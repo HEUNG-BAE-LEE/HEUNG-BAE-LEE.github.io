@@ -6,23 +6,23 @@
     
 
     
-    <title>growth_hacking_00 | DataLatte&#39;s IT Blog</title>
+    <title>[CS231n]Lecture05-Convolution Neural Network | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
-    <meta name="description" content="Growth hacking outlineStart up? 에어비앤비, 우버, 비바리퍼블리카(토스), 우아한형제들(배달의 민족), VCNC의 타다 등의 회사 확장가능하고 반복가능한 사업모델을 탐색하기 위해 고안되어진 임시조직 아직 잘 작동하는 사업 모델을 찾아내지 못한 기업을 의미하며, 사업 모델이 잘 작동한다면 Established company라고 부를">
+    <meta name="description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="growth_hacking_00">
-<meta property="og:url" content="https://heung-bae-lee.github.io/2019/05/18/growth_hacking_00/index.html">
+<meta property="og:title" content="[CS231n]Lecture05-Convolution Neural Network">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/07/19/cs231n_05/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="Growth hacking outlineStart up? 에어비앤비, 우버, 비바리퍼블리카(토스), 우아한형제들(배달의 민족), VCNC의 타다 등의 회사 확장가능하고 반복가능한 사업모델을 탐색하기 위해 고안되어진 임시조직 아직 잘 작동하는 사업 모델을 찾아내지 못한 기업을 의미하며, 사업 모델이 잘 작동한다면 Established company라고 부를">
+<meta property="og:description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-20T03:36:19.296Z">
+<meta property="og:updated_time" content="2019-07-21T08:59:00.385Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="growth_hacking_00">
-<meta name="twitter:description" content="Growth hacking outlineStart up? 에어비앤비, 우버, 비바리퍼블리카(토스), 우아한형제들(배달의 민족), VCNC의 타다 등의 회사 확장가능하고 반복가능한 사업모델을 탐색하기 위해 고안되어진 임시조직 아직 잘 작동하는 사업 모델을 찾아내지 못한 기업을 의미하며, 사업 모델이 잘 작동한다면 Established company라고 부를">
+<meta name="twitter:title" content="[CS231n]Lecture05-Convolution Neural Network">
+<meta name="twitter:description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
     
 
     
@@ -135,19 +135,19 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/growth-hacking/">growth hacking</a>
+    <a class="page-title-link" href="/categories/CS231n/">CS231n</a>
     </h1>
 </div>
 
                         <div class="main-body-content">
-                            <article id="post-growth_hacking_00" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-cs231n_05" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        growth_hacking_00
+        [CS231n]Lecture05-Convolution Neural Network
         </h1>
     
 
@@ -157,8 +157,8 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/05/18/growth_hacking_00/" class="article-date">
-            <time datetime="2019-05-17T22:36:16.000Z" itemprop="datePublished">2019-05-18</time>
+        <a href="/2019/07/19/cs231n_05/" class="article-date">
+            <time datetime="2019-07-18T18:00:00.000Z" itemprop="datePublished">2019-07-19</time>
         </a>
     </div>
 
@@ -169,60 +169,49 @@
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h1 id="Growth-hacking-outline"><a href="#Growth-hacking-outline" class="headerlink" title="Growth hacking outline"></a>Growth hacking outline</h1><h2 id="Start-up"><a href="#Start-up" class="headerlink" title="Start up?"></a>Start up?</h2><ul>
-<li>에어비앤비, 우버, 비바리퍼블리카(토스), 우아한형제들(배달의 민족), VCNC의 타다 등의 회사</li>
-<li><code>확장가능하고 반복가능한 사업모델을 탐색하기 위해 고안되어진 임시조직</code></li>
-<li>아직 잘 작동하는 사업 모델을 찾아내지 못한 기업을 의미하며, 사업 모델이 잘 작동한다면 Established company라고 부를 수 있다.</li>
-<li><code>스타트업의 숙명은 결국 사업 모델을 찾기 전까지 여러 가지 시도를 하고 시행착오를 겪을 수 밖에 없다!</code></li>
-<li>스타트업의 특징<ul>
-<li>한정된 자원(Runway) ex) 제한된 돈</li>
-<li>Runway의 끝에 도달하기 전에 해야할 일<ul>
-<li>시장, 고객 등에 대한 가설을 확인하며 고객 확보</li>
-<li>매출, 후속 투자 유치 등</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>이런 스타트업과 가설검증의 관계는 무엇일까?<br>    - 가설은, 팀이 가진 경험이나 직관을 기반으로한 학습된 추측이다.</p>
-<p><code>결국 스타트업은 끊임없이 가설을 검증해야하는 조직이다!!</code></p>
+            <p>CNN의 역사는 생략하겠다.</p>
+<h3 id="CNN의-기본적인-구조"><a href="#CNN의-기본적인-구조" class="headerlink" title="CNN의 기본적인 구조"></a>CNN의 기본적인 구조</h3><p>기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다.</p>
+<p>더 자세히 말하자면, 우선 필터의 크기는 입력의 크기보다는 작지만 필터의 깊이는 항상 입력의 깊이 만큼 항상 확장되어야 한다. 그러한 필터를 전체 이미지의 일부 공간에 겹쳐놓고 내적을 수행한다. 필터의 W(가중치)와 이에 상응하는 위치에 있는 입력 이미지의 픽셀을 곱해준다.</p>
+<p>이러한 내적을 할 때는 fully connected layer의 연산과 동일하게 필터 크기에 상응하는 입력 데이터의 텐서를 하나의 긴 벡터로 보고 벡터 끼리의 내적으로 생각하면 된다. 왜냐하면 각 원소끼리 Convolution을 하는 것과 텐서를 쭉 펴서 내적을 하는 것은 동일한 작업의 결과물을 보여주기 때문이다.</p>
+<p><code>신호처리 분야에서의 convolution은 실제로 필터를 뒤집은 다음에 연산을 수행한다는 내용</code>이 있었는데 이 부분은 아직 정확한 의미를 알지 못해 좀 더 찾아보며 공부한 후 추후에 다시 내용을 업데이트 해야할 것 같다.</p>
+<p>이제부터는 CNN에서의 필터가 작동하는 방식을 말해 보면, Convolution은 이미지의 좌상단부터 시작하게 된다. 그리고 필터와 입력 이미지 데이터의 내적으로인해 각 해당 위치에 activation map을 산출하게 된다. 예를 들어 2칸씩 띄어서 필터를 슬라이딩 한다던지 출력 activation map 행렬의 크기는 필터를 어떻게 슬라이드를 하느냐에 따라 다를 것이다. 기본적으로는 하나씩 연산을 수행한다. 보통 Convolution Layer에서는 여러개의 필터를 사용하는데 그 이유는 <code>필터마다 다른 특징을 추출하고 싶기 때문</code>이다. activation map의 갯수는 사용하는 필터갯수에 따라 달라진다.</p>
+<p>CNN(ConvNet)layer들 사이에 보통의 NN 처럼 activation function, Convolution, pooling(뒤에 더 자세한 설명을 하겠지만 pooling은 activation map의 사이즈를 줄이는 역할을 한다.) 같은 처리를 한 후 이러한 layer 구조를 여러번 쌓아준다. 이러한 여러 Layer들을 쌓고나서 보면 <code>결국 각 필터들이 계층적으로 학습을 하는것을 보게된다</code>. 보통은 CNN 전체의 구조에서 <code>앞쪽에 있는 필터들은 low-level feature</code>(Edge와 같은)를 학습하게 되고, 중간은 Mid-level feature을 가지게 되어 cornor나 blobs등과 같은 특징들이 보인다. <code>뒤쪽으로 갈수록 high-level feature</code>(좀 더 객체와 닮은 것들이 출력으로 나오는)를 학습하게 된다.</p>
+<p>이렇게 필터에 따라 특징을 추출하는 과정이 중요하기에 필터의 <code>Depth를 늘리는 데 어떤 직관을 가져야하는지 의문이 들수도 있을 것이다. 이는 어떻게 모델을 디자인해야 되는지의 문제이므로 실제로는 어떤것이 더 좋은지를 찾아내야한다.</code></p>
+<p>Conv Layer를 계층적으로 쌓아서 단순한 특징을 뽑고 그서을 또 조합해서 더 복잡한 특징으로 활용했다. 이는 강제로 학습시킨 것이 아니라 계층적 구조를 설계하고 역전파로 학습시킨 것 뿐이지만 필터는 이렇게 학습되는 것이다. 우리가 각 필터를 통해 얻은 activation map을 시각화하면 이미지가 어떻게 생겨야 해당 뉴런의 활성을 최대화시킬 수 있는지는 나타내는 것이다. <code>즉, 이미지가 필터와 비슷하게 생겼으면 출력값이 커지게 된다! 그러므로 우리는 이런 시각화를 통해 어떤 필터에 대한 activation map인지를 역으로 추론해 볼 수 있을 것이다. 마치 이미지 중 어느 위치에서 필터가 크게 반응하는 지를 볼 수 있기 때문이다.</code>시각화는 Backpropagation을 통해 해볼 수 있다. <code>보통 필터의 갯수는 2의 제곱수로 한다. ex) 32, 64, 128, 512등</code></p>
+<h3 id="Spatial-dimension"><a href="#Spatial-dimension" class="headerlink" title="Spatial dimension"></a>Spatial dimension</h3><p>먼저, 한가지 주의할 점은 우리의 입력데이터를 잘 커버할 수 없는 필터 사이즈로 CNN 구조를 설계하게 되면, 그로인한 불균형한 결과를 볼 수도 있기 때문에 잘 동작하지 않을 수 있다는 문제가 있다. 그러므로 필터의 사이즈를 정할떄는 입력데이터를 커버할 수 있는 사이즈로 정해주어야 할 것이다.</p>
+<p>우리가 필터를 슬라이딩한 후의 activation map의 사이즈(가로,세로 크기)는</p>
 <ul>
-<li><p>그러므로, 스타트업은 빠른 속도로(Lean하게) 가설을 검증해야 한다. 왜냐하면 많은 가설들을 주어진 자원내에 해결하여 이익을 창출해야하기 때문이다.</p>
-</li>
-<li><p>그로스 역시, 끊임 없이 가설을 세우고 검증하는 “테스트”를 반복하는 것이다.</p>
-</li>
+<li><code>(원래 image dimension - 필터 dimension)/stride + 1</code></li>
 </ul>
-<h2 id="리스크와-가설"><a href="#리스크와-가설" class="headerlink" title="리스크와 가설"></a>리스크와 가설</h2><ul>
-<li>위에서 가설의 검증 중요성을 언급하였다. 그렇다면 스타트업이 가지고 있는 가설 중 어떤 가설 부터 확인해야 하는지를 말하자면, 틀렸을 경우, 사업이 실패할 확률이 큰 리스크가 높은 가설을 먼저 확인해야 함이 논리적일 것이다. 그렇다면 그 리스크가 큰 가설은 제일 무엇일지를 고민해보면 <code>수익을 창출해낼수 있으려면 고객이 있어야 하므로 잠재적인 고객이 없다는 것이 가장 리스크가 높을 것이다.</code></li>
-</ul>
-<h2 id="고객-리스크"><a href="#고객-리스크" class="headerlink" title="고객 리스크"></a>고객 리스크</h2><h3 id="고객에-대한-가설을-확인하는-방법"><a href="#고객에-대한-가설을-확인하는-방법" class="headerlink" title="고객에 대한 가설을 확인하는 방법"></a>고객에 대한 가설을 확인하는 방법</h3><ul>
-<li><p>고객 인터뷰 (가장 효과적인 방법)</p>
+<p>이를 이용해서 어떤 필터 크기를 사용해야하는 지를 알 수가 있다. 어떤 스트라이드를 사용했을 때 이미지에 꼭 맞는지, 그리고 몇 개의 출력값을 낼 수 있는지도 알 수 있다.</p>
+<h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h3><p>가장 흔히 쓰는 기법은 zero-pad이다. <code>입력 image data의 코너 즉 가장자리는 필터를 적용할 때 필터의 중심보다는 덜 영향을 주진 않을지의 의문을 가질 수도 있을 것이다. 그러한 의문을 해소하기 위해 zero padding을 사용하는 것이다.</code> 다음 그림처럼, 가장자리에 0을 채워 덫붙여 넣는 것이다. 그렇게하면 좌상단의 자리에서도 필터 연산을 수행할 수 있게 된다. 혹시 Padding을 모르는 사람들을 위해 말을 하자면, 예를들어 image data의 가장자리에 픽셀을 덫붙여주는 작업이다. zero padding을 하면 모서리에 필요없는 특징을 추가하게 되는 것은 아닌지라는 의문을 갖을 수 있는데, 우리의 본 목적은 이미지나 영상 내에서 어떤 edge 부분의 위치(값)을 얻고 싶은 것이고, zero-padding은 이를 할 수 있는 하나의 방법일 뿐이라는 것을 명심하자! 왜냐하면 우리는 지금 필터가 닿지 않는 모서리 부분에서도 값을 뽑을 수 있게 되기 때문이다. (zero가 아닌 mirror나 extend하는 방법도 있다!! 허나, zero-padding 제법 잘 동작하는 방법 중 하나이다.) <code>물론 모서리 부분에 약간의 artifact가 생길 순 있다. 당연히 고려해야 하는 부분이다</code>. zero-padding을 하는 또 다른 이유는 Layer를 거치면서도 입력의 사이즈를 유지하기 위해서이다. padding을 해줌으로서 컬럼이 두개가 더 생성되어 결국에는 입력받은 데이터의 크기와 동일한 출력 크기를 얻을 수 있다는 점을 앞서 배운 공식에 적용시켜 생각해보면 이해가 갈 것이다.</p>
+<p><code>즉, 요약하면 Padding을 하게되면 출력 사이즈를 유지시켜주고 필터의 중앙이 닿지 않는 곳도 연산할 수 있다는 것을 알 수 있다.</code></p>
+<p>다음은 내가 강의를 들으면서 접했던 질문 중 나 또한 궁금했던 질문이다. <code>만약 이미지가 square matrix가 아니고 rectangular matrix라면 수평, 수직방향의 stride를 다르게 적용해야 하는지 이다.</code> 이런 질문은 나왁 같은 입문자들에게는 궁금할 만한 질문이라고 생각한다. 담은 <code>물론 가능하지만, 보통은 square matrix로 이미지를 처리한후 사용하여 같은 stride를 적용한다는 것이다.</code> 이미지 해상도 문제와도 관련이 있다. 아마 우리는 입력 이미지 원본 상태의 비율을 유지하고 싶겠지만 대부분은 정사각형으로 잘라서 사용한다는 것이다.</p>
+<p><code>일반적으로 어떤 stride와 filter를 쓸건지를 정하는 방법이 있다.</code><br>| filter size | stride |<br>|:-:|:–:|<br>|3x3   |  1  |<br>|5x5   |  2  |<br>|7x7   |  3  |</p>
+<p>만약 Layer가 여러겹 쌓인 구조를 설계한다고 가정했을때, <code>zero-padding을 하지 않는 다면 출력 사이즈는 아주 빠르게 줄어 들게 될 것이다. 그 의미는 결국 일부 정보를 잃게 되는 것이고 원본 이미지를 표현하기에 너무 작은 값을 사용하게 될 것이다.</code> 또한, 그 이유는 매번 필터를 적용하여 convolution을 할 때 각 코너에 있는 값들을 계산하지 못하기 때문이다.</p>
+<p>예를 들어 보자. input volume이 32x32x3이고, 10개의 5x5 필터들을 stride 1, padding을 2로 주었을 경우, output volume size는 어떻게 될 것인가? 정답은 32x32x10이다.<br>(32+2<em>2-5/1+1=32이고 필터의 갯수가 10이므로) <code>그렇다면 이 Layer의 parameter는 총 몇개 일까?</code> 정답은 5</em>5<em>3=75개라는 가중치와 bias인 1개를 더한 75+1=76개를 각 필터당 가지므로 총 10개의 필터가 있기에 76</em>10=760개이다.</p>
+<p><code>1x1 Convolution도 의미가 있다.</code> 필터의 크기가 1초과인 다른 필터들 처럼 공간적인 정보를 이용하진 않지만 여전히 Depth만큼 연산을 수행한다. 그러니 1x1 ConvNet는 입력의 전체 Depth에 대한 내적을 수행하는 것과 같다.</p>
+<p><code>&#39;stride를 선택하는 데 있어 가질 수 있는 직관은 무엇인가&#39;라는 의문에 stride를 크게 가져갈수록 출력은 점점 작아질 것이라는 것이다. 즉, 이미지를 다운샘플링하는 것인데 Pooling을 하는 것과 비슷하다. 엄밀히 말하자면 둘은 다른 얘기이며, Pooling 보다 더 좋은 성능을 보이기도 한다. Pooling 처럼 다운 샘플링하는 동일한 효과를 얻으면서도 더 좋은 성능을 낼 수도 있다.</code> 그리고 activation map의 사이즈를 줄이는 것은 추후 모델의 전체 파라미터의 갯수에도 영향을 미친다. 왜냐하면 출력 노드 전 마지막 단계에서 Fully connected Layer를 보게 되면 Conv의 출력 모두와 연결되어 있음을 알 수 있다. 즉, Conv Layer의 출력이 작을수록 Fully connected Layer에서 필요한 파라미터의 수가 더 작을 것이라는 점이다. 파라미터의 수, 모델의 사이즈, 그리고 Overfitting 과 같은 것들에는 다양한 trade-off가 있다. 이러한 trade-off는 stride를 몇 으로 할지를 결정할때 고려해야 하는 문제이다.</p>
 <ul>
-<li><p>포커스 그룹 인터뷰(FGI)</p>
-<ul>
-<li>5~6명 정도되는 인원들을 한 방에 모아놓고 인터뷰 진행을 하므로 인터뷰 중 자신의 주관적인 의견을 말하기 보다는 그 인터뷰의 흐름에 따라 의견을 낼 수 있는 <code>집단 사고의 위험</code>이 있을 수 있다. 또한 <code>목소리 큰 사람에세 동조</code>하는 경향을 보이므로 이런 문제를 해결하기 위해 전문 모더레이터를 고용하는 방법이 있지만 이 방법은 비용이 높으므로 스타트업에서 추천하는 방법은 아니다.</li>
+<li>Conv Layer를 Brain Neuron의 관점에서 살펴보자. 뉴련과 Conv Layer의 가장 큰 차이점은 우리의 뉴런은 Local connectivity를 가지고 있다는 점이다. Conv Layer처럼 슬라이딩을 하는 것이 아니라 특정 부분에만 연결되어 있다. 하나의 뉴런은 한 부분만 처리하고, 그런 뉴런들이 모여서 전체 이미지를 처리하는 것이다. 이런 식으로 spatial structure를 유지한 채로 Layer의 출력인 activation map을 만드는 것이다. <code>또한, 필터는 이미지에서 같은 지역을 돌더라도 서로 다른 특징을 뽑아낸다고 볼 수 있다.</code></li>
 </ul>
-</li>
-<li><p>1대 1 심층 인터뷰</p>
-<ul>
-<li>위의 포커스 그룹 인터뷰와는 다르게 집단 사고의 위험이 없고 비교적 쉽게 수행할 수 있다. 온전히 한명의 고객에 집중할 수 있다는 장점이 있다.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>여기까지 보게 되면 그로스 해킹은 데이터를 보아야만 하는 것이 아니지 않느냐는 의문이 생길 것이다. 이에 대한 답은 아니다라는 결론을 내릴 수 있게 된다. <code>왜냐하면 그로스라는 것은 결국 고객을 파악하여 고객이 어떤 문제를 가지고 있는지 같은 고객의 잠재적인 니즈를 파악하여 그를 해결하므로서 수익을 창출하는 것이기 때문이다.</code> 참고로 데이터 기반 회사의 끝판왕인 구글도 고객 인터뷰를 중시한다.</p>
-<p>[참고] 고객 인터뷰 공부하기</p>
-<ul>
-<li>애쉬 모리아의 책 “린 스타트업”, “스케일링”</li>
-<li>Google Ventures - User Research, Quick n’Dirty<br><a href="https://library.gv.com/user-research-quick-and-dirty-1fcfa54c91c4" target="_blank" rel="noopener">https://library.gv.com/user-research-quick-and-dirty-1fcfa54c91c4</a></li>
-</ul>
-<h3 id="고객이-존재한다면-추후에-확인해야할-리스트"><a href="#고객이-존재한다면-추후에-확인해야할-리스트" class="headerlink" title="고객이 존재한다면 추후에 확인해야할 리스트"></a>고객이 존재한다면 추후에 확인해야할 리스트</h3><ul>
-<li>고객이 존재하긴 하더라도, 적은 수의 고객만 존재한다면 시장의 파이가 크지 않으므로 사업모델을 만들어내기 적합하지 않다. 이런 시장의 크기는 <code>충분히 여러명(50명, 100명)과 인터뷰를 하며, 반복적인 패턴을 관찰해야 하며, 또 다른 방법으로는 실제 제품을 개발하지 않고 아이디어를 검증하는 방법인 Smoke Test를 실행헤 보는 것이다. 예를 들면, 더미 화면을 만들어 그곳으로 트래픽을 유입시켜서 테스트를 하는 방법이다. 이렇게 함으로써 우리 제품의 시장에서의 수요를 확인할 수 있다.</code></li>
-</ul>
-<h2 id="솔루션-리스크"><a href="#솔루션-리스크" class="headerlink" title="솔루션 리스크"></a>솔루션 리스크</h2><ul>
-<li>Problem-Solution Fit이 맞지 않다라는 말을 들어본적이 있을 것이다. 즉, 솔루션이 문제에 적합하지 않다는 것이다. 고객의 문제도 존재하고, 지갑을 열 고객도 충분히 많지만 우리의 제품이 그 문제에 대한 효과적인 해결책이 아닌 경우에 위의 말을 사용한다. <code>솔루션 리스크에 대비하려면 프로토타입을 만들어서 고객 반을을 먼저 확인해야 한다.</code> 가설을 확인하지 않은 채, 제품 개발에 너무 많은 자원을 들이지 않아야 한다.</li>
-</ul>
+<h3 id="Pooling-layer"><a href="#Pooling-layer" class="headerlink" title="Pooling layer"></a>Pooling layer</h3><p>Pooling Layer는 Representation들을 더 작고 관리하기 쉽게 해준다. 즉 파라미터의 수를 줄인다는 것이다.<br>그리고 일종의 공간적인 불변성을 얻을 수 도 있다. <code>결국 Pooling Layer를 관리하는 일은 Downsampling하는 것이다. 여기서 중요한 점은 Depth에는 아무런 영향을 주지 않는다는 것이다.</code> 그리고 일반적으로 Max pooling이 사용된다. Pooling에도 필터 크기를 정할 수 있다. 얼마만큼의 영역을 한 번에 묶을지를 정하는 것이다. 기본적으로 Downsampling을 하고 싶은 것이기 때문에 Pooling을 할 때는 겹치지 않는 것이 일반적이다. 또한, 우리가 다루는 값들은, 얼마나 이 뉴런이 활성화되었는 지를 나타내는 값이다. 즉, 이 필터가 각 위치에서 얼마나 활성화되었는지 이다. Max pooling은 그 지역이 어디든, 어떤 신호에 대해 “얼마나” 그 필터가 활성화 되었는지를 알려준다고 알 수 있다. <code>인식에 대해 생각해 보았을때 인식은 그 값이 어디에 있었다는 것 보다는 그 값이 얼마나 큰지가 중요한 것이다.</code> 그러므로 average pooling 보다 더 좋다. Pooling도 일종의 stride 기법이라고 볼 수 있다. 사람들은 Downsampling을 할때 Pooling을 하기보단 stride를 많이 사용하고 있는 추세이고 성능도 좋다. Pooling Layer도 Conv Layer에서 사용했던 수식을 그대로 이용해서 Design choice를 할 수 있다.<code>한가지 특징이 있다면 pooling layer에서는 보통 padding을 하지 않는다. padding의 목적은 주로 사이즈를 유지하기 위한 것이지만 pooling의 목적은 down sampling이고 Conv layer에서 처럼 코너의 값을 계산하지 못하는 경우도 없기 때문이다.</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">filter size</th>
+<th align="center">stride</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">2x2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">3x3</td>
+<td align="center">2</td>
+</tr>
+</tbody></table>
 
         </div>
         <footer class="article-footer">
@@ -230,7 +219,7 @@
 
 
 
-    <a data-url="https://heung-bae-lee.github.io/2019/05/18/growth_hacking_00/" data-id="cjycpy676000biabavljouxs0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://heung-bae-lee.github.io/2019/07/19/cs231n_05/" data-id="cjycqc3hs0001gmbakc642ult" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -300,19 +289,18 @@
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "growth_hacking_00",
+        "headline": "[CS231n]Lecture05-Convolution Neural Network",
         "image": "https://heung-bae-lee.github.io",
         "keywords": "",
-        "genre": "growth hacking",
-        "datePublished": "2019-05-18",
-        "dateCreated": "2019-05-18",
-        "dateModified": "2019-07-20",
-        "url": "https://heung-bae-lee.github.io/2019/05/18/growth_hacking_00/",
-        "description": "Growth hacking outlineStart up?
-에어비앤비, 우버, 비바리퍼블리카(토스), 우아한형제들(배달의 민족), VCNC의 타다 등의 회사
-확장가능하고 반복가능한 사업모델을 탐색하기 위해 고안되어진 임시조직
-아직 잘 작동하는 사업 모델을 찾아내지 못한 기업을 의미하며, 사업 모델이 잘 작동한다면 Established company라고 부를 "
-        "wordCount": 490
+        "genre": "CS231n",
+        "datePublished": "2019-07-19",
+        "dateCreated": "2019-07-19",
+        "dateModified": "2019-07-21",
+        "url": "https://heung-bae-lee.github.io/2019/07/19/cs231n_05/",
+        "description": "CNN의 역사는 생략하겠다.
+CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다.
+더 자세히 말하자면, "
+        "wordCount": 1311
     }
 </script>
 
@@ -392,20 +380,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2019/05/18/growth_hacking_01/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            growth_hacking_01
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/03/08/Bayes/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/07/18/cs231n_02/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">프로그래머를 위한 베이지안 with 파이썬(1)</p>
+        <p class="article-nav-title">[CS231n]Lecture02-Image classification pipeline</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -550,7 +528,7 @@
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://heung-bae-lee.github.io/2019/05/18/growth_hacking_00/';
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/07/19/cs231n_05/';
     
     (function() {
     var dsq = document.createElement('script');
