@@ -6,7 +6,7 @@
     
 
     
-    <title>[CS231n]Lecture06-Training Neural Networks | DataLatte&#39;s IT Blog</title>
+    <title>[CS231n]Lecture07-Training Neural Networks | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -14,14 +14,14 @@
     
     <meta name="description" content="지난 6강에서는 activation function을 중점적으로 다루어 보았는데, 10년전 까지만 해도 sigmoid가 아주 유명했다. 허나, Vanishing gradient가 생기는 문제로 인해 최근에는 Sigmoid와 tanh 보다는 ReLU를 쓴다라고 했다.  대부분의 경우 normalize나 zero-centered로 데이터를 처리해 주지 않으면,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[CS231n]Lecture06-Training Neural Networks">
+<meta property="og:title" content="[CS231n]Lecture07-Training Neural Networks">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/07/22/cs231n_07/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="지난 6강에서는 activation function을 중점적으로 다루어 보았는데, 10년전 까지만 해도 sigmoid가 아주 유명했다. 허나, Vanishing gradient가 생기는 문제로 인해 최근에는 Sigmoid와 tanh 보다는 ReLU를 쓴다라고 했다.  대부분의 경우 normalize나 zero-centered로 데이터를 처리해 주지 않으면,">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-23T03:52:07.615Z">
+<meta property="og:updated_time" content="2019-07-23T04:09:56.267Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[CS231n]Lecture06-Training Neural Networks">
+<meta name="twitter:title" content="[CS231n]Lecture07-Training Neural Networks">
 <meta name="twitter:description" content="지난 6강에서는 activation function을 중점적으로 다루어 보았는데, 10년전 까지만 해도 sigmoid가 아주 유명했다. 허나, Vanishing gradient가 생기는 문제로 인해 최근에는 Sigmoid와 tanh 보다는 ReLU를 쓴다라고 했다.  대부분의 경우 normalize나 zero-centered로 데이터를 처리해 주지 않으면,">
     
 
@@ -147,7 +147,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-        [CS231n]Lecture06-Training Neural Networks
+        [CS231n]Lecture07-Training Neural Networks
         </h1>
     
 
@@ -237,10 +237,8 @@
 </li>
 </ul>
 <h4 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h4><ul>
-<li><p>모델에 어떤 조건들을 추가할 텐데 그 term들은 모델이 Training data에 fit하는 것을 막아줄 것이다. 그리고 한번도 보지 못한 데이터에서의 성능을 향상시키는 방법이다.</p>
-</li>
-<li><p><code>L2 regularization은 NN에는 잘 어울리지 않는다. 왜???</code></p>
-</li>
+<li>모델에 어떤 조건들을 추가할 텐데 그 term들은 모델이 Training data에 fit하는 것을 막아줄 것이다. 그리고 한번도 보지 못한 데이터에서의 성능을 향상시키는 방법이다.</li>
+<li><code>L2 regularization은 NN에는 잘 어울리지 않는다. 왜???</code></li>
 <li><p><code>NN에서 가장 많이 사용하는 Regularization은 바로 dropout이다!!!</code></p>
 <ul>
 <li><p>Dropout</p>
@@ -295,8 +293,7 @@
 </li>
 <li><p>1) 먼저 ImageNet 같은 아주 큰 데이터셋으로 학습을 한번 시킨다.<br>ImageNet에서 학습된 feature를 우리가 가진 작은 데이터셋에 적용하는 것이다.이제는 1000개의 ImageNet 카테고리를 분류하는 것이 아니라 10종의 강아지를 분류하는 문제이다. 데이터는 엄청 적다. 이 데이터 셋은 오직 C(예:10개)개의 클래스만 가지고 있다.</p>
 </li>
-<li><p>2) 가장 마지막의 Fully connected layer는 최종 feature와 class scores간의 연결인데 이를 초기화시킨다. 또한, 기존의 ImageNet은 4,096 x 1,000 차원의 matrix였지만 이제는 우리가 10개의 클래스를 갖으므로 4,096 x 10 차원의 matrix로 바꿔준다. 나머지 이전의 모든 레이어드르이 가중치는 그대로 둔다. <code>이렇게 되면 linear classifier를 학습시키는 것과 같다. 왜냐하면 오로지 마지막 레이어만 가지고 우리 데이터를 학습시키는 것이기 때문이다.</code></p>
-</li>
+<li>2) 가장 마지막의 Fully connected layer는 최종 feature와 class scores간의 연결인데 이를 초기화시킨다. 또한, 기존의 ImageNet은 4,096 x 1,000 차원의 matrix였지만 이제는 우리가 10개의 클래스를 갖으므로 4,096 x 10 차원의 matrix로 바꿔준다. 나머지 이전의 모든 레이어드르이 가중치는 그대로 둔다. <code>이렇게 되면 linear classifier를 학습시키는 것과 같다. 왜냐하면 오로지 마지막 레이어만 가지고 우리 데이터를 학습시키는 것이기 때문이다.</code></li>
 </ul>
 <p>이러한 방법을 사용하면 아주 작은 데이터 셋일지라도 아주 잘 동작하는 모델을 만들 수 있다.</p>
 <ul>
@@ -384,7 +381,7 @@
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "[CS231n]Lecture06-Training Neural Networks",
+        "headline": "[CS231n]Lecture07-Training Neural Networks",
         "image": "https://heung-bae-lee.github.io",
         "keywords": "",
         "genre": "CS231n",
@@ -501,7 +498,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
-                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture06-Training Neural Networks</a></p>
+                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture07-Training Neural Networks</a></p>
                             <p class="item-date"><time datetime="2019-07-22T03:24:40.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
@@ -664,5 +661,22 @@
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

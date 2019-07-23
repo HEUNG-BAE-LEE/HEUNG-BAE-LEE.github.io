@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="Optimization을 통해서 네트워크의 파라미터를 학습시킬 수 있다. Loss가 줄어드는 방향으로 이동하는데 이것은 gradient의 반대 방향으로 이동하는 것과 같다. Mini-batch SGD 알고리즘으로 가중치들(네트워크의 파라미터)을 업데이트하는 과정은 다음과 같다.  Mini-batch SGD로 가중치 업데이트 과정Loop:   데이터의 bat">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-22T03:24:28.696Z">
+<meta property="og:updated_time" content="2019-07-23T04:10:08.865Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[CS231n]Lecture06-Training Neural Networks">
 <meta name="twitter:description" content="Optimization을 통해서 네트워크의 파라미터를 학습시킬 수 있다. Loss가 줄어드는 방향으로 이동하는데 이것은 gradient의 반대 방향으로 이동하는 것과 같다. Mini-batch SGD 알고리즘으로 가중치들(네트워크의 파라미터)을 업데이트하는 과정은 다음과 같다.  Mini-batch SGD로 가중치 업데이트 과정Loop:   데이터의 bat">
@@ -184,7 +184,7 @@
 <li>activation function 선택, preprocessing, weight initialization, regularization, gradient checking</li>
 </ul>
 <h4 id="Activation-function"><a href="#Activation-function" class="headerlink" title="Activation function"></a>Activation function</h4><h5 id="1-Sigmoid"><a href="#1-Sigmoid" class="headerlink" title="1)Sigmoid"></a>1)Sigmoid</h5><ul>
-<li>$$$\sigma(x) = \frac{1}{1+e^{-x}}$$$</li>
+<li>$\sigma(x) = \frac{1}{1+e^{-x}}$</li>
 <li>각 입력을 받아서 그 입력을 [0,1]사이의 값이 되도록 해준다. 입력의 값이 크면 Sigmoid의 출력값이 1에 가까울 것이고 작으면 0에 가까울 것이다.</li>
 <li>neuron의 firing rate를 saturation 시키는 것으로 해석할 수 있다. 왜냐하면 어떤 값이 0에서 1사이의 값을 가지면 이를 fireing rate라고 생각할 수 있기 때문이다. ReLu가 생물학적 타당성이 더 크기에 최근에는 대부분 ReLu를 사용한다.(이 부분은 생물학적인 내용인것 같다.)</li>
 <li>참조 <a href="http://www.aistudy.co.kr/neural/biological_schalkoff.htm" target="_blank" rel="noopener">firing rate</a></li>
@@ -203,8 +203,7 @@
 </ul>
 <h5 id="2-tanh"><a href="#2-tanh" class="headerlink" title="2)tanh"></a>2)tanh</h5><ul>
 <li>sigmoid와는 비슷한 모양을 가지지만 출력값의 범위가 [-1,1]이다.</li>
-<li>가장 큰 차이라면 zero-centered라는 것이다. 이를 통해 sigmoid의 두번째 문제는 해결되지만, saturation 때문에 여전히 Gradient는 죽는다. 여전히 flat한 구간이 있기 때문이다.</li>
-<li><h6 id="3-ReLU"><a href="#3-ReLU" class="headerlink" title="3)ReLU"></a>3)ReLU</h6></li>
+<li>가장 큰 차이라면 zero-centered라는 것이다. 이를 통해 sigmoid의 두번째 문제는 해결되지만, saturation 때문에 여전히 Gradient는 죽는다. 여전히 flat한 구간이 있기 때문이다.<br>-<h6 id="3-ReLU"><a href="#3-ReLU" class="headerlink" title="3)ReLU"></a>3)ReLU</h6></li>
 <li>f(x) = max(0,x)</li>
 <li>적어도 양의 값에서는 saturetion되지 않는다.</li>
 <li>sigmoid와는 다르게 exponential같은 연산이 없는 단순한 max 연산이므로 계산이 매우 빠르다.(sigmoid나 tanh보다 수렴속도가 6배정도로 훨씬 빠르다.)</li>
@@ -355,7 +354,7 @@
         "genre": "CS231n",
         "datePublished": "2019-07-19",
         "dateCreated": "2019-07-19",
-        "dateModified": "2019-07-22",
+        "dateModified": "2019-07-23",
         "url": "https://heung-bae-lee.github.io/2019/07/19/cs231n_06/",
         "description": "Optimization을 통해서 네트워크의 파라미터를 학습시킬 수 있다. Loss가 줄어드는 방향으로 이동하는데 이것은 gradient의 반대 방향으로 이동하는 것과 같다. Mini-batch SGD 알고리즘으로 가중치들(네트워크의 파라미터)을 업데이트하는 과정은 다음과 같다.
 
@@ -447,7 +446,7 @@ Mini-batch SGD로 가중치 업데이트 과정Loop:
         <strong class="article-nav-caption">newer</strong>
         <p class="article-nav-title">
         
-            [CS231n]Lecture06-Training Neural Networks
+            [CS231n]Lecture07-Training Neural Networks
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
@@ -479,7 +478,7 @@ Mini-batch SGD로 가중치 업데이트 과정Loop:
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
-                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture06-Training Neural Networks</a></p>
+                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture07-Training Neural Networks</a></p>
                             <p class="item-date"><time datetime="2019-07-22T03:24:40.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
@@ -642,5 +641,22 @@ Mini-batch SGD로 가중치 업데이트 과정Loop:
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
