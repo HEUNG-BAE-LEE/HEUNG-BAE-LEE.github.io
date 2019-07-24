@@ -171,13 +171,11 @@
         <div class="article-entry" itemprop="articleBody">
             <p>우선 코드를 작성할때 HTML 코드는 tag name에 대문자로도 작성이 가능하나, 소문자로 작성하는 것을 권하며 코드 간 들여 쓰기를 하는 이유는 HTML 요소 간 관계(부모, 자식, 형제)를 구분하기 용이 함에 들여쓰나, 브라우저는 코드가 한 줄 이어도 해석하는데 아무런 문제가 없다.</p>
 <h2 id="DTD-표준-호환모드"><a href="#DTD-표준-호환모드" class="headerlink" title="DTD(표준 호환모드)"></a>DTD(표준 호환모드)</h2><p>문서 유형 정의(Document Type Definition)를 말하며 브라우저의 렌더링 모드를 표준으로 작동하게 만들어 준다. 여기서 중요한 것인 DTD는 반드시 HTML 문서의 최상 위에 위치해야 한다.</p>
-<p>[비표준(quirks) 모드와 표준(standards) 호환모드](<a href="https://developer.mozilla.org/ko/docs/Web/HTML" target="_blank" rel="noopener">https://developer.mozilla.org/ko/docs/Web/HTML</a> Quirks_Mode_and_Standards_Mode/)</p>
+<p><a href="https://developer.mozilla.org/ko/docs/Web/HTML Quirks_Mode_and_Standards_Mode/" target="_blank" rel="noopener">비표준(quirks) 모드와 표준(standards) 호환모드</a></p>
 <p>또한, 브라우저에서 해당 웹의 DOCTYPE을 알고 싶은 경우는 console 창에 document.doctype을 입력하면 출력되게 되어있어서 확인 할 수 있다.</p>
 <p>웹 표준 기술 규격에 따르면 html 요소는 오직 1개의 head와 뒤 따르는 1개의 body 요소만 자식으로 포함할 수 있다는 사실을 기억하자.</p>
-<h2 id="문서에-사용된-주-언어가-무엇인지-설정하는-lang-속성"><a href="#문서에-사용된-주-언어가-무엇인지-설정하는-lang-속성" class="headerlink" title="문서에 사용된 주 언어가 무엇인지 설정하는 lang 속성"></a>문서에 사용된 주 언어가 무엇인지 설정하는 lang 속성</h2><html>루트 요소에 lang 속성을 사용하여 문서에 주요 사용되는 언어(language)를 설정한다.사용되는 언어 코드는 [ISO 639](https://ko.wikipedia.org/wiki/ISO_639/) (전 세계 언어 명칭에 고유 부호를 부여하는 국제 표준)에서 찾을 수 있다.
-
+<h2 id="문서에-사용된-주-언어가-무엇인지-설정하는-lang-속성"><a href="#문서에-사용된-주-언어가-무엇인지-설정하는-lang-속성" class="headerlink" title="문서에 사용된 주 언어가 무엇인지 설정하는 lang 속성"></a>문서에 사용된 주 언어가 무엇인지 설정하는 lang 속성</h2><p><html>루트 요소에 lang 속성을 사용하여 문서에 주요 사용되는 언어(language)를 설정한다.사용되는 언어 코드는 <a href="https://ko.wikipedia.org/wiki/ISO_639/" target="_blank" rel="noopener">ISO 639</a> (전 세계 언어 명칭에 고유 부호를 부여하는 국제 표준)에서 찾을 수 있다.</html></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"ko-KR"</span>&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=<span class="string">"utf-8"</span>&gt;</span><br><span class="line">        &lt;title&gt; HTML 문서 작성을 위한 기본 문법&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;p title=<span class="string">"Development Tools"</span>&gt;개발 도구(Devtools)&lt;/p&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-
 <p>위의 코드에서 html 태그의 lang이라는 attribute를 통해 작성하는 코드에서 주로 사용되는 언어를 선택 해주면 된다. “ko-KR”은 대한민국에서 주로 사용언어는 korean이라는 의미이다.</p>
 <p>ko, en 은 korean, english 의 약자로 언어(language) 정보를 말한다. 반면 KR은 Republic of Korea 지역(locale) 정보를 말한다.</p>
 <p>ko 만 사용하면 한국어를 통칭하지만, 언어를 지역마다 구분해야 할 경우, 지역 정보를 추가하여 사용하는 것이 좋다.</p>
@@ -185,14 +183,14 @@
 <p>영문권에서는 지역마다 사용 되는 영어가 달라 다음과 같이 표기하여 구분한다.</p>
 <p>en-GB ⇒ 영국 영어<br>en-US ⇒ 미국 영어<br>en-CA ⇒ 캐나다 영어</p>
 <p>언어 조회는 <a href="https://r12a.github.io/app-subtags/" target="_blank" rel="noopener">Language subtag lookup</a> 에서 할 수 있다.</p>
-</html>
+
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="https://heung-bae-lee.github.io/2019/02/12/frontent3/" data-id="cjyfa987a000ftfbahojs2saj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://heung-bae-lee.github.io/2019/02/12/frontent3/" data-id="cjygumlv9000q3sba64tah1ym" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -272,7 +270,7 @@
         "url": "https://heung-bae-lee.github.io/2019/02/12/frontent3/",
         "description": "우선 코드를 작성할때 HTML 코드는 tag name에 대문자로도 작성이 가능하나, 소문자로 작성하는 것을 권하며 코드 간 들여 쓰기를 하는 이유는 HTML 요소 간 관계(부모, 자식, 형제)를 구분하기 용이 함에 들여쓰나, 브라우저는 코드가 한 줄 이어도 해석하는데 아무런 문제가 없다.
 DTD(표준 호환모드)문서 유형 정의(Document Type Def"
-        "wordCount": 329
+        "wordCount": 332
     }
 </script>
 
@@ -388,7 +386,16 @@ DTD(표준 호환모드)문서 유형 정의(Document Type Def"
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
-                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture07-Training Neural Networks</a></p>
+                            <p class="item-title"><a href="/2019/07/23/cs231n_08/" class="title">[CS231n]Lecture08-Deep learning Software</a></p>
+                            <p class="item-date"><time datetime="2019-07-23T05:13:30.000Z" itemprop="datePublished">2019-07-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
+                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture07-Training Neural Networks2</a></p>
                             <p class="item-date"><time datetime="2019-07-22T03:24:40.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
@@ -420,15 +427,6 @@ DTD(표준 호환모드)문서 유형 정의(Document Type Def"
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/growth-hacking/">growth hacking</a></p>
-                            <p class="item-title"><a href="/2019/05/18/growth_hacking_01/" class="title">growth_hacking_01</a></p>
-                            <p class="item-date"><time datetime="2019-05-17T23:38:10.000Z" itemprop="datePublished">2019-05-18</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -438,7 +436,7 @@ DTD(표준 호환모드)문서 유형 정의(Document Type Def"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -448,7 +446,7 @@ DTD(표준 호환모드)문서 유형 정의(Document Type Def"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -551,22 +549,5 @@ DTD(표준 호환모드)문서 유형 정의(Document Type Def"
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>

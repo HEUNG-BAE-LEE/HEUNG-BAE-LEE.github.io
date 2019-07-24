@@ -194,26 +194,23 @@
     - open tag
     - close tag
 - attribute
-- value</code></pre><h3 id="기본-문법"><a href="#기본-문법" class="headerlink" title="기본 문법"></a>기본 문법</h3><p>HTML 요소는 대소문자를 구분하지 않는다!!! 하지만 대게 가독성과 기타 이유 때문에 소문자로 작성한다.<br>HTML은 elements로 구성되어 있으며, 이들은 적절한 방법으로 나타내고 실행하기 위해 각 컨텐츠의 여러 부분들을 감싸고 마크업 한다.</p>
+- value
+</code></pre><h3 id="기본-문법"><a href="#기본-문법" class="headerlink" title="기본 문법"></a>기본 문법</h3><p>HTML 요소는 대소문자를 구분하지 않는다!!! 하지만 대게 가독성과 기타 이유 때문에 소문자로 작성한다.<br>HTML은 elements로 구성되어 있으며, 이들은 적절한 방법으로 나타내고 실행하기 위해 각 컨텐츠의 여러 부분들을 감싸고 마크업 한다.</p>
 <ul>
 <li><p>만약 문장을 그냥 자체로 표현하고 싶다면?? 다음과 같이 </p><p>로 감싸면 된다.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &lt;p&gt;My cat is very grumpy.&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>여기서 </p><p>는 opening tag</p>
 </li>
-<li><p></p>는 closing tag</li>
-<li><p>안에 감싸져 있는 My cat is very grumpy는 Content</p>
-</li>
-<li><p>위의 코드 전체를 Element라고 한다.</p>
-</li>
+<li>&lt;/p&gt;는 closing tag</li>
+<li>안에 감싸져 있는 My cat is very grumpy는 Content</li>
+<li>위의 코드 전체를 Element라고 한다.</li>
 </ul>
 <h4 id="닫는-태그가-없는-HTML-요소"><a href="#닫는-태그가-없는-HTML-요소" class="headerlink" title="닫는 태그가 없는 HTML 요소"></a>닫는 태그가 없는 HTML 요소</h4><ul>
 <li>Empty Element는 contents를 감싸지 않아 비어있다는 의미로써 contents를 감싸지 않기 때문에 닫는 태그를 갖지 않는다.</li>
 </ul>
 <p><a href="https://developer.mozilla.org/en-US/docs/Glossary/Empty_element" target="_blank" rel="noopener">empty element</a></p>
-<h4 id="중첩된-요소-Nesting-elements"><a href="#중첩된-요소-Nesting-elements" class="headerlink" title="중첩된 요소(Nesting elements)"></a>중첩된 요소(Nesting elements)</h4><p>요소 안에 다른 요소가 들어갈 수 있다. 그런 요소는 중첩되어 있다고 표현한다. 예를 들어 “고양이가 매우 사납다”라는 문단을 강조하기 위해서 ‘매우’라는 단어를 강조하는 <strong>요소를 중첩해서 사용할 수 있다.</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &lt;p&gt;My cat is &lt;strong&gt;very&lt;/strong&gt; grumpy.&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
+<h4 id="중첩된-요소-Nesting-elements"><a href="#중첩된-요소-Nesting-elements" class="headerlink" title="중첩된 요소(Nesting elements)"></a>중첩된 요소(Nesting elements)</h4><p>요소 안에 다른 요소가 들어갈 수 있다. 그런 요소는 중첩되어 있다고 표현한다. 예를 들어 “고양이가 매우 사납다”라는 문단을 강조하기 위해서 ‘매우’라는 단어를 강조하는 <strong>요소를 중첩해서 사용할 수 있다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &lt;p&gt;My cat is &lt;strong&gt;very&lt;/strong&gt; grumpy.&lt;/p&gt;</span><br></pre></td></tr></table></figure></strong></p>
 <h4 id="블럭-레벨-요소-vs-인라인-요소-Block-vs-inline-elements"><a href="#블럭-레벨-요소-vs-인라인-요소-Block-vs-inline-elements" class="headerlink" title="블럭 레벨 요소 vs 인라인 요소(Block vs inline elements)"></a>블럭 레벨 요소 vs 인라인 요소(Block vs inline elements)</h4><p>HTML의 두 종류의 Element는 Block level element와 Inline element이다.</p>
 <ul>
 <li><p><code>Block-level elements</code>는 웹페이지 상에 Block을 만드는 요소이다. <code>앞뒤 요소 사이에 새로운 줄(Line)을 만들고 나타난다.</code> 즉 블록 레벨 요소 이전과 이후 요소사이의 줄을 바꾼다. <code>블록 레벨 요소는 일반적으로 페이지의 구조적 요소를 나타낼 때 사용</code>된다. 예를 들어 개발자는 블록 레벨 요소를 사용하여 Paragraph, list, Navigation Menus(네비게이션 메뉴), Footers(꼬리말)등을 표현할 수 있다. <code>블록 레벨 요소는 인라인 요소에 중첩될 수 없다. 그러나 블록 레벨 요소는 다른 블록 레벨 요소에 중첩될수 있다.</code></p>
@@ -222,11 +219,9 @@
 </li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;em&gt;first&lt;/em&gt;&lt;em&gt;second&lt;/em&gt;&lt;em&gt;third&lt;/em&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;forth&lt;/p&gt;&lt;p&gt;fifth&lt;/p&gt;&lt;p&gt;sixth&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
 <p>위의 코드를 실행 시켜 보면 알 수 있듯이 <em>은 인라인 요소여서 서로 같은 줄에 공백이 없이 위치 하지만, <p>는 블록 레벨 요소이어서, 각 요소들은 새로운 줄에 나타나며, 위와 아래에 여백이 있다.(정확히는 여백은 브라우저가 문단에 적용하는 기본 CSS styling 때문에 적용된다.)</p>
 <h3 id="빈-요소-Empty-elements"><a href="#빈-요소-Empty-elements" class="headerlink" title="빈 요소(Empty elements)"></a>빈 요소(Empty elements)</h3><p>모든 요소가 위에 언급된 Open tag, contents, closed tag의 패턴을 따르는 것은 아니다. 주로 문서에 무언가를 첨부하기 위해 단일 태그(Single tag)를 사용하는 요소도 있다. 예들들어 <img>요소는 해당 위치에 이미지를 삽입하기 위한 요소이다.(빈 요소는 가끔 Void 요소로 불리기도 한다.)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=<span class="string">"https://raw.githubusercontent.com/mdn/beginner-html-site/gh-pages/images/firefox-icon.png"</span>&gt;</span><br></pre></td></tr></table></figure>
-
 <h3 id="속성-attributes"><a href="#속성-attributes" class="headerlink" title="속성(attributes)"></a>속성(attributes)</h3><p>element는 Attribute를 가질 수 있다. Attribute는 element에 실제론 나타내고 싶지 않지만 추가적인 내용을 담고 싶을 때 사용한다. 아래의 코드는 나중에 스타일에 관련된 내용이나 기타 내용을 위해 해당 목표를 구분할 수 있는 class attribute를 부여 했다.</p>
 <ul>
 <li>Attribute를 사용할 때 지켜야 할 점<ul>
@@ -243,7 +238,7 @@
 
 
 
-    <a data-url="https://heung-bae-lee.github.io/2019/01/15/Foront_end2/" data-id="cjyfa98740004tfbajctv5rhg" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://heung-bae-lee.github.io/2019/01/15/Foront_end2/" data-id="cjygumluz00043sbaxnkb6fak" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -443,7 +438,16 @@ Page title(웹 페이지의 제목으로 브라우저 탭에 표시된다.)
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
-                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture07-Training Neural Networks</a></p>
+                            <p class="item-title"><a href="/2019/07/23/cs231n_08/" class="title">[CS231n]Lecture08-Deep learning Software</a></p>
+                            <p class="item-date"><time datetime="2019-07-23T05:13:30.000Z" itemprop="datePublished">2019-07-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
+                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture07-Training Neural Networks2</a></p>
                             <p class="item-date"><time datetime="2019-07-22T03:24:40.000Z" itemprop="datePublished">2019-07-22</time></p>
                         </div>
                     </li>
@@ -475,15 +479,6 @@ Page title(웹 페이지의 제목으로 브라우저 탭에 표시된다.)
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/growth-hacking/">growth hacking</a></p>
-                            <p class="item-title"><a href="/2019/05/18/growth_hacking_01/" class="title">growth_hacking_01</a></p>
-                            <p class="item-date"><time datetime="2019-05-17T23:38:10.000Z" itemprop="datePublished">2019-05-18</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -493,7 +488,7 @@ Page title(웹 페이지의 제목으로 브라우저 탭에 표시된다.)
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -503,7 +498,7 @@ Page title(웹 페이지의 제목으로 브라우저 탭에 표시된다.)
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -606,22 +601,5 @@ Page title(웹 페이지의 제목으로 브라우저 탭에 표시된다.)
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
