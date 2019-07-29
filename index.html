@@ -174,7 +174,8 @@
 최신 CNN Architectures에 대해 알아보는 시간을 갖겠다. 사람들이 가장 많이 사용하는 구조들을 연대순으로 나열해보자면 AlexNet -&gt; VGGNet -&gt; GoogleNet -&gt; ResNet이 있다.
 반면 엄청 잘 사용하지는 않지만 역사적인 관점에서 아주 흥미로운 모델들 그리고 아주 최신의 모델들도 다룰 것이다.
 
-[그림 00
+
+LeNet
         </p>
     </div>
 </article>
@@ -727,5 +728,22 @@ h1 요소는 문서에서 단 한번만 사용하며 HTML5에서는 섹션 콘�
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
