@@ -12,18 +12,18 @@
     
         <meta name="keywords" content>
     
-    <meta name="description" content="최신 CNN Architectures에 대해 알아보는 시간을 갖겠다. 사람들이 가장 많이 사용하는 구조들을 연대순으로 나열해보자면 AlexNet -&amp;gt; VGGNet -&amp;gt; GoogleNet -&amp;gt; ResNet이 있다. 반면 엄청 잘 사용하지는 않지만 역사적인 관점에서 아주 흥미로운 모델들 그리고 아주 최신의 모델들도 다룰 것이다.   LeNet">
+    <meta name="description" content="LeNet 산업에 아주 성공적으로 적용된 최초의 ConvNet이다.   이미지를 입력으로 받아 Stride = 1인 5x5필터를 거치고 몇 개의 Conv Layer와 Pooling Layer를 거친다. 그리고 마지막 출력 노드 전에 Fully Connected Layer가 붙는다.   엄청 간단한 모델이지만 숫자 인식에서 엄청난 성공을 거두었다.   Al">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[CS231n]Lecture09-CNN_Architectures">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/07/28/cs231n_09/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="최신 CNN Architectures에 대해 알아보는 시간을 갖겠다. 사람들이 가장 많이 사용하는 구조들을 연대순으로 나열해보자면 AlexNet -&amp;gt; VGGNet -&amp;gt; GoogleNet -&amp;gt; ResNet이 있다. 반면 엄청 잘 사용하지는 않지만 역사적인 관점에서 아주 흥미로운 모델들 그리고 아주 최신의 모델들도 다룰 것이다.   LeNet">
+<meta property="og:description" content="LeNet 산업에 아주 성공적으로 적용된 최초의 ConvNet이다.   이미지를 입력으로 받아 Stride = 1인 5x5필터를 거치고 몇 개의 Conv Layer와 Pooling Layer를 거친다. 그리고 마지막 출력 노드 전에 Fully Connected Layer가 붙는다.   엄청 간단한 모델이지만 숫자 인식에서 엄청난 성공을 거두었다.   Al">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/cs231n_09_00.png">
-<meta property="og:updated_time" content="2019-07-29T07:11:35.579Z">
+<meta property="og:updated_time" content="2019-07-29T07:22:51.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[CS231n]Lecture09-CNN_Architectures">
-<meta name="twitter:description" content="최신 CNN Architectures에 대해 알아보는 시간을 갖겠다. 사람들이 가장 많이 사용하는 구조들을 연대순으로 나열해보자면 AlexNet -&amp;gt; VGGNet -&amp;gt; GoogleNet -&amp;gt; ResNet이 있다. 반면 엄청 잘 사용하지는 않지만 역사적인 관점에서 아주 흥미로운 모델들 그리고 아주 최신의 모델들도 다룰 것이다.   LeNet">
+<meta name="twitter:description" content="LeNet 산업에 아주 성공적으로 적용된 최초의 ConvNet이다.   이미지를 입력으로 받아 Stride = 1인 5x5필터를 거치고 몇 개의 Conv Layer와 Pooling Layer를 거친다. 그리고 마지막 출력 노드 전에 Fully Connected Layer가 붙는다.   엄청 간단한 모델이지만 숫자 인식에서 엄청난 성공을 거두었다.   Al">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/cs231n_09_00.png">
     
 
@@ -78,7 +78,7 @@
                                     <a class="main-nav-list-link" href="/">Home</a>
                                 </li>
                             
-                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
                                     
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/about/index.html">About</a>
@@ -171,11 +171,7 @@
         
         
         <div class="article-entry" itemprop="articleBody">
-            <ul>
-<li>최신 CNN Architectures에 대해 알아보는 시간을 갖겠다. 사람들이 가장 많이 사용하는 구조들을 연대순으로 나열해보자면 AlexNet -&gt; VGGNet -&gt; GoogleNet -&gt; ResNet이 있다.</li>
-<li>반면 엄청 잘 사용하지는 않지만 역사적인 관점에서 아주 흥미로운 모델들 그리고 아주 최신의 모델들도 다룰 것이다.</li>
-</ul>
-<p><img src="/image/cs231n_09_00.png" alt="그림 00"></p>
+            <p><img src="/image/cs231n_09_00.png" alt="그림 00"></p>
 <h3 id="LeNet"><a href="#LeNet" class="headerlink" title="LeNet"></a>LeNet</h3><ul>
 <li>산업에 아주 성공적으로 적용된 최초의 ConvNet이다.</li>
 </ul>
@@ -185,7 +181,7 @@
 <ul>
 <li>엄청 간단한 모델이지만 숫자 인식에서 엄청난 성공을 거두었다.</li>
 </ul>
-<p>[그림 01]</p>
+<p><img src="/image/cs231n_09_01.png" alt="그림 01"></p>
 <h3 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h3><ul>
 <li>2012년에 등장한 최초의 Large scale CNN이며 Image Classification Benchmark의 우승 모델이다. ConvNet 연구의 부흥을 일으킨 장본인이다. 수년 전까지 대부분의 CNN 아키텍쳐의 베이스 모델로 사용되어 왔다. AlexNet은 다양한 Task의 transfer learning에 많이 사용되었다.</li>
 </ul>
@@ -209,7 +205,7 @@
 <li>2013년 우승 모델이며 AlexNet의 하이퍼 파라미터를 개선한 모델이다.</li>
 <li>AlexNet과 같은 Layer 수이고, 기존의 구조도 같다. <code>다만, stride size, 필터 수 같은 하이퍼 파라미터를 조절해서 AlexNet의 Error rate를 좀 더 개선시켰다.</code></li>
 </ul>
-<p>[그림 2]</p>
+<p><img src="/image/cs231n_09_02.png" alt="그림 02"></p>
 <h3 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h3><ul>
 <li><p>훨씬 더 깊어졌고 더 작은 필터를 사용한다. 더 깊게 쌓이므로써 Non-Linearity를 더 추가 할 수 있고 파라미터 수도 더 적어지게 되었다.</p>
 <ul>
@@ -235,7 +231,7 @@
 <h4 id="질문-Localization은-무엇인가"><a href="#질문-Localization은-무엇인가" class="headerlink" title="질문) Localization은 무엇인가?"></a>질문) Localization은 무엇인가?</h4><ul>
 <li>task 중에서 예를 들면 “이미지에 고양이가 있는가?”를 분류하는 것 뿐만 아니라 정확히 고양이가 어디에 있는지 네모박스를 그리는 것이다. Detection은 이미지 내에 다수의 객체가 존재할 수 있다. 그에 반해 localization은 이미지에 객체가 하나만 있다고 가정하고 이미지를 분류하고 추가적으로 네모박스도 쳐야한다.</li>
 </ul>
-<p>[그림 3]</p>
+<p><img src="/image/cs231n_09_03.png" alt="그림 03"></p>
 <h4 id="질문-네트워크가-깊어질수록-Layer의-필터-갯수를-늘려야-하는지-Channel-Depth를-늘려야-하는지"><a href="#질문-네트워크가-깊어질수록-Layer의-필터-갯수를-늘려야-하는지-Channel-Depth를-늘려야-하는지" class="headerlink" title="질문) 네트워크가 깊어질수록 Layer의 필터 갯수를 늘려야 하는지?(Channel Depth를 늘려야 하는지)"></a>질문) 네트워크가 깊어질수록 Layer의 필터 갯수를 늘려야 하는지?(Channel Depth를 늘려야 하는지)</h4><ul>
 <li>디자인하기 나름이고 반드시 그럴 필요는 없다. <code>하지만, 실제로 사람들이 Depth를 많이 늘리는 경우가 많다. Depth를 늘리는 이유 중 하나는 계산량을 일정하게 유지시키기 위해서이다. 왜냐하면 보통 네트워크가 깊어질수록 각 Layer의 입력을 Down sampling하게 된다. 즉, 네트워크를 통해 나가면서 점점 정보를 잃어나가는 현상이 발생될 수 있다는 것이다. 그러므로 Spatial area가 작아질수록 필터의 depth를 조금씩 늘려주게 된다. Width나 Height가 작아지기 때문에 Depth를 늘려도 부담이 없다.</code></li>
 </ul>
@@ -243,7 +239,7 @@
 <li>2014년 Classification Challenge에서 우승한 모델이다. 22개의 Layer를 가진 깊은 네트워크이다. <code>가장 중요한 것은 효율적인 계산에 관한 그들의 특별한 관점이 있다는 것과 높은 계산량을 아주 효율적으로 수행하도록 네트워크를 디자인했다는 점이다.</code></li>
 <li>“a good local network typology”를 디자인 하고 싶었다. 그리고 “network within a network”라는 개념으로 local topology를 구현했고 이를 쌓아올렸다. Inception module을 여러개 쌓아서 만든다. 또한 <code>파라미터를 줄이기 위해 FC-Layer를 사용하지 않는다.</code> 전체 파라미터 수가 60M인 AlexNet에 비해 GoogLeNet은 전체 파라미터 수가 5M 정도이다.</li>
 </ul>
-<p>[그림 4]</p>
+<p><img src="/image/cs231n_09_04.png" alt="그림 04"></p>
 <ul>
 <li><code>Inception Module 내부에는 동일한 입력을 받는 서로 다른 다양한 필터들이 병렬로 존재한다.</code> 이전 Layer의 입력을 받아서 다양한 Conv 연산을 수행 한 후 각 Layer에서 각각의 출력 값들이 나온다. 그 출력들을 모두 Depth 방향으로 합친다.(concatenate) 그렇게 합치면 하나의 tensor로 출력이 결정되고 이 하나의 출력을 다음 레이어로 전달하는 것이다.</li>
 </ul>
@@ -253,11 +249,11 @@
 <li><p>위와 같은 문제를 해결하기 위한 key insight <code>bottleneck layer를 이용하는 것이다. Conv 연산을 수행하기에 앞서 입력을 더 낮은 차원으로 보내는 것이다.(depth를 더 낮은 차원으로 projection하는 것) input feature map들 간의 선형 결합(linear combination)이라고 할 수 있다.</code></p>
 </li>
 </ul>
-<p>[그림5]<br><code>주요 아이디어는 바로 입력의 depth를 줄이는 것이다.</code>각 Layer의 계산량은 1x1 conv를 통해 줄어든다.</p>
+<p><img src="/image/cs231n_09_05.png" alt="그림 05"><br><code>주요 아이디어는 바로 입력의 depth를 줄이는 것이다.</code>각 Layer의 계산량은 1x1 conv를 통해 줄어든다.</p>
 <h4 id="질문-1x1-Conv를-수행하면-일부-정보손실이-발생하지-않는다"><a href="#질문-1x1-Conv를-수행하면-일부-정보손실이-발생하지-않는다" class="headerlink" title="질문) 1x1 Conv를 수행하면 일부 정보손실이 발생하지 않는다?"></a>질문) 1x1 Conv를 수행하면 일부 정보손실이 발생하지 않는다?</h4><ul>
 <li>정보 손실이 발생할 순 있지만 동시에 redundancy가 있는 imput features를 선형결합 한다고 볼 수 있다. 1x1 conv로 선형결합을 하고 non-Linearity(ReLU같은)를 추가하면 네트워크가 더 깊어지는 효과도 있다. 일반적으로 1x1 con를 추가하면 여러모로 도움이 되고 더 잘 동작한다.</li>
 </ul>
-<p>[그림 6]<br>위의 그림에서 파란색 네모 박스는 추가시킨 보조 분류기(auxiliary classifier)이다. 그 구조는 Average pooling과 1x1 conv가 있고 FC-layer도 몇개 붙는 우리가 알고있는 작은 네트워크들이다. SoftMax로 1000개의 ImageNet class를 구분한다. 또한 <code>네트워크가 깊기 때문애 이곳에서도 loss를 계산하고 추가적인 gradient를 얻을 수 있고 따라서 중간 Layer의 학습을 도울 수 있다.</code></p>
+<p><img src="/image/cs231n_09_06.png" alt="그림 06"><br>위의 그림에서 파란색 네모 박스는 추가시킨 보조 분류기(auxiliary classifier)이다. 그 구조는 Average pooling과 1x1 conv가 있고 FC-layer도 몇개 붙는 우리가 알고있는 작은 네트워크들이다. SoftMax로 1000개의 ImageNet class를 구분한다. 또한 <code>네트워크가 깊기 때문애 이곳에서도 loss를 계산하고 추가적인 gradient를 얻을 수 있고 따라서 중간 Layer의 학습을 도울 수 있다.</code></p>
 <h4 id="질문-보조분류기에서-나온-결과를-최종-분류-결과에-이용할-수-있는가"><a href="#질문-보조분류기에서-나온-결과를-최종-분류-결과에-이용할-수-있는가" class="headerlink" title="질문) 보조분류기에서 나온 결과를 최종 분류 결과에 이용할 수 있는가??"></a>질문) 보조분류기에서 나온 결과를 최종 분류 결과에 이용할 수 있는가??</h4><ul>
 <li>GoogLeNet 학습 시, 각 보조분류기의 Loss를 모두 합친 평균을 계산한다. 아마도 도움이 될 것이다.</li>
 </ul>
@@ -267,7 +263,7 @@
 <h4 id="질문-각-Layer가-가중치를-공유하는가-아닌가"><a href="#질문-각-Layer가-가중치를-공유하는가-아닌가" class="headerlink" title="질문) 각 Layer가 가중치를 공유하는가 아닌가??"></a>질문) 각 Layer가 가중치를 공유하는가 아닌가??</h4><ul>
 <li>모든 Layer를 가중치를 공유하지 않는다.</li>
 </ul>
-<h3 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h3><p>[그림 8]</p>
+<h3 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h3><p><img src="/image/cs231n_09_08.png" alt="그림 07"></p>
 <ul>
 <li>2015년도 우승 모델이며, 혁명적으로 네트워크의 깊이가 깊어진 모델이다.(152개의 Layer)</li>
 <li><code>residual connection</code> 이라는 방법을 사용한다. residual block들을 쌓아올리는 구조이다.</li>
@@ -278,7 +274,7 @@
 <h4 id="질문-Layer의-출력과-Skip-Connection의-출력이-같은-차원인가"><a href="#질문-Layer의-출력과-Skip-Connection의-출력이-같은-차원인가" class="headerlink" title="질문) Layer의 출력과 Skip Connection의 출력이 같은 차원인가?"></a>질문) Layer의 출력과 Skip Connection의 출력이 같은 차원인가?</h4><ul>
 <li>그렇다. 두 경로의 출력 값 모두 같은 차원이다. 일반적으로는 같은 차원이 맞지만, 그렇지 않은 경우에는 Depth-wise padding으로 차원을 맞춰준다.</li>
 </ul>
-<p>[그림 7]</p>
+<p><img src="/image/cs231n_09_07.png" alt="그림 08"></p>
 <h4 id="질문-Layer의-출력인-Residual의-의미는-무엇인가"><a href="#질문-Layer의-출력인-Residual의-의미는-무엇인가" class="headerlink" title="질문) Layer의 출력인 Residual의 의미는 무엇인가?"></a>질문) Layer의 출력인 Residual의 의미는 무엇인가?</h4><ul>
 <li>아래 그림을 보면, 전체 출력 값은 F(x)+X 이고, F(x)는 Layer의 출력 값이다. X는 그저 입력값이다. 왼쪽의 평범한 네트워크는 H(x)를 학습시키고 있지만 아주 깊은 네트워크에서는 H(x)를 학습시키는 것은 너무 어렵다. 그래서 <code>ResNet의 아이디어는 H(x)=F(x)+x이므로 F(x)를 학습시켜보면 어떨까라는 것이다. 즉, H(x)를 직접 배우는 대신에 X에 얼마의 값을 더하고 빼야할까를 배우는 것이 쉬울것이라고 생각한 것이다. 이것은 단지 가설일 뿐이지만 가설이 참이라면 모델의 일부가 학습된 shallow layers이고 나머지 layer들은 identity로 구성되어진 상황에서는 잘 동작할 것이다. 이는 대부분의 layer가 잘 동작하려면 layer의 출력이 identity에 가까워야 할지 모른다는 것을 암시한다. 이 때문에 Identity(Input) +  변화량(delta)만 학습시키면 된다.</code> 예를들어, Output = Input(Identity)이어야만 하는 상황이면 F(x) = 0 이 되면 그만이다. 이는 상대적으로 학습시키기 쉽다고 볼 수 있다.</li>
 </ul>
@@ -289,7 +285,7 @@
 
 
 
-    <a data-url="https://heung-bae-lee.github.io/2019/07/28/cs231n_09/" data-id="cjynznm040000jfbavjiibknk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://heung-bae-lee.github.io/2019/07/28/cs231n_09/" data-id="cjyo2fc9w000820ba8dfxqqyr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -368,12 +364,18 @@
         "dateModified": "2019-07-29",
         "url": "https://heung-bae-lee.github.io/2019/07/28/cs231n_09/",
         "description": "
-최신 CNN Architectures에 대해 알아보는 시간을 갖겠다. 사람들이 가장 많이 사용하는 구조들을 연대순으로 나열해보자면 AlexNet -&gt; VGGNet -&gt; GoogleNet -&gt; ResNet이 있다.
-반면 엄청 잘 사용하지는 않지만 역사적인 관점에서 아주 흥미로운 모델들 그리고 아주 최신의 모델들도 다룰 것이다.
+LeNet
+산업에 아주 성공적으로 적용된 최초의 ConvNet이다.
 
 
-LeNet"
-        "wordCount": 1672
+이미지를 입력으로 받아 Stride = 1인 5x5필터를 거치고 몇 개의 Conv Layer와 Pooling Layer를 거친다. 그리고 마지막 출력 노드 전에 Fully Connected Layer가 붙는다.
+
+
+엄청 간단한 모델이지만 숫자 인식에서 엄청난 성공을 거두었다.
+
+
+Al"
+        "wordCount": 1653
     }
 </script>
 
@@ -453,6 +455,16 @@ LeNet"
         
 <nav id="article-nav">
     
+        <a href="/2019/07/29/post/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            [수리통계학] 나혼자 정리하는 통계생의 수리통계학 00
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/2019/07/23/cs231n_08/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
@@ -474,6 +486,24 @@ LeNet"
         <h3 class="widget-title">recents</h3>
         <div class="widget">
             <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/07/29/post-1/" class="title">post</a></p>
+                            <p class="item-date"><time datetime="2019-07-29T07:22:55.000Z" itemprop="datePublished">2019-07-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></p>
+                            <p class="item-title"><a href="/2019/07/29/post/" class="title">[수리통계학] 나혼자 정리하는 통계생의 수리통계학 00</a></p>
+                            <p class="item-date"><time datetime="2019-07-29T07:12:38.000Z" itemprop="datePublished">2019-07-29</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -502,24 +532,6 @@ LeNet"
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
-                            <p class="item-title"><a href="/2019/07/19/cs231n_06/" class="title">[CS231n]Lecture06-Training Neural Networks</a></p>
-                            <p class="item-date"><time datetime="2019-07-19T14:15:00.000Z" itemprop="datePublished">2019-07-19</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
-                            <p class="item-title"><a href="/2019/07/19/cs231n_05/" class="title">[CS231n]Lecture05-Convolution Neural Network</a></p>
-                            <p class="item-date"><time datetime="2019-07-18T18:00:00.000Z" itemprop="datePublished">2019-07-19</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -529,7 +541,7 @@ LeNet"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -539,7 +551,7 @@ LeNet"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -642,5 +654,22 @@ LeNet"
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
