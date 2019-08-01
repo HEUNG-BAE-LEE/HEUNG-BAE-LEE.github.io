@@ -20,7 +20,7 @@
 <meta property="og:description" content="LeNet 산업에 아주 성공적으로 적용된 최초의 ConvNet이다.   이미지를 입력으로 받아 Stride = 1인 5x5필터를 거치고 몇 개의 Conv Layer와 Pooling Layer를 거친다. 그리고 마지막 출력 노드 전에 Fully Connected Layer가 붙는다.   엄청 간단한 모델이지만 숫자 인식에서 엄청난 성공을 거두었다.   Al">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/cs231n_09_00.png">
-<meta property="og:updated_time" content="2019-07-30T14:01:19.808Z">
+<meta property="og:updated_time" content="2019-07-31T13:40:52.676Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[CS231n]Lecture09-CNN_Architectures">
 <meta name="twitter:description" content="LeNet 산업에 아주 성공적으로 적용된 최초의 ConvNet이다.   이미지를 입력으로 받아 Stride = 1인 5x5필터를 거치고 몇 개의 Conv Layer와 Pooling Layer를 거친다. 그리고 마지막 출력 노드 전에 Fully Connected Layer가 붙는다.   엄청 간단한 모델이지만 숫자 인식에서 엄청난 성공을 거두었다.   Al">
@@ -78,7 +78,7 @@
                                     <a class="main-nav-list-link" href="/">Home</a>
                                 </li>
                             
-                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
                                     
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/about/index.html">About</a>
@@ -267,7 +267,10 @@
 <h3 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h3><p><img src="/image/cs231n_09_08.png" alt="그림 07"></p>
 <ul>
 <li>2015년도 우승 모델이며, 혁명적으로 네트워크의 깊이가 깊어진 모델이다.(152개의 Layer)</li>
-<li><code>residual connection</code> 이라는 방법을 사용한다. residual block들을 쌓아올리는 구조이다.</li>
+<li><code>residual connection</code> 이라는 방법을 사용한다. residual block들을 쌓아올리는 구조이다.<ul>
+<li>short connection과 residual block이 도입된 모델</li>
+</ul>
+</li>
 <li><code>모델 Depth가 50이상일 때 Bottleneck Layers를 도입</code></li>
 <li>‘CNN을 깊고 더 깊게 쌓게 되면 어떤 일이 발생할까?’라는 의문에서 부터 시작된다. 예를 들어, VGG에 conv pool Layer를 깊게만 쌓는다고 과연 성ㄴ능이 더 좋아지는 것이 맞는지를 보자면 아니라는 것이다. 다음 그림에서 56-Layer와 20-Layer를 비교해서 설명하고 있다. 우리는 56-Layer는 상대적으로 더 많은 파라미터를 가지고 있기에 20-Layer보다 좀더 overfitting이 일어날 확률이 높다고 생각할 수 있을 것이다. 허나 우리 예상처럼 test error는 56-layer가 더 낮지만 training error 또한 더 낮기에 <code>overfitting이 원인이 아니라는 것을 확실히 알 수 있다.</code></li>
 <li><code>ResNet 저자들아 내린 가설은 더 깊은 모델 학습 시 Optimization에 문제가 생긴다는 것</code>이다. 그렇다면 <code>모델이 더 깊다면 적어도 더 얕은 모델만큼은 성능이 나와야 하지 않는가</code>라는 생각으로 인해 더 얕은 모델의 가중치를 깊은 모델의 일부 Layer에 복사한다. 그리고 나머지 Layer는 identity mapping을 하여 Deeper Model의 학습이 제대로 안되더라도 적어도 shallower Model 만큼의 성능을 보장하게끔 디자인 한다. 이런 아이디어를 모델에 적용시키기 위해 <code>가중치가 없으면 입력을 identity mapping을 시켜 출력으로 내보내는 Skip Connection</code>을 도입하게 된다. <code>실제 Layer는 변화량(delta)만 학습하면 된다. 입력 X에 대한 잔차(residual)이라고 할 수 있다.</code></li>
@@ -277,7 +280,10 @@
 </ul>
 <p><img src="/image/cs231n_09_07.png" alt="그림 08"></p>
 <h4 id="질문-Layer의-출력인-Residual의-의미는-무엇인가"><a href="#질문-Layer의-출력인-Residual의-의미는-무엇인가" class="headerlink" title="질문) Layer의 출력인 Residual의 의미는 무엇인가?"></a>질문) Layer의 출력인 Residual의 의미는 무엇인가?</h4><ul>
-<li>아래 그림을 보면, 전체 출력 값은 F(x)+X 이고, F(x)는 Layer의 출력 값이다. X는 그저 입력값이다. 왼쪽의 평범한 네트워크는 H(x)를 학습시키고 있지만 아주 깊은 네트워크에서는 H(x)를 학습시키는 것은 너무 어렵다. 그래서 <code>ResNet의 아이디어는 H(x)=F(x)+x이므로 F(x)를 학습시켜보면 어떨까라는 것이다. 즉, H(x)를 직접 배우는 대신에 X에 얼마의 값을 더하고 빼야할까를 배우는 것이 쉬울것이라고 생각한 것이다. 이것은 단지 가설일 뿐이지만 가설이 참이라면 모델의 일부가 학습된 shallow layers이고 나머지 layer들은 identity로 구성되어진 상황에서는 잘 동작할 것이다. 이는 대부분의 layer가 잘 동작하려면 layer의 출력이 identity에 가까워야 할지 모른다는 것을 암시한다. 이 때문에 Identity(Input) +  변화량(delta)만 학습시키면 된다.</code> 예를들어, Output = Input(Identity)이어야만 하는 상황이면 F(x) = 0 이 되면 그만이다. 이는 상대적으로 학습시키기 쉽다고 볼 수 있다.</li>
+<li><p>아래 그림을 보면, 전체 출력 값은 F(x)+X 이고, F(x)는 Layer의 출력 값이다. X는 그저 입력값이다. 왼쪽의 평범한 네트워크는 H(x)를 학습시키고 있지만 아주 깊은 네트워크에서는 H(x)를 학습시키는 것은 너무 어렵다. 그래서 <code>ResNet의 아이디어는 H(x)=F(x)+x이므로 F(x)를 학습시켜보면 어떨까라는 것이다. 즉, H(x)를 직접 배우는 대신에 X에 얼마의 값을 더하고 빼야할까를 배우는 것이 쉬울것이라고 생각한 것이다. 이것은 단지 가설일 뿐이지만 가설이 참이라면 모델의 일부가 학습된 shallow layers이고 나머지 layer들은 identity로 구성되어진 상황에서는 잘 동작할 것이다. 이는 대부분의 layer가 잘 동작하려면 layer의 출력이 identity에 가까워야 할지 모른다는 것을 암시한다. 이 때문에 Identity(Input) +  변화량(delta)만 학습시키면 된다.</code> 예를들어, Output = Input(Identity)이어야만 하는 상황이면 F(x) = 0 이 되면 그만이다. 이는 상대적으로 학습시키기 쉽다고 볼 수 있다.</p>
+</li>
+<li><p><code>ResNet에서는 Layer의 출력은 입력 + residual block의 출력이다.</code> 우선 residual block의 가중치가 0이면 이 block은 identity mapping을 한다. <code>이러한 속성으로 모델이 필요없는 Layer를 사용하지 않도록 학습하는데 아주 유용하다.</code> ResNet의 관점에서 L2 Regularization을 해석해 볼 수도 있다. Layer에 L2 Regularization을 추가시키면 L2는 모든 파라미터가 0이 되도록 노력할 것이다. 사실 CNN Architectures의 관점에서 보면 모든 파라미터가 0이면 이상하다. 하지만 ResNet의 관점에서는 파라미터를 0으로 만드려는 속성은 모델이 불필요한 Layer를 사용하지 않도록 해줄 수 있다.</p>
+</li>
 </ul>
 
         </div>
@@ -286,7 +292,7 @@
 
 
 
-    <a data-url="https://heung-bae-lee.github.io/2019/07/28/cs231n_09/" data-id="cjyo2fc9w000820ba8dfxqqyr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://heung-bae-lee.github.io/2019/07/28/cs231n_09/" data-id="cjysrwvdn000gejbaon3m80gt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -362,7 +368,7 @@
         "genre": "CS231n",
         "datePublished": "2019-07-28",
         "dateCreated": "2019-07-28",
-        "dateModified": "2019-07-30",
+        "dateModified": "2019-07-31",
         "url": "https://heung-bae-lee.github.io/2019/07/28/cs231n_09/",
         "description": "
 LeNet
@@ -376,7 +382,7 @@ LeNet
 
 
 Al"
-        "wordCount": 1727
+        "wordCount": 1802
     }
 </script>
 
@@ -456,7 +462,7 @@ Al"
         
 <nav id="article-nav">
     
-        <a href="/2019/07/29/post/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2019/07/29/Statistics_00/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">newer</strong>
         <p class="article-nav-title">
         
@@ -491,6 +497,15 @@ Al"
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Kaggle/">Kaggle</a></p>
+                            <p class="item-title"><a href="/2019/08/01/kaggle_00/" class="title">colab &amp; Kaggle 연동 및 기초 사용법</a></p>
+                            <p class="item-date"><time datetime="2019-08-01T07:26:46.000Z" itemprop="datePublished">2019-08-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/07/29/cs231n_10/" class="title">[CS231n]Lecture10-Recurrent Neural Networks</a></p>
                             <p class="item-date"><time datetime="2019-07-29T07:22:55.000Z" itemprop="datePublished">2019-07-29</time></p>
@@ -501,7 +516,7 @@ Al"
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></p>
-                            <p class="item-title"><a href="/2019/07/29/post/" class="title">[수리통계학] 나혼자 정리하는 통계생의 수리통계학 00</a></p>
+                            <p class="item-title"><a href="/2019/07/29/Statistics_00/" class="title">[수리통계학] 나혼자 정리하는 통계생의 수리통계학 00</a></p>
                             <p class="item-date"><time datetime="2019-07-29T07:12:38.000Z" itemprop="datePublished">2019-07-29</time></p>
                         </div>
                     </li>
@@ -524,15 +539,6 @@ Al"
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/CS231n/">CS231n</a></p>
-                            <p class="item-title"><a href="/2019/07/22/cs231n_07/" class="title">[CS231n]Lecture07-Training Neural Networks2</a></p>
-                            <p class="item-date"><time datetime="2019-07-22T03:24:40.000Z" itemprop="datePublished">2019-07-22</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -542,7 +548,7 @@ Al"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -552,7 +558,7 @@ Al"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

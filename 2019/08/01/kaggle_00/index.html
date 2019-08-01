@@ -6,23 +6,23 @@
     
 
     
-    <title>크롤링과 스크래핑 및 unix명령어 기초지식(1) | DataLatte&#39;s IT Blog</title>
+    <title>colab &amp; Kaggle 연동 및 기초 사용법 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
-    <meta name="description" content="크롤링과 스크래핑 웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저">
+    <meta name="description" content="Kaggle Korea에서 진행중인 대회에서 Kaggle Kernel을 사용하다 보니 커널이 자꾸 죽는 이유는 도대체 무엇인지… competition에 늦게 참여한 관계로 더 시간이 촉박하기만 한데…. 그래서 google colab으로 바꾸려고 생각하였다. 캐글은 예측모델 및 분석 대회를 하는 플랫폼이다. 개인 및 단체에서 해결하고 싶은 과제와 데이터를 등">
 <meta property="og:type" content="article">
-<meta property="og:title" content="크롤링과 스크래핑 및 unix명령어 기초지식(1)">
-<meta property="og:url" content="https://heung-bae-lee.github.io/2018/12/23/unix/index.html">
+<meta property="og:title" content="colab &amp; Kaggle 연동 및 기초 사용법">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/08/01/kaggle_00/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="크롤링과 스크래핑 웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저">
+<meta property="og:description" content="Kaggle Korea에서 진행중인 대회에서 Kaggle Kernel을 사용하다 보니 커널이 자꾸 죽는 이유는 도대체 무엇인지… competition에 늦게 참여한 관계로 더 시간이 촉박하기만 한데…. 그래서 google colab으로 바꾸려고 생각하였다. 캐글은 예측모델 및 분석 대회를 하는 플랫폼이다. 개인 및 단체에서 해결하고 싶은 과제와 데이터를 등">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-16T12:08:35.899Z">
+<meta property="og:updated_time" content="2019-08-01T14:27:14.122Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="크롤링과 스크래핑 및 unix명령어 기초지식(1)">
-<meta name="twitter:description" content="크롤링과 스크래핑 웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저">
+<meta name="twitter:title" content="colab &amp; Kaggle 연동 및 기초 사용법">
+<meta name="twitter:description" content="Kaggle Korea에서 진행중인 대회에서 Kaggle Kernel을 사용하다 보니 커널이 자꾸 죽는 이유는 도대체 무엇인지… competition에 늦게 참여한 관계로 더 시간이 촉박하기만 한데…. 그래서 google colab으로 바꾸려고 생각하였다. 캐글은 예측모델 및 분석 대회를 하는 플랫폼이다. 개인 및 단체에서 해결하고 싶은 과제와 데이터를 등">
     
 
     
@@ -135,19 +135,19 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/crawling/">crawling</a>
+    <a class="page-title-link" href="/categories/Kaggle/">Kaggle</a>
     </h1>
 </div>
 
                         <div class="main-body-content">
-                            <article id="post-unix" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-kaggle_00" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        크롤링과 스크래핑 및 unix명령어 기초지식(1)
+        colab &amp; Kaggle 연동 및 기초 사용법
         </h1>
     
 
@@ -157,8 +157,8 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/12/23/unix/" class="article-date">
-            <time datetime="2018-12-23T09:34:53.000Z" itemprop="datePublished">2018-12-23</time>
+        <a href="/2019/08/01/kaggle_00/" class="article-date">
+            <time datetime="2019-08-01T07:26:46.000Z" itemprop="datePublished">2019-08-01</time>
         </a>
     </div>
 
@@ -169,17 +169,30 @@
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="크롤링과-스크래핑"><a href="#크롤링과-스크래핑" class="headerlink" title="크롤링과 스크래핑"></a>크롤링과 스크래핑</h2><ul>
-<li><p>웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다.<br> 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유<br> 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저장함으로 가능한 일이다. 또한 RSS 리더는 사람 대신 크롤러가<br> RSS 피드를 확인하고, 변경 사항이 있는 경우에 업데이트된 항목이 있다고 알려주기도 한다. 가장 공감할 수 있는 부분은 바로 트위터,<br> 페이스북 등의 SNS에서 웹 페이지 URL을 공유하면 페이지의 제목과 이미지를 미리 보기로 출력해 주는데, 이것도 크롤러가 해당 페이<br> 지를 방문해서 관련된 정보를 추출하기 때문에 가능한 것이다.</p>
-<h3 id="그렇다면-크롤러와-스크래핑-두-용어의-차이점은-무엇인가"><a href="#그렇다면-크롤러와-스크래핑-두-용어의-차이점은-무엇인가" class="headerlink" title="그렇다면 크롤러와 스크래핑 두 용어의 차이점은 무엇인가???"></a>그렇다면 크롤러와 스크래핑 두 용어의 차이점은 무엇인가???</h3></li>
-<li><p>크롤링<br>  웹 페이지의 하이퍼링크를 순회하면서 웹 페이지를 다운로드 하는 작업</p>
-</li>
-<li><p>스크래핑<br>  다운로드한 웹 페이지에서 필요한 정보를 추출하는 작업</p>
+            <p>Kaggle Korea에서 진행중인 대회에서 Kaggle Kernel을 사용하다 보니 커널이 자꾸 죽는 이유는 도대체 무엇인지… competition에 늦게 참여한 관계로 더 시간이 촉박하기만 한데…. 그래서 google colab으로 바꾸려고 생각하였다.</p>
+<p>캐글은 예측모델 및 분석 대회를 하는 플랫폼이다. 개인 및 단체에서 해결하고 싶은 과제와 데이터를 등록하면, 캐글에 가입한 데이터 과학자들이 모델을 개발하고 결과를 등록한다. 예측력을 순위로 하여 가장 좋은 순위에게는 상금도 주워진다. 그만큼 데이터 사이언스에 관한 분들은 모를 수 없는 사이트라고 생각한다.</p>
+<p>Google Colaboratory는 <code>Google Drive + Jupyter Notebook</code>의 기능을 가지고 있으며, <code>Google Drive처럼 협업 가능(동시에 수정 가능)</code>하다고 한다. <a href="https://colab.research.google.com/" target="_blank" rel="noopener">https://colab.research.google.com/</a>로 접속시 사용 가능하다. 무엇보다 가장 좋았던 점은 캐글의 커널은 9시간이 최장 이용시간인 반면에, <code>colab은 12시간</code>이다. 3시간 차이에 얼마나 더 바뀌겠냐라는 분들도 계시 겠지만 GPU가 없는 나에겐 3시간은 엄청난 시간이다.</p>
+<p>더 자세한 사항은 [<a href="https://zzsza.github.io/data/2018/08/30/google-colab/][https://zzsza.github.io/data/2018/08/30/google-colab/" target="_blank" rel="noopener">https://zzsza.github.io/data/2018/08/30/google-colab/][https://zzsza.github.io/data/2018/08/30/google-colab/</a>] 이 블로그를 참조하는 것을 추천한다! 개인적으로 데이터 사이언스에 관해 많은 것에 대해 자세히 다루고 있다고 생각하며 강추한다!(절대 홍보글 아님.)</p>
+<h3 id="구글-드라이브와-Colab-연동"><a href="#구글-드라이브와-Colab-연동" class="headerlink" title="구글 드라이브와 Colab 연동"></a>구글 드라이브와 Colab 연동</h3><ul>
+<li>매번 session이 끊기거나 종료되면 이 작업을 해주어야 한다. 그래도 kaggle 보단 내 컴퓨터에선 덜 끊긴다. 먼저, 구글 드라이브와 연동을 시키는 이유는 로컬에서 Colab working directory로 파일을 업로드하게 되면 차후 다시 접속할 때 다시 업로드를 해주어야하지만 구글 드라이브에선 바로 읽을 수 있기 때문이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from google.colab import auth</span><br><span class="line">auth.authenticate_user()</span><br><span class="line"></span><br><span class="line"><span class="comment"># colab에서 drive란 폴더를 만든 후, 우리 구글 드라이브의 root와 drive 폴더를 연결(mount)</span></span><br><span class="line">from google.colab import drive</span><br><span class="line">drive.mount(<span class="string">'/content/gdrive'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="구글-드라이브와-로컬-연동"><a href="#구글-드라이브와-로컬-연동" class="headerlink" title="구글 드라이브와 로컬 연동"></a>구글 드라이브와 로컬 연동</h3><ul>
+<li>파일을 하나씩 업로드하지 말고 대량의 파일을 한꺼번에 업로드하고 싶은 경우</li>
+<li><code>[BackupAndSync](https://www.google.com/drive/download/)</code>를 사용해 로컬과 구글 드라이브를 연동<ul>
+<li>1) 위 링크를 클릭해 백업 및 동기화 다운로드</li>
+<li>2) InstallBackupAndSync.dmg라는 파일을 클릭한 후, (열리지 않으면 우클릭 후 열기) 프로그램 설치</li>
+<li>3)맥북 환경이 한글이신 분은 Google에서 백업 및 동기화라는 응용 프로그램이 추가됨(이것도 실행이 안되면 클릭 후 실행)</li>
+<li>환경 설정에서 동기화할 폴더 선택 (단, 크기가 큰 파일은 동기화 시간이 오래 걸릴 수 있음)</li>
+</ul>
 </li>
 </ul>
-<p>그렇다면 우리는 결국 크롤링한 후 스크래핑까지 하게 되는 일련의 작업을 앞으로 할 것이라고 생각한다.</p>
-<h2 id="Wget으로-크롤링하기"><a href="#Wget으로-크롤링하기" class="headerlink" title="Wget으로 크롤링하기"></a>Wget으로 크롤링하기</h2><p>가장 먼저 Wget으로 크롤링하는 법을 소개 할 것이다. 크롤링과 스크래핑이 무엇인지 감을 잡기 위함이다.</p>
-<p>W</p>
+<h3 id="Kaggle-연동하기"><a href="#Kaggle-연동하기" class="headerlink" title="Kaggle 연동하기"></a>Kaggle 연동하기</h3><h4 id="1-Kaggle-beta-API-Json-Key-다운"><a href="#1-Kaggle-beta-API-Json-Key-다운" class="headerlink" title="- 1) Kaggle beta API Json Key 다운"></a>- 1) Kaggle beta API Json Key 다운</h4><pre><code>- Kaggle - My Account - Dataset 옆에 있는 …을 클릭한 후, Account로 이동
+- 하단에 API 부분에 Create New API Token을 클릭하면 Json Key가 다운로드 됨
+- 이 Json 키를 매번 Colab에서 올려서 할 수도 있지만, 더 편하게 사용하고 싶어서 Google Storage에 Json 파일을 올리고, 거기서 키를 복사해오는 방법으로 진행합니다
+</code></pre><h4 id="2-Google-Storage에-Json-Key-저장"><a href="#2-Google-Storage에-Json-Key-저장" class="headerlink" title="- 2) Google Storage에 Json Key 저장"></a>- 2) Google Storage에 Json Key 저장</h4><pre><code>- Google Storage로 이동한 후, Storage 버킷 선택 (버킷이 없다면 생성!)
+- Colab에서 아래 명령어 입력
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from google.colab import auth</span><br><span class="line">auth.authenticate_user()</span><br><span class="line"></span><br><span class="line">!mkdir -p ~/.kaggle</span><br><span class="line">!mv ./kaggle.json ~/.kaggle/</span><br><span class="line">!chmod 600 ~/.kaggle/kaggle.json</span><br></pre></td></tr></table></figure>
 
         </div>
         <footer class="article-footer">
@@ -187,7 +200,7 @@
 
 
 
-    <a data-url="https://heung-bae-lee.github.io/2018/12/23/unix/" data-id="cjysrwvdu000wejbawoj8hv97" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://heung-bae-lee.github.io/2019/08/01/kaggle_00/" data-id="cjysrwvdu000uejba6s7swm79" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -257,17 +270,17 @@
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "크롤링과 스크래핑 및 unix명령어 기초지식(1)",
+        "headline": "colab &amp; Kaggle 연동 및 기초 사용법",
         "image": "https://heung-bae-lee.github.io",
         "keywords": "",
-        "genre": "crawling",
-        "datePublished": "2018-12-23",
-        "dateCreated": "2018-12-23",
-        "dateModified": "2019-01-16",
-        "url": "https://heung-bae-lee.github.io/2018/12/23/unix/",
-        "description": "크롤링과 스크래핑
-웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저"
-        "wordCount": 166
+        "genre": "Kaggle",
+        "datePublished": "2019-08-01",
+        "dateCreated": "2019-08-01",
+        "dateModified": "2019-08-01",
+        "url": "https://heung-bae-lee.github.io/2019/08/01/kaggle_00/",
+        "description": "Kaggle Korea에서 진행중인 대회에서 Kaggle Kernel을 사용하다 보니 커널이 자꾸 죽는 이유는 도대체 무엇인지… competition에 늦게 참여한 관계로 더 시간이 촉박하기만 한데…. 그래서 google colab으로 바꾸려고 생각하였다.
+캐글은 예측모델 및 분석 대회를 하는 플랫폼이다. 개인 및 단체에서 해결하고 싶은 과제와 데이터를 등"
+        "wordCount": 428
     }
 </script>
 
@@ -347,20 +360,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2019/01/14/Front_end/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            HTML이란?
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/12/22/1day/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/07/29/cs231n_10/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">hexo를 이용한 블로그 만들기</p>
+        <p class="article-nav-title">[CS231n]Lecture10-Recurrent Neural Networks</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -519,7 +522,7 @@
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://heung-bae-lee.github.io/2018/12/23/unix/';
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/08/01/kaggle_00/';
     
     (function() {
     var dsq = document.createElement('script');
