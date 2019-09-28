@@ -21,7 +21,7 @@
 <meta property="og:description" content="HTTP HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리소스를 전송하는 프로토콜(규약)   클라이언트에서 서버로 HTTP 요청을 하는데 이 요청 방식으로는 Get, Post, Put, delete, Option등이 있는데 이 중 크롤링에서 가장 많이 쓰이는 두가지(Get, Post)">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/HTTP.png">
-<meta property="og:updated_time" content="2019-09-28T06:46:08.052Z">
+<meta property="og:updated_time" content="2019-09-28T07:08:48.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="웹 기본 지식 이해하기 01(chrome을 이용하여 웹페이지 분석하기)">
 <meta name="twitter:description" content="HTTP HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리소스를 전송하는 프로토콜(규약)   클라이언트에서 서버로 HTTP 요청을 하는데 이 요청 방식으로는 Get, Post, Put, delete, Option등이 있는데 이 중 크롤링에서 가장 많이 쓰이는 두가지(Get, Post)">
@@ -195,6 +195,21 @@
 </li>
 </ul>
 <p>어떠한 방식으로 해당 웹 페이지가 서버에 요청을 하는지는 <code>개발자 도구의 Network 탭에서 특정 Name을 보게 되면 Request Method를 보면서 확인할 수 있다.</code></p>
+<h3 id="HTML-element-이해하기-tag-attribute-value"><a href="#HTML-element-이해하기-tag-attribute-value" class="headerlink" title="HTML element 이해하기(tag, attribute, value)"></a>HTML element 이해하기(tag, attribute, value)</h3><ul>
+<li><p>HTML(Hyper Text Markup Language)</p>
+<ul>
+<li>웹사이트를 생성하기 위한 언어로 문서와 문서가 링크로 연결되어 있고, tag를 사용하는 언어</li>
+</ul>
+</li>
+<li><p>태그(Tag)란?</p>
+<ul>
+<li>HTML 문서의 기본 블락</li>
+<li><code>&lt;태그명 속성1=&quot;속성값1&quot; 속성2=&quot;속성값2&quot;&gt;Value&lt;/태그명&gt;</code> (Value가 있는 경우)</li>
+<li><code>&lt;태그명 속성1=&quot;속성값1&quot; 속성2=&quot;속성값2/&quot;&gt;</code> (Value가 없는 경우)</li>
+</ul>
+</li>
+</ul>
+<p>크롤링을 단 한번이라도 직접 해보신 분들은 우리가 원하는 값을 추출하기 위해서는 어느 정도의 HTML 지식이 있어야한다. 즉, Value를 추출하기 위해 해당 Value가 포함되어 있는 <code>tag의 구조를 알아야 한다는 것이다.</code> 위의 단순한 tag의 구조는 그런 관점에서 혹시라도 HTML의 구조를 모르시분들을 위해 간단히 설명하고 넘어가는 것이다.</p>
 
         </div>
         <footer class="article-footer">
@@ -285,7 +300,7 @@ HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리�
 
 
 클라이언트에서 서버로 HTTP 요청을 하는데 이 요청 방식으로는 Get, Post, Put, delete, Option등이 있는데 이 중 크롤링에서 가장 많이 쓰이는 두가지(Get, Post)"
-        "wordCount": 143
+        "wordCount": 225
     }
 </script>
 
