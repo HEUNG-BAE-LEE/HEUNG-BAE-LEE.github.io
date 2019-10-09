@@ -173,7 +173,7 @@
             Requests 모듈
 http request/response를 위한 모듈
 HTTP method를 메소드 명으로 사용하여 request 요청 예)GET, POST
-가장 우리가 흔하게 크롤링을 하는데 사용하는 방식이며, API만 알고 있다면 쉽게 사용할 수 있다!!!
+가장 우리가 흔하게 크롤링을 하는데 사용하는 방식이며, API만 알고 있다면 쉽게 사용할 수 있다!
 
 
         </p>
@@ -469,5 +469,22 @@ HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리�
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
