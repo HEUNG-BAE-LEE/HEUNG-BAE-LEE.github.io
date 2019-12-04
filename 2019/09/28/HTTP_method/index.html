@@ -21,7 +21,7 @@
 <meta property="og:description" content="HTTP HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리소스를 전송하는 프로토콜(규약)   클라이언트에서 서버로 HTTP 요청을 하는데 이 요청 방식으로는 Get, Post, Put, delete, Option등이 있는데 이 중 크롤링에서 가장 많이 쓰이는 두가지(Get, Post)">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/HTTP.png">
-<meta property="og:updated_time" content="2019-09-28T07:20:44.989Z">
+<meta property="og:updated_time" content="2019-11-01T05:42:23.240Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="웹 기본 지식 이해하기 01(chrome을 이용하여 웹페이지 분석하기)">
 <meta name="twitter:description" content="HTTP HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리소스를 전송하는 프로토콜(규약)   클라이언트에서 서버로 HTTP 요청을 하는데 이 요청 방식으로는 Get, Post, Put, delete, Option등이 있는데 이 중 크롤링에서 가장 많이 쓰이는 두가지(Get, Post)">
@@ -79,7 +79,7 @@
                                     <a class="main-nav-list-link" href="/">Home</a>
                                 </li>
                             
-                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
                                     
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/about/index.html">About</a>
@@ -183,7 +183,7 @@
 <p><img src="/image/HTTP.png" alt="그림 00"></p>
 <p>클라이언트에서 서버로 HTTP 요청을 하는데 이 요청 방식으로는 Get, Post, Put, delete, Option등이 있는데 이 중 크롤링에서 가장 많이 쓰이는 두가지(Get, Post)를 알아볼 것이다.</p>
 <ul>
-<li>GET 요청 : 데이터를 URL에 포함하여 전달이 가능하다. 그러므로 정보의 공유가 가능하다. 공유가 가능하다는 의미는 가장 쉬운 예를 들자면 URL 클릭하면 그 정보를 담고있는 웹 페이지를 요청하여 우리의 웹 브라우져에 랜더링을 거쳐 보여주는 것이 가능하다는 의미이다.(주로 리소스 요청에 사용)<ul>
+<li>GET 요청 : <code>데이터를 URL에 포함하여 전달이 가능하다. 그러므로 정보의 공유가 가능</code>하다. 공유가 가능하다는 의미는 가장 쉬운 예를 들자면 URL 클릭하면 그 정보를 담고있는 웹 페이지를 요청하여 우리의 웹 브라우져에 랜더링을 거쳐 보여주는 것이 가능하다는 의미이다.(주로 리소스 요청에 사용)<ul>
 <li>ex)<code>https://search.naver.com/search.naver?sm=top hty&amp;fbm=1</code></li>
 </ul>
 </li>
@@ -194,7 +194,7 @@
 </ul>
 </li>
 </ul>
-<p>어떠한 방식으로 해당 웹 페이지가 서버에 요청을 하는지는 <code>개발자 도구의 Network 탭에서 특정 Name을 보게 되면 Request Method를 보면서 확인할 수 있다.</code></p>
+<p>어떠한 방식으로 해당 웹 페이지가 서버에 요청을 하는지는 <code>개발자 도구의 Network 탭에서 특정 Name을 클릭 후 Request Method를 보면서 확인할 수 있다.</code></p>
 <h3 id="HTML-element-이해하기-tag-attribute-value"><a href="#HTML-element-이해하기-tag-attribute-value" class="headerlink" title="HTML element 이해하기(tag, attribute, value)"></a>HTML element 이해하기(tag, attribute, value)</h3><ul>
 <li><p>HTML(Hyper Text Markup Language)</p>
 <ul>
@@ -217,7 +217,7 @@
 
 
 
-    <a data-url="https://heung-bae-lee.github.io/2019/09/28/HTTP_method/" data-id="ck16hw2zb00075bba8dw7uxvs" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://heung-bae-lee.github.io/2019/09/28/HTTP_method/" data-id="ck3rbctm00005ldbawi4fsdge" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -293,7 +293,7 @@
         "genre": "",
         "datePublished": "2019-09-28",
         "dateCreated": "2019-09-28",
-        "dateModified": "2019-09-28",
+        "dateModified": "2019-11-01",
         "url": "https://heung-bae-lee.github.io/2019/09/28/HTTP_method/",
         "description": "HTTP
 HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리소스를 전송하는 프로토콜(규약)
@@ -415,6 +415,15 @@ HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리�
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/11/29/dataengineering_basic/" class="title">data engineering basic</a></p>
+                            <p class="item-date"><time datetime="2019-11-29T10:57:36.000Z" itemprop="datePublished">2019-11-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2019/09/28/Request/" class="title">Requests 모듈 사용하기(HTTP 통신)</a></p>
                             <p class="item-date"><time datetime="2019-09-28T07:20:55.000Z" itemprop="datePublished">2019-09-28</time></p>
@@ -448,15 +457,6 @@ HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리�
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></p>
-                            <p class="item-title"><a href="/2019/07/29/Statistics_00/" class="title">[수리통계학] 나혼자 정리하는 통계생의 수리통계학 00</a></p>
-                            <p class="item-date"><time datetime="2019-07-29T07:12:38.000Z" itemprop="datePublished">2019-07-29</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -466,7 +466,7 @@ HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -476,7 +476,7 @@ HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -593,22 +593,5 @@ HyperText Transfer Protocol: HTML(HyperText Markup language) 문서 등의 리�
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
