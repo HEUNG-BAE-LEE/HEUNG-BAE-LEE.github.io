@@ -12,19 +12,19 @@
     
         <meta name="keywords" content>
     
-    <meta name="description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.       학습을 마친 후 validation set이나 test set에 적용할 때는 더">
+    <meta name="description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.        학습을 마친 후 validation set이나 test set에 적용할 때는 더">
 <meta property="og:type" content="article">
 <meta property="og:title" content="심층 신경망의 구조">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/08/deep_learning03/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.       학습을 마친 후 validation set이나 test set에 적용할 때는 더">
+<meta property="og:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.        학습을 마친 후 validation set이나 test set에 적용할 때는 더">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://heung-bae-lee.github.io/image/">
-<meta property="og:updated_time" content="2019-12-08T12:11:40.185Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/Neuron_01.png">
+<meta property="og:updated_time" content="2019-12-08T15:14:51.047Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="심층 신경망의 구조">
-<meta name="twitter:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.       학습을 마친 후 validation set이나 test set에 적용할 때는 더">
-<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/">
+<meta name="twitter:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.        학습을 마친 후 validation set이나 test set에 적용할 때는 더">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Neuron_01.png">
     
 
     
@@ -137,7 +137,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/deep-learning/">deep learning</a>
     </h1>
 </div>
 
@@ -171,15 +171,15 @@
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="심층-신경망의-구조"><a href="#심층-신경망의-구조" class="headerlink" title="심층 신경망의 구조"></a>심층 신경망의 구조</h2><p><img src="/image/" alt="Neuron"></p>
-<p><img src="/image/" alt="shallow NN"></p>
-<p><img src="/image/" alt="심층 신경망(Deep Neural Network)"></p>
-<p><img src="/image/" alt="심층신경망은 무엇이 다를까?"></p>
+            <h2 id="심층-신경망의-구조"><a href="#심층-신경망의-구조" class="headerlink" title="심층 신경망의 구조"></a>심층 신경망의 구조</h2><p><img src="/image/Neuron_01.png" alt="Neuron"></p>
+<p><img src="/image/shallowNN_01.png" alt="shallow NN"></p>
+<p><img src="/image/Deep_Neural_Network.png" alt="심층 신경망(Deep Neural Network)"></p>
+<p><img src="/image/what_is_difference with_DNN.png" alt="심층신경망은 무엇이 다를까?"></p>
 <ul>
 <li><code>은닉 계층 추가 = 특징의 비선형 변환 추가!!</code></li>
 </ul>
-<h2 id="역전파-학습법의-개념"><a href="#역전파-학습법의-개념" class="headerlink" title="역전파 학습법의 개념"></a>역전파 학습법의 개념</h2><p><img src="/image/" alt="알고리즘의 학습과 미분"></p>
-<p><img src="/image/" alt="의존성이 있는 함수의 계산"></p>
+<h2 id="역전파-학습법의-개념"><a href="#역전파-학습법의-개념" class="headerlink" title="역전파 학습법의 개념"></a>역전파 학습법의 개념</h2><p><img src="/image/Algorithm_learning_and_differentiation.png" alt="알고리즘의 학습과 미분"></p>
+<p><img src="/image/compute_function_with_dependency.png" alt="의존성이 있는 함수의 계산"></p>
 <ul>
 <li>y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.</li>
 </ul>
@@ -188,24 +188,42 @@
 <li><code>처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.</code></li>
 </ul>
 <p><img src="/image/chain_rule.png" alt="Chain rule"></p>
-<p><img src="/image/" alt="심층 신경망의 미분(은닉계층1)"></p>
-<p><img src="/image/" alt="심층 신경망의 미분(은닉계층2)"></p>
-<p><img src="/image/" alt="순방향 전파(Forward Propagation)"></p>
+<p><img src="/image/differentiation_of_DNN.png" alt="심층 신경망의 미분(출력계층)"></p>
+<p><img src="/image/differentiation_of_DNN_01.png" alt="심층 신경망의 미분(은닉계층1)"></p>
+<p><img src="/image/differentiation_of_DNN_02.png" alt="심층 신경망의 미분(은닉계층2)"></p>
+<p><img src="/image/Forward_inference.png" alt="순방향 전파(Forward Propagation)"></p>
 <ul>
 <li>학습을 마친 후 validation set이나 test set에 적용할 때는 더 이상 학습을 하지 않으므로 이 순방향 추론만을 사용한다.</li>
 </ul>
-<p><img src="/image/" alt="역전파 학습법(Back-Propagation)"></p>
-<h2 id="심층-신경망의-수학적-이해"><a href="#심층-신경망의-수학적-이해" class="headerlink" title="심층 신경망의 수학적 이해"></a>심층 신경망의 수학적 이해</h2><p><img src="/image/" alt="전결합 계층"></p>
-<p><img src="/image/" alt="심층 신경망"></p>
-<h2 id="역전파-학습의-필요성"><a href="#역전파-학습의-필요성" class="headerlink" title="역전파 학습의 필요성"></a>역전파 학습의 필요성</h2><p><img src="/image/" alt="블랙박스 모델"></p>
-<p><img src="/image/" alt="블랙박스 모델의 학습"></p>
-<p><img src="/image/" alt="수치적 기울기(Numerical Gradient"></p>
-<p><img src="/image/" alt="블랙박스 모델의 수치적 기울기"></p>
+<p><img src="/image/Back_Propagation.png" alt="역전파 학습법(Back-Propagation)"></p>
+<h2 id="심층-신경망의-수학적-이해"><a href="#심층-신경망의-수학적-이해" class="headerlink" title="심층 신경망의 수학적 이해"></a>심층 신경망의 수학적 이해</h2><p><img src="/image/FC_Layer.png" alt="전결합 계층"></p>
+<p><img src="/image/DNN_00.png" alt="심층 신경망"></p>
+<h2 id="역전파-학습의-필요성"><a href="#역전파-학습의-필요성" class="headerlink" title="역전파 학습의 필요성"></a>역전파 학습의 필요성</h2><p><img src="/imageBlackBoxModel.png" alt="블랙박스 모델"></p>
+<p><img src="/image/learning_BlackBoxModel.png" alt="블랙박스 모델의 학습"></p>
+<p><img src="/image/Numerical_Gradient.png" alt="수치적 기울기(Numerical Gradient"></p>
+<p><img src="/image/Numerical_Gradient_of_BlackBoxmodel.png" alt="블랙박스 모델의 수치적 기울기"></p>
 <ul>
 <li>(N+1번) 손실함수를 평가한다고 하는데 그 이유는 기준점이 되는 손실함수를 먼저 한번 계산하고 나머지 편미분시에 가각 N번 평가하기 때문이다.</li>
 </ul>
-<p><img src="/image/" alt></p>
-<p>!</p>
+<p><img src="/image/Numerical_Gradient_of_DNN.png" alt="심층 신경망의 수치적 기울기"></p>
+<h2 id="합성함수와-연쇄-법칙"><a href="#합성함수와-연쇄-법칙" class="headerlink" title="합성함수와 연쇄 법칙"></a>합성함수와 연쇄 법칙</h2><p><img src="/image/chain_rule_01.png" alt="연쇄 법칙"></p>
+<p><img src="/image/series_connection_of_two_function.png" alt="직렬 연결된 두 함수의 미분"></p>
+<p><img src="/image/differentiation_and_chain_rule.png" alt="미분과 연쇄 법칙"></p>
+<p><img src="/image/expansion_of_chain_rule.png" alt="연쇄법칙의 확장"></p>
+<h2 id="역전파-학습법의-수식적-이해"><a href="#역전파-학습법의-수식적-이해" class="headerlink" title="역전파 학습법의 수식적 이해"></a>역전파 학습법의 수식적 이해</h2><p><img src="/image/DNN_aspect_of_composite function.png" alt="합성 함수로서의 심층 신경망"></p>
+<p><img src="/image/DNN_aspect_of_learning.png" alt="학습관점에서 본 심층 신경망"></p>
+<p><img src="/image/DNN_chain_rule.png" alt="심층신경망의 연쇄법칙"></p>
+<ul>
+<li><code>미분하고자 하는 경로 사이에 있는 모든 미분값을 알아야 원하는 미분을 구할 수 있다는 의미이다.</code></li>
+</ul>
+<p><img src="/image/FCLayer_differentiation.png" alt="전결합 계층의 미분(1)"></p>
+<p><img src="/image/FCLayer_differentiation_01.png" alt="전결합 계층의 미분(2)"></p>
+<p><img src="/image/differentiation_of_sigmoid_function.png" alt="Sigmoid 함수의 미분"></p>
+<p><img src="/image/Back_Propagation_algorithm.png" alt="역전파 알고리즘"></p>
+<ul>
+<li><code>수치적 미분에서는 N+1번을 계산하여야 했지만, 역전파 알고리즘으로 인해 단 한번의 손실함수 평가로 미분을 구할 수 있다.</code></li>
+</ul>
+<h2 id="수치-미분을-이용한-심층-신경망-학습"><a href="#수치-미분을-이용한-심층-신경망-학습" class="headerlink" title="수치 미분을 이용한 심층 신경망 학습"></a>수치 미분을 이용한 심층 신경망 학습</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
         </div>
         <footer class="article-footer">
@@ -284,12 +302,12 @@
             "name": "HeungBae Lee"
         },
         "headline": "심층 신경망의 구조",
-        "image": "https://heung-bae-lee.github.io/image/",
+        "image": "https://heung-bae-lee.github.io/image/Neuron_01.png",
         "keywords": "",
-        "genre": "",
+        "genre": "deep learning",
         "datePublished": "2019-12-08",
         "dateCreated": "2019-12-08",
-        "dateModified": "2019-12-08",
+        "dateModified": "2019-12-09",
         "url": "https://heung-bae-lee.github.io/2019/12/08/deep_learning03/",
         "description": "심층 신경망의 구조
 
@@ -312,8 +330,9 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
 
 
 
-학습을 마친 후 validation set이나 test set에 적용할 때는 더 "
-        "wordCount": 164
+
+학습을 마친 후 validation set이나 test set에 적용할 때는 더"
+        "wordCount": 285
     }
 </script>
 
@@ -393,20 +412,10 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
         
 <nav id="article-nav">
     
-        <a href="/2019/12/08/deep_learning02/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            쉽게 배우는 경사하강 학습법
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/12/06/deep_learning01/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/12/08/deep_learning02/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">가장 단순한 신경망을 통한 작동원리</p>
+        <p class="article-nav-title">쉽게 배우는 경사하강 학습법</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -429,16 +438,16 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
-                            <p class="item-title"><a href="/2019/12/08/deep_learning02/" class="title">쉽게 배우는 경사하강 학습법</a></p>
-                            <p class="item-date"><time datetime="2019-12-08T04:12:28.000Z" itemprop="datePublished">2019-12-08</time></p>
+                            <p class="item-title"><a href="/2019/12/08/deep_learning03/" class="title">심층 신경망의 구조</a></p>
+                            <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/12/08/deep_learning03/" class="title">심층 신경망의 구조</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/08/deep_learning02/" class="title">쉽게 배우는 경사하강 학습법</a></p>
                             <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
                         </div>
                     </li>
@@ -457,7 +466,7 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
                             <p class="item-title"><a href="/2019/12/05/deep_learning00/" class="title">딥러닝이 무엇인가?</a></p>
-                            <p class="item-date"><time datetime="2019-12-05T12:16:10.000Z" itemprop="datePublished">2019-12-05</time></p>
+                            <p class="item-date"><time datetime="2019-12-04T15:00:00.000Z" itemprop="datePublished">2019-12-05</time></p>
                         </div>
                     </li>
                 
@@ -479,7 +488,7 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -606,5 +615,22 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
