@@ -170,16 +170,22 @@
     
 
         <p class="article-excerpt">
-            신경 세포Neuron의 그래프 표현
+            
 
 Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.
 
-인공신경망
-Fully-Connected Layer(Dense Layer)
-얕은 신경망
-얕은 신경망으로 무엇을 할 수 있을까?
-회귀
 
+
+
+
+
+
+
+
+
+
+
+위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현
         </p>
     </div>
 </article>
@@ -206,11 +212,11 @@ Fully-Connected Layer(Dense Layer)
     
 
         <p class="article-excerpt">
-            딥러닝의 이해딥러닝 vs 기계학습 vs 인공지능
-딥러닝 vs 빅데이터
-딥러닝은 왜 특별한가요?
+            딥러닝의 이해
 
-기계학습의 경우에는 위의 고양이와 개를 구분하기 위해서 이진 분류기를 구현할 것인데, 이런 이진 분류기를 구현하기 위해서는 Feature Extractor가 필요하다. 여기서 말하는 Feature Extractor 란 구분에 용이한 특징을 추출하여 featu
+
+
+기계학습의 경우에는 위의 고양이와 개를 구분하기 위해서 이진 분류기를 구현할 것인데, 이런 이진 분류기를 구현하기 위해서는 Feature Extractor가 필요하다. 여기서 말하는 Feature Extractor 란 구분에 용이한 특징을 추출하여 feature vector를 만드는 데 사용하는 것이다. 이렇게 잘 추출한 특징 벡터를
         </p>
     </div>
 </article>
@@ -754,5 +760,22 @@ CPU
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
