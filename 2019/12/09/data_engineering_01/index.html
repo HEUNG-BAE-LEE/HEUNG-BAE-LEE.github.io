@@ -21,10 +21,12 @@
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-09T13:12:23.583Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/IAM_00.png">
+<meta property="og:updated_time" content="2019-12-09T16:01:15.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering basic(Unix환경 및 커맨드)">
 <meta name="twitter:description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/IAM_00.png">
     
     <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/">
 
@@ -199,6 +201,48 @@ ga('send', 'pageview');
 <h4 id="command-sh"><a href="#command-sh" class="headerlink" title="command.sh"></a>command.sh</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">python3 example.py 1 &gt; result.txt</span><br><span class="line">python3 example.py 2 &gt;&gt; result.txt</span><br><span class="line">head result.txt</span><br><span class="line">rm -rf result.txt example.py</span><br></pre></td></tr></table></figure>
 <h4 id="terminal창"><a href="#terminal창" class="headerlink" title="terminal창"></a>terminal창</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#권한을 설정</span></span><br><span class="line">chmod +x command.sh</span><br><span class="line">./command.sh</span><br></pre></td></tr></table></figure>
 <h4 id="보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서"><a href="#보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서" class="headerlink" title="보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,"></a>보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># zip형식으로 되어있는 모든(*)파일을 삭제해라</span></span><br><span class="line">rm *.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모든 파일을 lisztfever라는 이름으로 압축해라. -r 옵션은 파일이 있을 수 있으므로 붙여준다.</span></span><br><span class="line">zip lisztfever.zip -r *</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws s3라는 storage에 s3://areha/lisztfever/lisztfever.zip 에 해당 path의 파일을 삭제</span></span><br><span class="line">aws s3 rm s3://areha/lisztfever/lisztfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># s3에게 다시 copy해라</span></span><br><span class="line">aws s3 cp ./listzfever.zip s3://areha/lisztfever/listzfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws lambda function을 update해라.</span></span><br><span class="line">aws lambda update-function-code --<span class="keyword">function</span>-name listzfever --s3-buket areha --s3-key listzfever/listzfever.zip</span><br></pre></td></tr></table></figure>
+<h2 id="AWS-Cloud-Service"><a href="#AWS-Cloud-Service" class="headerlink" title="AWS Cloud Service"></a>AWS Cloud Service</h2><p>먼저, <code>IAM</code>(Identity and Access Management)에 대해서 설명하겠다. <code>내가 누구이고 어떤 Access를 가지고 있는지를 관리하는 곳이라고 생각할 수 있다.</code> 여기서 새로운 User를 등록 할 수 있다.</p>
+<p><img src="/image/IAM_00.png" alt="그림00"></p>
+<ul>
+<li>위의 Add User를 통해서 새로운 User를 등록해보자.</li>
+</ul>
+<p><img src="/image/IAM_01.png" alt="그림01"></p>
+<ul>
+<li>Access type은 우리가 AWS cli를 통해서도 관리하므로 첫번째인 Programmatic access로 설정한다.</li>
+</ul>
+<p><img src="/image/IAM_02.png" alt="그림02"></p>
+<ul>
+<li><p>Permission을 주는 방식에 대한 설정하는 부분이다.</p>
+<ul>
+<li><p>Add user to group : 한 Project를 여러명이 같이 진행하여 여러명이 관리할 경우 사용.</p>
+</li>
+<li><p>Copy permissions from existing user : 말 그대로 이미 존재하는 user의 permission들 중 하나를 선택하여 Copy할 경우 사용</p>
+</li>
+<li><p>Attach existing policies directly : AWS에 존재하는 정책들 중 하나를 선택하여 바로 사용하는 경우 사용</p>
+</li>
+</ul>
+</li>
+<li><p>예전에 있던 계정이 만료된걸 모르고 있다가 결제를 안해버려서…. ㅠㅠㅠ 새롭게 만든 계정으로 하느라 등록된 User들이 없다. 그러므로 3번째 설정으로 들어가서 모든 최상위 permission을 갖는 AdministratorAccess를 주었다.</p>
+</li>
+<li><p>다음으로 넘어가게 되면, tag를 설정하게 되는데, 우선 넘어가겠다.(이 부분은 나중에 설정할 것이다.)</p>
+</li>
+</ul>
+<p><img src="/image/IAM_03.png" alt="그림03"></p>
+<ul>
+<li>앞에서 설정한 사항들을 확인하고, Create User를 누르게 되면 설정한대로 User를 생성하게 되는 것이다.</li>
+</ul>
+<p><img src="/image/IAM_03.png" alt="그림04"></p>
+<ul>
+<li>Access key ID, Secret access key가 생성되어 나오는데, <code>이 창이 닫히면, 볼수 없으므로 Download csv를 하는 것을 권장한다.</code></li>
+</ul>
+<ul>
+<li>설치 프로그램을 실행한다. /usr/local/aws에 AWS CLI를 설치하고 /usr/local/bin 디렉터리에 symlink aws를 생성한다. <code>-b 옵션을 사용하여 symlink를 생성하면 사용자의 $PATH 변수에 설치 디렉터리를 지정할 필요가 없다. 이렇게 하면 모든 사용자가 임의 디렉터리에서 aws를 입력하여 AWS CLI를 호출 가능하게 한다.</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"</span> -o <span class="string">"awscli-bundle.zip"</span></span><br><span class="line">unzip awscli-bundle.zip</span><br><span class="line">sudo ./awscli-bundle/install -i /usr/<span class="built_in">local</span>/aws -b /usr/<span class="built_in">local</span>/bin/aws</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위의 설치가 다 끝나면, 이제 aws cli의 configure를 설정해 볼 것이다. 이를 통해 우리가 console에 접속하지 않고도 cli 환경에서도 aws를 조작할 수 있게 된다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws configure</span><br><span class="line">AWS Access Key ID [None]: Access key ID</span><br><span class="line">AWS Secret Access Key [None]: Secret access key</span><br><span class="line">Default region name [None]: ap-northeast-2</span><br><span class="line">Default output format [None]:</span><br></pre></td></tr></table></figure>
 
         </div>
         <footer class="article-footer">
@@ -277,16 +321,16 @@ ga('send', 'pageview');
             "name": "HeungBae Lee"
         },
         "headline": "data engineering basic(Unix환경 및 커맨드)",
-        "image": "https://heung-bae-lee.github.io",
+        "image": "https://heung-bae-lee.github.io/image/IAM_00.png",
         "keywords": "",
         "genre": "data engineering",
         "datePublished": "2019-12-09",
         "dateCreated": "2019-12-09",
-        "dateModified": "2019-12-09",
+        "dateModified": "2019-12-10",
         "url": "https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/",
         "description": "Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print
 command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &gt;&gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt"
-        "wordCount": 340
+        "wordCount": 631
     }
 </script>
 
@@ -569,22 +613,5 @@ command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결�
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
