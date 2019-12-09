@@ -8,15 +8,23 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning03/</loc>
-        <lastmod>2019-12-09T05:27:41.273Z</lastmod>
+        <loc>https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/</loc>
+        <lastmod>2019-12-09T13:12:23.583Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/11/29/dataengineering_basic/</loc>
+        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning03/</loc>
+        <lastmod>2019-12-09T08:33:04.032Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/11/29/data_engineering_basic/</loc>
         <lastmod>2019-12-08T14:31:09.223Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

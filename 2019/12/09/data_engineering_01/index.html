@@ -8,22 +8,25 @@
     
 
     
-    <title>DataLatte&#39;s IT Blog</title>
+    <title>data engineering basic(Unix환경 및 커맨드) | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DataLatte&#39;s IT Blog">
-<meta property="og:url" content="https://heung-bae-lee.github.io/page/3/index.html">
-<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
-<meta property="og:locale" content="en">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DataLatte&#39;s IT Blog">
-<meta name="twitter:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+        <meta name="keywords" content>
     
-    <link rel="canonical" href="https://heung-bae-lee.github.io/page/3/">
+    <meta name="description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="data engineering basic(Unix환경 및 커맨드)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-09T13:12:23.583Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="data engineering basic(Unix환경 및 커맨드)">
+<meta name="twitter:description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
+    
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/">
 
     
         <link rel="alternate" href="/" title="DataLatte&#39;s IT Blog" type="application/atom+xml">
@@ -149,261 +152,156 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <em class="page-title-link" data-url="home">Home</em>
+    <a class="page-title-link" href="/categories/data-engineering/">data engineering</a>
     </h1>
 </div>
 
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-data_engineering_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Front-end/">Front end</a>
-            </div>
-            <div class="date"><time datetime="2019-03-05T14:05:59.000Z" itemprop="datePublished">2019-03-05</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/05/front_end4/">비주얼 디자인에서 제목(Headings), 단락(Paragraph)구조 도출하기</a>
+        data engineering basic(Unix환경 및 커맨드)
         </h1>
     
 
-        <p class="article-excerpt">
-            제목(Hedings), 단락(Paragraph) 도출하는 과정단락(Paragraph)
-사용자가 가장 많이 읽는 콘텐츠는 단락으로 단락은 p요소로 구성된다.
-
-제목의 단계(Hedings Level 1 - 6)
-사용자가 가장 먼저 읽은 콘텐츠는 제목으로 제목은 h요소로 구성된다.
-h1 요소는 문서에서 단 한번만 사용하며 HTML5에서는 섹션 콘텐츠 마다 사용 
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/09/data_engineering_01/" class="article-date">
+            <time datetime="2019-12-09T08:48:07.000Z" itemprop="datePublished">2019-12-09</time>
+        </a>
     </div>
-</article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Front-end/">Front end</a>
+		
+
+                
             </div>
-            <div class="date"><time datetime="2019-02-12T01:57:00.000Z" itemprop="datePublished">2019-02-12</time></div>
-        </div>
         
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/02/12/frontent3/">HTML의 DOCTYPE?</a>
-        </h1>
-    
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="Pipes-and-Filters"><a href="#Pipes-and-Filters" class="headerlink" title="Pipes and Filters"></a>Pipes and Filters</h3><p>cat : 해당 파일 전체를 print<br>head : 해당 파일 앞의 10줄 정도를 print<br>tail : 해당 파일 뒤의 20줄 정도를 print</p>
+<p>command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장<br>command &gt;&gt; file : 기존의 파일에 덮붙여서 결과를 저장(python append같은 느낌!)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example.py를 python3로 run하고 그 결과를 result.txt파일로 저장</span></span><br><span class="line">python3 example.py &gt; result.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># example.py를 python3로 run하고 그 결과를 result.txt파일에 덮붙여서 저장</span></span><br><span class="line">python3 example.py &gt;&gt; result.txt</span><br></pre></td></tr></table></figure>
+<h3 id="Shell-script"><a href="#Shell-script" class="headerlink" title="Shell script"></a>Shell script</h3><ul>
+<li><p><code>terminal에서 바로 명령어를 여러개 사용하고 싶을때 shell script를 사용하면 된다.</code></p>
+</li>
+<li><p>예를들어 아래의 example.py를 실행시켜 위에서 command를 한번에 실행시키고 싶다면 다음과 같이 먼저 example.py를 작성한 후에 command.sh 파일에는 command들을 작성한 후에 shell script 파일을 run하면 된다.</p>
+</li>
+</ul>
+<h4 id="example-py"><a href="#example-py" class="headerlink" title="example.py"></a>example.py</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    <span class="comment"># command 뒤에 따라오는 첫번째 글자를 print</span></span><br><span class="line">    <span class="built_in">print</span>(sys.argv[1])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h4 id="command-sh"><a href="#command-sh" class="headerlink" title="command.sh"></a>command.sh</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">python3 example.py 1 &gt; result.txt</span><br><span class="line">python3 example.py 2 &gt;&gt; result.txt</span><br><span class="line">head result.txt</span><br><span class="line">rm -rf result.txt example.py</span><br></pre></td></tr></table></figure>
+<h4 id="terminal창"><a href="#terminal창" class="headerlink" title="terminal창"></a>terminal창</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#권한을 설정</span></span><br><span class="line">chmod +x command.sh</span><br><span class="line">./command.sh</span><br></pre></td></tr></table></figure>
+<h4 id="보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서"><a href="#보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서" class="headerlink" title="보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,"></a>보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># zip형식으로 되어있는 모든(*)파일을 삭제해라</span></span><br><span class="line">rm *.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모든 파일을 lisztfever라는 이름으로 압축해라. -r 옵션은 파일이 있을 수 있으므로 붙여준다.</span></span><br><span class="line">zip lisztfever.zip -r *</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws s3라는 storage에 s3://areha/lisztfever/lisztfever.zip 에 해당 path의 파일을 삭제</span></span><br><span class="line">aws s3 rm s3://areha/lisztfever/lisztfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># s3에게 다시 copy해라</span></span><br><span class="line">aws s3 cp ./listzfever.zip s3://areha/lisztfever/listzfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws lambda function을 update해라.</span></span><br><span class="line">aws lambda update-function-code --<span class="keyword">function</span>-name listzfever --s3-buket areha --s3-key listzfever/listzfever.zip</span><br></pre></td></tr></table></figure>
 
-        <p class="article-excerpt">
-            우선 코드를 작성할때 HTML 코드는 tag name에 대문자로도 작성이 가능하나, 소문자로 작성하는 것을 권하며 코드 간 들여 쓰기를 하는 이유는 HTML 요소 간 관계(부모, 자식, 형제)를 구분하기 용이 함에 들여쓰나, 브라우저는 코드가 한 줄 이어도 해석하는데 아무런 문제가 없다.
-DTD(표준 호환모드)문서 유형 정의(Document Type Def
-        </p>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/" data-id="ck3yksnmp000xcwba02uxfpde" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
     </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "data engineering basic(Unix환경 및 커맨드)",
+        "image": "https://heung-bae-lee.github.io",
+        "keywords": "",
+        "genre": "data engineering",
+        "datePublished": "2019-12-09",
+        "dateCreated": "2019-12-09",
+        "dateModified": "2019-12-09",
+        "url": "https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/",
+        "description": "Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print
+command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &gt;&gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt"
+        "wordCount": 340
+    }
+</script>
+
 </article>
-    
-        </div>
-    
 
+    <section id="comments">
     
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
         
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
-            </div>
-            <div class="date"><time datetime="2019-01-16T13:59:30.000Z" itemprop="datePublished">2019-01-16</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/01/16/deep_learning1/">deep learning_01</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            우선 지금부터 설명하는 내용은 패스트캠퍼스의 교육과정에서 배운 내용과 제 나름대로 책을 읽어가며 정리하는 내용을 바탕으로 작성하는 글입니다.
-딥러닝 기초딥러닝? ML분야에서나 AI분야에서 활발하게 이용하고 있는데 간단히 말하자면, 여기서 말하는 ‘deep’은 학습을 수행하는 신경망(혹은 그에 상응하는 다른 것)의 층수가 ‘깊다’라는 의미이다. 즉, 여러층을
-        </p>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-</article>
-    
 
     
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Front-end/">Front end</a>
-            </div>
-            <div class="date"><time datetime="2019-01-15T03:36:00.000Z" itemprop="datePublished">2019-01-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/01/15/Foront_end2/">HTML이란?</a>
-        </h1>
-    
+    </section>
 
-        <p class="article-excerpt">
-            HTML 문서 작성을 위해 알아야 할 기본 문법웹 페이지는 head 영역과 body영역으로 구성 된다.
-
-Head
-
-Page title(웹 페이지의 제목으로 브라우저 탭에 표시된다.)
-만약 위의 값이 한글인데 깨지게 된 경우는 console창에서 document.characterSet을 쳐보면 인코딩 방식을 확인 할 수 있으며 meta 태그에 charset
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Front-end/">Front end</a>
-            </div>
-            <div class="date"><time datetime="2019-01-14T08:36:00.000Z" itemprop="datePublished">2019-01-14</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/01/14/Front_end/">HTML이란?</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            HTML(Hyper Text Markup Language)이란??
-Hyper Text란?
-text의 밑줄이 거지게되어 사용자가 이걸 눌르면 연결되어있는 링크로 연결된다.
-
-
-구조를 설계할 때 사용되는 언어이며, 하이퍼링크 시스템으로 이루어져 있다.
-확장자는 htm, html으로 가지며, 이 파일은 단순한 텍스트 파일에 불과하지만, 이 파일을 웹브라우져가 화
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-        
-            </div></section>
-        
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/crawling/">crawling</a>
-            </div>
-            <div class="date"><time datetime="2018-12-23T09:34:53.000Z" itemprop="datePublished">2018-12-23</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/12/23/unix/">크롤링과 스크래핑 및 unix명령어 기초지식(1)</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            크롤링과 스크래핑
-웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/hexo/">hexo</a>
-            </div>
-            <div class="date"><time datetime="2018-12-21T15:00:00.000Z" itemprop="datePublished">2018-12-22</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/12/22/1day/">hexo를 이용한 블로그 만들기</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Hexo로 나만의 블로그 만들기! Hexo는  쉽고 빠르고 강력한 블로그 프레임워크입니다.  Node.js만 조금 알고 있다면 자신의 취향에 맞게 커스터마이징 할 수 있어서 좋습니다. 또한 템플릿 엔진으로는 Swig 또는 EJS 를 주로 사용합니다. 작성 시 사용할 수 있는 언어로는 HTML, Markdown, AsciiDoc 등이 있습니다. 이 글은 그 
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-
-    </div></section>
-
-
-    <nav id="page-nav">
-        <span class="pages">Page 3 of 3</span>
-        <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
 
 
                         </div>
@@ -464,6 +362,19 @@ text의 밑줄이 거지게되어 사용자가 이걸 눌르면 연결되어있�
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/12/08/deep_learning02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">쉽게 배우는 경사하강 학습법</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -617,11 +528,13 @@ text의 밑줄이 거지게되어 사용자가 이걸 눌르면 연결되어있�
     var disqus_shortname = 'hexo-theme-hueman';
     
     
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
