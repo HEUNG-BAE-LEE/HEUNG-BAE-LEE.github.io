@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>https://heung-bae-lee.github.io</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning03/</loc>
+        <lastmod>2019-12-08T15:14:51.047Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/11/29/dataengineering_basic/</loc>
+        <lastmod>2019-12-08T14:31:09.223Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/05/deep_learning00/</loc>
+        <lastmod>2019-12-08T12:41:32.567Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning02/</loc>
+        <lastmod>2019-12-08T12:41:27.510Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/06/deep_learning01/</loc>
+        <lastmod>2019-12-08T12:33:35.852Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/01/16/deep_learning1/</loc>
+        <lastmod>2019-12-08T05:35:02.857Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/18/cs231n_02/</loc>
+        <lastmod>2019-12-08T05:34:11.115Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/09/28/HTTP_method/</loc>
+        <lastmod>2019-12-06T04:56:15.576Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/09/28/Request/</loc>
+        <lastmod>2019-11-21T10:39:17.411Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/08/01/kaggle_00/</loc>
+        <lastmod>2019-09-28T05:51:41.381Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/29/Statistics_00/</loc>
+        <lastmod>2019-07-31T13:40:58.126Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/29/cs231n_10/</loc>
+        <lastmod>2019-07-31T13:40:54.829Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/28/cs231n_09/</loc>
+        <lastmod>2019-07-31T13:40:52.676Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/23/cs231n_08/</loc>
+        <lastmod>2019-07-24T07:35:38.400Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/22/cs231n_07/</loc>
+        <lastmod>2019-07-23T04:21:56.948Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/19/cs231n_06/</loc>
+        <lastmod>2019-07-23T04:18:10.010Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/19/cs231n_05/</loc>
+        <lastmod>2019-07-21T08:59:00.385Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/03/05/front_end4/</loc>
+        <lastmod>2019-07-20T03:36:22.826Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/05/18/growth_hacking_00/</loc>
+        <lastmod>2019-07-20T03:36:19.296Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/</loc>
+        <lastmod>2019-07-20T03:36:16.967Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2018/12/22/1day/</loc>
+        <lastmod>2019-07-20T03:36:13.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/03/08/Bayes/</loc>
+        <lastmod>2019-07-20T03:36:10.633Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/02/12/frontent3/</loc>
+        <lastmod>2019-03-05T13:56:18.570Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/01/14/Front_end/</loc>
+        <lastmod>2019-03-05T13:54:51.234Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/01/15/Foront_end2/</loc>
+        <lastmod>2019-03-05T13:54:47.784Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2018/12/23/unix/</loc>
+        <lastmod>2019-01-16T12:08:35.899Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+</urlset>
+<!-- XML Sitemap generated by Hexo SEO Friendly Sitemap Generator -->
