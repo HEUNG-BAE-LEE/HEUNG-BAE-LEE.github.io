@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://heung-bae-lee.github.io/"/>
-  <updated>2019-12-09T16:01:15.934Z</updated>
+  <updated>2019-12-10T11:27:20.560Z</updated>
   <id>https://heung-bae-lee.github.io/</id>
   
   <author>
@@ -17,11 +17,59 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Convolution Neural Network(1)</title>
+    <link href="https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/"/>
+    <id>https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/</id>
+    <published>2019-12-10T04:50:24.000Z</published>
+    <updated>2019-12-10T11:27:20.560Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="합성곱-연산과-이미지-필터"><a href="#합성곱-연산과-이미지-필터" class="headerlink" title="합성곱 연산과 이미지 필터"></a>합성곱 연산과 이미지 필터</h2><p><img src="/image/analog_signal.png" alt="아날로그 신호처리"></p><ul><li>아날로그 신호처리는 <code>선형이고 시불변인 시스템</code>에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. <code>디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의</code>되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수에서 나오는 linearity를 만족시키면 되는 것이고, <code>시불변이라는 의미는 시간이 지나도 동일한 결과를 내보내준다는 의미이다.</code> 확률과정에서 step에 영향을 받지 않는다라고 보면 좋을 것 같다. 사람은 대표적으로 LTI 시스템이 아닌 시스템이다.</li></ul><p><img src="/image/Dirac_delta_function.png" alt="Dirac 델타 함수"></p><ul><li>수학적으로는 엄밀하진 않지만, 공학에선 많이 사용한다. 왼쪽의 삼각형을 모든 구간에 대해 전부해준다면 값은 1이 될 것이다. 여기서 $h\to\infty$가 되면, Dirac 델타 함수가 된다.<ul><li>시간 t=0만 임의의 값을 갖고, 나머지 구간은 0을 갖는다.</li><li>모든 구간에서 적분한 값이 1</li></ul></li></ul><p><img src="/image/impulse_response.png" alt="임펄스 응답"></p><p><img src="/image/convolution_operation.png" alt="합성곱 연산"></p><ul><li><code>convolution을 한다는 것은 임의의 두 함수 중 한 함수를 좌우로 뒤집고 이동시키면서 두함수의 곱을 적분하여 계산한다.</code></li></ul><p><img src="/image/conv_operation_and_LTI_system.png" alt="합성곱 연산과 LTI 시스템"></p><p><img src="/image/2_Dimension_2_channel.png" alt="이차원 신호와 흑백 이미지"></p><p><img src="/image/2_Dimension_color_image.png" alt="이차원 신호와 컬러 이미지"></p><p><img src="/image/image_conv.png" alt="영상의 합성곱 계산"><br><a href="http://deeplearning.net/software/theano_versions/dev/tutorial/conv_arithmetic.html" target="_blank" rel="noopener">합성곱 계산 animation</a></p><p><img src="/image/noise_removal_filter.png" alt="잡음 제거 필터"></p><p><img src="/image/differentiation_filter.png" alt="미분 필터"></p><ul><li>vertical Sobel Filter가 왜 미분 필터이냐고 의문이 든다면, 1차원 신호를 data로 생각하고 앞서 했었던 수치 미분을 떠올려 보자. 그렇다면, 단숨에 이해가 갔을 것이다. 지금은 vertical Sobel Filter이므로 가로의 Edge는 추출하지 못한 것을 확인할 수 있다. 그에 반해 세로 성분들은 잘 검출된 것을 확인 할 수 있다. 만일 위의 필터를 90도 rotate해주게되면 가로로 미분하는 horizonal Sobel Filter가 되어 위의 결과와는 반대의 결과를 보여줄 것이다.</li></ul><h2 id="합성곱-계층"><a href="#합성곱-계층" class="headerlink" title="합성곱 계층"></a>합성곱 계층</h2><p><img src="/image/product_to_conv.png" alt="곱에서 합성곱으로"></p><ul><li><code>입력</code>이 이제는 <code>영상</code>으로 여러개 들어오게 되어 각각의 입력층의 뉴런 하나 하나가 <code>channel</code>이라고 불린다. <code>필터 가중치</code>는 보통 <code>3x3, 5x5, 7x7등을 주로 사용</code>한다. 2D signal과 2D signal을 곱(<code>element-wise product or Hadamard product</code>)해야하므로 <code>합성곱</code>을 사용한다.  </li></ul><p><img src="/image/FC_Layer_conv.png" alt="전결합 계층"></p><p><img src="/image/Conv_layer.png" alt="합성곱 계층"></p><ul><li>$kernel_{Height} \times kernel_{Width} \times channel_{in} \times channel_{out}$ 만큼의 parameter가 필요하다. filter는 $Channel_{in} \times Chaeel_{out}$개 만큼 있을 것이다.</li></ul><p><img src="/image/Conv_Layer_meaning.png" alt="합성곱 계층의 의미"></p><ul><li>kernel(Filter)에 나타나는 모양과 유사한 모양을 한 위치가 높은 값으로 나타나게 된다.</li></ul><h2 id="기본적인-합성곱-신경망"><a href="#기본적인-합성곱-신경망" class="headerlink" title="기본적인 합성곱 신경망"></a>기본적인 합성곱 신경망</h2><p><img src="/image/basic_conv_structure.png" alt="합성곱 신경망의 기본 구조"></p><p><img src="/image/Conv_Layer_feature_map.png" alt="합성곱 계층"></p><ul><li>stride요소를 넣지 않으면, 합성곱 계층에서는 영상의 크기는 그대로이며, <code>영상의 채널 수</code>가 달라진다.</li><li><code>kernel(filter)가 돌아다니면서 포착하는 형태이기 때문에 공간적인 특징</code>이 있고, 따라서 <code>Feature Map</code>이라고 한다.</li></ul><p><img src="/image/Pooling_Layer.png" alt="풀링 계층"></p><p><img src="/image/Pooling_Layers.png" alt="Pooling Layers"></p><ul><li>classification에서는 Max Pooling이 주로 잘 먹힌다!</li></ul><p><img src="/image/Flatten.png" alt="평탄화"><br>-<code>Convolutional Layer와 FC Layer를 연결해주기 위해 필요하다</code></p><p><img src="/image/FC_Layer_why.png" alt="전결합 계층"></p><p><img src="/image/why_use_this_structure_conv.png" alt="그러면 왜 이런 구조를 쓰나?"></p><ul><li><p>먼저, 맨 처음 언급했던 머신러닝과 딥러닝의 가장 큰 차이는 사람이 feature를 넣어주느냐 그렇지 않느냐의 차이라고 했다. 크게 보면 위의 그래프에서 합성곱 계층과 활성함수의 과정을 N번 반복하는 것은 shallowNN의 input으로 넣어 줄 Feature를 뽑는 과정이라고 직관적으로 이해할 수 있다.</p></li><li><p>앞의 합성곱 계층에서 activation function 까지를 계속해서 <code>진행 할수록 Feature Map의 크기(width와 height)는 Kernel과 Pooling에 의해서 줄어들고 channel(depth)는 늘어나게 될 것이다. 또한 처음부터 끝까지 동일한 크기의 kernel(Filter)을 사용한다고 가정한다면, 영상에서 더 넓은 영역을 커버하는 효과를 주는 것과 동일하다.</code></p></li></ul><p><img src="/image/Receptive_Field.png" alt="Receptive Field"></p><ul><li><code>그래서 Feature Map을 한번 뽑을 때마다 Pooling을 해주면서 처음에는 좁은 영역을 점점 더 넓은 영역을 본다. 점점 더 넓은 영역을 본다는 의미는 Pooling을 함으로써 결국에는 더 넓은 범위를 대표하는 값들을 가진 2-D Matrix인 Feature Map이 될 것이기 때문이다.</code></li></ul><p><img src="/image/LeNet_5.png" alt="LeNet-5"></p><ul><li>98년도의 르쿤 교수님의 LeNet-5는 pooling 대신 subsampling을 사용하여 같은 Feature Map의 크기를 줄여주었다.</li></ul><p><img src="/image/VGG_16.png" alt="VGG-16"></p><h2 id="합성곱-신경망의-심화-이해"><a href="#합성곱-신경망의-심화-이해" class="headerlink" title="합성곱 신경망의 심화 이해"></a>합성곱 신경망의 심화 이해</h2><p><img src="/image/importance_of_conv.png" alt="합성곱 게층의 필요성"></p><ul><li>간단히 생각하면 $kernel_{height} \times kernel_{width} \times Channel_{in} \times Channel_{out}$ 만큼 어마어마하게 많은 Parameter가 필요하므로 계산해야 할 Parameter가 상대적으로 적은 FC Layer로 하는 것이 더 좋은 방법이지 않을까라고 생각하시는 분들이 있을 것이다. 허나, 그것은 잘못된 생각이다. <code>Convolutional Layer를 사용하기 때문에 우리가 Image를 처리할 수 있는 것이다. FC Layer를 사용하게 되면 오히려 계산해야 할 Parameter의 개수가 어마어마하게 늘어난다.</code>$(Height_{in} \times Width_{in} \times Channel_{in}) \times (Height_{out} \times Width_{out} \times C_{out})$ 얼핏 보기엔 비슷해보이겠지만, 예를 들어보자. 입력으로 RGB channel을 갖는 1024 * 1024 image를 받는다면, FC Layer를 사용한다면, $(1024 \tiems 1024 \times 16) \times (1024 \times 1024 \times 32)$이지만 Convolutional Layer를 사용하고 $3 \times 3$ kernel을 사용한다면 $(3 \times 3 \times 16 \times 32)$로 훨씬 적은 연산을 한다. 이러한 이유로 우리가 영상을 입력으로 하는 것은 절대로 FC Layer를 통해 해결할 수 없다.</li></ul><p><img src="/image/mathmatical_expression_of_FC_Layer_00.png" alt="전결합 계층의 수학적 표현"></p><p><img src="/image/mathmatical_expression_of_Conv_Layer_00.png" alt="합성곱 계층의 수학적 표현"></p><ul><li>위에서 W는 kernel들을 $C_{in} \times C_{out}$ Matrix로 이루어진 tensor이다. 즉, $W_{i,j}$들이 각각의 kernel을 나타내고 $X_{i}$와 convolution operation을 해주므로 편향은 FC Layer와 동일하게 channel 1개마다 1개씩 존재한다.</li></ul><p><img src="/image/importance_of_Padding.png" alt="Padding의 필요성"></p><p><img src="/image/Padding.png" alt="Padding"></p><ul><li>위의 그림의 예를 보면 kernel size가 $3 = 2N+1$이므로 입력에 상하좌우 1개의 Zero-Padding을 해준 것이다.</li></ul><p><img src="/image/Stride.png" alt="Stride"></p><ul><li>Stride를 하는 것은 결과를 미리 Convolution을 Full로 다 연산을 한 다음에 하나씩 Subsample하는 것과 동일한 결과를 가져온다. 그러므로 다 연산한 후에 subsampling을 하면 연산은 다하지만 결국엔 버리는 값이 생기기 때문에 Stride를 사용한다.</li></ul><p><img src="/image/conv_layer_feature.png" alt="합성곱 계층의 특징"></p><ul><li>학습 초반에는 위쪽의 Feature Map들 처럼 좁은 범위의 Feature들을 추출하지만, 학습의 후반 부에는 넓은 범위의 Feature들을 학습한다.</li></ul><h2 id="Batch-Normalization-배치-정규화"><a href="#Batch-Normalization-배치-정규화" class="headerlink" title="Batch Normalization(배치 정규화)"></a>Batch Normalization(배치 정규화)</h2><p><img src="/image" alt="Batch Normalization"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;합성곱-연산과-이미지-필터&quot;&gt;&lt;a href=&quot;#합성곱-연산과-이미지-필터&quot; class=&quot;headerlink&quot; title=&quot;합성곱 연산과 이미지 필터&quot;&gt;&lt;/a&gt;합성곱 연산과 이미지 필터&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/image/analo
+      
+    
+    </summary>
+    
+    
+      <category term="deep learning" scheme="https://heung-bae-lee.github.io/categories/deep-learning/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>data engineering basic(SQL Basic)</title>
+    <link href="https://heung-bae-lee.github.io/2019/12/10/data_engineering_02/"/>
+    <id>https://heung-bae-lee.github.io/2019/12/10/data_engineering_02/</id>
+    <published>2019-12-10T02:23:24.000Z</published>
+    <updated>2019-12-10T04:51:30.112Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="SQL-Structured-Query-Language"><a href="#SQL-Structured-Query-Language" class="headerlink" title="SQL(Structured Query Language)"></a>SQL(Structured Query Language)</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;SQL-Structured-Query-Language&quot;&gt;&lt;a href=&quot;#SQL-Structured-Query-Language&quot; class=&quot;headerlink&quot; title=&quot;SQL(Structured Query Language)&quot;&gt;&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="data engineering" scheme="https://heung-bae-lee.github.io/categories/data-engineering/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>data engineering basic(Unix환경 및 커맨드)</title>
     <link href="https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/"/>
     <id>https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/</id>
     <published>2019-12-09T08:48:07.000Z</published>
-    <updated>2019-12-09T16:01:15.934Z</updated>
+    <updated>2019-12-10T02:24:31.333Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Pipes-and-Filters"><a href="#Pipes-and-Filters" class="headerlink" title="Pipes and Filters"></a>Pipes and Filters</h3><p>cat : 해당 파일 전체를 print<br>head : 해당 파일 앞의 10줄 정도를 print<br>tail : 해당 파일 뒤의 20줄 정도를 print</p><p>command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장<br>command &gt;&gt; file : 기존의 파일에 덮붙여서 결과를 저장(python append같은 느낌!)</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example.py를 python3로 run하고 그 결과를 result.txt파일로 저장</span></span><br><span class="line">python3 example.py &gt; result.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># example.py를 python3로 run하고 그 결과를 result.txt파일에 덮붙여서 저장</span></span><br><span class="line">python3 example.py &gt;&gt; result.txt</span><br></pre></td></tr></table></figure><h3 id="Shell-script"><a href="#Shell-script" class="headerlink" title="Shell script"></a>Shell script</h3><ul><li><p><code>terminal에서 바로 명령어를 여러개 사용하고 싶을때 shell script를 사용하면 된다.</code></p></li><li><p>예를들어 아래의 example.py를 실행시켜 위에서 command를 한번에 실행시키고 싶다면 다음과 같이 먼저 example.py를 작성한 후에 command.sh 파일에는 command들을 작성한 후에 shell script 파일을 run하면 된다.</p></li></ul><h4 id="example-py"><a href="#example-py" class="headerlink" title="example.py"></a>example.py</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    <span class="comment"># command 뒤에 따라오는 첫번째 글자를 print</span></span><br><span class="line">    <span class="built_in">print</span>(sys.argv[1])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure><h4 id="command-sh"><a href="#command-sh" class="headerlink" title="command.sh"></a>command.sh</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">python3 example.py 1 &gt; result.txt</span><br><span class="line">python3 example.py 2 &gt;&gt; result.txt</span><br><span class="line">head result.txt</span><br><span class="line">rm -rf result.txt example.py</span><br></pre></td></tr></table></figure><h4 id="terminal창"><a href="#terminal창" class="headerlink" title="terminal창"></a>terminal창</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#권한을 설정</span></span><br><span class="line">chmod +x command.sh</span><br><span class="line">./command.sh</span><br></pre></td></tr></table></figure><h4 id="보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서"><a href="#보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서" class="headerlink" title="보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,"></a>보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># zip형식으로 되어있는 모든(*)파일을 삭제해라</span></span><br><span class="line">rm *.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모든 파일을 lisztfever라는 이름으로 압축해라. -r 옵션은 파일이 있을 수 있으므로 붙여준다.</span></span><br><span class="line">zip lisztfever.zip -r *</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws s3라는 storage에 s3://areha/lisztfever/lisztfever.zip 에 해당 path의 파일을 삭제</span></span><br><span class="line">aws s3 rm s3://areha/lisztfever/lisztfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># s3에게 다시 copy해라</span></span><br><span class="line">aws s3 cp ./listzfever.zip s3://areha/lisztfever/listzfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws lambda function을 update해라.</span></span><br><span class="line">aws lambda update-function-code --<span class="keyword">function</span>-name listzfever --s3-buket areha --s3-key listzfever/listzfever.zip</span><br></pre></td></tr></table></figure><h2 id="AWS-Cloud-Service"><a href="#AWS-Cloud-Service" class="headerlink" title="AWS Cloud Service"></a>AWS Cloud Service</h2><p>먼저, <code>IAM</code>(Identity and Access Management)에 대해서 설명하겠다. <code>내가 누구이고 어떤 Access를 가지고 있는지를 관리하는 곳이라고 생각할 수 있다.</code> 여기서 새로운 User를 등록 할 수 있다.</p><p><img src="/image/IAM_00.png" alt="그림00"></p><ul><li>위의 Add User를 통해서 새로운 User를 등록해보자.</li></ul><p><img src="/image/IAM_01.png" alt="그림01"></p><ul><li>Access type은 우리가 AWS cli를 통해서도 관리하므로 첫번째인 Programmatic access로 설정한다.</li></ul><p><img src="/image/IAM_02.png" alt="그림02"></p><ul><li><p>Permission을 주는 방식에 대한 설정하는 부분이다.</p><ul><li><p>Add user to group : 한 Project를 여러명이 같이 진행하여 여러명이 관리할 경우 사용.</p></li><li><p>Copy permissions from existing user : 말 그대로 이미 존재하는 user의 permission들 중 하나를 선택하여 Copy할 경우 사용</p></li><li><p>Attach existing policies directly : AWS에 존재하는 정책들 중 하나를 선택하여 바로 사용하는 경우 사용</p></li></ul></li><li><p>예전에 있던 계정이 만료된걸 모르고 있다가 결제를 안해버려서…. ㅠㅠㅠ 새롭게 만든 계정으로 하느라 등록된 User들이 없다. 그러므로 3번째 설정으로 들어가서 모든 최상위 permission을 갖는 AdministratorAccess를 주었다.</p></li><li><p>다음으로 넘어가게 되면, tag를 설정하게 되는데, 우선 넘어가겠다.(이 부분은 나중에 설정할 것이다.)</p></li></ul><p><img src="/image/IAM_03.png" alt="그림03"></p><ul><li>앞에서 설정한 사항들을 확인하고, Create User를 누르게 되면 설정한대로 User를 생성하게 되는 것이다.</li></ul><p><img src="/image/IAM_03.png" alt="그림04"></p><ul><li>Access key ID, Secret access key가 생성되어 나오는데, <code>이 창이 닫히면, 볼수 없으므로 Download csv를 하는 것을 권장한다.</code></li></ul><ul><li>설치 프로그램을 실행한다. /usr/local/aws에 AWS CLI를 설치하고 /usr/local/bin 디렉터리에 symlink aws를 생성한다. <code>-b 옵션을 사용하여 symlink를 생성하면 사용자의 $PATH 변수에 설치 디렉터리를 지정할 필요가 없다. 이렇게 하면 모든 사용자가 임의 디렉터리에서 aws를 입력하여 AWS CLI를 호출 가능하게 한다.</code></li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"</span> -o <span class="string">"awscli-bundle.zip"</span></span><br><span class="line">unzip awscli-bundle.zip</span><br><span class="line">sudo ./awscli-bundle/install -i /usr/<span class="built_in">local</span>/aws -b /usr/<span class="built_in">local</span>/bin/aws</span><br></pre></td></tr></table></figure><ul><li>위의 설치가 다 끝나면, 이제 aws cli의 configure를 설정해 볼 것이다. 이를 통해 우리가 console에 접속하지 않고도 cli 환경에서도 aws를 조작할 수 있게 된다.</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws configure</span><br><span class="line">AWS Access Key ID [None]: Access key ID</span><br><span class="line">AWS Secret Access Key [None]: Secret access key</span><br><span class="line">Default region name [None]: ap-northeast-2</span><br><span class="line">Default output format [None]:</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -448,55 +496,6 @@
     
     
       <category term="growth hacking" scheme="https://heung-bae-lee.github.io/categories/growth-hacking/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>growth_hacking_00</title>
-    <link href="https://heung-bae-lee.github.io/2019/05/18/growth_hacking_00/"/>
-    <id>https://heung-bae-lee.github.io/2019/05/18/growth_hacking_00/</id>
-    <published>2019-05-17T22:36:16.000Z</published>
-    <updated>2019-07-20T03:36:19.296Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Growth-hacking-outline"><a href="#Growth-hacking-outline" class="headerlink" title="Growth hacking outline"></a>Growth hacking outline</h1><h2 id="Start-up"><a href="#Start-up" class="headerlink" title="Start up?"></a>Start up?</h2><ul><li>에어비앤비, 우버, 비바리퍼블리카(토스), 우아한형제들(배달의 민족), VCNC의 타다 등의 회사</li><li><code>확장가능하고 반복가능한 사업모델을 탐색하기 위해 고안되어진 임시조직</code></li><li>아직 잘 작동하는 사업 모델을 찾아내지 못한 기업을 의미하며, 사업 모델이 잘 작동한다면 Established company라고 부를 수 있다.</li><li><code>스타트업의 숙명은 결국 사업 모델을 찾기 전까지 여러 가지 시도를 하고 시행착오를 겪을 수 밖에 없다!</code></li><li>스타트업의 특징<ul><li>한정된 자원(Runway) ex) 제한된 돈</li><li>Runway의 끝에 도달하기 전에 해야할 일<ul><li>시장, 고객 등에 대한 가설을 확인하며 고객 확보</li><li>매출, 후속 투자 유치 등</li></ul></li></ul></li></ul><p>이런 스타트업과 가설검증의 관계는 무엇일까?</p><pre><code>- 가설은, 팀이 가진 경험이나 직관을 기반으로한 학습된 추측이다.</code></pre><p><code>결국 스타트업은 끊임없이 가설을 검증해야하는 조직이다!!</code></p><ul><li><p>그러므로, 스타트업은 빠른 속도로(Lean하게) 가설을 검증해야 한다. 왜냐하면 많은 가설들을 주어진 자원내에 해결하여 이익을 창출해야하기 때문이다.</p></li><li><p>그로스 역시, 끊임 없이 가설을 세우고 검증하는 “테스트”를 반복하는 것이다.</p></li></ul><h2 id="리스크와-가설"><a href="#리스크와-가설" class="headerlink" title="리스크와 가설"></a>리스크와 가설</h2><ul><li>위에서 가설의 검증 중요성을 언급하였다. 그렇다면 스타트업이 가지고 있는 가설 중 어떤 가설 부터 확인해야 하는지를 말하자면, 틀렸을 경우, 사업이 실패할 확률이 큰 리스크가 높은 가설을 먼저 확인해야 함이 논리적일 것이다. 그렇다면 그 리스크가 큰 가설은 제일 무엇일지를 고민해보면 <code>수익을 창출해낼수 있으려면 고객이 있어야 하므로 잠재적인 고객이 없다는 것이 가장 리스크가 높을 것이다.</code></li></ul><h2 id="고객-리스크"><a href="#고객-리스크" class="headerlink" title="고객 리스크"></a>고객 리스크</h2><h3 id="고객에-대한-가설을-확인하는-방법"><a href="#고객에-대한-가설을-확인하는-방법" class="headerlink" title="고객에 대한 가설을 확인하는 방법"></a>고객에 대한 가설을 확인하는 방법</h3><ul><li><p>고객 인터뷰 (가장 효과적인 방법)</p><ul><li><p>포커스 그룹 인터뷰(FGI)</p><ul><li>5~6명 정도되는 인원들을 한 방에 모아놓고 인터뷰 진행을 하므로 인터뷰 중 자신의 주관적인 의견을 말하기 보다는 그 인터뷰의 흐름에 따라 의견을 낼 수 있는 <code>집단 사고의 위험</code>이 있을 수 있다. 또한 <code>목소리 큰 사람에세 동조</code>하는 경향을 보이므로 이런 문제를 해결하기 위해 전문 모더레이터를 고용하는 방법이 있지만 이 방법은 비용이 높으므로 스타트업에서 추천하는 방법은 아니다.</li></ul></li><li><p>1대 1 심층 인터뷰</p><ul><li>위의 포커스 그룹 인터뷰와는 다르게 집단 사고의 위험이 없고 비교적 쉽게 수행할 수 있다. 온전히 한명의 고객에 집중할 수 있다는 장점이 있다.</li></ul></li></ul></li></ul><p>여기까지 보게 되면 그로스 해킹은 데이터를 보아야만 하는 것이 아니지 않느냐는 의문이 생길 것이다. 이에 대한 답은 아니다라는 결론을 내릴 수 있게 된다. <code>왜냐하면 그로스라는 것은 결국 고객을 파악하여 고객이 어떤 문제를 가지고 있는지 같은 고객의 잠재적인 니즈를 파악하여 그를 해결하므로서 수익을 창출하는 것이기 때문이다.</code> 참고로 데이터 기반 회사의 끝판왕인 구글도 고객 인터뷰를 중시한다.</p><p>[참고] 고객 인터뷰 공부하기</p><ul><li>애쉬 모리아의 책 “린 스타트업”, “스케일링”</li><li>Google Ventures - User Research, Quick n’Dirty<br><a href="https://library.gv.com/user-research-quick-and-dirty-1fcfa54c91c4" target="_blank" rel="noopener">https://library.gv.com/user-research-quick-and-dirty-1fcfa54c91c4</a></li></ul><h3 id="고객이-존재한다면-추후에-확인해야할-리스트"><a href="#고객이-존재한다면-추후에-확인해야할-리스트" class="headerlink" title="고객이 존재한다면 추후에 확인해야할 리스트"></a>고객이 존재한다면 추후에 확인해야할 리스트</h3><ul><li>고객이 존재하긴 하더라도, 적은 수의 고객만 존재한다면 시장의 파이가 크지 않으므로 사업모델을 만들어내기 적합하지 않다. 이런 시장의 크기는 <code>충분히 여러명(50명, 100명)과 인터뷰를 하며, 반복적인 패턴을 관찰해야 하며, 또 다른 방법으로는 실제 제품을 개발하지 않고 아이디어를 검증하는 방법인 Smoke Test를 실행헤 보는 것이다. 예를 들면, 더미 화면을 만들어 그곳으로 트래픽을 유입시켜서 테스트를 하는 방법이다. 이렇게 함으로써 우리 제품의 시장에서의 수요를 확인할 수 있다.</code></li></ul><h2 id="솔루션-리스크"><a href="#솔루션-리스크" class="headerlink" title="솔루션 리스크"></a>솔루션 리스크</h2><ul><li>Problem-Solution Fit이 맞지 않다라는 말을 들어본적이 있을 것이다. 즉, 솔루션이 문제에 적합하지 않다는 것이다. 고객의 문제도 존재하고, 지갑을 열 고객도 충분히 많지만 우리의 제품이 그 문제에 대한 효과적인 해결책이 아닌 경우에 위의 말을 사용한다. <code>솔루션 리스크에 대비하려면 프로토타입을 만들어서 고객 반을을 먼저 확인해야 한다.</code> 가설을 확인하지 않은 채, 제품 개발에 너무 많은 자원을 들이지 않아야 한다.</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Growth-hacking-outline&quot;&gt;&lt;a href=&quot;#Growth-hacking-outline&quot; class=&quot;headerlink&quot; title=&quot;Growth hacking outline&quot;&gt;&lt;/a&gt;Growth hacking outli
-      
-    
-    </summary>
-    
-    
-      <category term="growth hacking" scheme="https://heung-bae-lee.github.io/categories/growth-hacking/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>프로그래머를 위한 베이지안 with 파이썬(1)</title>
-    <link href="https://heung-bae-lee.github.io/2019/03/08/Bayes/"/>
-    <id>https://heung-bae-lee.github.io/2019/03/08/Bayes/</id>
-    <published>2019-03-08T14:52:20.000Z</published>
-    <updated>2019-07-20T03:36:10.633Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="베이지안-심리-상태"><a href="#베이지안-심리-상태" class="headerlink" title="베이지안 심리 상태"></a>베이지안 심리 상태</h3><ul><li>베이지안 추론은 불확실성을 유지한다는 점에서 기존의 전통적인 통계적 추론과 다르다. 위의 말을 읽었을때 개인적으로 통게학을 전공한 나로써는 이해가 잘 가지 않았다. 왜냐하면 통계라는 학문 자체가 불확실성을 기반으로 하는 것이 아닌가라는 의문이 들었기 때문이다. random한 것에서 확률적으로 높은 것을 찾아내는 것인데 말이다.</li></ul><p>우선 확률을 해석하는 방법은 크게 두가지로 구분 될 수 있다.</p><ul><li>고전적인 빈도주의적 관점 : 사건이 장기적으로 일어나는 빈도로 해석<br>ex) 항공기의 사고 확률을 오랫동안 발생한 비행기 사고의 빈도로 해석한다.</li></ul><p>위의 빈도주의적 관점은 논리적으로는 오류가 없어 보이나, 오랫동안이라는 전제조건이 필요하다. 만일 오랫동안 즉, 충분한 시도가 없었을 경우의 확률은 어떠한 근거로 이야기 해야할 것인가의 의문을 갖게 된다. 그것이 바로 베이지안 방법이다.</p><ul><li>베이지안 관점 : 사건 발생에 대한 믿음 또는 확신의 척도로 해석</li></ul><p>간단히 말하면, 확률은 의견이나 견해를 요약한 것이라는 의미일 것이다. 주목할 점은 믿음의 정도나 확신의 척도가 개인의 주관에 달려 있다는 점이다. 그렇다면 객관적이지 않은데 이것을 확률이라고 말할 수 있는가? 좀더 근본적인 얘기를 해보자면 믿음이기 때문에 누군가가 틀렸다는 것을 말할 수 없지 않은가?</p><p>베이지안관점에서의 확률을 이야기하자면 베이즈 정리 또한 빼놓고 이야기 할수 없을 것이다.<br>베이즈 정리의 사전확률과 사후확률</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;베이지안-심리-상태&quot;&gt;&lt;a href=&quot;#베이지안-심리-상태&quot; class=&quot;headerlink&quot; title=&quot;베이지안 심리 상태&quot;&gt;&lt;/a&gt;베이지안 심리 상태&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;베이지안 추론은 불확실성을 유지한다는 점에서 기존의 전통적
-      
-    
-    </summary>
-    
-    
-      <category term="Bayes" scheme="https://heung-bae-lee.github.io/categories/Bayes/"/>
     
     
   </entry>
