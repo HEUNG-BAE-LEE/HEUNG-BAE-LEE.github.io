@@ -354,6 +354,30 @@
   </entry>
   
   <entry>
+    <title>내가 정리하는 C/C++/자료구조_00</title>
+    <link href="https://heung-bae-lee.github.io/2019/07/24/data_structure_00/"/>
+    <id>https://heung-bae-lee.github.io/2019/07/24/data_structure_00/</id>
+    <published>2019-07-24T08:03:14.000Z</published>
+    <updated>2019-12-11T16:25:06.686Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="개발환경-구축하기"><a href="#개발환경-구축하기" class="headerlink" title="개발환경 구축하기"></a>개발환경 구축하기</h3><h4 id="C와-C"><a href="#C와-C" class="headerlink" title="C와 C++"></a>C와 C++</h4><p>1) C++는 기본적으로 C의 기능을 확장한 형태의 프로그래밍 언어이다.<br>2) 따라서 C 언어의 기능을 포함하고 있다는 점에서 C++프로젝트로 .C 확장자를 갖는 파일을 생성하여 코딩해도 정상적으로 동작한다.</p><p>개발환경 구축하기</p><ul><li><p>나는 개인적으로 IDE(Integrated Development Environment) 중에서 Atom을 이미 설치하고 있기에 따로 대표적인 Visual Studio를 설치하진 않았다.</p></li><li><p>Atom에서는 따로 <code>gpp-compiler</code> 라는 패키지를 설치해주면 끝난다! 단축키 또한 자신이 커스터마이징 할 수 있는데, <code>나는 default인 f5가 compile f6이 디버깅으로 되어있는 상태에서 사용할 것이다.</code></p></li></ul><p><a href>Development_environment</a></p><ul><li>전통적인 프로그램은 전처리기 -&gt; 컴파일러 -&gt; 링커를 거쳐 실행파일로 만들어진다.</li></ul><p>역시! 모든 언어의 기초를 배울때 하는 Hello World를 언급하며 시작해보자!</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(void) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world\n"</span>);</span><br><span class="line">    // system(<span class="string">"pause"</span>);</span><br><span class="line">    system( <span class="string">"read -n 1 -s -p \"Press any key to continue...\""</span> );</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>명령문 하나하나씩 설명을 하자면 처음, #include 명령어를 이용해 다양한 라이브러리를 불러 올 수 있다. 위에서 불러온 <code>stdio.h</code>(standard io)는 여러 기본적인 기능을 포함하고 있지만 그 중 대표적으로 위에서 사용한 printf가 있다.<code>main</code>함수는 다양한 함수가 사용 될 수 있겠지만 처음 시작할 때는 main함수 이후에 사용한다. 또한 가장 큰 특징은 <code>함수는 반환값이 없을 수도 있지만 main 함수에서는 항상 0을 반환하는 것이 일반적이다.</code> 나와 같이 R과 python으로 프로그래밍을 배운 사람이라면 ;이 낯설을 것이다. C/C++에서는 <code>하나의 명령어가 끝났음을 알리기 위해 ;을 붙인다.</code> 위의 명령 프롬프트에서 pause 명령어를 실행시키면 키보드를 입력 전까지 대기하는 기능을 사용할 수 있다. system 함수를 이용하여 운영체제의 기본적인 기능을 이용할 수 있다. 허나, 나의 mac북은 window의 프롬프트 창과는 다른 운영체제이므로 당연히 pause가 걸리지 않는다! 실행하면 찾을 수 없는 명령어라고 나오므로 약간의 편법으로 구사할 수 있을 것 같다! 혹시라도 mac에서 pause를 걸려한다면 저런식으로 만들어 보는 방법도 있다.</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;개발환경-구축하기&quot;&gt;&lt;a href=&quot;#개발환경-구축하기&quot; class=&quot;headerlink&quot; title=&quot;개발환경 구축하기&quot;&gt;&lt;/a&gt;개발환경 구축하기&lt;/h3&gt;&lt;h4 id=&quot;C와-C&quot;&gt;&lt;a href=&quot;#C와-C&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+    
+      <category term="C/C++/자료구조" scheme="https://heung-bae-lee.github.io/categories/C-C-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>[CS231n]Lecture08-Deep learning Software</title>
     <link href="https://heung-bae-lee.github.io/2019/07/23/cs231n_08/"/>
     <id>https://heung-bae-lee.github.io/2019/07/23/cs231n_08/</id>
@@ -471,31 +495,6 @@
     
     
       <category term="CS231n" scheme="https://heung-bae-lee.github.io/categories/CS231n/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>growth_hacking_01</title>
-    <link href="https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/"/>
-    <id>https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/</id>
-    <published>2019-05-17T23:38:10.000Z</published>
-    <updated>2019-07-20T03:36:16.967Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="결국-문제는-Distribution"><a href="#결국-문제는-Distribution" class="headerlink" title="결국 문제는 Distribution"></a>결국 문제는 Distribution</h2><ul><li><p>모바일 앱 시장을 생각해 보면 알수 있듯이 초창기에는 신기해서 앱을 다운로드하던 시정이 있었지만, 현재는 앱을 다운로드하지 않는 트렌드를 알 수 있다. 클라우드 서비스의 성장과 SaaS의 성장으로 인래 많은 스타트업이 생겼지만, 그 중 대부분이 실패를 한다. 그 이유는 <code>유통</code>때문이다. 즉, 빈약한 유통채널을 가지고 있기 때문이다. 그러한 대표적인 사례로 TiVo를 꼽을 수 있다. 즉, 컨텐츠가 있어야 디지털 비디오 레코드 상품을 판매하는 것이 의미있는 것인데, 컨텐츠들은 모두 케이블 TV 사업자와 위성 TV 사업자가 컨텐츠 유통을 쥐고있기 때문에 유통이 어려웠다. 결국 Tivo는 Patent Troll(특허 전쟁)로 전락하였다.</p></li><li><p><code>성공적인 기술 기업의 일반적인 모델은, 제품 중심기업이 아니라 유통 중심 기업이 되는 것</code>이다. 구글, 페이스북등의 기업은 그 자체가 유통 플랫폼이 되어, 계속해서 새로운 제품을 고객들에게 선보이고 있다. 허나 위의 유통 중심의 기업으로 성장하기가 어려운 현실이 되었다. 시장에 많은 제품과 서비스가 나와있으며 소비자와 고객들이 가진 시간과 돈은 한정되어있으므로 모든 제품과 서비스가 고객들에게 도달하지 못하기 때문이다. 또한, 페이스북, 인스타그램 등 광고 플랫폼의 지면에는 한계가 있지만, 광고하고 싶은 기업은 점점 늘어나기 때문에 광고비는 상승한다. 사람들은 점점 광고를 클릭하지 않으며, 사람들이 기업의 마케팅 활동에 적응하고 피로감을 느끼고있는 상황은 더욱 더 유통이 이루어지기 힘들게 하고 있다.</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;결국-문제는-Distribution&quot;&gt;&lt;a href=&quot;#결국-문제는-Distribution&quot; class=&quot;headerlink&quot; title=&quot;결국 문제는 Distribution&quot;&gt;&lt;/a&gt;결국 문제는 Distribution&lt;/h2&gt;&lt;ul&gt;
-
-      
-    
-    </summary>
-    
-    
-      <category term="growth hacking" scheme="https://heung-bae-lee.github.io/categories/growth-hacking/"/>
     
     
   </entry>
