@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>가장 단순한 신경망을 통한 작동원리 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    <meta name="description" content="Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.             위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현">
+<meta property="og:type" content="article">
+<meta property="og:title" content="가장 단순한 신경망을 통한 작동원리">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/06/deep_learning01/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.             위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/Neuron.png">
+<meta property="og:updated_time" content="2019-12-08T12:33:35.852Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="가장 단순한 신경망을 통한 작동원리">
+<meta name="twitter:description" content="Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.             위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Neuron.png">
+    
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/06/deep_learning01/">
+   
+    
+        <link rel="alternate" href="/" title="DataLatte&#39;s IT Blog" type="application/atom+xml">
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/deep-learning/">deep learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-deep_learning01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        가장 단순한 신경망을 통한 작동원리
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/06/deep_learning01/" class="article-date">
+            <time datetime="2019-12-05T15:00:00.000Z" itemprop="datePublished">2019-12-06</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/image/Neuron.png" alt="신경 세포"><br><img src="/image/Graph_of_Neuron.png" alt="Neuron의 그래프 표현"></p>
+<ul>
+<li>Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.</li>
+</ul>
+<p><img src="/image/Artificial_NN.png" alt="인공신경망"></p>
+<p><img src="/image/Fully_connected_Layer.png" alt="Fully-Connected Layer(Dense Layer)"></p>
+<p><img src="/image/ShallowNN.png" alt="얕은 신경망"></p>
+<p><img src="/image/what_will_you_do_with_shallowNN.png" alt="얕은 신경망으로 무엇을 할 수 있을까?"></p>
+<p><img src="/image/regression.png" alt="회귀"></p>
+<p><img src="/image/classification.png" alt="분류"></p>
+<p><img src="/image/regression_with_shallowNN.png" alt="얕은 신경망을 이용한 회귀"></p>
+<p><img src="/image/binary_classification_with_shallowNN.png" alt="얕은 신경망을 이용한 이진분류"></p>
+<p><img src="/image/Multi_classification_with_shallowNN.png" alt="얕은 신경망을 이용한 다중 클래스 분류"></p>
+<p><img src="/image/mathmatical_expression_of_Neuron.png" alt="뉴런의 수학적 표현"></p>
+<ul>
+<li>위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 <code>편향을 통해 원점을 지나지 않는 선들도 표현할 수 있게 할 수 있다.</code> 참고로 특별히 편향이 없는 경우도 있을 순 있다.</li>
+</ul>
+<p><img src="/image/mathmatical_expression_of_Fully_connecter_layer.png" alt="전결합 계층의 수학적 표현"></p>
+<p><img src="/image/input_Layer.png" alt="입력 계층"></p>
+<p><img src="/image/hidden_Layer.png" alt="은닉계층"></p>
+<p><img src="/image/output_Layer.png" alt="출력계층"></p>
+<h2 id="회귀-문제"><a href="#회귀-문제" class="headerlink" title="회귀 문제"></a>회귀 문제</h2><p><img src="/image/regression01.png" alt="회귀"></p>
+<ul>
+<li>어떤 입력이 들어왔을 떄 출력이 연속적인 값을 가질 때 Regression을 사용한다.</li>
+</ul>
+<p><img src="/image/simple_linear_regression.png" alt="단순 선형 회귀"><br><img src="/image/multi_linear_regression.png" alt="다중 선형 회귀"><br><img src="/image/aspect_of_geometry_about_multi_linear_regression.png" alt="다중 선형 회귀의 기하학적 해석"><br><img src="/image/shallowNN_and_regression_algorithm.png" alt="얕은 신경망과 회귀 알고리즘"><br><img src="/image/hidden_Layer_and_regression.png" alt="은닉 계층과 회귀"></p>
+<h2 id="이진-분류-문제"><a href="#이진-분류-문제" class="headerlink" title="이진 분류 문제"></a>이진 분류 문제</h2><p><img src="/image/classification_01.png" alt="분류"><br><img src="/image/logistic_regression.png" alt="로지스틱 회귀"><br><img src="/image/sigmoid_function.png" alt="sigmoid function"><br><img src="/image/binary_cross_entropy.png" alt="교차 엔트로피 오차"><br><img src="/image/aspect_of_geometry _about_multi_logistic_regression.png" alt="다중 로지스틱 회귀의 기하학적 해석"><br><img src="/image/shallowNN_and_classification_algorithm.png" alt="얕은 신경망과 분류 알고리즘"><br><img src="/image/hidden_Layer_and_classification.png" alt="은닉계층과 분류"></p>
+<h2 id="다중-분류-문제"><a href="#다중-분류-문제" class="headerlink" title="다중 분류 문제"></a>다중 분류 문제</h2><p><img src="/image/multi_classification.png" alt="다중 클래스 분류"></p>
+<p><img src="/image/one_hot_encoding.png" alt="one-hot Encoding"><br><img src="/image/sparse_expression_of_one_hot_encoding.png" alt="one-hot Encoding의 희소 표현"><br><img src="/image/multi_classificatio_with_shallowNN.png" alt="얕은 신경망을 이용한 다중 클래스 분류"><br><img src="/image/how_do_shallowNN_compute_output.png" alt="어떻게 출력을 계산할 것인가?"><br><img src="/image/softmax_vs_sigmoid.png" alt="Softmax vs Sigmoid"><br><img src="/image/how_do_shallowNN_compare_Truth_with_outputs.png" alt="정답과 출력을 어떻게 비교할까?"><br><img src="/image/Cross_Entropy_Error.png" alt="Cross Entropy Error"></p>
+<ul>
+<li>Softmax의 분모에 의해서 다른 클래스에 대한 학습에도 영향을 준다는 의미이다. 분모는 다른 클래스로 예측한 확률또한 더해주기 때문이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 얕은 신셩망을 이용한 다중 분류 문제</span></span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"><span class="comment">## 함수 구현</span></span><br><span class="line"><span class="comment"># Sigmoid 함수</span></span><br><span class="line"></span><br><span class="line">def sigmoid(x):</span><br><span class="line">    <span class="built_in">return</span> 1/(1+np.exp(-x))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Softmax 함수</span></span><br><span class="line">def softmax(x):</span><br><span class="line">    <span class="built_in">return</span> np.exp(x)/np.sum(np.exp(x))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 네트워크 구조 정의</span></span><br><span class="line">class ShallowNN:</span><br><span class="line">    <span class="comment"># 아래의 W와 b에 적절한 값은 추후에 넣어주기 때문에 현재는 0으로 잡음</span></span><br><span class="line">    def __init__(self, num_input, num_hidden, num_output):</span><br><span class="line">        self.W_h = np.zeros((num_hidden, num_input), dtype=np.float32)</span><br><span class="line">        self.b_h = np.zeros((num_hidden, 1), dtype=np.float32)</span><br><span class="line"></span><br><span class="line">        self.W_o = np.zeros((num_output, num_hidden), dtype=np.float32)</span><br><span class="line">        self.b_o = np.zeros((num_output, 1), dtype=np.float32)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># NN의 연산을 call 형태로 해서 작성</span></span><br><span class="line">    def __call__(self, x):</span><br><span class="line">        h = sigmoid(np.matmul(self.W_h, x) + self.b_h)</span><br><span class="line">        <span class="built_in">return</span> softmax(np.matmul(self.W_o, h) + self.b_o)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 데이터셋 불러오기</span></span><br><span class="line">dataset = np.load(<span class="string">'ch2_dataset.npz'</span>)</span><br><span class="line">inputs = dataset[<span class="string">'inputs'</span>]</span><br><span class="line">labels = dataset[<span class="string">'labels'</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(labels.shape)</span><br><span class="line"><span class="built_in">print</span>(inputs.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ShallowNN Model 생성</span></span><br><span class="line">model=ShallowNN(num_input=inputs.shape[1], num_hidden=128, num_output=10)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 사전에 학습된 파라미터 불러오기</span></span><br><span class="line">weights = np.load(<span class="string">'ch2_parameters.npz'</span>)</span><br><span class="line">model.W_h = weights[<span class="string">'W_h'</span>]</span><br><span class="line">model.b_h = weights[<span class="string">'b_h'</span>]</span><br><span class="line">model.W_o = weights[<span class="string">'W_o'</span>]</span><br><span class="line">model.b_o = weights[<span class="string">'b_o'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 결과 프린트</span></span><br><span class="line">outputs = []</span><br><span class="line"><span class="keyword">for</span> point, label <span class="keyword">in</span> zip(inputs, labels):</span><br><span class="line">    output = model(point)</span><br><span class="line">    outputs.append(np.argmax(output))</span><br><span class="line">    <span class="built_in">print</span>(np.argmax(output), label)</span><br><span class="line"></span><br><span class="line">outputs =  np.stack(outputs, axis=0)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 정답 클래스 scatter plot</span></span><br><span class="line">plt.figure()</span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> range(10):</span><br><span class="line">    mask = labels == idx</span><br><span class="line">    plt.scatter(inputs[mask, 0], inputs[mask, 1])</span><br><span class="line">plt.title(<span class="string">'True Label'</span>)</span><br><span class="line"><span class="comment"># plt.grid()</span></span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 출력 클래스 scatter plot</span></span><br><span class="line">plt.figure()</span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> range(10):</span><br><span class="line">    mask = outputs == idx</span><br><span class="line">    plt.scatter(inputs[mask, 0], inputs[mask, 1])</span><br><span class="line">plt.title(<span class="string">'Model output'</span>)</span><br><span class="line"><span class="comment"># plt.grid()</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://heung-bae-lee.github.io/2019/12/06/deep_learning01/" data-id="ck42asxmo0012r2baygf7ycw2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "가장 단순한 신경망을 통한 작동원리",
+        "image": "https://heung-bae-lee.github.io/image/Neuron.png",
+        "keywords": "",
+        "genre": "deep learning",
+        "datePublished": "2019-12-06",
+        "dateCreated": "2019-12-06",
+        "dateModified": "2019-12-08",
+        "url": "https://heung-bae-lee.github.io/2019/12/06/deep_learning01/",
+        "description": "
+
+Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.
+
+
+
+
+
+
+
+
+
+
+
+
+위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현"
+        "wordCount": 689
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/12/08/deep_learning02/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            쉽게 배우는 경사하강 학습법
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/12/05/deep_learning00/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">딥러닝이 무엇인가?</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/10/deep_learning_04/" class="title">Convolution Neural Network(1)</a></p>
+                            <p class="item-date"><time datetime="2019-12-10T04:50:24.000Z" itemprop="datePublished">2019-12-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/10/data_engineering_02/" class="title">data engineering basic(SQL Basic)</a></p>
+                            <p class="item-date"><time datetime="2019-12-10T02:23:24.000Z" itemprop="datePublished">2019-12-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/09/data_engineering_01/" class="title">data engineering basic(Unix환경 및 커맨드)</a></p>
+                            <p class="item-date"><time datetime="2019-12-09T08:48:07.000Z" itemprop="datePublished">2019-12-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/08/deep_learning03/" class="title">심층 신경망의 구조</a></p>
+                            <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/08/deep_learning02/" class="title">쉽게 배우는 경사하강 학습법</a></p>
+                            <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/12/06/deep_learning01/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
