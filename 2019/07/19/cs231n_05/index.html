@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>[CS231n]Lecture05-Convolution Neural Network | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[CS231n]Lecture05-Convolution Neural Network">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/07/19/cs231n_05/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-21T08:59:00.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[CS231n]Lecture05-Convolution Neural Network">
+<meta name="twitter:description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/07/19/cs231n_05/">
+   
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+<link rel="alternate" href="/atom.xml" title="DataLatte's IT Blog" type="application/atom+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/CS231n/">CS231n</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-cs231n_05" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        [CS231n]Lecture05-Convolution Neural Network
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/07/19/cs231n_05/" class="article-date">
+            <time datetime="2019-07-18T18:00:00.000Z" itemprop="datePublished">2019-07-19</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>CNN의 역사는 생략하겠다.</p>
+<h3 id="CNN의-기본적인-구조"><a href="#CNN의-기본적인-구조" class="headerlink" title="CNN의 기본적인 구조"></a>CNN의 기본적인 구조</h3><p>기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다.</p>
+<p>더 자세히 말하자면, 우선 필터의 크기는 입력의 크기보다는 작지만 필터의 깊이는 항상 입력의 깊이 만큼 항상 확장되어야 한다. 그러한 필터를 전체 이미지의 일부 공간에 겹쳐놓고 내적을 수행한다. 필터의 W(가중치)와 이에 상응하는 위치에 있는 입력 이미지의 픽셀을 곱해준다.</p>
+<p>이러한 내적을 할 때는 fully connected layer의 연산과 동일하게 필터 크기에 상응하는 입력 데이터의 텐서를 하나의 긴 벡터로 보고 벡터 끼리의 내적으로 생각하면 된다. 왜냐하면 각 원소끼리 Convolution을 하는 것과 텐서를 쭉 펴서 내적을 하는 것은 동일한 작업의 결과물을 보여주기 때문이다.</p>
+<p><code>신호처리 분야에서의 convolution은 실제로 필터를 뒤집은 다음에 연산을 수행한다는 내용</code>이 있었는데 이 부분은 아직 정확한 의미를 알지 못해 좀 더 찾아보며 공부한 후 추후에 다시 내용을 업데이트 해야할 것 같다.</p>
+<p>이제부터는 CNN에서의 필터가 작동하는 방식을 말해 보면, Convolution은 이미지의 좌상단부터 시작하게 된다. 그리고 필터와 입력 이미지 데이터의 내적으로인해 각 해당 위치에 activation map을 산출하게 된다. 예를 들어 2칸씩 띄어서 필터를 슬라이딩 한다던지 출력 activation map 행렬의 크기는 필터를 어떻게 슬라이드를 하느냐에 따라 다를 것이다. 기본적으로는 하나씩 연산을 수행한다. 보통 Convolution Layer에서는 여러개의 필터를 사용하는데 그 이유는 <code>필터마다 다른 특징을 추출하고 싶기 때문</code>이다. activation map의 갯수는 사용하는 필터갯수에 따라 달라진다.</p>
+<p>CNN(ConvNet)layer들 사이에 보통의 NN 처럼 activation function, Convolution, pooling(뒤에 더 자세한 설명을 하겠지만 pooling은 activation map의 사이즈를 줄이는 역할을 한다.) 같은 처리를 한 후 이러한 layer 구조를 여러번 쌓아준다. 이러한 여러 Layer들을 쌓고나서 보면 <code>결국 각 필터들이 계층적으로 학습을 하는것을 보게된다</code>. 보통은 CNN 전체의 구조에서 <code>앞쪽에 있는 필터들은 low-level feature</code>(Edge와 같은)를 학습하게 되고, 중간은 Mid-level feature을 가지게 되어 cornor나 blobs등과 같은 특징들이 보인다. <code>뒤쪽으로 갈수록 high-level feature</code>(좀 더 객체와 닮은 것들이 출력으로 나오는)를 학습하게 된다.</p>
+<p>이렇게 필터에 따라 특징을 추출하는 과정이 중요하기에 필터의 <code>Depth를 늘리는 데 어떤 직관을 가져야하는지 의문이 들수도 있을 것이다. 이는 어떻게 모델을 디자인해야 되는지의 문제이므로 실제로는 어떤것이 더 좋은지를 찾아내야한다.</code></p>
+<p>Conv Layer를 계층적으로 쌓아서 단순한 특징을 뽑고 그서을 또 조합해서 더 복잡한 특징으로 활용했다. 이는 강제로 학습시킨 것이 아니라 계층적 구조를 설계하고 역전파로 학습시킨 것 뿐이지만 필터는 이렇게 학습되는 것이다. 우리가 각 필터를 통해 얻은 activation map을 시각화하면 이미지가 어떻게 생겨야 해당 뉴런의 활성을 최대화시킬 수 있는지는 나타내는 것이다. <code>즉, 이미지가 필터와 비슷하게 생겼으면 출력값이 커지게 된다! 그러므로 우리는 이런 시각화를 통해 어떤 필터에 대한 activation map인지를 역으로 추론해 볼 수 있을 것이다. 마치 이미지 중 어느 위치에서 필터가 크게 반응하는 지를 볼 수 있기 때문이다.</code>시각화는 Backpropagation을 통해 해볼 수 있다. <code>보통 필터의 갯수는 2의 제곱수로 한다. ex) 32, 64, 128, 512등</code></p>
+<h3 id="Spatial-dimension"><a href="#Spatial-dimension" class="headerlink" title="Spatial dimension"></a>Spatial dimension</h3><p>먼저, 한가지 주의할 점은 우리의 입력데이터를 잘 커버할 수 없는 필터 사이즈로 CNN 구조를 설계하게 되면, 그로인한 불균형한 결과를 볼 수도 있기 때문에 잘 동작하지 않을 수 있다는 문제가 있다. 그러므로 필터의 사이즈를 정할떄는 입력데이터를 커버할 수 있는 사이즈로 정해주어야 할 것이다.</p>
+<p>우리가 필터를 슬라이딩한 후의 activation map의 사이즈(가로,세로 크기)는</p>
+<ul>
+<li><code>(원래 image dimension - 필터 dimension)/stride + 1</code></li>
+</ul>
+<p>이를 이용해서 어떤 필터 크기를 사용해야하는 지를 알 수가 있다. 어떤 스트라이드를 사용했을 때 이미지에 꼭 맞는지, 그리고 몇 개의 출력값을 낼 수 있는지도 알 수 있다.</p>
+<h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h3><p>가장 흔히 쓰는 기법은 zero-pad이다. <code>입력 image data의 코너 즉 가장자리는 필터를 적용할 때 필터의 중심보다는 덜 영향을 주진 않을지의 의문을 가질 수도 있을 것이다. 그러한 의문을 해소하기 위해 zero padding을 사용하는 것이다.</code> 다음 그림처럼, 가장자리에 0을 채워 덫붙여 넣는 것이다. 그렇게하면 좌상단의 자리에서도 필터 연산을 수행할 수 있게 된다. 혹시 Padding을 모르는 사람들을 위해 말을 하자면, 예를들어 image data의 가장자리에 픽셀을 덫붙여주는 작업이다. zero padding을 하면 모서리에 필요없는 특징을 추가하게 되는 것은 아닌지라는 의문을 갖을 수 있는데, 우리의 본 목적은 이미지나 영상 내에서 어떤 edge 부분의 위치(값)을 얻고 싶은 것이고, zero-padding은 이를 할 수 있는 하나의 방법일 뿐이라는 것을 명심하자! 왜냐하면 우리는 지금 필터가 닿지 않는 모서리 부분에서도 값을 뽑을 수 있게 되기 때문이다. (zero가 아닌 mirror나 extend하는 방법도 있다!! 허나, zero-padding 제법 잘 동작하는 방법 중 하나이다.) <code>물론 모서리 부분에 약간의 artifact가 생길 순 있다. 당연히 고려해야 하는 부분이다</code>. zero-padding을 하는 또 다른 이유는 Layer를 거치면서도 입력의 사이즈를 유지하기 위해서이다. padding을 해줌으로서 컬럼이 두개가 더 생성되어 결국에는 입력받은 데이터의 크기와 동일한 출력 크기를 얻을 수 있다는 점을 앞서 배운 공식에 적용시켜 생각해보면 이해가 갈 것이다.</p>
+<p><code>즉, 요약하면 Padding을 하게되면 출력 사이즈를 유지시켜주고 필터의 중앙이 닿지 않는 곳도 연산할 수 있다는 것을 알 수 있다.</code></p>
+<p>다음은 내가 강의를 들으면서 접했던 질문 중 나 또한 궁금했던 질문이다. <code>만약 이미지가 square matrix가 아니고 rectangular matrix라면 수평, 수직방향의 stride를 다르게 적용해야 하는지 이다.</code> 이런 질문은 나왁 같은 입문자들에게는 궁금할 만한 질문이라고 생각한다. 담은 <code>물론 가능하지만, 보통은 square matrix로 이미지를 처리한후 사용하여 같은 stride를 적용한다는 것이다.</code> 이미지 해상도 문제와도 관련이 있다. 아마 우리는 입력 이미지 원본 상태의 비율을 유지하고 싶겠지만 대부분은 정사각형으로 잘라서 사용한다는 것이다.</p>
+<p><code>일반적으로 어떤 stride와 filter를 쓸건지를 정하는 방법이 있다.</code><br>| filter size | stride |<br>|:-:|:—:|<br>|3x3   |  1  |<br>|5x5   |  2  |<br>|7x7   |  3  |</p>
+<p>만약 Layer가 여러겹 쌓인 구조를 설계한다고 가정했을때, <code>zero-padding을 하지 않는 다면 출력 사이즈는 아주 빠르게 줄어 들게 될 것이다. 그 의미는 결국 일부 정보를 잃게 되는 것이고 원본 이미지를 표현하기에 너무 작은 값을 사용하게 될 것이다.</code> 또한, 그 이유는 매번 필터를 적용하여 convolution을 할 때 각 코너에 있는 값들을 계산하지 못하기 때문이다.</p>
+<p>예를 들어 보자. input volume이 32x32x3이고, 10개의 5x5 필터들을 stride 1, padding을 2로 주었을 경우, output volume size는 어떻게 될 것인가? 정답은 32x32x10이다.<br>(32+2<em>2-5/1+1=32이고 필터의 갯수가 10이므로) <code>그렇다면 이 Layer의 parameter는 총 몇개 일까?</code> 정답은 5</em>5<em>3=75개라는 가중치와 bias인 1개를 더한 75+1=76개를 각 필터당 가지므로 총 10개의 필터가 있기에 76</em>10=760개이다.</p>
+<p><code>1x1 Convolution도 의미가 있다.</code> 필터의 크기가 1초과인 다른 필터들 처럼 공간적인 정보를 이용하진 않지만 여전히 Depth만큼 연산을 수행한다. 그러니 1x1 ConvNet는 입력의 전체 Depth에 대한 내적을 수행하는 것과 같다.</p>
+<p><code>&#39;stride를 선택하는 데 있어 가질 수 있는 직관은 무엇인가&#39;라는 의문에 stride를 크게 가져갈수록 출력은 점점 작아질 것이라는 것이다. 즉, 이미지를 다운샘플링하는 것인데 Pooling을 하는 것과 비슷하다. 엄밀히 말하자면 둘은 다른 얘기이며, Pooling 보다 더 좋은 성능을 보이기도 한다. Pooling 처럼 다운 샘플링하는 동일한 효과를 얻으면서도 더 좋은 성능을 낼 수도 있다.</code> 그리고 activation map의 사이즈를 줄이는 것은 추후 모델의 전체 파라미터의 갯수에도 영향을 미친다. 왜냐하면 출력 노드 전 마지막 단계에서 Fully connected Layer를 보게 되면 Conv의 출력 모두와 연결되어 있음을 알 수 있다. 즉, Conv Layer의 출력이 작을수록 Fully connected Layer에서 필요한 파라미터의 수가 더 작을 것이라는 점이다. 파라미터의 수, 모델의 사이즈, 그리고 Overfitting 과 같은 것들에는 다양한 trade-off가 있다. 이러한 trade-off는 stride를 몇 으로 할지를 결정할때 고려해야 하는 문제이다.</p>
+<ul>
+<li>Conv Layer를 Brain Neuron의 관점에서 살펴보자. 뉴련과 Conv Layer의 가장 큰 차이점은 우리의 뉴런은 Local connectivity를 가지고 있다는 점이다. Conv Layer처럼 슬라이딩을 하는 것이 아니라 특정 부분에만 연결되어 있다. 하나의 뉴런은 한 부분만 처리하고, 그런 뉴런들이 모여서 전체 이미지를 처리하는 것이다. 이런 식으로 spatial structure를 유지한 채로 Layer의 출력인 activation map을 만드는 것이다. <code>또한, 필터는 이미지에서 같은 지역을 돌더라도 서로 다른 특징을 뽑아낸다고 볼 수 있다.</code></li>
+</ul>
+<h3 id="Pooling-layer"><a href="#Pooling-layer" class="headerlink" title="Pooling layer"></a>Pooling layer</h3><p>Pooling Layer는 Representation들을 더 작고 관리하기 쉽게 해준다. 즉 파라미터의 수를 줄인다는 것이다.<br>그리고 일종의 공간적인 불변성을 얻을 수 도 있다. <code>결국 Pooling Layer를 관리하는 일은 Downsampling하는 것이다. 여기서 중요한 점은 Depth에는 아무런 영향을 주지 않는다는 것이다.</code> 그리고 일반적으로 Max pooling이 사용된다. Pooling에도 필터 크기를 정할 수 있다. 얼마만큼의 영역을 한 번에 묶을지를 정하는 것이다. 기본적으로 Downsampling을 하고 싶은 것이기 때문에 Pooling을 할 때는 겹치지 않는 것이 일반적이다. 또한, 우리가 다루는 값들은, 얼마나 이 뉴런이 활성화되었는 지를 나타내는 값이다. 즉, 이 필터가 각 위치에서 얼마나 활성화되었는지 이다. Max pooling은 그 지역이 어디든, 어떤 신호에 대해 “얼마나” 그 필터가 활성화 되었는지를 알려준다고 알 수 있다. <code>인식에 대해 생각해 보았을때 인식은 그 값이 어디에 있었다는 것 보다는 그 값이 얼마나 큰지가 중요한 것이다.</code> 그러므로 average pooling 보다 더 좋다. Pooling도 일종의 stride 기법이라고 볼 수 있다. 사람들은 Downsampling을 할때 Pooling을 하기보단 stride를 많이 사용하고 있는 추세이고 성능도 좋다. Pooling Layer도 Conv Layer에서 사용했던 수식을 그대로 이용해서 Design choice를 할 수 있다.<code>한가지 특징이 있다면 pooling layer에서는 보통 padding을 하지 않는다. padding의 목적은 주로 사이즈를 유지하기 위한 것이지만 pooling의 목적은 down sampling이고 Conv layer에서 처럼 코너의 값을 계산하지 못하는 경우도 없기 때문이다.</code></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">filter size</th>
+<th style="text-align:center">stride</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2x2</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">3x3</td>
+<td style="text-align:center">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "[CS231n]Lecture05-Convolution Neural Network",
+        "image": "https://heung-bae-lee.github.io",
+        "keywords": "",
+        "genre": "CS231n",
+        "datePublished": "2019-07-19",
+        "dateCreated": "2019-07-19",
+        "dateModified": "2019-07-21",
+        "url": "https://heung-bae-lee.github.io/2019/07/19/cs231n_05/",
+        "description": "CNN의 역사는 생략하겠다.
+CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다.
+더 자세히 말하자면, "
+        "wordCount": 1312
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/07/19/cs231n_06/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            [CS231n]Lecture06-Training Neural Networks
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/07/18/cs231n_02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">[CS231n]Lecture02-Image classification pipeline</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/10/deep_learning_04/" class="title">Convolution Neural Network(1)</a></p>
+                            <p class="item-date"><time datetime="2019-12-10T04:50:24.000Z" itemprop="datePublished">2019-12-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/10/data_engineering_02/" class="title">data engineering basic(SQL Basic)</a></p>
+                            <p class="item-date"><time datetime="2019-12-10T02:23:24.000Z" itemprop="datePublished">2019-12-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/09/data_engineering_01/" class="title">data engineering basic(Unix환경 및 커맨드)</a></p>
+                            <p class="item-date"><time datetime="2019-12-09T08:48:07.000Z" itemprop="datePublished">2019-12-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/08/deep_learning03/" class="title">심층 신경망의 구조</a></p>
+                            <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/08/deep_learning02/" class="title">쉽게 배우는 경사하강 학습법</a></p>
+                            <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/07/19/cs231n_05/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
