@@ -20,7 +20,7 @@
 <meta property="og:description" content="합성곱 연산과 이미지 필터  아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/analog_signal.png">
-<meta property="og:updated_time" content="2019-12-12T05:04:16.861Z">
+<meta property="og:updated_time" content="2019-12-12T05:37:21.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Convolution Neural Network(1)">
 <meta name="twitter:description" content="합성곱 연산과 이미지 필터  아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수">
@@ -275,86 +275,87 @@ ga('send', 'pageview');
 <ul>
 <li>학습 초반에는 위쪽의 Feature Map들 처럼 좁은 범위의 Feature들을 추출하지만, 학습의 후반 부에는 넓은 범위의 Feature들을 학습한다.</li>
 </ul>
-<h2 id="Batch-Normalization-배치-정규화"><a href="#Batch-Normalization-배치-정규화" class="headerlink" title="Batch Normalization(배치 정규화)"></a>Batch Normalization(배치 정규화)</h2><p><img src="/image/" alt="일반 경사 하강법(vanilla Gradient Descent)"></p>
+<h2 id="Batch-Normalization-배치-정규화"><a href="#Batch-Normalization-배치-정규화" class="headerlink" title="Batch Normalization(배치 정규화)"></a>Batch Normalization(배치 정규화)</h2><p><img src="/image/vanilla_gradient_descent.png" alt="일반 경사 하강법(vanilla Gradient Descent)"></p>
 <ul>
 <li><code>일반 경사 하강법의 경우, Gradient를 한번 업데이트 하기 위해 모든 학습 데이터를 사용한다.</code> 하지만 데이터가 엄청나게 많다면?? 그렇다면 Gradient를 업데이트하는데 오랜시간이 소요될 것이다. 그렇다면 SGD는??!! Stochastic은???</li>
 </ul>
-<p><img src="/image/" alt="확률적 경사 하강법(Stochastic Gradient Descent)"></p>
-<p><img src="/image/" alt="미니 배치 학습법"></p>
+<p><img src="/image/stochastic_gradient_descent.png" alt="확률적 경사 하강법(Stochastic Gradient Descent)"></p>
+<p><img src="/image/minibatch_learning.png" alt="미니 배치 학습법"></p>
 <ul>
 <li>Epoch마다 데이터 순서를 섞어주기도 하는 이유는 random성을 더 강하게 해주기 위해서이다.</li>
 </ul>
-<p><img src="/image/" alt="internal Covariate Shift"></p>
+<p><img src="/image/internal_Covariate_Shift.png" alt="internal Covariate Shift"></p>
 <ul>
 <li><code>이런 현상을 해결하기 위한 것이 batch normalization이다.</code></li>
 </ul>
-<p><img src="/image/" alt="배치 정규화(Batch Normalization)"></p>
-<p><img src="/image/" alt="학습단계(Training Phase)"></p>
+<p><img src="/image/Batch_normalization.png" alt="배치 정규화(Batch Normalization)"></p>
+<p><img src="/image/Training_Phase.png" alt="학습단계(Training Phase)"></p>
 <ul>
 <li><p>또한, 동일한 scale과 동일한 zero-mean을 가지게 되기 때문에 학습률 결정에 유리하다 말의 의미는 <code>학습을 할 때 더 scale이 큰 경우에는 학습이 많이 되고, scale이 작으면 학습이 적게 되는 문제가 발생할 수 있다. 학습률을 너무 크게 할 경우 Gradient가 크게 나오는 곳에 Gradient exploding이 발생할 수가 있고, 반대로 학습률을 너무 작게 할 경우 Gradient Vanishing이 발생되서 학습이 안되는 곳이 발생되는 문제가 있는데 Normalization을 해주게 되면 모든 각각의 계층들이 동일한 scale로 학습되기 때문에 학습률 결정에 유리하다는 것이다.</code><br>(미분을 할때 입력에 대해서 출력값이 커지게 되면, Gradient값도 커질 것이다.)</p>
 </li>
 <li><p>각각의 batch를 normalization하면, 말 그대로 normalization이 된 것이므로 모수가 $\mu=0, \sigma^2=1$인 gaussian distribution을 갖게 될 것이다. 그런데 activation함수는 LeRu를 사용한다면 0미만인 것들은 모조리 0값으로 반환될것이다. 이미 연산을 해놓은 값들을 연산 하기 전이 아닌 연산후에 0으로 만들어 의미 없게 만드는 것 보다 그렇게 0으로 반환되는 개수를 조절하기 위해 추가 스케일링 계수인 $\gamma$와 $\beta$를 만들고, 역전파 알고리즘으로 학습시켜준다.</p>
 </li>
 </ul>
-<p><img src="/image/" alt="추론 단계(Inference Phase)"></p>
+<p><img src="/image/Inference_Phase.png" alt="추론 단계(Inference Phase)"></p>
 <ul>
 <li>학습과정에서 이동평균을 구해놓는데, 최근 N개에 대한 이동평균을 사용한다. <code>최근 N개만 사용하고 그 전에 것들은 자연스럽게 날라가기 때문에 최근 N개가 충분한 sample이 아닐 경우 $\mu, \sigma$가 적절하지 않게 결정되는 문제가 있는데 이런 상황을 해결하는 것은 지수평균을 사용한다.</code></li>
 </ul>
-<h2 id="심화-합성곱-신경망"><a href="#심화-합성곱-신경망" class="headerlink" title="심화 합성곱 신경망"></a>심화 합성곱 신경망</h2><p><img src="/image/" alt="합성곱 신경망"></p>
-<h3 id="GoogLeNet"><a href="#GoogLeNet" class="headerlink" title="GoogLeNet"></a>GoogLeNet</h3><p><img src="/image/" alt="GoogLeNet(Inception)"></p>
+<h2 id="심화-합성곱-신경망"><a href="#심화-합성곱-신경망" class="headerlink" title="심화 합성곱 신경망"></a>심화 합성곱 신경망</h2><p><img src="/image/Conv_NN.png" alt="합성곱 신경망"></p>
+<h3 id="GoogLeNet"><a href="#GoogLeNet" class="headerlink" title="GoogLeNet"></a>GoogLeNet</h3><p><img src="/image/GoogLeNet.png" alt="GoogLeNet(Inception)"></p>
 <ul>
 <li>2014년도에 GoogLeNet과 VGG-19가 나왔는데, GoogLeNet이 에러율이 좀 더 낮고 층이 더 깊은 것을 알 수 있다. GoogLeNet이 좀 더 복잡해서 VGG가 더 많이 알려져 있지만, 다양한 스킬들을 공부하려면 GoogLeNet을 조금 살펴보는 것도 좋을 것이다.</li>
 </ul>
-<p><img src="/image/" alt="GoogLeNet의 구조"></p>
+<p><img src="/image/sturcture_of_GoogLeNet.png" alt="GoogLeNet의 구조"></p>
 <ul>
 <li><code>Let&#39;s Go Deeper and Deeper라는 모토를 가지고 만들어진 것과 같이 좀더 hidden_layer가 깊어진 것을 알 수 있다.</code></li>
 </ul>
-<p><img src="/image/" alt="Inception 모듈(naive version)"></p>
+<p><img src="/image/Inception_Module.png" alt="Inception 모듈(naive version)"></p>
 <ul>
 <li>1x1, 3x3, 5x5의 feature들을 다 나누어서 학습한다. <code>즉, 다양한 크기의 Filter들이 잘 학습된다. 또한 3x3 Max pooling 같은 경우는 convolution Layer를 거치지않고도 단순히 max pooling을 통한 후에도 다음 단계에서 의미있는 feature로 작동된다는 것을 보여주었다!!</code></li>
 </ul>
-<p><img src="/image/" alt="Inception 모듈(dimension reductions)"></p>
+<p><img src="/image/Inception_Module_01.png" alt="Inception 모듈(dimension reductions)"></p>
 <ul>
 <li>naive 한 Inception 모듈 구조에서 먼저 <code>단순히 1x1 conv를 통과시켜 동일한 channel 영역(Receptive Field)을 가져가면서도 channel을 줄여 연산량을 줄여 주는 구조인 Bottleneck를 구현</code>하고 있다.</li>
 </ul>
-<p><img src="/image/" alt="Bottleneck 구조"></p>
-<p><img src="/image/" alt="추가 분류기 사용"></p>
+<p><img src="/image/Bottle_neck_sturcture.png" alt="Bottleneck 구조"></p>
+<p><img src="/image/extra_clssifier.png" alt="추가 분류기 사용"></p>
 <ul>
 <li>맨 마지막 출력층에서만 inference를 한다면 Input에 가까운 층일수록 점점 더 Vanishing Gradient문제로 인해 학습이 저하 될 것을 우려하여 중간 feature들로도 classification을 하도록 하였다.</li>
 </ul>
-<h2 id="GoogLeNet-중간-요약"><a href="#GoogLeNet-중간-요약" class="headerlink" title="GoogLeNet 중간 요약"></a>GoogLeNet 중간 요약</h2><ul>
+<h4 id="GoogLeNet-중간-요약"><a href="#GoogLeNet-중간-요약" class="headerlink" title="GoogLeNet 중간 요약"></a>GoogLeNet 중간 요약</h4><ul>
 <li>Inception 구조</li>
 <li>Battleneck 구조</li>
 <li>중간 중간에 inference</li>
 </ul>
-<h3 id="Residual-Network"><a href="#Residual-Network" class="headerlink" title="Residual Network"></a>Residual Network</h3><p><img src="/image/" alt="Residual Network(ResNet)"></p>
+<h3 id="Residual-Network"><a href="#Residual-Network" class="headerlink" title="Residual Network"></a>Residual Network</h3><p><img src="/image/ResNet.png" alt="Residual Network(ResNet)"></p>
 <ul>
 <li>이제는 거의 일반적이고, 기본구조로 많이 사용하는 구조이다.</li>
 </ul>
-<p><img src="/image/" alt="ResNet의 구조"></p>
-<p><img src="/image/" alt="Skip Connection"></p>
+<p><img src="/image/structure_of ResNet.png" alt="ResNet의 구조"></p>
+<p><img src="/image/Skip_connection.png" alt="Skip Connection"></p>
 <ul>
 <li>왼쪽 구조에서 표현가능한 것은 오른쪽 구조인 Residual 구조에서도 표현 가능함이 증명 되어 있다. 직관적으로 봤을때는 Feature를 뽑아서 이전 Feature와 더한 다는 것이 잘 이해가 안갈 수 도 있겠지만, 이런식으로 했을때도 좌측의 일반적인 Conv Layer의 구조와 수학적으로 동치를 이룬다는 것을 알고 있자.</li>
 </ul>
-<p><img src="/image/" alt="Identity Mapping"></p>
-<p><img src="/image/" alt="Pre-Activation"></p>
+<p><img src="/image/Identity_Mapping.png" alt="Identity Mapping"></p>
+<p><img src="/image/Pre_activation_00.png" alt="Pre-Activation_00"></p>
 <ul>
 <li>맨 왼쪽이 Original ResidualNN의 구조이고 가운데가 Pre-Activation을 사용하는 구조이다.  </li>
 </ul>
-<h2 id="Densely-Connected-ConvNets-DenseNet"><a href="#Densely-Connected-ConvNets-DenseNet" class="headerlink" title="Densely Connected ConvNets(DenseNet)"></a>Densely Connected ConvNets(DenseNet)</h2><p><img src="/image/" alt="Densely Connected ConvNets"></p>
+<p><img src="/image/Pre_activation_01.png" alt="Pre-Activation_01"></p>
+<h2 id="Densely-Connected-ConvNets-DenseNet"><a href="#Densely-Connected-ConvNets-DenseNet" class="headerlink" title="Densely Connected ConvNets(DenseNet)"></a>Densely Connected ConvNets(DenseNet)</h2><p><img src="/image/DenseNet.png" alt="Densely Connected ConvNets"></p>
 <ul>
 <li>간단히 말하자면, 모든 Layer들이 다 연결되어 있는 구조라고 할 수 있다.</li>
 </ul>
-<p><img src="/image/" alt="DenseNet 구조"></p>
+<p><img src="/image/structure_of_DenseNet.png" alt="DenseNet 구조"></p>
 <ul>
 <li><p>처음에 일반적인 Conv Layer를 통해 Feature Map을 만들고 그런 뒤에 Dense Block을 이용해서 다른 모든 Conv Layer들과 Dense하게 연결시켜준다. 그 다음 Conv Layer를 이용해서 channel 개수를 조정해주고, Max Pooling을 이용해서 영상크기를 줄여준다. 이런 과정을 여러번 반복해서 Feature를 추출한 후, 맨 마지막은 FC Layer로 구성해주었다.</p>
 </li>
 <li><p><code>위의 구조에서 Dense Block들이 residual block으로 바뀐다면 ResNet인 것이다. Pre-Activation구조를 사용한다는 것이 ResNet을 계승하고 있는다는 것을 알 수 있는 명확한 내용이다.</code></p>
 </li>
 </ul>
-<p><img src="/image/" alt="Dense Block"></p>
-<p><img src="/image/" alt="Bottleneck 구조"></p>
-<p><img src="/image/" alt="DensNet의 구현"></p>
+<p><img src="/image/Dense_Block.png" alt="Dense Block"></p>
+<p><img src="/image/Bottle_neck_structure.png" alt="Bottleneck 구조"></p>
+<p><img src="/image/practice_of_DenseNet.png" alt="DensNet의 구현"></p>
 
         </div>
         <footer class="article-footer">
@@ -443,7 +444,7 @@ ga('send', 'pageview');
         "description": "합성곱 연산과 이미지 필터
 
 아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수"
-        "wordCount": 1353
+        "wordCount": 1356
     }
 </script>
 
