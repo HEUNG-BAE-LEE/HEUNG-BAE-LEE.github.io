@@ -21,7 +21,7 @@
 <meta property="og:description" content="합성곱 연산과 이미지 필터  아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/analog_signal.png">
-<meta property="og:updated_time" content="2019-12-12T05:37:21.693Z">
+<meta property="og:updated_time" content="2019-12-13T03:47:57.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Convolution Neural Network(1)">
 <meta name="twitter:description" content="합성곱 연산과 이미지 필터  아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수">
@@ -257,7 +257,7 @@ ga('send', 'pageview');
 <p><img src="/image/VGG_16.png" alt="VGG-16"></p>
 <h2 id="합성곱-신경망의-심화-이해"><a href="#합성곱-신경망의-심화-이해" class="headerlink" title="합성곱 신경망의 심화 이해"></a>합성곱 신경망의 심화 이해</h2><p><img src="/image/importance_of_conv.png" alt="합성곱 게층의 필요성"></p>
 <ul>
-<li>간단히 생각하면 $kernel_{height} \times kernel_{width} \times Channel_{in} \times Channel_{out}$ 만큼 어마어마하게 많은 Parameter가 필요하므로 계산해야 할 Parameter가 상대적으로 적은 FC Layer로 하는 것이 더 좋은 방법이지 않을까라고 생각하시는 분들이 있을 것이다. 허나, 그것은 잘못된 생각이다. <code>Convolutional Layer를 사용하기 때문에 우리가 Image를 처리할 수 있는 것이다. FC Layer를 사용하게 되면 오히려 계산해야 할 Parameter의 개수가 어마어마하게 늘어난다.</code>$(Height_{in} \times Width_{in} \times Channel_{in}) \times (Height_{out} \times Width_{out} \times C_{out})$ 얼핏 보기엔 비슷해보이겠지만, 예를 들어보자. 입력으로 RGB channel을 갖는 1024 * 1024 image를 받는다면, FC Layer를 사용한다면, $(1024 \tiems 1024 \times 16) \times (1024 \times 1024 \times 32)$이지만 Convolutional Layer를 사용하고 $3 \times 3$ kernel을 사용한다면 $(3 \times 3 \times 16 \times 32)$로 훨씬 적은 연산을 한다. 이러한 이유로 우리가 영상을 입력으로 하는 것은 절대로 FC Layer를 통해 해결할 수 없다.</li>
+<li>간단히 생각하면 $kernel_{height} \times kernel_{width} \times Channel_{in} \times Channel_{out}$ 만큼 어마어마하게 많은 Parameter가 필요하므로 계산해야 할 Parameter가 상대적으로 적은 FC Layer로 하는 것이 더 좋은 방법이지 않을까라고 생각하시는 분들이 있을 것이다. 허나, 그것은 잘못된 생각이다. <code>Convolutional Layer를 사용하기 때문에 우리가 Image를 처리할 수 있는 것이다. FC Layer를 사용하게 되면 오히려 계산해야 할 Parameter의 개수가 어마어마하게 늘어난다.</code>$(Height_{in} \times Width_{in} \times Channel_{in}) \times (Height_{out} \times Width_{out} \times C_{out})$ 얼핏 보기엔 비슷해보이겠지만, 예를 들어보자. 입력으로 RGB channel을 갖는 1024 * 1024 image를 받는다면, FC Layer를 사용한다면, $(1024 \times 1024 \times 16) \times (1024 \times 1024 \times 32)$이지만 Convolutional Layer를 사용하고 $3 \times 3$ kernel을 사용한다면 $(3 \times 3 \times 16 \times 32)$로 훨씬 적은 연산을 한다. 이러한 이유로 우리가 영상을 입력으로 하는 것은 절대로 FC Layer를 통해 해결할 수 없다.</li>
 </ul>
 <p><img src="/image/mathmatical_expression_of_FC_Layer_00.png" alt="전결합 계층의 수학적 표현"></p>
 <p><img src="/image/mathmatical_expression_of_Conv_Layer_00.png" alt="합성곱 계층의 수학적 표현"></p>
@@ -300,7 +300,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Inference_Phase.png" alt="추론 단계(Inference Phase)"></p>
 <ul>
-<li>학습과정에서 이동평균을 구해놓는데, 최근 N개에 대한 이동평균을 사용한다. <code>최근 N개만 사용하고 그 전에 것들은 자연스럽게 날라가기 때문에 최근 N개가 충분한 sample이 아닐 경우 $\mu, \sigma$가 적절하지 않게 결정되는 문제가 있는데 이런 상황을 해결하는 것은 지수평균을 사용한다.</code></li>
+<li>학습과정에서 이동평균을 구해놓는데, 최근 N개에 대한 이동평균을 사용한다. <code>최근 N개만 사용하고 그 전에 것들은 자연스럽게 날라가기 때문에 최근 N개가 충분한 sample이 아닐 경우</code>$\mu$<code>,</code>$\sigma$<code>가 적절하지 않게 결정되는 문제가 있는데 이런 상황을 해결하는 것은 지수평균을 사용한다.</code></li>
 </ul>
 <h2 id="심화-합성곱-신경망"><a href="#심화-합성곱-신경망" class="headerlink" title="심화 합성곱 신경망"></a>심화 합성곱 신경망</h2><p><img src="/image/Conv_NN.png" alt="합성곱 신경망"></p>
 <h3 id="GoogLeNet"><a href="#GoogLeNet" class="headerlink" title="GoogLeNet"></a>GoogLeNet</h3><p><img src="/image/GoogLeNet.png" alt="GoogLeNet(Inception)"></p>
@@ -434,12 +434,12 @@ ga('send', 'pageview');
         "genre": "deep learning",
         "datePublished": "2019-12-10",
         "dateCreated": "2019-12-10",
-        "dateModified": "2019-12-12",
+        "dateModified": "2019-12-13",
         "url": "https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/",
         "description": "합성곱 연산과 이미지 필터
 
 아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수"
-        "wordCount": 1356
+        "wordCount": 1354
     }
 </script>
 
@@ -487,6 +487,16 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
+        <a href="/2019/12/13/deep_learning_05/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Basic ConvNN(VGG-16모방한 기본)구현
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/2019/12/10/data_engineering_02/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
@@ -508,6 +518,15 @@ ga('send', 'pageview');
         <h3 class="widget-title">recents</h3>
         <div class="widget">
             <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/13/deep_learning_05/" class="title">Basic ConvNN(VGG-16모방한 기본)구현</a></p>
+                            <p class="item-date"><time datetime="2019-12-13T03:58:02.000Z" itemprop="datePublished">2019-12-13</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -545,15 +564,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
-                            <p class="item-title"><a href="/2019/12/08/deep_learning02/" class="title">쉽게 배우는 경사하강 학습법</a></p>
-                            <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -563,7 +573,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -573,7 +583,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -690,22 +700,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>

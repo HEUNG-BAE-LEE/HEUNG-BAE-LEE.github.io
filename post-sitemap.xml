@@ -8,8 +8,40 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/13/deep_learning_05/</loc>
+        <lastmod>2019-12-13T04:10:20.528Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning02/</loc>
+        <lastmod>2019-12-13T03:55:29.137Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning03/</loc>
+        <lastmod>2019-12-13T03:49:09.237Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/</loc>
-        <lastmod>2019-12-12T05:37:21.693Z</lastmod>
+        <lastmod>2019-12-13T03:47:57.795Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/19/cs231n_05/</loc>
+        <lastmod>2019-12-13T03:43:27.468Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -40,14 +72,6 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning03/</loc>
-        <lastmod>2019-12-09T08:33:04.032Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://heung-bae-lee.github.io/2019/11/29/data_engineering_basic/</loc>
         <lastmod>2019-12-08T14:31:09.223Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -58,14 +82,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/12/05/deep_learning00/</loc>
         <lastmod>2019-12-08T12:41:32.567Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning02/</loc>
-        <lastmod>2019-12-08T12:41:27.510Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -162,14 +178,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/07/19/cs231n_06/</loc>
         <lastmod>2019-07-23T04:18:10.010Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/07/19/cs231n_05/</loc>
-        <lastmod>2019-07-21T08:59:00.385Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

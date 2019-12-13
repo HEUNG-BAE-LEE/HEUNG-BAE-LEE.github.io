@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-21T08:59:00.385Z">
+<meta property="og:updated_time" content="2019-12-13T03:43:27.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[CS231n]Lecture05-Convolution Neural Network">
 <meta name="twitter:description" content="CNN의 역사는 생략하겠다. CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다. 더 자세히 말하자면,">
@@ -203,9 +203,33 @@ ga('send', 'pageview');
 <h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h3><p>가장 흔히 쓰는 기법은 zero-pad이다. <code>입력 image data의 코너 즉 가장자리는 필터를 적용할 때 필터의 중심보다는 덜 영향을 주진 않을지의 의문을 가질 수도 있을 것이다. 그러한 의문을 해소하기 위해 zero padding을 사용하는 것이다.</code> 다음 그림처럼, 가장자리에 0을 채워 덫붙여 넣는 것이다. 그렇게하면 좌상단의 자리에서도 필터 연산을 수행할 수 있게 된다. 혹시 Padding을 모르는 사람들을 위해 말을 하자면, 예를들어 image data의 가장자리에 픽셀을 덫붙여주는 작업이다. zero padding을 하면 모서리에 필요없는 특징을 추가하게 되는 것은 아닌지라는 의문을 갖을 수 있는데, 우리의 본 목적은 이미지나 영상 내에서 어떤 edge 부분의 위치(값)을 얻고 싶은 것이고, zero-padding은 이를 할 수 있는 하나의 방법일 뿐이라는 것을 명심하자! 왜냐하면 우리는 지금 필터가 닿지 않는 모서리 부분에서도 값을 뽑을 수 있게 되기 때문이다. (zero가 아닌 mirror나 extend하는 방법도 있다!! 허나, zero-padding 제법 잘 동작하는 방법 중 하나이다.) <code>물론 모서리 부분에 약간의 artifact가 생길 순 있다. 당연히 고려해야 하는 부분이다</code>. zero-padding을 하는 또 다른 이유는 Layer를 거치면서도 입력의 사이즈를 유지하기 위해서이다. padding을 해줌으로서 컬럼이 두개가 더 생성되어 결국에는 입력받은 데이터의 크기와 동일한 출력 크기를 얻을 수 있다는 점을 앞서 배운 공식에 적용시켜 생각해보면 이해가 갈 것이다.</p>
 <p><code>즉, 요약하면 Padding을 하게되면 출력 사이즈를 유지시켜주고 필터의 중앙이 닿지 않는 곳도 연산할 수 있다는 것을 알 수 있다.</code></p>
 <p>다음은 내가 강의를 들으면서 접했던 질문 중 나 또한 궁금했던 질문이다. <code>만약 이미지가 square matrix가 아니고 rectangular matrix라면 수평, 수직방향의 stride를 다르게 적용해야 하는지 이다.</code> 이런 질문은 나왁 같은 입문자들에게는 궁금할 만한 질문이라고 생각한다. 담은 <code>물론 가능하지만, 보통은 square matrix로 이미지를 처리한후 사용하여 같은 stride를 적용한다는 것이다.</code> 이미지 해상도 문제와도 관련이 있다. 아마 우리는 입력 이미지 원본 상태의 비율을 유지하고 싶겠지만 대부분은 정사각형으로 잘라서 사용한다는 것이다.</p>
-<p><code>일반적으로 어떤 stride와 filter를 쓸건지를 정하는 방법이 있다.</code><br>| filter size | stride |<br>|:-:|:—:|<br>|3x3   |  1  |<br>|5x5   |  2  |<br>|7x7   |  3  |</p>
+<p><code>일반적으로 어떤 stride와 filter를 쓸건지를 정하는 방법이 있다.</code></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">filter size</th>
+<th style="text-align:center">stride</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">3x3</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">5x5</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">7x7</td>
+<td style="text-align:center">3</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>만약 Layer가 여러겹 쌓인 구조를 설계한다고 가정했을때, <code>zero-padding을 하지 않는 다면 출력 사이즈는 아주 빠르게 줄어 들게 될 것이다. 그 의미는 결국 일부 정보를 잃게 되는 것이고 원본 이미지를 표현하기에 너무 작은 값을 사용하게 될 것이다.</code> 또한, 그 이유는 매번 필터를 적용하여 convolution을 할 때 각 코너에 있는 값들을 계산하지 못하기 때문이다.</p>
-<p>예를 들어 보자. input volume이 32x32x3이고, 10개의 5x5 필터들을 stride 1, padding을 2로 주었을 경우, output volume size는 어떻게 될 것인가? 정답은 32x32x10이다.<br>(32+2<em>2-5/1+1=32이고 필터의 갯수가 10이므로) <code>그렇다면 이 Layer의 parameter는 총 몇개 일까?</code> 정답은 5</em>5<em>3=75개라는 가중치와 bias인 1개를 더한 75+1=76개를 각 필터당 가지므로 총 10개의 필터가 있기에 76</em>10=760개이다.</p>
+<p>예를 들어 보자. input volume이 32x32x3이고, 10개의 5x5 필터들을 stride 1, padding을 2로 주었을 경우, output volume size는 어떻게 될 것인가? 정답은 32x32x10이다.<br>(32+(2x2)-5/1)+1=32이고 필터의 갯수가 10이므로) <code>그렇다면 이 Layer의 parameter는 총 몇개 일까?</code> 정답은 5x5x3=75개라는 가중치와 bias인 1개를 더한 75+1=76개를 각 필터당 가지므로 총 10개의 필터가 있기에 76*10=760개이다.</p>
 <p><code>1x1 Convolution도 의미가 있다.</code> 필터의 크기가 1초과인 다른 필터들 처럼 공간적인 정보를 이용하진 않지만 여전히 Depth만큼 연산을 수행한다. 그러니 1x1 ConvNet는 입력의 전체 Depth에 대한 내적을 수행하는 것과 같다.</p>
 <p><code>&#39;stride를 선택하는 데 있어 가질 수 있는 직관은 무엇인가&#39;라는 의문에 stride를 크게 가져갈수록 출력은 점점 작아질 것이라는 것이다. 즉, 이미지를 다운샘플링하는 것인데 Pooling을 하는 것과 비슷하다. 엄밀히 말하자면 둘은 다른 얘기이며, Pooling 보다 더 좋은 성능을 보이기도 한다. Pooling 처럼 다운 샘플링하는 동일한 효과를 얻으면서도 더 좋은 성능을 낼 수도 있다.</code> 그리고 activation map의 사이즈를 줄이는 것은 추후 모델의 전체 파라미터의 갯수에도 영향을 미친다. 왜냐하면 출력 노드 전 마지막 단계에서 Fully connected Layer를 보게 되면 Conv의 출력 모두와 연결되어 있음을 알 수 있다. 즉, Conv Layer의 출력이 작을수록 Fully connected Layer에서 필요한 파라미터의 수가 더 작을 것이라는 점이다. 파라미터의 수, 모델의 사이즈, 그리고 Overfitting 과 같은 것들에는 다양한 trade-off가 있다. 이러한 trade-off는 stride를 몇 으로 할지를 결정할때 고려해야 하는 문제이다.</p>
 <ul>
@@ -308,12 +332,12 @@ ga('send', 'pageview');
         "genre": "CS231n",
         "datePublished": "2019-07-19",
         "dateCreated": "2019-07-19",
-        "dateModified": "2019-07-21",
+        "dateModified": "2019-12-13",
         "url": "https://heung-bae-lee.github.io/2019/07/19/cs231n_05/",
         "description": "CNN의 역사는 생략하겠다.
 CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차이점은 기존의 이미지 구조를 보존시킨다는 점이다. 그리고 필터가 가중치 역할을 하는 것이라고 생각하면 될 것이다. 간단히 표현하자면, 필터를 통해 이미지를 슬라이딩하면서 공간적으로 내적을 수행하는 방식이 CNN 구조이다.
 더 자세히 말하자면, "
-        "wordCount": 1312
+        "wordCount": 1296
     }
 </script>
 
@@ -397,6 +421,15 @@ CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/13/deep_learning_05/" class="title">Basic ConvNN(VGG-16모방한 기본)구현</a></p>
+                            <p class="item-date"><time datetime="2019-12-13T03:58:02.000Z" itemprop="datePublished">2019-12-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
                             <p class="item-title"><a href="/2019/12/10/deep_learning_04/" class="title">Convolution Neural Network(1)</a></p>
                             <p class="item-date"><time datetime="2019-12-10T04:50:24.000Z" itemprop="datePublished">2019-12-10</time></p>
                         </div>
@@ -429,15 +462,6 @@ CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차�
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
-                            <p class="item-title"><a href="/2019/12/08/deep_learning02/" class="title">쉽게 배우는 경사하강 학습법</a></p>
-                            <p class="item-date"><time datetime="2019-12-07T15:00:00.000Z" itemprop="datePublished">2019-12-08</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -447,7 +471,7 @@ CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -457,7 +481,7 @@ CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -574,22 +598,5 @@ CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차�
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
