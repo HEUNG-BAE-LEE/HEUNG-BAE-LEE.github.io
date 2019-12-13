@@ -8,8 +8,15 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/categories/data-engineering/</loc>
+        <lastmod>2019-12-13T06:08:50.742Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/categories/deep-learning/</loc>
-        <lastmod>2019-12-13T04:10:20.528Z</lastmod>
+        <lastmod>2019-12-13T05:44:14.797Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -24,13 +31,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/categories/C-C-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/</loc>
         <lastmod>2019-12-11T16:25:06.686Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/categories/data-engineering/</loc>
-        <lastmod>2019-12-10T04:51:30.112Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
