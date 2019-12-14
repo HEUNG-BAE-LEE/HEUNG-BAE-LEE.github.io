@@ -21,7 +21,7 @@
 <meta property="og:description" content="1) 추천 시스템(Recommendation System)이란?위키백과의 정의를 통해 먼저 정리해보자!  정보 필터링 (IF) 기술의 일종 특정 사용자가 관심을 가질만한 정보 (영화, 음악, 책, 뉴스, 이미지, 웹 페이지 등)를 추천하는 것  ㄴ.종류(Different Types of Recommendation Engines) :1) 협업 필터링 기법(C">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Content_Based_Filtering.png">
-<meta property="og:updated_time" content="2019-12-14T06:52:52.576Z">
+<meta property="og:updated_time" content="2019-12-14T06:55:23.274Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="추천시스템(Recommendation System)">
 <meta name="twitter:description" content="1) 추천 시스템(Recommendation System)이란?위키백과의 정의를 통해 먼저 정리해보자!  정보 필터링 (IF) 기술의 일종 특정 사용자가 관심을 가질만한 정보 (영화, 음악, 책, 뉴스, 이미지, 웹 페이지 등)를 추천하는 것  ㄴ.종류(Different Types of Recommendation Engines) :1) 협업 필터링 기법(C">
@@ -249,7 +249,7 @@ ga('send', 'pageview');
 <li>ㄴ. Boolean TF :<script type="math/tex; mode=display">tf(t, d) = t가 d에 한 번이라도 나타나면 1, 아니명 0</script></li>
 <li>ㄴ. log scale TF :<script type="math/tex; mode=display">tf(t, d) = \log(f(t, d) +1)</script></li>
 <li>ㄴ. 증가 빈도 TF :<ul>
-<li>일반적으로는 문서의 길이가 상대적으로 길 경우, 단어 빈도값을 조정하기 위해 사용<script type="math/tex; mode=display">tf(t, d) =  0.5 + \frac{0.5 \hspace(0.1cm) \times \hspace(0.1cm) f(t, d)}{max{f(w, d) : w \in d}} = 0.5 + \frac{0.5 \hspace(0.1cm) \times \hspace(0.1cm)target 단어에 대한 TF}{동일 문서(문장)내에서의 최빈단어의 빈도수}</script></li>
+<li>일반적으로는 문서의 길이가 상대적으로 길 경우, 단어 빈도값을 조정하기 위해 사용<script type="math/tex; mode=display">tf(t, d) =  0.5 + \frac{0.5 \times f(t, d)}{max{f(w, d) : w \in d}} = 0.5 + \frac{0.5 \times target 단어에 대한 TF}{동일 문서(문장)내에서의 최빈단어의 빈도수}</script></li>
 </ul>
 </li>
 </ul>
@@ -436,7 +436,7 @@ in d  \mid} =  \log \frac{전체 문서의 수}{해당 Target단어를 포함한
 특정 사용자가 관심을 가질만한 정보 (영화, 음악, 책, 뉴스, 이미지, 웹 페이지 등)를 추천하는 것
 
 ㄴ.종류(Different Types of Recommendation Engines) :1) 협업 필터링 기법(C"
-        "wordCount": 1392
+        "wordCount": 1389
     }
 </script>
 
