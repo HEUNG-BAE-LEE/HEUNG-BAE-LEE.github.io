@@ -8,6 +8,13 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/categories/Recommendation-System/</loc>
+        <lastmod>2019-12-14T06:28:10.153Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/categories/data-engineering/</loc>
         <lastmod>2019-12-13T14:26:40.902Z</lastmod>
         <changefreq>weekly</changefreq>
