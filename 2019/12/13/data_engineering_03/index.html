@@ -6,24 +6,26 @@
     
 
     
-    <title>REST API | DataLatte&#39;s IT Blog</title>
+    <title>API는 무엇인가?!?(1) | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
     
-    <meta name="description" content="REST API">
+    <meta name="description" content="REST API의 정의와 예제들API(Application Programming Interface) 두 개의 시스템이 서로 상호 작용하기 위한 인터페이스 데이터를 주고 받는 인터페이스 API라고 하면 보통 REST API를 지칭      웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축  API 접근 권한Authentication V">
 <meta property="og:type" content="article">
-<meta property="og:title" content="REST API">
+<meta property="og:title" content="API는 무엇인가?!?(1)">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="REST API">
+<meta property="og:description" content="REST API의 정의와 예제들API(Application Programming Interface) 두 개의 시스템이 서로 상호 작용하기 위한 인터페이스 데이터를 주고 받는 인터페이스 API라고 하면 보통 REST API를 지칭      웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축  API 접근 권한Authentication V">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-13T06:08:49.239Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/Web_API.png">
+<meta property="og:updated_time" content="2019-12-13T14:26:40.902Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="REST API">
-<meta name="twitter:description" content="REST API">
+<meta name="twitter:title" content="API는 무엇인가?!?(1)">
+<meta name="twitter:description" content="REST API의 정의와 예제들API(Application Programming Interface) 두 개의 시스템이 서로 상호 작용하기 위한 인터페이스 데이터를 주고 받는 인터페이스 API라고 하면 보통 REST API를 지칭      웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축  API 접근 권한Authentication V">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Web_API.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -163,7 +165,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        REST API
+        API는 무엇인가?!?(1)
         </h1>
     
 
@@ -185,7 +187,47 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h3 id="REST-API"><a href="#REST-API" class="headerlink" title="REST API"></a>REST API</h3>
+            <h2 id="REST-API의-정의와-예제들"><a href="#REST-API의-정의와-예제들" class="headerlink" title="REST API의 정의와 예제들"></a>REST API의 정의와 예제들</h2><h3 id="API-Application-Programming-Interface"><a href="#API-Application-Programming-Interface" class="headerlink" title="API(Application Programming Interface)"></a>API(Application Programming Interface)</h3><ul>
+<li>두 개의 시스템이 서로 상호 작용하기 위한 인터페이스<ul>
+<li>데이터를 주고 받는 인터페이스</li>
+<li>API라고 하면 보통 REST API를 지칭</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/Web_API.png" alt="Web_API"></p>
+<ul>
+<li>웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축</li>
+</ul>
+<h2 id="API-접근-권한"><a href="#API-접근-권한" class="headerlink" title="API 접근 권한"></a>API 접근 권한</h2><h3 id="Authentication-VS-Authorization"><a href="#Authentication-VS-Authorization" class="headerlink" title="Authentication VS Authorization"></a>Authentication VS Authorization</h3><ul>
+<li>Authentication : Identity(정체)가 맞다는 증명</li>
+<li>Authorization : API를 통한 어떠한 액션을 허용</li>
+</ul>
+<h5 id="API가-Authentication으로-하여도-어떠한-액션에-대해서는-Authorization을-혀용하지-않을-수-있음"><a href="#API가-Authentication으로-하여도-어떠한-액션에-대해서는-Authorization을-혀용하지-않을-수-있음" class="headerlink" title="API가 Authentication으로 하여도 어떠한 액션에 대해서는 Authorization을 혀용하지 않을 수 있음"></a><code>API가 Authentication으로 하여도 어떠한 액션에 대해서는 Authorization을 혀용하지 않을 수 있음</code></h5><h3 id="API의-필수는-첫째도-둘째도-Security"><a href="#API의-필수는-첫째도-둘째도-Security" class="headerlink" title="API의 필수는 첫째도 둘째도 Security"></a>API의 필수는 첫째도 둘째도 Security</h3><ul>
+<li>어떠한 Security 방안이 없을 경우<ul>
+<li>DELETE request를 통해서 다른 이용자의 정보를 지울 수도 있음</li>
+<li>제 3자에게 데이터 유출로 이어질 수 있음</li>
+<li>누가 API를 사용하는지, 어떤 정보를 가져가는지 트래킹 할 수가 없음</li>
+</ul>
+</li>
+</ul>
+<h3 id="API-Key란-무엇인가"><a href="#API-Key란-무엇인가" class="headerlink" title="API Key란 무엇인가?"></a>API Key란 무엇인가?</h3><ul>
+<li>API Key란 보통 Request URL혹은 Request 헤더에 포함되는 긴 String</li>
+</ul>
+<h3 id="Basic-Auth"><a href="#Basic-Auth" class="headerlink" title="Basic Auth"></a>Basic Auth</h3><p><img src="/image/BAsic_Auth.png" alt="Basic Auth"></p>
+<h3 id="OAuth-2-0"><a href="#OAuth-2-0" class="headerlink" title="OAuth 2.0"></a>OAuth 2.0</h3><ul>
+<li>설명하자면 Web API는 우리가 직접 어떤 Action을 하는 것이기 때문에 해당 Web에만 접근 권한을 받으면 되지만, 그와는 다르게 어떤 Action을 취할 Web을 다른 앱에게 접근 권한을 주어 End User인 우리 대신 정보를 제공하게 해주는 방식이다. 예를 듬면 우리가 어떤 서비스를 가입하려고 할때 SNS로 가입이 가능하게 할 수 있는 접근 권한 방식이라고 할 수 있다.<br><img src="/image/OAuth2.png" alt="OAuth2.0"></li>
+</ul>
+<h2 id="Endpoints-amp-Methods"><a href="#Endpoints-amp-Methods" class="headerlink" title="Endpoints &amp; Methods"></a>Endpoints &amp; Methods</h2><ul>
+<li><code>Resource</code>는 API를 통해 리턴된 정보이며, 하나의 <code>Resource</code> 안에 여러개의 Endpoints가 존재한다.<br><img src="/image/Endpoints_Method.png" alt="Endpoint_Method"></li>
+</ul>
+<p><img src="/image/Methods.png" alt="Methods 정의"></p>
+<h2 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h2><ul>
+<li>Parameters는 Endpoint를 통해 Requests 할때 같이 전달하는 옵션들<ul>
+<li>Request Body안에 포함되는 Parameter들은 post 방식에서 주로 많이 사용한다.<br><img src="/image/" alt="4가지 Parameter 타입들"></li>
+</ul>
+</li>
+</ul>
+
         </div>
         <footer class="article-footer">
             
@@ -255,16 +297,27 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "REST API",
-        "image": "https://heung-bae-lee.github.io",
+        "headline": "API는 무엇인가?!?(1)",
+        "image": "https://heung-bae-lee.github.io/image/Web_API.png",
         "keywords": "",
         "genre": "data engineering",
         "datePublished": "2019-12-13",
         "dateCreated": "2019-12-13",
         "dateModified": "2019-12-13",
         "url": "https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/",
-        "description": "REST API"
-        "wordCount": 7
+        "description": "REST API의 정의와 예제들API(Application Programming Interface)
+두 개의 시스템이 서로 상호 작용하기 위한 인터페이스
+데이터를 주고 받는 인터페이스
+API라고 하면 보통 REST API를 지칭
+
+
+
+
+
+웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축
+
+API 접근 권한Authentication V"
+        "wordCount": 264
     }
 </script>
 
@@ -338,7 +391,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
-                            <p class="item-title"><a href="/2019/12/13/data_engineering_03/" class="title">REST API</a></p>
+                            <p class="item-title"><a href="/2019/12/13/data_engineering_03/" class="title">API는 무엇인가?!?(1)</a></p>
                             <p class="item-date"><time datetime="2019-12-13T04:25:42.000Z" itemprop="datePublished">2019-12-13</time></p>
                         </div>
                     </li>
@@ -515,22 +568,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
