@@ -6,25 +6,30 @@
     
 
     
-    <title>Archive: 2019/5 | DataLatte&#39;s IT Blog</title>
+    <title>data engineering (AWS로 DB 만들기) | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
+        <meta name="keywords" content>
     
-    <meta name="description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DataLatte&#39;s IT Blog">
-<meta property="og:url" content="https://heung-bae-lee.github.io/archives/2019/05/index.html">
+    
+    <meta name="description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 것이다. 허나, Amazon Web Servi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="data engineering (AWS로 DB 만들기)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta property="og:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 것이다. 허나, Amazon Web Servi">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/service.png">
+<meta property="og:updated_time" content="2019-12-15T10:04:01.338Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DataLatte&#39;s IT Blog">
-<meta name="twitter:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta name="twitter:title" content="data engineering (AWS로 DB 만들기)">
+<meta name="twitter:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 것이다. 허나, Amazon Web Servi">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/service.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/archives/2019/05/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/">
    
     
 
@@ -150,85 +155,170 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>Archive: 2019/5
+    <a class="page-title-link" href="/categories/data-engineering/">data engineering</a>
     </h1>
 </div>
 
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-data_engineering_04" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/growth-hacking/">growth hacking</a>
-            </div>
-            <div class="date"><time datetime="2019-05-17T23:38:10.000Z" itemprop="datePublished">2019-05-18</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/05/18/growth_hacking_01/">growth_hacking_01</a>
+        data engineering (AWS로 DB 만들기)
         </h1>
     
 
-        <p class="article-excerpt">
-            결국 문제는 Distribution
-모바일 앱 시장을 생각해 보면 알수 있듯이 초창기에는 신기해서 앱을 다운로드하던 시정이 있었지만, 현재는 앱을 다운로드하지 않는 트렌드를 알 수 있다. 클라우드 서비스의 성장과 SaaS의 성장으로 인래 많은 스타트업이 생겼지만, 그 중 대부분이 실패를 한다. 그 이유는 유통때문이다. 즉, 빈약한 유통채널을 가지고 있기 때
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
+            </header>
         
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/growth-hacking/">growth hacking</a>
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/15/data_engineering_04/" class="article-date">
+            <time datetime="2019-12-15T06:16:36.000Z" itemprop="datePublished">2019-12-15</time>
+        </a>
+    </div>
+
+		
+
+                
             </div>
-            <div class="date"><time datetime="2019-05-17T22:36:16.000Z" itemprop="datePublished">2019-05-18</time></div>
-        </div>
         
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/05/18/growth_hacking_00/">growth_hacking_00</a>
-        </h1>
-    
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="AWS-RDB-만들기"><a href="#AWS-RDB-만들기" class="headerlink" title="AWS RDB 만들기"></a>AWS RDB 만들기</h2><ul>
+<li>Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.</li>
+</ul>
+<h3 id="AWS-RDS-생성"><a href="#AWS-RDS-생성" class="headerlink" title="AWS RDS 생성"></a>AWS RDS 생성</h3><ul>
+<li><p>개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 것이다. 허나, Amazon Web Service(AWS)는 Amazon의 그런 이미지와는 다르다. <code>Cloud Service</code>를 제공해주는 것이다.</p>
+</li>
+<li><p>우선 가입을 해야한다. 참고로 대학생인 분들은 <a href="https://www.google.com/search?hl=ko&amp;sxsrf=ACYBGNTcqJdihtFh_XYEH08MOfxSkRO-QQ%3A1576396697970&amp;ei=mef1XeXrOtDmwQOPgYvQDw&amp;q=aws+%ED%95%99%EC%83%9D%EA%B3%84%EC%A0%95&amp;oq=AWS&amp;gs_l=psy-ab.3.0.35i39l3j0i67j0i20i263j0i67j0j0i67j0j0i67.76947.77683..78517...3.0..0.136.371.0j3......0....1..gws-wiz.....10..35i362i39j0i131..21%3A1j22%3A0.2vj_C1Bu8zw" target="_blank" rel="noopener">AWS educate</a>로 가입하면 Credit을 받는 방법이 있는데, 뭐 꼭 현재 재학중이지 않아도 자신의 대학교 이메일로 인증이 가능하다면 AWS Educate에 Student신분으로 가입이 가능하다. 만약 대학생이 아닌 분들은 그냥 AWS(AWS와 AWS educate는 다르다.)를 가입해서 사용하면 된다. 참고로 1년 동안은 어느정도 free tier를 주어서 몇몇 서비스들은 무료로 오래 이용가능할 것이다. 필자도 작년 이용했었는데 기간이 만료되어 이번에 다시 다른 계정을 만들었는데, 새로운 계정을 만들면 또 free tier 이용이 가능한 것 같다.(개인적인 생각이지만 아마도 가입시에 적는 신용카드 번호가 다른 것이면 가능한듯 하다.) 또한, 가입시에 적는 신용카드는 결제 카드로 설정되며 free tier로 이용하는 것을 제외한 다른 이용료를 결제할 수 있다. 물론, 자동결제는 아니고 자신이 결제해줘야 하며, 결제를 해주지 않는다면 휴면 계정으로 전환시켜 서비스 이용이 불가능하다.(처음 결제되는 $1는 결제가 되는 카드인지 확인하는 확인용으로 알고있는데 나중에 결제 취소 해주므로 걱정하지 않아도 된다. 뭐 $1정도는….)</p>
+</li>
+<li><p>다음의 서비스 중에 우선 RDM을 생성해 줄 것이다.</p>
+</li>
+</ul>
+<p><img src="/image/service.png" alt="AWS에서 제공하는 서비스"></p>
+<ul>
+<li>Create database를 클릭, method에서 직접 Customize하려면 Standard를 체크!(easy 방법은 이미 Instancd Size와 ram 등 사양들을 AWS Image처럼 만들어 놓은 형태로 되어있다.) 또한, Python을 통해 사용할 것이므로 MySQL로 만들 것이다.</li>
+</ul>
+<p><img src="/image/create_database.png" alt="AWS에서 DB 생성"></p>
+<ul>
+<li>version은 제일 stable한 5.7.22 version을 선택! Templete은 Free-Tier를 선택! 만약 바로 실무에서 사용해야 한다면 Production을 사용하면 된다. 필자는 연습용으로 만드는 것이므로 Free를 선택 !!!</li>
+</ul>
+<p><img src="/image/version_tier.png" alt="AWS에서 DB 생성 1"></p>
+<h2 id="Storage-type"><a href="#Storage-type" class="headerlink" title="Storage type"></a>Storage type</h2><ul>
+<li><p>General Purpose : 주로 저장할 때 사용</p>
+</li>
+<li><p>Provisioned IOPS(Input Output Per Second): 데이터의 입출력을 빠르게 접근할 수 있게 할 때 사</p>
+</li>
+</ul>
+<h2 id="Multi-AZ-deployment"><a href="#Multi-AZ-deployment" class="headerlink" title="Multi-AZ deployment"></a>Multi-AZ deployment</h2><ul>
+<li>접속하는 User의 지역에 상관없이 동일하게 Performance를 내도록 할 때 사용</li>
+</ul>
+<h2 id="Inbound"><a href="#Inbound" class="headerlink" title="Inbound"></a>Inbound</h2><ul>
+<li>이 데이터를 connect 할 때 접속가능한 프로토콜 설정</li>
+</ul>
 
-        <p class="article-excerpt">
-            Growth hacking outlineStart up?
-에어비앤비, 우버, 비바리퍼블리카(토스), 우아한형제들(배달의 민족), VCNC의 타다 등의 회사
-확장가능하고 반복가능한 사업모델을 탐색하기 위해 고안되어진 임시조직
-아직 잘 작동하는 사업 모델을 찾아내지 못한 기업을 의미하며, 사업 모델이 잘 작동한다면 Established company라고 부를 
-        </p>
-    </div>
-</article>
-    
         </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "data engineering (AWS로 DB 만들기)",
+        "image": "https://heung-bae-lee.github.io/image/service.png",
+        "keywords": "",
+        "genre": "data engineering",
+        "datePublished": "2019-12-15",
+        "dateCreated": "2019-12-15",
+        "dateModified": "2019-12-15",
+        "url": "https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/",
+        "description": "AWS RDB 만들기
+Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.
+
+AWS RDS 생성
+개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 것이다. 허나, Amazon Web Servi"
+        "wordCount": 319
+    }
+</script>
+
+</article>
+
+    <section id="comments">
     
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
 
-
-    </div></section>
+    
+    </section>
 
 
 
@@ -258,6 +348,19 @@ ga('send', 'pageview');
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/12/14/linear_algebra_00/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">선형 대수 공부할 때 도움되는 사이트</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -411,11 +514,13 @@ ga('send', 'pageview');
     var disqus_shortname = 'hexo-theme-hueman';
     
     
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>

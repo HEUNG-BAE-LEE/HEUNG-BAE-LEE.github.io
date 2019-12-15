@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/</loc>
+        <lastmod>2019-12-15T10:04:01.338Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/</loc>
+        <lastmod>2019-12-15T06:18:38.435Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2019/12/14/Recommendation_System_00/</loc>
         <lastmod>2019-12-15T05:43:25.915Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,14 +34,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/12/14/linear_algebra_00/</loc>
         <lastmod>2019-12-15T03:36:41.506Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/</loc>
-        <lastmod>2019-12-13T14:26:40.902Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
