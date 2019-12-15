@@ -21,7 +21,7 @@
 <meta property="og:description" content="1) 추천 시스템(Recommendation System)이란?위키백과의 정의를 통해 먼저 정리해보자!  정보 필터링 (IF) 기술의 일종 특정 사용자가 관심을 가질만한 정보 (영화, 음악, 책, 뉴스, 이미지, 웹 페이지 등)를 추천하는 것  ㄴ.종류(Different Types of Recommendation Engines) :1) 협업 필터링 기법(C">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Collaborative_filtering.png">
-<meta property="og:updated_time" content="2019-12-14T07:16:16.160Z">
+<meta property="og:updated_time" content="2019-12-15T05:43:25.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="추천시스템(Recommendation System)">
 <meta name="twitter:description" content="1) 추천 시스템(Recommendation System)이란?위키백과의 정의를 통해 먼저 정리해보자!  정보 필터링 (IF) 기술의 일종 특정 사용자가 관심을 가질만한 정보 (영화, 음악, 책, 뉴스, 이미지, 웹 페이지 등)를 추천하는 것  ㄴ.종류(Different Types of Recommendation Engines) :1) 협업 필터링 기법(C">
@@ -68,6 +68,8 @@ ga('send', 'pageview');
 <link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
 </head>
 </html>
+<script data-ad-client="ca-pub-4604833066889492" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 <body>
     <div id="wrap">
         <header id="header">
@@ -241,21 +243,22 @@ ga('send', 'pageview');
 </li>
 </ul>
 <script type="math/tex; mode=display">TF-IDF = TF \times IDF</script><ul>
-<li><p><code>TF(Term Frequency, 단어 빈도)</code></p>
-<ul>
+<li><code>TF(Term Frequency, 단어 빈도)</code><ul>
 <li><code>특정한 단어가 문서 내에 얼마나 자주 등장하는지를 나타내는 값</code></li>
 <li>산출 방식<ul>
 <li>ㄴ. TF :<script type="math/tex; mode=display">tf(t, d) = f(t, d) (f(t, d) : 문서 d 내에서 단어 t의 총 빈도)</script></li>
 <li>ㄴ. Boolean TF :<script type="math/tex; mode=display">tf(t, d) = t가 d에 한 번이라도 나타나면 1, 아니명 0</script></li>
 <li>ㄴ. log scale TF :<script type="math/tex; mode=display">tf(t, d) = \log(f(t, d) +1)</script></li>
 <li>ㄴ. 증가 빈도 TF :<ul>
-<li>일반적으로는 문서의 길이가 상대적으로 길 경우, 단어 빈도값을 조정하기 위해 사용<script type="math/tex; mode=display">tf(t, d) =  0.5 + \frac{0.5 \times f(t, d)}{max{f(w, d) : w \in d}} = 0.5 + \frac{0.5 \times target 단어에 대한 TF}{동일 문서(문장)내에서의 최빈단어의 빈도수}</script></li>
+<li>일반적으로는 문서의 길이가 상대적으로 길 경우, 단어 빈도값을 조정하기 위해 사용</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<script type="math/tex; mode=display">tf(t, d) =  0.5 + \frac{0.5 \times f(t, d)}{max{f(w, d) : w \in d}} = 0.5 + \frac{0.5 \times target 단어에 대한 TF}{동일 문서(문장)내에서의 최빈단어의 빈도수}</script><ul>
 <li><p><code>IDF(Inverse Document Frequency, 역문서 빈도)</code></p>
 <ul>
 <li><p>TF 값이 높을 수록 문서에서 중요하다고 생각될 수도 있지만 단순히 흔하게 등장하는 것일 수도 있다. 이값을 DF(Document Frequency, 문서 빈도)라고한다. 영어문장에서 예를 들자면 가령 I, you 같은 단어들을 예로 들 수 있을 것이다. <code>DF의 역수를 IDF(Inverse Document Frequency, 역문서 빈도)</code>라고 한다. <code>한 단어가 문서 집합 전체에서 얼마나 공통적으로 나타나는지를 나타내는 값</code></p>
@@ -265,14 +268,13 @@ ga('send', 'pageview');
 <li><p>산출 방식</p>
 <ul>
 <li>$ \mid D \mid$ : 문서 집합 D의 크기, 또는 전체 문서의 수</li>
-<li>$ \mid d \in D : t \in d  \mid$ : 단어 t가 포함된 문서의 수(즉, $tf(t,0) \neq 0$). <code>단어가 전체 말뭉치(Corpus)안에 존재하지 않을 경우 이는 분모가  0이 되는 결과를 가져온다. 이를 방지하기 위해</code> $1 +  \mid d \in D : t \in d  \mid $로 쓰는 것이 일반적이다.<script type="math/tex; mode=display">idf(t, D) = \log \frac{ \mid D  \mid}{ \mid d \in D : t
-in d  \mid} =  \log \frac{전체 문서의 수}{해당 Target단어를 포함한 문서의 수}</script></li>
+<li>$ \mid d \in D : t \in d  \mid$ : 단어 t가 포함된 문서의 수(즉, $tf(t,0) \neq 0$). <code>단어가 전체 말뭉치(Corpus)안에 존재하지 않을 경우 이는 분모가  0이 되는 결과를 가져온다. 이를 방지하기 위해</code> $1 +  \mid d \in D : t \in d  \mid $로 쓰는 것이 일반적이다.</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="3-Hybrid-Recommendation-Systems"><a href="#3-Hybrid-Recommendation-Systems" class="headerlink" title="3) Hybrid Recommendation Systems"></a>3) <code>Hybrid Recommendation Systems</code></h3><ul>
+<script type="math/tex; mode=display">idf(t, D) = \log \frac{ \mid D  \mid}{ \mid d \in D : t \in d  \mid} =  \log \frac{전체 문서의 수}{해당 Target단어를 포함한 문서의 수}</script><h3 id="3-Hybrid-Recommendation-Systems"><a href="#3-Hybrid-Recommendation-Systems" class="headerlink" title="3) Hybrid Recommendation Systems"></a>3) <code>Hybrid Recommendation Systems</code></h3><ul>
 <li><p>위의 2가지 Recommendation System들은 각각의 장점과 단점이 존재함을 살펴보았다. 그래서 최근 연구는 <code>Collaborative filtering과 content-based filtering을 섞은 Hybrid 접근법</code>이 몇몇의 상황(<code>Cold start(충분한 정보가 없어서 필요한 정보를 얻지 못하는 것)) Sparsity</code>)에서 <code>더 효과적</code>일 수 있다고 설명한다.</p>
 </li>
 <li><p><code>Hybrid 추천 시스템</code>이란 용어는 아래의 각 시스템별 단점들을 보완하기 위해 <code>다중의 추천 기술을 함께 섞는 어떠한 추천 시스템</code>을 의미하며 다중의 추천 기술이 내포하고 있는 의미는 동일한 기술을 여러개 겹치는 것도 포함된다.</p>
@@ -428,7 +430,7 @@ in d  \mid} =  \log \frac{전체 문서의 수}{해당 Target단어를 포함한
         "genre": "Recommendation System",
         "datePublished": "2019-12-14",
         "dateCreated": "2019-12-14",
-        "dateModified": "2019-12-14",
+        "dateModified": "2019-12-15",
         "url": "https://heung-bae-lee.github.io/2019/12/14/Recommendation_System_00/",
         "description": "1) 추천 시스템(Recommendation System)이란?위키백과의 정의를 통해 먼저 정리해보자!
 
@@ -436,7 +438,7 @@ in d  \mid} =  \log \frac{전체 문서의 수}{해당 Target단어를 포함한
 특정 사용자가 관심을 가질만한 정보 (영화, 음악, 책, 뉴스, 이미지, 웹 페이지 등)를 추천하는 것
 
 ㄴ.종류(Different Types of Recommendation Engines) :1) 협업 필터링 기법(C"
-        "wordCount": 1390
+        "wordCount": 1391
     }
 </script>
 
