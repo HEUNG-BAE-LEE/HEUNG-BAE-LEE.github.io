@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>data engineering basic(Unix환경 및 커맨드) | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="data engineering basic(Unix환경 및 커맨드)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/IAM_00.png">
+<meta property="og:updated_time" content="2019-12-10T02:24:31.333Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="data engineering basic(Unix환경 및 커맨드)">
+<meta name="twitter:description" content="Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print command &amp;gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &amp;gt;&amp;gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/IAM_00.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/">
+   
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script data-ad-client="ca-pub-4604833066889492" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/data-engineering/">data engineering</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+			    <article id="post-data_engineering_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        data engineering basic(Unix환경 및 커맨드)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/09/data_engineering_01/" class="article-date">
+            <time datetime="2019-12-09T08:48:07.000Z" itemprop="datePublished">2019-12-09</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="Pipes-and-Filters"><a href="#Pipes-and-Filters" class="headerlink" title="Pipes and Filters"></a>Pipes and Filters</h3><p>cat : 해당 파일 전체를 print<br>head : 해당 파일 앞의 10줄 정도를 print<br>tail : 해당 파일 뒤의 20줄 정도를 print</p>
+<p>command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장<br>command &gt;&gt; file : 기존의 파일에 덮붙여서 결과를 저장(python append같은 느낌!)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example.py를 python3로 run하고 그 결과를 result.txt파일로 저장</span></span><br><span class="line">python3 example.py &gt; result.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># example.py를 python3로 run하고 그 결과를 result.txt파일에 덮붙여서 저장</span></span><br><span class="line">python3 example.py &gt;&gt; result.txt</span><br></pre></td></tr></table></figure>
+<h3 id="Shell-script"><a href="#Shell-script" class="headerlink" title="Shell script"></a>Shell script</h3><ul>
+<li><p><code>terminal에서 바로 명령어를 여러개 사용하고 싶을때 shell script를 사용하면 된다.</code></p>
+</li>
+<li><p>예를들어 아래의 example.py를 실행시켜 위에서 command를 한번에 실행시키고 싶다면 다음과 같이 먼저 example.py를 작성한 후에 command.sh 파일에는 command들을 작성한 후에 shell script 파일을 run하면 된다.</p>
+</li>
+</ul>
+<h4 id="example-py"><a href="#example-py" class="headerlink" title="example.py"></a>example.py</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    <span class="comment"># command 뒤에 따라오는 첫번째 글자를 print</span></span><br><span class="line">    <span class="built_in">print</span>(sys.argv[1])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h4 id="command-sh"><a href="#command-sh" class="headerlink" title="command.sh"></a>command.sh</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">python3 example.py 1 &gt; result.txt</span><br><span class="line">python3 example.py 2 &gt;&gt; result.txt</span><br><span class="line">head result.txt</span><br><span class="line">rm -rf result.txt example.py</span><br></pre></td></tr></table></figure>
+<h4 id="terminal창"><a href="#terminal창" class="headerlink" title="terminal창"></a>terminal창</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#권한을 설정</span></span><br><span class="line">chmod +x command.sh</span><br><span class="line">./command.sh</span><br></pre></td></tr></table></figure>
+<h4 id="보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서"><a href="#보통은-우리가-deploy-sh라는-파일로-만들어-그-안에서-작업을-한다-예를-들어서" class="headerlink" title="보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,"></a>보통은 우리가 deploy.sh라는 파일로 만들어 그 안에서 작업을 한다. 예를 들어서,</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># zip형식으로 되어있는 모든(*)파일을 삭제해라</span></span><br><span class="line">rm *.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모든 파일을 lisztfever라는 이름으로 압축해라. -r 옵션은 파일이 있을 수 있으므로 붙여준다.</span></span><br><span class="line">zip lisztfever.zip -r *</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws s3라는 storage에 s3://areha/lisztfever/lisztfever.zip 에 해당 path의 파일을 삭제</span></span><br><span class="line">aws s3 rm s3://areha/lisztfever/lisztfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># s3에게 다시 copy해라</span></span><br><span class="line">aws s3 cp ./listzfever.zip s3://areha/lisztfever/listzfever.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># aws lambda function을 update해라.</span></span><br><span class="line">aws lambda update-function-code --<span class="keyword">function</span>-name listzfever --s3-buket areha --s3-key listzfever/listzfever.zip</span><br></pre></td></tr></table></figure>
+<h2 id="AWS-Cloud-Service"><a href="#AWS-Cloud-Service" class="headerlink" title="AWS Cloud Service"></a>AWS Cloud Service</h2><p>먼저, <code>IAM</code>(Identity and Access Management)에 대해서 설명하겠다. <code>내가 누구이고 어떤 Access를 가지고 있는지를 관리하는 곳이라고 생각할 수 있다.</code> 여기서 새로운 User를 등록 할 수 있다.</p>
+<p><img src="/image/IAM_00.png" alt="그림00"></p>
+<ul>
+<li>위의 Add User를 통해서 새로운 User를 등록해보자.</li>
+</ul>
+<p><img src="/image/IAM_01.png" alt="그림01"></p>
+<ul>
+<li>Access type은 우리가 AWS cli를 통해서도 관리하므로 첫번째인 Programmatic access로 설정한다.</li>
+</ul>
+<p><img src="/image/IAM_02.png" alt="그림02"></p>
+<ul>
+<li><p>Permission을 주는 방식에 대한 설정하는 부분이다.</p>
+<ul>
+<li><p>Add user to group : 한 Project를 여러명이 같이 진행하여 여러명이 관리할 경우 사용.</p>
+</li>
+<li><p>Copy permissions from existing user : 말 그대로 이미 존재하는 user의 permission들 중 하나를 선택하여 Copy할 경우 사용</p>
+</li>
+<li><p>Attach existing policies directly : AWS에 존재하는 정책들 중 하나를 선택하여 바로 사용하는 경우 사용</p>
+</li>
+</ul>
+</li>
+<li><p>예전에 있던 계정이 만료된걸 모르고 있다가 결제를 안해버려서…. ㅠㅠㅠ 새롭게 만든 계정으로 하느라 등록된 User들이 없다. 그러므로 3번째 설정으로 들어가서 모든 최상위 permission을 갖는 AdministratorAccess를 주었다.</p>
+</li>
+<li><p>다음으로 넘어가게 되면, tag를 설정하게 되는데, 우선 넘어가겠다.(이 부분은 나중에 설정할 것이다.)</p>
+</li>
+</ul>
+<p><img src="/image/IAM_03.png" alt="그림03"></p>
+<ul>
+<li>앞에서 설정한 사항들을 확인하고, Create User를 누르게 되면 설정한대로 User를 생성하게 되는 것이다.</li>
+</ul>
+<p><img src="/image/IAM_03.png" alt="그림04"></p>
+<ul>
+<li>Access key ID, Secret access key가 생성되어 나오는데, <code>이 창이 닫히면, 볼수 없으므로 Download csv를 하는 것을 권장한다.</code></li>
+</ul>
+<ul>
+<li>설치 프로그램을 실행한다. /usr/local/aws에 AWS CLI를 설치하고 /usr/local/bin 디렉터리에 symlink aws를 생성한다. <code>-b 옵션을 사용하여 symlink를 생성하면 사용자의 $PATH 변수에 설치 디렉터리를 지정할 필요가 없다. 이렇게 하면 모든 사용자가 임의 디렉터리에서 aws를 입력하여 AWS CLI를 호출 가능하게 한다.</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"</span> -o <span class="string">"awscli-bundle.zip"</span></span><br><span class="line">unzip awscli-bundle.zip</span><br><span class="line">sudo ./awscli-bundle/install -i /usr/<span class="built_in">local</span>/aws -b /usr/<span class="built_in">local</span>/bin/aws</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위의 설치가 다 끝나면, 이제 aws cli의 configure를 설정해 볼 것이다. 이를 통해 우리가 console에 접속하지 않고도 cli 환경에서도 aws를 조작할 수 있게 된다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws configure</span><br><span class="line">AWS Access Key ID [None]: Access key ID</span><br><span class="line">AWS Secret Access Key [None]: Secret access key</span><br><span class="line">Default region name [None]: ap-northeast-2</span><br><span class="line">Default output format [None]:</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "data engineering basic(Unix환경 및 커맨드)",
+        "image": "https://heung-bae-lee.github.io/image/IAM_00.png",
+        "keywords": "",
+        "genre": "data engineering",
+        "datePublished": "2019-12-09",
+        "dateCreated": "2019-12-09",
+        "dateModified": "2019-12-10",
+        "url": "https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/",
+        "description": "Pipes and Filterscat : 해당 파일 전체를 printhead : 해당 파일 앞의 10줄 정도를 printtail : 해당 파일 뒤의 20줄 정도를 print
+command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결과 파일에 저장command &gt;&gt; file : 기존의 파일에 덮붙여서 결과를 저장(pyt"
+        "wordCount": 631
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/12/10/data_engineering_02/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            data engineering basic(SQL Basic)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/12/08/deep_learning02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">쉽게 배우는 경사하강 학습법</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/15/data_engineering_04/" class="title">data engineering (AWS로 DB 만들기)</a></p>
+                            <p class="item-date"><time datetime="2019-12-15T06:16:36.000Z" itemprop="datePublished">2019-12-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2019/12/14/linear_algebra_00/" class="title">선형 대수 공부할 때 도움되는 사이트</a></p>
+                            <p class="item-date"><time datetime="2019-12-14T07:24:18.000Z" itemprop="datePublished">2019-12-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Recommendation-System/">Recommendation System</a></p>
+                            <p class="item-title"><a href="/2019/12/14/Recommendation_System_00/" class="title">추천시스템(Recommendation System)</a></p>
+                            <p class="item-date"><time datetime="2019-12-14T02:34:02.000Z" itemprop="datePublished">2019-12-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/13/data_engineering_03/" class="title">data engineering (API는 무엇인가?!?)</a></p>
+                            <p class="item-date"><time datetime="2019-12-13T04:25:42.000Z" itemprop="datePublished">2019-12-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2019/12/13/deep_learning_05/" class="title">Basic ConvNN(VGG-16모방한 기본)구현</a></p>
+                            <p class="item-date"><time datetime="2019-12-13T03:58:02.000Z" itemprop="datePublished">2019-12-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
