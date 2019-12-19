@@ -8,16 +8,8 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/</loc>
-        <lastmod>2019-12-17T04:17:05.314Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/14/linear_algebra_00/</loc>
-        <lastmod>2019-12-16T11:54:02.937Z</lastmod>
+        <loc>https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/</loc>
+        <lastmod>2019-12-19T05:49:23.320Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,7 +17,31 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/</loc>
-        <lastmod>2019-12-15T06:18:38.435Z</lastmod>
+        <lastmod>2019-12-17T07:06:18.224Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/</loc>
+        <lastmod>2019-12-17T05:58:56.056Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/</loc>
+        <lastmod>2019-12-17T04:17:10.108Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/14/linear_algebra_00/</loc>
+        <lastmod>2019-12-17T01:20:31.153Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -90,14 +106,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/07/24/data_structure_00/</loc>
         <lastmod>2019-12-11T16:25:06.686Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/</loc>
-        <lastmod>2019-12-10T02:24:31.333Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
