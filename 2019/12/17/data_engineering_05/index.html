@@ -20,10 +20,12 @@
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경우mysql&amp;gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-19T05:49:23.320Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/artist_table.png">
+<meta property="og:updated_time" content="2019-12-19T05:53:45.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (DB에 table 만들기)">
 <meta name="twitter:description" content="DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경우mysql&amp;gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/artist_table.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -210,6 +212,10 @@ ga('send', 'pageview');
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 추가</span></span><br><span class="line">mysql&gt; update artist_genres <span class="built_in">set</span> genre=<span class="string">'pop'</span> <span class="built_in">where</span> artist_id=<span class="string">'1234'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># columns 추가</span></span><br><span class="line">mysql&gt; alter table artist_genres add column country VARCHAR(255);</span><br><span class="line"></span><br><span class="line"><span class="comment"># update 되는 시점을 갖는 column 추가</span></span><br><span class="line"><span class="comment"># 자동적으로 데이터가 추가 될때마다 그 시점이 저장됨</span></span><br><span class="line">mysql&gt; alter table artist_genres add column updated_at timestamp default current_timestamp on update current_timestamp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 동일한 키값을 갖는 데이터가 이미 존재하므로 오류를 방생시킴.</span></span><br><span class="line">mysql&gt; INSERT INTO artist_genres (artist_id, genre, country) VALUES (<span class="string">'1234'</span>, <span class="string">'pop'</span>, <span class="string">'UK'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># replace into 구문을 통해 값이 변경되기 했지만 성능적인 측면에서, 데이터가 많을땐 먼저 키값이 있는지 찾고, 존재한다면 지금처럼 그 행을 지우고 새로운 행으로 바꿔준다.</span></span><br><span class="line">mysql&gt; REPLACE INTO artist_genres (artist_id, genre, country) VALUES (<span class="string">'1234'</span>, <span class="string">'pop'</span>, <span class="string">'UK'</span>);</span><br><span class="line">Query OK, 2 rows affected (0.28 sec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 위에서 replace into 구문을 통해 값이 변경되었음을 확인 할 수 있다.</span></span><br><span class="line">mysql&gt; select * from artist_genres;</span><br><span class="line"></span><br><span class="line"><span class="comment"># artist_id, genre가 Unique key인데 두 컬럼을 동시에 동일한 값을 갖는 row가 없으므로 새로 추가 해준다.</span></span><br><span class="line">mysql&gt; REPLACE INTO artist_genres (artist_id, genre, country) VALUES (<span class="string">'1234'</span>, <span class="string">'rock'</span>, <span class="string">'UK'</span>);</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from artist_genres;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 말 그대로 동일한 키값이 있으면 그냥 insert into 구문은 오류를 발생시켰지만, insert ignore into 구문은 오류를 발생시키지 않고 무시한다.</span></span><br><span class="line">mysql&gt; insert ignore into artist_genres (artist_id, genre, country) VALUES (<span class="string">'1234'</span>, <span class="string">'rock'</span>, <span class="string">'FR'</span>);</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from artist_genres;</span><br><span class="line"></span><br><span class="line"><span class="comment"># on duplicate key update</span></span><br><span class="line">mysql&gt; insert into artist_genres (artist_id, genre, country) values (<span class="string">'1234'</span>, <span class="string">'rock'</span>, <span class="string">'FR'</span>) on duplicate key update artist_id=<span class="string">'1234'</span>, genre=<span class="string">'rock'</span>, country=<span class="string">'FR'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 우리가 입의로 넣어 주었던 country는 지워줄 것이다.</span></span><br><span class="line">mysql&gt; alter table artist_genres drop column country;</span><br></pre></td></tr></table></figure>
 <h4 id="결론은-다음-구문을-query문으로-사용하겠다는-것이다"><a href="#결론은-다음-구문을-query문으로-사용하겠다는-것이다" class="headerlink" title="결론은 다음 구문을 query문으로 사용하겠다는 것이다."></a>결론은 다음 구문을 query문으로 사용하겠다는 것이다.</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into artist_genres (artist_id, genre, country) values (<span class="string">'1234'</span>, <span class="string">'rock'</span>, <span class="string">'FR'</span>) on duplicate key update artist_id=<span class="string">'1234'</span>, genre=<span class="string">'rock'</span>, country=<span class="string">'FR'</span></span><br></pre></td></tr></table></figure>
+<h3 id="결과-이미지"><a href="#결과-이미지" class="headerlink" title="결과 이미지"></a>결과 이미지</h3><ul>
+<li>python script를 짜고 추후에 script를 실행하여 바로 RDS에 저장하고 table이 제대로 생성됬는지 확인하였다.</li>
+</ul>
+<p><img src="/image/artist_table.png" alt="artist 테이블 생성"><br><img src="/image/artist_genres_table.png" alt="artist genres 테이블 생성"></p>
 
         </div>
         <footer class="article-footer">
@@ -281,7 +287,7 @@ ga('send', 'pageview');
             "name": "HeungBae Lee"
         },
         "headline": "data engineering (DB에 table 만들기)",
-        "image": "https://heung-bae-lee.github.io",
+        "image": "https://heung-bae-lee.github.io/image/artist_table.png",
         "keywords": "",
         "genre": "data engineering",
         "datePublished": "2019-12-17",
@@ -289,7 +295,7 @@ ga('send', 'pageview');
         "dateModified": "2019-12-19",
         "url": "https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/",
         "description": "DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경우mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url "
-        "wordCount": 850
+        "wordCount": 877
     }
 </script>
 
@@ -540,5 +546,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
