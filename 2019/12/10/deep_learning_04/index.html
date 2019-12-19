@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Convolution Neural Network(1) | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="합성곱 연산과 이미지 필터  아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Convolution Neural Network(1)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="합성곱 연산과 이미지 필터  아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/analog_signal.png">
+<meta property="og:updated_time" content="2019-12-13T03:47:57.795Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Convolution Neural Network(1)">
+<meta name="twitter:description" content="합성곱 연산과 이미지 필터  아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/analog_signal.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/">
+   
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script data-ad-client="ca-pub-4604833066889492" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/deep-learning/">deep learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+			    <article id="post-deep_learning_04" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Convolution Neural Network(1)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/10/deep_learning_04/" class="article-date">
+            <time datetime="2019-12-10T04:50:24.000Z" itemprop="datePublished">2019-12-10</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="합성곱-연산과-이미지-필터"><a href="#합성곱-연산과-이미지-필터" class="headerlink" title="합성곱 연산과 이미지 필터"></a>합성곱 연산과 이미지 필터</h2><p><img src="/image/analog_signal.png" alt="아날로그 신호처리"></p>
+<ul>
+<li>아날로그 신호처리는 <code>선형이고 시불변인 시스템</code>에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. <code>디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의</code>되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수에서 나오는 linearity를 만족시키면 되는 것이고, <code>시불변이라는 의미는 시간이 지나도 동일한 결과를 내보내준다는 의미이다.</code> 확률과정에서 step에 영향을 받지 않는다라고 보면 좋을 것 같다. 사람은 대표적으로 LTI 시스템이 아닌 시스템이다.</li>
+</ul>
+<p><img src="/image/Dirac_delta_function.png" alt="Dirac 델타 함수"></p>
+<ul>
+<li>수학적으로는 엄밀하진 않지만, 공학에선 많이 사용한다. 왼쪽의 삼각형을 모든 구간에 대해 전부해준다면 값은 1이 될 것이다. 여기서 $h\to\infty$가 되면, Dirac 델타 함수가 된다.<ul>
+<li>시간 t=0만 임의의 값을 갖고, 나머지 구간은 0을 갖는다.</li>
+<li>모든 구간에서 적분한 값이 1</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/impulse_response.png" alt="임펄스 응답"></p>
+<p><img src="/image/convolution_operation.png" alt="합성곱 연산"></p>
+<ul>
+<li><code>convolution을 한다는 것은 임의의 두 함수 중 한 함수를 좌우로 뒤집고 이동시키면서 두함수의 곱을 적분하여 계산한다.</code></li>
+</ul>
+<p><img src="/image/conv_operation_and_LTI_system.png" alt="합성곱 연산과 LTI 시스템"></p>
+<p><img src="/image/2_Dimension_2_channel.png" alt="이차원 신호와 흑백 이미지"></p>
+<p><img src="/image/2_Dimension_color_image.png" alt="이차원 신호와 컬러 이미지"></p>
+<p><img src="/image/image_conv.png" alt="영상의 합성곱 계산"><br><a href="http://deeplearning.net/software/theano_versions/dev/tutorial/conv_arithmetic.html" target="_blank" rel="noopener">합성곱 계산 animation</a></p>
+<p><img src="/image/noise_removal_filter.png" alt="잡음 제거 필터"></p>
+<p><img src="/image/differentiation_filter.png" alt="미분 필터"></p>
+<ul>
+<li>vertical Sobel Filter가 왜 미분 필터이냐고 의문이 든다면, 1차원 신호를 data로 생각하고 앞서 했었던 수치 미분을 떠올려 보자. 그렇다면, 단숨에 이해가 갔을 것이다. 지금은 vertical Sobel Filter이므로 가로의 Edge는 추출하지 못한 것을 확인할 수 있다. 그에 반해 세로 성분들은 잘 검출된 것을 확인 할 수 있다. 만일 위의 필터를 90도 rotate해주게되면 가로로 미분하는 horizonal Sobel Filter가 되어 위의 결과와는 반대의 결과를 보여줄 것이다.</li>
+</ul>
+<h2 id="합성곱-계층"><a href="#합성곱-계층" class="headerlink" title="합성곱 계층"></a>합성곱 계층</h2><p><img src="/image/product_to_conv.png" alt="곱에서 합성곱으로"></p>
+<ul>
+<li><code>입력</code>이 이제는 <code>영상</code>으로 여러개 들어오게 되어 각각의 입력층의 뉴런 하나 하나가 <code>channel</code>이라고 불린다. <code>필터 가중치</code>는 보통 <code>3x3, 5x5, 7x7등을 주로 사용</code>한다. 2D signal과 2D signal을 곱(<code>element-wise product or Hadamard product</code>)해야하므로 <code>합성곱</code>을 사용한다.  </li>
+</ul>
+<p><img src="/image/FC_Layer_conv.png" alt="전결합 계층"></p>
+<p><img src="/image/Conv_layer.png" alt="합성곱 계층"></p>
+<ul>
+<li>$kernel_{Height} \times kernel_{Width} \times channel_{in} \times channel_{out}$ 만큼의 parameter가 필요하다. filter는 $Channel_{in} \times Chaeel_{out}$개 만큼 있을 것이다.</li>
+</ul>
+<p><img src="/image/Conv_Layer_meaning.png" alt="합성곱 계층의 의미"></p>
+<ul>
+<li>kernel(Filter)에 나타나는 모양과 유사한 모양을 한 위치가 높은 값으로 나타나게 된다.</li>
+</ul>
+<h2 id="기본적인-합성곱-신경망"><a href="#기본적인-합성곱-신경망" class="headerlink" title="기본적인 합성곱 신경망"></a>기본적인 합성곱 신경망</h2><p><img src="/image/basic_conv_structure.png" alt="합성곱 신경망의 기본 구조"></p>
+<p><img src="/image/Conv_Layer_feature_map.png" alt="합성곱 계층"></p>
+<ul>
+<li>stride요소를 넣지 않으면, 합성곱 계층에서는 영상의 크기는 그대로이며, <code>영상의 채널 수</code>가 달라진다.</li>
+<li><code>kernel(filter)가 돌아다니면서 포착하는 형태이기 때문에 공간적인 특징</code>이 있고, 따라서 <code>Feature Map</code>이라고 한다.</li>
+</ul>
+<p><img src="/image/Pooling_Layer.png" alt="풀링 계층"></p>
+<p><img src="/image/Pooling_Layers.png" alt="Pooling Layers"></p>
+<ul>
+<li>classification에서는 Max Pooling이 주로 잘 먹힌다!</li>
+</ul>
+<p><img src="/image/Flatten.png" alt="평탄화"><br>-<code>Convolutional Layer와 FC Layer를 연결해주기 위해 필요하다</code></p>
+<p><img src="/image/FC_Layer_why.png" alt="전결합 계층"></p>
+<p><img src="/image/why_use_this_structure_conv.png" alt="그러면 왜 이런 구조를 쓰나?"></p>
+<ul>
+<li><p>먼저, 맨 처음 언급했던 머신러닝과 딥러닝의 가장 큰 차이는 사람이 feature를 넣어주느냐 그렇지 않느냐의 차이라고 했다. 크게 보면 위의 그래프에서 합성곱 계층과 활성함수의 과정을 N번 반복하는 것은 shallowNN의 input으로 넣어 줄 Feature를 뽑는 과정이라고 직관적으로 이해할 수 있다.</p>
+</li>
+<li><p>앞의 합성곱 계층에서 activation function 까지를 계속해서 <code>진행 할수록 Feature Map의 크기(width와 height)는 Kernel과 Pooling에 의해서 줄어들고 channel(depth)는 늘어나게 될 것이다. 또한 처음부터 끝까지 동일한 크기의 kernel(Filter)을 사용한다고 가정한다면, 영상에서 더 넓은 영역을 커버하는 효과를 주는 것과 동일하다.</code></p>
+</li>
+</ul>
+<p><img src="/image/Receptive_Field.png" alt="Receptive Field"></p>
+<ul>
+<li><code>그래서 Feature Map을 한번 뽑을 때마다 Pooling을 해주면서 처음에는 좁은 영역을 점점 더 넓은 영역을 본다. 점점 더 넓은 영역을 본다는 의미는 Pooling을 함으로써 결국에는 더 넓은 범위를 대표하는 값들을 가진 2-D Matrix인 Feature Map이 될 것이기 때문이다.</code></li>
+</ul>
+<p><img src="/image/LeNet_5.png" alt="LeNet-5"></p>
+<ul>
+<li>98년도의 르쿤 교수님의 LeNet-5는 pooling 대신 subsampling을 사용하여 같은 Feature Map의 크기를 줄여주었다.</li>
+</ul>
+<p><img src="/image/VGG_16.png" alt="VGG-16"></p>
+<h2 id="합성곱-신경망의-심화-이해"><a href="#합성곱-신경망의-심화-이해" class="headerlink" title="합성곱 신경망의 심화 이해"></a>합성곱 신경망의 심화 이해</h2><p><img src="/image/importance_of_conv.png" alt="합성곱 게층의 필요성"></p>
+<ul>
+<li>간단히 생각하면 $kernel_{height} \times kernel_{width} \times Channel_{in} \times Channel_{out}$ 만큼 어마어마하게 많은 Parameter가 필요하므로 계산해야 할 Parameter가 상대적으로 적은 FC Layer로 하는 것이 더 좋은 방법이지 않을까라고 생각하시는 분들이 있을 것이다. 허나, 그것은 잘못된 생각이다. <code>Convolutional Layer를 사용하기 때문에 우리가 Image를 처리할 수 있는 것이다. FC Layer를 사용하게 되면 오히려 계산해야 할 Parameter의 개수가 어마어마하게 늘어난다.</code>$(Height_{in} \times Width_{in} \times Channel_{in}) \times (Height_{out} \times Width_{out} \times C_{out})$ 얼핏 보기엔 비슷해보이겠지만, 예를 들어보자. 입력으로 RGB channel을 갖는 1024 * 1024 image를 받는다면, FC Layer를 사용한다면, $(1024 \times 1024 \times 16) \times (1024 \times 1024 \times 32)$이지만 Convolutional Layer를 사용하고 $3 \times 3$ kernel을 사용한다면 $(3 \times 3 \times 16 \times 32)$로 훨씬 적은 연산을 한다. 이러한 이유로 우리가 영상을 입력으로 하는 것은 절대로 FC Layer를 통해 해결할 수 없다.</li>
+</ul>
+<p><img src="/image/mathmatical_expression_of_FC_Layer_00.png" alt="전결합 계층의 수학적 표현"></p>
+<p><img src="/image/mathmatical_expression_of_Conv_Layer_00.png" alt="합성곱 계층의 수학적 표현"></p>
+<ul>
+<li>위에서 W는 kernel들을 $C_{in} \times C_{out}$ Matrix로 이루어진 tensor이다. 즉, $W_{i,j}$들이 각각의 kernel을 나타내고 $X_{i}$와 convolution operation을 해주므로 편향은 FC Layer와 동일하게 channel 1개마다 1개씩 존재한다.</li>
+</ul>
+<p><img src="/image/importance_of_Padding.png" alt="Padding의 필요성"></p>
+<p><img src="/image/Padding.png" alt="Padding"></p>
+<ul>
+<li>위의 그림의 예를 보면 kernel size가 $3 = 2N+1$이므로 입력에 상하좌우 1개의 Zero-Padding을 해준 것이다.</li>
+</ul>
+<p><img src="/image/Stride.png" alt="Stride"></p>
+<ul>
+<li>Stride를 하는 것은 결과를 미리 Convolution을 Full로 다 연산을 한 다음에 하나씩 Subsample하는 것과 동일한 결과를 가져온다. 그러므로 다 연산한 후에 subsampling을 하면 연산은 다하지만 결국엔 버리는 값이 생기기 때문에 Stride를 사용한다.</li>
+</ul>
+<p><img src="/image/conv_layer_feature.png" alt="합성곱 계층의 특징"></p>
+<ul>
+<li>학습 초반에는 위쪽의 Feature Map들 처럼 좁은 범위의 Feature들을 추출하지만, 학습의 후반 부에는 넓은 범위의 Feature들을 학습한다.</li>
+</ul>
+<h2 id="Batch-Normalization-배치-정규화"><a href="#Batch-Normalization-배치-정규화" class="headerlink" title="Batch Normalization(배치 정규화)"></a>Batch Normalization(배치 정규화)</h2><p><img src="/image/vanilla_gradient_descent.png" alt="일반 경사 하강법(vanilla Gradient Descent)"></p>
+<ul>
+<li><code>일반 경사 하강법의 경우, Gradient를 한번 업데이트 하기 위해 모든 학습 데이터를 사용한다.</code> 하지만 데이터가 엄청나게 많다면?? 그렇다면 Gradient를 업데이트하는데 오랜시간이 소요될 것이다. 그렇다면 SGD는??!! Stochastic은???</li>
+</ul>
+<p><img src="/image/stochastic_gradient_descent.png" alt="확률적 경사 하강법(Stochastic Gradient Descent)"></p>
+<p><img src="/image/minibatch_learning.png" alt="미니 배치 학습법"></p>
+<ul>
+<li>Epoch마다 데이터 순서를 섞어주기도 하는 이유는 random성을 더 강하게 해주기 위해서이다.</li>
+</ul>
+<p><img src="/image/internal_Covariate_Shift.png" alt="internal Covariate Shift"></p>
+<ul>
+<li><code>이런 현상을 해결하기 위한 것이 batch normalization이다.</code></li>
+</ul>
+<p><img src="/image/Batch_normalization.png" alt="배치 정규화(Batch Normalization)"></p>
+<p><img src="/image/Training_Phase.png" alt="학습단계(Training Phase)"></p>
+<ul>
+<li><p>또한, 동일한 scale과 동일한 zero-mean을 가지게 되기 때문에 학습률 결정에 유리하다 말의 의미는 <code>학습을 할 때 더 scale이 큰 경우에는 학습이 많이 되고, scale이 작으면 학습이 적게 되는 문제가 발생할 수 있다. 학습률을 너무 크게 할 경우 Gradient가 크게 나오는 곳에 Gradient exploding이 발생할 수가 있고, 반대로 학습률을 너무 작게 할 경우 Gradient Vanishing이 발생되서 학습이 안되는 곳이 발생되는 문제가 있는데 Normalization을 해주게 되면 모든 각각의 계층들이 동일한 scale로 학습되기 때문에 학습률 결정에 유리하다는 것이다.</code><br>(미분을 할때 입력에 대해서 출력값이 커지게 되면, Gradient값도 커질 것이다.)</p>
+</li>
+<li><p>각각의 batch를 normalization하면, 말 그대로 normalization이 된 것이므로 모수가 $\mu=0, \sigma^2=1$인 gaussian distribution을 갖게 될 것이다. 그런데 activation함수는 LeRu를 사용한다면 0미만인 것들은 모조리 0값으로 반환될것이다. 이미 연산을 해놓은 값들을 연산 하기 전이 아닌 연산후에 0으로 만들어 의미 없게 만드는 것 보다 그렇게 0으로 반환되는 개수를 조절하기 위해 추가 스케일링 계수인 $\gamma$와 $\beta$를 만들고, 역전파 알고리즘으로 학습시켜준다.</p>
+</li>
+</ul>
+<p><img src="/image/Inference_Phase.png" alt="추론 단계(Inference Phase)"></p>
+<ul>
+<li>학습과정에서 이동평균을 구해놓는데, 최근 N개에 대한 이동평균을 사용한다. <code>최근 N개만 사용하고 그 전에 것들은 자연스럽게 날라가기 때문에 최근 N개가 충분한 sample이 아닐 경우</code>$\mu$<code>,</code>$\sigma$<code>가 적절하지 않게 결정되는 문제가 있는데 이런 상황을 해결하는 것은 지수평균을 사용한다.</code></li>
+</ul>
+<h2 id="심화-합성곱-신경망"><a href="#심화-합성곱-신경망" class="headerlink" title="심화 합성곱 신경망"></a>심화 합성곱 신경망</h2><p><img src="/image/Conv_NN.png" alt="합성곱 신경망"></p>
+<h3 id="GoogLeNet"><a href="#GoogLeNet" class="headerlink" title="GoogLeNet"></a>GoogLeNet</h3><p><img src="/image/GoogLeNet.png" alt="GoogLeNet(Inception)"></p>
+<ul>
+<li>2014년도에 GoogLeNet과 VGG-19가 나왔는데, GoogLeNet이 에러율이 좀 더 낮고 층이 더 깊은 것을 알 수 있다. GoogLeNet이 좀 더 복잡해서 VGG가 더 많이 알려져 있지만, 다양한 스킬들을 공부하려면 GoogLeNet을 조금 살펴보는 것도 좋을 것이다.</li>
+</ul>
+<p><img src="/image/sturcture_of_GoogLeNet.png" alt="GoogLeNet의 구조"></p>
+<ul>
+<li><code>Let&#39;s Go Deeper and Deeper라는 모토를 가지고 만들어진 것과 같이 좀더 hidden_layer가 깊어진 것을 알 수 있다.</code></li>
+</ul>
+<p><img src="/image/Inception_Module.png" alt="Inception 모듈(naive version)"></p>
+<ul>
+<li>1x1, 3x3, 5x5의 feature들을 다 나누어서 학습한다. <code>즉, 다양한 크기의 Filter들이 잘 학습된다. 또한 3x3 Max pooling 같은 경우는 convolution Layer를 거치지않고도 단순히 max pooling을 통한 후에도 다음 단계에서 의미있는 feature로 작동된다는 것을 보여주었다!!</code></li>
+</ul>
+<p><img src="/image/Inception_Module_01.png" alt="Inception 모듈(dimension reductions)"></p>
+<ul>
+<li>naive 한 Inception 모듈 구조에서 먼저 <code>단순히 1x1 conv를 통과시켜 동일한 channel 영역(Receptive Field)을 가져가면서도 channel을 줄여 연산량을 줄여 주는 구조인 Bottleneck를 구현</code>하고 있다.</li>
+</ul>
+<p><img src="/image/Bottle_neck_sturcture.png" alt="Bottleneck 구조"></p>
+<p><img src="/image/extra_clssifier.png" alt="추가 분류기 사용"></p>
+<ul>
+<li>맨 마지막 출력층에서만 inference를 한다면 Input에 가까운 층일수록 점점 더 Vanishing Gradient문제로 인해 학습이 저하 될 것을 우려하여 중간 feature들로도 classification을 하도록 하였다.</li>
+</ul>
+<h4 id="GoogLeNet-중간-요약"><a href="#GoogLeNet-중간-요약" class="headerlink" title="GoogLeNet 중간 요약"></a>GoogLeNet 중간 요약</h4><ul>
+<li>Inception 구조</li>
+<li>Battleneck 구조</li>
+<li>중간 중간에 inference</li>
+</ul>
+<h3 id="Residual-Network"><a href="#Residual-Network" class="headerlink" title="Residual Network"></a>Residual Network</h3><p><img src="/image/ResNet.png" alt="Residual Network(ResNet)"></p>
+<ul>
+<li>이제는 거의 일반적이고, 기본구조로 많이 사용하는 구조이다.</li>
+</ul>
+<p><img src="/image/structure_of ResNet.png" alt="ResNet의 구조"></p>
+<p><img src="/image/Skip_connection.png" alt="Skip Connection"></p>
+<ul>
+<li>왼쪽 구조에서 표현가능한 것은 오른쪽 구조인 Residual 구조에서도 표현 가능함이 증명 되어 있다. 직관적으로 봤을때는 Feature를 뽑아서 이전 Feature와 더한 다는 것이 잘 이해가 안갈 수 도 있겠지만, 이런식으로 했을때도 좌측의 일반적인 Conv Layer의 구조와 수학적으로 동치를 이룬다는 것을 알고 있자.</li>
+</ul>
+<p><img src="/image/Identity_Mapping.png" alt="Identity Mapping"></p>
+<p><img src="/image/Pre_activation_00.png" alt="Pre-Activation_00"></p>
+<ul>
+<li>맨 왼쪽이 Original ResidualNN의 구조이고 가운데가 Pre-Activation을 사용하는 구조이다.  </li>
+</ul>
+<p><img src="/image/Pre_activation_01.png" alt="Pre-Activation_01"></p>
+<h2 id="Densely-Connected-ConvNets-DenseNet"><a href="#Densely-Connected-ConvNets-DenseNet" class="headerlink" title="Densely Connected ConvNets(DenseNet)"></a>Densely Connected ConvNets(DenseNet)</h2><p><img src="/image/DenseNet.png" alt="Densely Connected ConvNets"></p>
+<ul>
+<li>간단히 말하자면, 모든 Layer들이 다 연결되어 있는 구조라고 할 수 있다.</li>
+</ul>
+<p><img src="/image/structure_of_DenseNet.png" alt="DenseNet 구조"></p>
+<ul>
+<li><p>처음에 일반적인 Conv Layer를 통해 Feature Map을 만들고 그런 뒤에 Dense Block을 이용해서 다른 모든 Conv Layer들과 Dense하게 연결시켜준다. 그 다음 Conv Layer를 이용해서 channel 개수를 조정해주고, Max Pooling을 이용해서 영상크기를 줄여준다. 이런 과정을 여러번 반복해서 Feature를 추출한 후, 맨 마지막은 FC Layer로 구성해주었다.</p>
+</li>
+<li><p><code>위의 구조에서 Dense Block들이 residual block으로 바뀐다면 ResNet인 것이다. Pre-Activation구조를 사용한다는 것이 ResNet을 계승하고 있는다는 것을 알 수 있는 명확한 내용이다.</code></p>
+</li>
+</ul>
+<p><img src="/image/Dense_Block.png" alt="Dense Block"></p>
+<p><img src="/image/Bottle_neck_structure.png" alt="Bottleneck 구조"></p>
+<p><img src="/image/practice_of_DenseNet.png" alt="DensNet의 구현"></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Convolution Neural Network(1)",
+        "image": "https://heung-bae-lee.github.io/image/analog_signal.png",
+        "keywords": "",
+        "genre": "deep learning",
+        "datePublished": "2019-12-10",
+        "dateCreated": "2019-12-10",
+        "dateModified": "2019-12-13",
+        "url": "https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/",
+        "description": "합성곱 연산과 이미지 필터
+
+아날로그 신호처리는 선형이고 시불변인 시스템에 의존해서 개발이 되게 되는데, Noise가 있는 입력이 들어왔을 때 넣어주면 Noise가 제거된 출력이 나오는 이런 시스템을 모두 LTI system이라고 부른다. 디지털 신호가 아닌 아날로그 신호로부터 LTI system이 정의되어있다. 선형이라는 것은 대부분 알고 있듯이 선형대수"
+        "wordCount": 1354
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/12/13/deep_learning_05/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Basic ConvNN(VGG-16모방한 기본)구현
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/12/10/data_engineering_02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">data engineering basic(SQL Basic)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/17/data_engineering_05/" class="title">data engineering (DB에 table 만들기)</a></p>
+                            <p class="item-date"><time datetime="2019-12-17T08:30:11.000Z" itemprop="datePublished">2019-12-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/15/data_engineering_04/" class="title">data engineering (AWS로 DB 만들기)</a></p>
+                            <p class="item-date"><time datetime="2019-12-15T06:16:36.000Z" itemprop="datePublished">2019-12-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2019/12/14/linear_algebra_00/" class="title">선형 대수 공부할 때 도움되는 사이트</a></p>
+                            <p class="item-date"><time datetime="2019-12-14T07:24:18.000Z" itemprop="datePublished">2019-12-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Recommendation-System/">Recommendation System</a></p>
+                            <p class="item-title"><a href="/2019/12/14/Recommendation_System_00/" class="title">추천시스템(Recommendation System)</a></p>
+                            <p class="item-date"><time datetime="2019-12-14T02:34:02.000Z" itemprop="datePublished">2019-12-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/13/data_engineering_03/" class="title">data engineering (API는 무엇인가?!?)</a></p>
+                            <p class="item-date"><time datetime="2019-12-13T04:25:42.000Z" itemprop="datePublished">2019-12-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

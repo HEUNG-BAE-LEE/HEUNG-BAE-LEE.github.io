@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>data engineering basic(SQL Basic) | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="SQL(Structured Query Language)DB (Database) 데이터를 통합하여 관리하는 데이터의 집합  DBMS (Database Management system) DB를 관리하는 미들웨어 시스템을 의미  Database 분류    RDBMS(Relational Database Management System) NoSQL     - 데이터">
+<meta property="og:type" content="article">
+<meta property="og:title" content="data engineering basic(SQL Basic)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/10/data_engineering_02/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="SQL(Structured Query Language)DB (Database) 데이터를 통합하여 관리하는 데이터의 집합  DBMS (Database Management system) DB를 관리하는 미들웨어 시스템을 의미  Database 분류    RDBMS(Relational Database Management System) NoSQL     - 데이터">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/RDBMS.png">
+<meta property="og:updated_time" content="2019-12-13T06:46:53.388Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="data engineering basic(SQL Basic)">
+<meta name="twitter:description" content="SQL(Structured Query Language)DB (Database) 데이터를 통합하여 관리하는 데이터의 집합  DBMS (Database Management system) DB를 관리하는 미들웨어 시스템을 의미  Database 분류    RDBMS(Relational Database Management System) NoSQL     - 데이터">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/RDBMS.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/10/data_engineering_02/">
+   
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script data-ad-client="ca-pub-4604833066889492" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/data-engineering/">data engineering</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+			    <article id="post-data_engineering_02" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        data engineering basic(SQL Basic)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/10/data_engineering_02/" class="article-date">
+            <time datetime="2019-12-10T02:23:24.000Z" itemprop="datePublished">2019-12-10</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="SQL-Structured-Query-Language"><a href="#SQL-Structured-Query-Language" class="headerlink" title="SQL(Structured Query Language)"></a>SQL(Structured Query Language)</h1><h3 id="DB-Database"><a href="#DB-Database" class="headerlink" title="DB (Database)"></a>DB (Database)</h3><ul>
+<li>데이터를 통합하여 관리하는 데이터의 집합</li>
+</ul>
+<h3 id="DBMS-Database-Management-system"><a href="#DBMS-Database-Management-system" class="headerlink" title="DBMS (Database Management system)"></a>DBMS (Database Management system)</h3><ul>
+<li>DB를 관리하는 미들웨어 시스템을 의미</li>
+</ul>
+<h3 id="Database-분류"><a href="#Database-분류" class="headerlink" title="Database 분류"></a>Database 분류</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">RDBMS(Relational Database Management System)</th>
+<th style="text-align:center">NoSQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">- 데이터 테이블 사이에 키값으로 관계를 가지고 있는 데이터베이스        ex) Oracle, Mysql, Postgresql, Sqlite -데이터 사이의관계 설정으로 최적화된 스키마를 설계 가능</td>
+<td style="text-align:center">- 데이터 테이블 사이에 관계가 없이 저장하는 데이터베이스  - 데이터 사이의 관계가 없으므로 복잡성이 줄고 많은 데이터를 저장 가능</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="RDBMS"><a href="#RDBMS" class="headerlink" title="RDBMS"></a>RDBMS</h3><p><img src="/image/RDBMS.png" alt="RDBMS"></p>
+<ul>
+<li><p>table</p>
+<ul>
+<li>행(row)과 열(column)로 이루어져 있는 데이터 베이스를 이루는 기본 단위</li>
+<li>Storage Engine<ul>
+<li>MyISAM : full text index 지원, table 단위 lock, select가 빠름, 구조 단순</li>
+<li>InnoDB : transaction 지원, row 단위 lock, 자원을 많이 사용, 구조 복잡</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Column</p>
+<ul>
+<li>테이블의 세로축 데이터</li>
+<li>Field, Attribute 라고도 불림</li>
+</ul>
+</li>
+<li><p>Row</p>
+<ul>
+<li>테이블의 가로축 데이터</li>
+<li>Tuple, Recode 라고도 불림</li>
+</ul>
+</li>
+<li><p>Value</p>
+<ul>
+<li>행(row)과 열(column)에 포함되어있는 데이터</li>
+</ul>
+</li>
+<li><p>Key</p>
+<ul>
+<li>행(row)의 식별자로 사용</li>
+</ul>
+</li>
+<li><p>Relationship<br><img src="/image/relationship.png" alt="relationship"></p>
+</li>
+<li><p>Schema</p>
+<ul>
+<li>스키마(schema)는 데이터 베이스의 구조를 만드는 디자인<br><img src="/image/schema.png" alt="Schema"></li>
+</ul>
+</li>
+</ul>
+<h3 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h3><ul>
+<li>NoSQL(Not Only SQL)<ul>
+<li>RDBMS의 의존적인 관계가 갖는 한계를 극복하기 위해 만들어진 데이터베이스</li>
+<li>확장성이 좋음<ul>
+<li>데이터 분산처리 용이</li>
+</ul>
+</li>
+<li>데이터 저장이 유연함<ul>
+<li>RDMBS와 다르게 구조의 변경이 불필요</li>
+</ul>
+</li>
+<li>Schema 및 Join이 없음<ul>
+<li>Join 기능이 없으므로 각각의 테이블만 사용가능</li>
+<li>collection 별로 관계가 없기 때문에 모든 데이터가 들어있어야 하므로 RDBMS보다 저장공간이 더 필요</li>
+<li>저장되는 데이터는 Key-value 형태의 JSON 포멧을 사용</li>
+</ul>
+</li>
+<li>select는 RDBMS보다 느리지만 insert가 빨라 대용량 데이터 베이스에 많이 사용</li>
+<li>트랜젝션(transaction)이 지원되지 않음(<code>동시수정에 대한 신뢰성이 지원되지 않음</code>)</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/NoSQL.png" alt="NoSQL"></p>
+<p><img src="/image/DB_ranking.png" alt="DB 순위"><br><a href="https://db-engines.com/en/ranking_trend" target="_blank" rel="noopener">https://db-engines.com/en/ranking_trend</a></p>
+<h2 id="Install-MySQL-for-Mac-OS"><a href="#Install-MySQL-for-Mac-OS" class="headerlink" title="Install MySQL(for Mac OS)"></a>Install MySQL(for Mac OS)</h2><ul>
+<li>주의) 2가지 방법을 소개하지만, <code>Python에서 MySQL을 활용할 User들에게는 1번 방법으로 설치를 해야한다는 것을 알려드립니다!!!</code></li>
+<li><code>brew(1번방법)로 설치해야 python의 mysql client를 사용할수 있습니다.</code></li>
+</ul>
+<h3 id="방법-1"><a href="#방법-1" class="headerlink" title="방법 1)"></a>방법 1)</h3><ul>
+<li>reference<ul>
+<li><a href="https://gist.github.com/operatino/392614486ce4421063b9dece4dfe6c21" target="_blank" rel="noopener">https://gist.github.com/operatino/392614486ce4421063b9dece4dfe6c21</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ brew install mysql@version_num</span><br><span class="line">$ brew tap homebrew/services $ brew services start mysql@version_num</span><br><span class="line">$ brew services list</span><br><span class="line">$ brew link mysql@version_num --force</span><br><span class="line">$ mysql -V</span><br></pre></td></tr></table></figure>
+<h4 id="앞으로-SQL-접속시-사용할-Password"><a href="#앞으로-SQL-접속시-사용할-Password" class="headerlink" title="앞으로 SQL 접속시 사용할 Password!!"></a>앞으로 SQL 접속시 사용할 Password!!</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqladmin -u root password <span class="string">'yourpassword'</span></span><br></pre></td></tr></table></figure>
+<h4 id="Connect-mysql-server"><a href="#Connect-mysql-server" class="headerlink" title="Connect mysql server"></a>Connect mysql server</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p</span><br></pre></td></tr></table></figure>
+<h3 id="방법-2-dmg-파일-받아서-install"><a href="#방법-2-dmg-파일-받아서-install" class="headerlink" title="방법 2) dmg 파일 받아서 install"></a>방법 2) dmg 파일 받아서 install</h3><ul>
+<li><p>step 1) <a href="https://dev.mysql.com/downloads/mysql/5.7.html#downloads" target="_blank" rel="noopener">https://dev.mysql.com/downloads/mysql/5.7.html#downloads</a>에서 <code>DMG 파일 다운로드</code></p>
+</li>
+<li><p>step 2) 다운 받은 DMG 파일을 실행</p>
+<ul>
+<li><code>설치 중간에 임시 패스워드를 기억</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/MySQL_installer.png" alt="MySQL installer"></p>
+<ul>
+<li>step 3) 시스템 환경설정에 가면 MySQL이 설치 된것을 확인</li>
+</ul>
+<h3 id="MySQL-서버의-인스턴스를-정지-및-실행-초기화-제거등을-할수-있다"><a href="#MySQL-서버의-인스턴스를-정지-및-실행-초기화-제거등을-할수-있다" class="headerlink" title="MySQL 서버의 인스턴스를 정지 및 실행, 초기화, 제거등을 할수 있다."></a>MySQL 서버의 인스턴스를 정지 및 실행, 초기화, 제거등을 할수 있다.</h3><ul>
+<li>Start MySQL Server 버튼을 클릭하여 실행</li>
+</ul>
+<h4 id="아래의-경로로-이동"><a href="#아래의-경로로-이동" class="headerlink" title="아래의 경로로 이동"></a>아래의 경로로 이동</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/mysql/bin</span><br></pre></td></tr></table></figure>
+<h4 id="Mysql-서버에-접속"><a href="#Mysql-서버에-접속" class="headerlink" title="Mysql 서버에 접속"></a>Mysql 서버에 접속</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./mysql -p</span><br></pre></td></tr></table></figure>
+<h4 id="Password-관리자-권한으로-실행을-위한-PC의-패스워드"><a href="#Password-관리자-권한으로-실행을-위한-PC의-패스워드" class="headerlink" title="Password: (관리자 권한으로 실행을 위한 PC의 패스워드)"></a>Password: (관리자 권한으로 실행을 위한 PC의 패스워드)</h4><h4 id="Enter-password-임시로-발급받은-DB의-패스워드-입력"><a href="#Enter-password-임시로-발급받은-DB의-패스워드-입력" class="headerlink" title="Enter password: (임시로 발급받은 DB의 패스워드 입력)"></a>Enter password: (임시로 발급받은 DB의 패스워드 입력)</h4><ul>
+<li>아래의 mysql 프롬프트가 나오면 정상!! 설치 완료!!<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="패스워드-변경-qwer1234-로-변경할-경우"><a href="#패스워드-변경-qwer1234-로-변경할-경우" class="headerlink" title="패스워드 변경 ( qwer1234 로 변경할 경우 )"></a>패스워드 변경 ( qwer1234 로 변경할 경우 )</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;qwer1234&apos;;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES; mysql&gt; quit;</span><br></pre></td></tr></table></figure>
+<h4 id="변경한-패스워드로-다시-로그인"><a href="#변경한-패스워드로-다시-로그인" class="headerlink" title="변경한 패스워드로 다시 로그인"></a>변경한 패스워드로 다시 로그인</h4><h2 id="Mysql-Basic-Command"><a href="#Mysql-Basic-Command" class="headerlink" title="Mysql Basic Command"></a>Mysql Basic Command</h2><h3 id="system"><a href="#system" class="headerlink" title="system"></a>system</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mysql명령어 리스트 확인</span></span><br><span class="line">mysql&gt; <span class="built_in">help</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 현재 상태 보기</span></span><br><span class="line">mysql&gt; status</span><br><span class="line"></span><br><span class="line"><span class="comment"># mysql 접속 종료</span></span><br><span class="line">mysql&gt; <span class="built_in">exit</span></span><br><span class="line">mysql&gt; quit</span><br><span class="line"></span><br><span class="line"><span class="comment"># 패스워드 변경 ( qwer1234 로 변경하는 경우 )</span></span><br><span class="line">mysql&gt; ALTER USER <span class="string">'root'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'qwer1234'</span></span><br><span class="line">2.2 Database</span><br></pre></td></tr></table></figure>
+<h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DB 목록 보기</span></span><br><span class="line">mysql&gt; show databases;</span><br><span class="line"></span><br><span class="line"><span class="comment"># DB 만들기 ( DB이름을 test라고 하려면 )</span></span><br><span class="line">mysql&gt; create database <span class="built_in">test</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># DB 접속하기 ( DB 이름 test )</span></span><br><span class="line">mysql&gt; use <span class="built_in">test</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 현재 접속중인 DB 확인하기</span></span><br><span class="line">mysql&gt; select database();</span><br><span class="line"></span><br><span class="line"><span class="comment"># DB 지우기</span></span><br><span class="line">mysql&gt; drop database <span class="built_in">test</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># DB 삭제 확인</span></span><br><span class="line">mysql&gt; show databases;</span><br></pre></td></tr></table></figure>
+<h3 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 테이블 만들기</span></span><br><span class="line"><span class="comment"># 문자열 name 20자, age 숫자 3자 컬럼이 있는 테이블이 생성</span></span><br><span class="line">mysql&gt; create table user ( name char(20), age int(3) );</span><br><span class="line"></span><br><span class="line"><span class="comment"># 테이블 목록 확인</span></span><br><span class="line">mysql&gt; show tables;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 테이블 구조 확인</span></span><br><span class="line">mysql&gt; desc user;</span><br><span class="line">mysql&gt; describe user;</span><br><span class="line">mysql&gt; explain user;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 테이블 이름 바꾸기(another로 바꾸기)</span></span><br><span class="line">mysql&gt; rename table user to another;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 테이블 이름 바뀐것 확인 mysql&gt; show tables;</span></span><br><span class="line"><span class="comment"># 테이블에 데이터 추가하기</span></span><br><span class="line">mysql&gt; insert into another(name, age) values(<span class="string">"alice"</span>, 23);</span><br><span class="line">mysql&gt; insert into another(name, age) values(<span class="string">"peter"</span>, 30);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 추가된 데이터 확인하기</span></span><br><span class="line">mysql&gt; select * from anther;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 테이블 지우기</span></span><br><span class="line">mysql&gt; drop table anther;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 테이블 삭제된것 확인</span></span><br><span class="line">mysql&gt; show tables;</span><br></pre></td></tr></table></figure>
+<h2 id="Database-Management-Application-for-Mac-OS"><a href="#Database-Management-Application-for-Mac-OS" class="headerlink" title="Database Management Application for Mac OS"></a>Database Management Application for Mac OS</h2><h4 id="step-1-Install-Sequel-Pro"><a href="#step-1-Install-Sequel-Pro" class="headerlink" title="step 1) Install Sequel Pro"></a>step 1) Install Sequel Pro</h4><ul>
+<li><a href="https://www.sequelpro.com/" target="_blank" rel="noopener">https://www.sequelpro.com/</a> 경로에서 sequelpro를 다운 받아서 설치</li>
+</ul>
+<h3 id="step-2-Connect-Database-Server"><a href="#step-2-Connect-Database-Server" class="headerlink" title="step 2) Connect Database Server"></a>step 2) Connect Database Server</h3><ul>
+<li>아래와 같이 Host, Username, Password를 설정하여 연결<br><img src="/image/Connection_DB_Server.png" alt="Connection_DB_Server"></li>
+</ul>
+<h2 id="Sample-Database-Download"><a href="#Sample-Database-Download" class="headerlink" title="Sample Database Download"></a>Sample Database Download</h2><ul>
+<li><a href="https://dev.mysql.com/doc/index-other.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/index-other.html</a>링크에서 Sample database 를 다운<ul>
+<li>혹시라도 앞으로 저의 블로그를 보시면서 따라해보실 분들은 world database, sakila database 를 다운받아 주세요.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/example_db.png" alt="example_db"></p>
+<ul>
+<li>sql 파일 추가<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/mysql/bin 디렉토리에서 아래와 같이 실행하면 sql 파일을 import - import 하기 전에 world 데이터 베이스가 있어야 함</span><br><span class="line">$ sudo ./mysql -p world &lt; (sql 파일 경로)</span><br><span class="line">- brew로 설치한 경우 아래와 같이 추가</span><br><span class="line">$ mysql -u root -p world &lt; (sql 파일 경로)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "data engineering basic(SQL Basic)",
+        "image": "https://heung-bae-lee.github.io/image/RDBMS.png",
+        "keywords": "",
+        "genre": "data engineering",
+        "datePublished": "2019-12-10",
+        "dateCreated": "2019-12-10",
+        "dateModified": "2019-12-13",
+        "url": "https://heung-bae-lee.github.io/2019/12/10/data_engineering_02/",
+        "description": "SQL(Structured Query Language)DB (Database)
+데이터를 통합하여 관리하는 데이터의 집합
+
+DBMS (Database Management system)
+DB를 관리하는 미들웨어 시스템을 의미
+
+Database 분류
+
+
+
+RDBMS(Relational Database Management System)
+NoSQL
+
+
+
+
+- 데이터"
+        "wordCount": 1007
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/12/10/deep_learning_04/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Convolution Neural Network(1)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/12/09/data_engineering_01/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">data engineering basic(Unix환경 및 커맨드)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/17/data_engineering_05/" class="title">data engineering (DB에 table 만들기)</a></p>
+                            <p class="item-date"><time datetime="2019-12-17T08:30:11.000Z" itemprop="datePublished">2019-12-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/15/data_engineering_04/" class="title">data engineering (AWS로 DB 만들기)</a></p>
+                            <p class="item-date"><time datetime="2019-12-15T06:16:36.000Z" itemprop="datePublished">2019-12-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2019/12/14/linear_algebra_00/" class="title">선형 대수 공부할 때 도움되는 사이트</a></p>
+                            <p class="item-date"><time datetime="2019-12-14T07:24:18.000Z" itemprop="datePublished">2019-12-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Recommendation-System/">Recommendation System</a></p>
+                            <p class="item-title"><a href="/2019/12/14/Recommendation_System_00/" class="title">추천시스템(Recommendation System)</a></p>
+                            <p class="item-date"><time datetime="2019-12-14T02:34:02.000Z" itemprop="datePublished">2019-12-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2019/12/13/data_engineering_03/" class="title">data engineering (API는 무엇인가?!?)</a></p>
+                            <p class="item-date"><time datetime="2019-12-13T04:25:42.000Z" itemprop="datePublished">2019-12-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2019/12/10/data_engineering_02/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
