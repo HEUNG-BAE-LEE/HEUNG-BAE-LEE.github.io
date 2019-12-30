@@ -8,8 +8,22 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/categories/machine-learning/</loc>
+        <lastmod>2019-12-30T09:39:21.825Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/categories/data-engineering/</loc>
-        <lastmod>2019-12-19T05:53:45.875Z</lastmod>
+        <lastmod>2019-12-30T08:20:06.924Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/categories/deep-learning/</loc>
+        <lastmod>2019-12-20T04:38:06.937Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -24,13 +38,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/categories/Recommendation-System/</loc>
         <lastmod>2019-12-15T05:43:25.915Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/categories/deep-learning/</loc>
-        <lastmod>2019-12-13T05:44:14.797Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

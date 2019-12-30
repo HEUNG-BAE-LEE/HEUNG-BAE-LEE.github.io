@@ -13,18 +13,18 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.        학습을 마친 후 validation set이나 test set에 적용할 때는 더">
+    <meta name="description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!선형 변환의 이해  선형대수의 선형 변환을 함수의 개념에서 보았을때, 입력 차원(n)이 출력 차원(m)보다 크다면 Onto(전사함수: 모든 공역이 치역이 되있는 상태)가 될 수 있지만, 그 반대인 경우는 적은 차원을 갖는 입력벡터의 차원으로 일부분의 출력 벡터의 차원을 커버하는 것이">
 <meta property="og:type" content="article">
 <meta property="og:title" content="심층 신경망의 구조">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/08/deep_learning03/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.        학습을 마친 후 validation set이나 test set에 적용할 때는 더">
+<meta property="og:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!선형 변환의 이해  선형대수의 선형 변환을 함수의 개념에서 보았을때, 입력 차원(n)이 출력 차원(m)보다 크다면 Onto(전사함수: 모든 공역이 치역이 되있는 상태)가 될 수 있지만, 그 반대인 경우는 적은 차원을 갖는 입력벡터의 차원으로 일부분의 출력 벡터의 차원을 커버하는 것이">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Neuron_01.png">
-<meta property="og:updated_time" content="2019-12-13T03:49:09.237Z">
+<meta property="og:updated_time" content="2019-12-20T04:38:06.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="심층 신경망의 구조">
-<meta name="twitter:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!  역전파 학습법의 개념   y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.    처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.        학습을 마친 후 validation set이나 test set에 적용할 때는 더">
+<meta name="twitter:description" content="심층 신경망의 구조     은닉 계층 추가 = 특징의 비선형 변환 추가!!선형 변환의 이해  선형대수의 선형 변환을 함수의 개념에서 보았을때, 입력 차원(n)이 출력 차원(m)보다 크다면 Onto(전사함수: 모든 공역이 치역이 되있는 상태)가 될 수 있지만, 그 반대인 경우는 적은 차원을 갖는 입력벡터의 차원으로 일부분의 출력 벡터의 차원을 커버하는 것이">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Neuron_01.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -94,7 +94,7 @@ ga('send', 'pageview');
                                     <a class="main-nav-list-link" href="/">Home</a>
                                 </li>
                             
-                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li></ul>
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
                                     
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/about/index.html">About</a>
@@ -193,7 +193,12 @@ ga('send', 'pageview');
 <p><img src="/image/Deep_Neural_Network.png" alt="심층 신경망(Deep Neural Network)"></p>
 <p><img src="/image/what_is_difference with_DNN.png" alt="심층신경망은 무엇이 다를까?"></p>
 <ul>
-<li><code>은닉 계층 추가 = 특징의 비선형 변환 추가!!</code></li>
+<li><p><code>은닉 계층 추가 = 특징의 비선형 변환 추가!!</code><br><a href="https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/" target="_blank" rel="noopener">선형 변환의 이해</a></p>
+</li>
+<li><p>선형대수의 선형 변환을 함수의 개념에서 보았을때, 입력 차원(n)이 출력 차원(m)보다 크다면 Onto(전사함수: 모든 공역이 치역이 되있는 상태)가 될 수 있지만, 그 반대인 경우는 적은 차원을 갖는 입력벡터의 차원으로 일부분의 출력 벡터의 차원을 커버하는 것이 되는 것이므로, 전사함수가 될 수 없다. 또한, 이런 입력차원(n)이 출력 차원(m)보다 작은 경우의 구조를 우리는 딥러닝 네트워크 구조에서도 볼 수 있다. 예를 들면 GAN이나 Auto Encoder의 decoder구조가 가장 쉬운 예시일 것이다. 여기서의 의문은 그렇다면, 일부분의 차원으로 피처를 잘 배울 수 있는지가 의문일 것이다. <code>허나, 그 일부의 차원이 원래 갖고 있던 특성에서 나올법한 특성들만을 생성해 주므로 걱정하지 않아도 된다.</code></p>
+</li>
+<li><p>또한, 선형시스템의 곱으로 노드들의 연산을 표현할 수 있는데, 여기서, 예를 들어, 특징벡터1과 특징벡터2간의 방향이 비슷한 즉, Orthogonal하지 않고 방향이 비슷한 벡터를 통해 연산을 진행하면 다음 층에서는 노드들 중에 비슷한 특징에 대한 정보를 포함하고 있을 것이다. Inner product를 projection의 개념에서 살펴보면, 어떠한 벡터가 다른 방향의 벡터에 projection을 하는 것은 그 projection한 벡터가 그 방향의 벡터가 어느 정도의 성분을 가지고 있는지를 의미하므로 <code>선형대수 측면에서 위에서 각 피처들간의 곱의 연산들에 의한 새로운 피처들의 생성은 projection된 길이를 비교하는 행위와 동일할 것이다.</code></p>
+</li>
 </ul>
 <h2 id="역전파-학습법의-개념"><a href="#역전파-학습법의-개념" class="headerlink" title="역전파 학습법의 개념"></a>역전파 학습법의 개념</h2><p><img src="/image/Algorithm_learning_and_differentiation.png" alt="알고리즘의 학습과 미분"></p>
 <p><img src="/image/compute_function_with_dependency.png" alt="의존성이 있는 함수의 계산"></p>
@@ -318,32 +323,17 @@ ga('send', 'pageview');
         "genre": "deep learning",
         "datePublished": "2019-12-08",
         "dateCreated": "2019-12-08",
-        "dateModified": "2019-12-13",
+        "dateModified": "2019-12-20",
         "url": "https://heung-bae-lee.github.io/2019/12/08/deep_learning03/",
         "description": "심층 신경망의 구조
 
 
 
 
-은닉 계층 추가 = 특징의 비선형 변환 추가!!
+은닉 계층 추가 = 특징의 비선형 변환 추가!!선형 변환의 이해
 
-역전파 학습법의 개념
-
-
-y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산이 있어서 비효율적이다.
-
-
-
-처음 계산할 때 값을 저장해주어서 중복계산이 발생하지 않도록 해준다.
-
-
-
-
-
-
-
-학습을 마친 후 validation set이나 test set에 적용할 때는 더"
-        "wordCount": 3253
+선형대수의 선형 변환을 함수의 개념에서 보았을때, 입력 차원(n)이 출력 차원(m)보다 크다면 Onto(전사함수: 모든 공역이 치역이 되있는 상태)가 될 수 있지만, 그 반대인 경우는 적은 차원을 갖는 입력벡터의 차원으로 일부분의 출력 벡터의 차원을 커버하는 것이 "
+        "wordCount": 3425
     }
 </script>
 
@@ -426,6 +416,15 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2019/12/30/machine_learning_00/" class="title">머신러닝의 개요</a></p>
+                            <p class="item-date"><time datetime="2019-12-30T08:20:19.000Z" itemprop="datePublished">2019-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
                             <p class="item-title"><a href="/2019/12/17/data_engineering_05/" class="title">data engineering (DB에 table 만들기)</a></p>
                             <p class="item-date"><time datetime="2019-12-17T08:30:11.000Z" itemprop="datePublished">2019-12-17</time></p>
@@ -459,15 +458,6 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
-                            <p class="item-title"><a href="/2019/12/13/data_engineering_03/" class="title">data engineering (API는 무엇인가?!?)</a></p>
-                            <p class="item-date"><time datetime="2019-12-13T04:25:42.000Z" itemprop="datePublished">2019-12-13</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -477,7 +467,7 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -487,7 +477,7 @@ y를 구하려면 x와 z를 알아야 하는데, x와 z에는 중복된 연산�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
