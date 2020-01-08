@@ -21,7 +21,7 @@
 <meta property="og:description" content="회귀분석이란?  지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.    회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_regression.png">
-<meta property="og:updated_time" content="2020-01-08T07:45:32.382Z">
+<meta property="og:updated_time" content="2020-01-08T17:12:07.615Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(01)">
 <meta name="twitter:description" content="회귀분석이란?  지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.    회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회">
@@ -229,16 +229,28 @@ ga('send', 'pageview');
 </thead>
 <tbody>
 <tr>
-<td>- 일변량(Univariate) - 다변량(Multivariate)</td>
-<td>- 오직 하나의 양적 독립변수(설명변수) - 두 개 이상의 양적 독립변수(설명변수)</td>
+<td>- 일변량(Univariate)</td>
+<td>- 오직 하나의 양적 독립변수(설명변수)</td>
 </tr>
 <tr>
-<td>- 단순(Simple) - 다중(Multiple)</td>
-<td>- 오직 하나의 종속변수(반응변수) - 두 개 이상의 종속변수(반응변수)</td>
+<td>- 다변량(Multivariate)</td>
+<td>- 두 개 이상의 양적 독립변수(설명변수)</td>
 </tr>
 <tr>
-<td>- 선형(Linear) - 비선형(Nonlinear)</td>
-<td>- 데이터에 대하여 가능한 변환을 취한 후, 모든 계수들이 방정식에 선형적으로 삽입되어 있음. - 종속변수(반응변수)와 일부 독립변수들의 관계가 비선형이거나 일부 계수들이 비선형적으로 나타남.  계수들을 선형적으로 나타나게 하는 어떤 변환도 가능하지 않음.</td>
+<td>- 단순(Simple)</td>
+<td>- 오직 하나의 종속변수(반응변수)</td>
+</tr>
+<tr>
+<td>- 다중(Multiple)</td>
+<td>- 두 개 이상의 종속변수(반응변수)</td>
+</tr>
+<tr>
+<td>- 선형(Linear)</td>
+<td>- 데이터에 대하여 가능한 변환을 취한 후, 모든 계수들이 방정식에 선형적으로 삽입되어 있음.</td>
+</tr>
+<tr>
+<td>- 비선형(Nonlinear)</td>
+<td>- 종속변수(반응변수)와 일부 독립변수들의 관계가 비선형이거나 일부 계수들이 비선형적으로 나타남.  계수들을 선형적으로 나타나게 하는 어떤 변환도 가능하지 않음.</td>
 </tr>
 <tr>
 <td>- 분산분석(ANOVA)</td>
@@ -255,6 +267,21 @@ ga('send', 'pageview');
 </tbody>
 </table>
 </div>
+<h4 id="대표적인-선형-회귀-모형은-다음과-같다"><a href="#대표적인-선형-회귀-모형은-다음과-같다" class="headerlink" title="대표적인 선형 회귀 모형은 다음과 같다."></a>대표적인 선형 회귀 모형은 다음과 같다.</h4><h4 id="일반-선형-회귀"><a href="#일반-선형-회귀" class="headerlink" title="일반 선형 회귀"></a>일반 선형 회귀</h4><ul>
+<li>예측값과 실제값의 잔차 제곱합을 최소화할 수 있도록 회귀 계수를 최적화하며, 규제(Regularization)를 적용하지 않은 모델이다.</li>
+</ul>
+<h4 id="릿지-Ridge"><a href="#릿지-Ridge" class="headerlink" title="릿지(Ridge)"></a>릿지(Ridge)</h4><ul>
+<li>Ridge 회귀는 선형 회귀에 <code>L2 Regularization을 추가한 모형</code>이다. Ridge 회귀는 L2 Regularization을 적용하는데, L2 Regularization은 <code>상대적으로 큰 회귀 계수 값의 예측 영향도를 감소 시키기 위해서 회귀 계수값을 더 작게 만드는 Regularization 모형이다.</code></li>
+</ul>
+<h4 id="라쏘-Lasso"><a href="#라쏘-Lasso" class="headerlink" title="라쏘(Lasso)"></a>라쏘(Lasso)</h4><ul>
+<li>Lasso 회귀는 선형 회귀에 <code>L1 Regularization을 적용한 방식</code>이다. L2 Regularization이 회귀 계수 값의 크기를 줄이는 데 반해, <code>L1 Regularization은 예측 영향력이 작은 피처의 회귀계수를 0으로 만들어 회귀 예측 시 피처가 선택되지 않게 하는 것</code>이다. 이러한 특성 때문에 L1 Regularization은 <code>피처 선택 기능</code>으로도 불린다.</li>
+</ul>
+<h4 id="엘라스틱넷-ElasticNet"><a href="#엘라스틱넷-ElasticNet" class="headerlink" title="엘라스틱넷(ElasticNet)"></a>엘라스틱넷(ElasticNet)</h4><ul>
+<li><code>L2, L1 Regularization을 함께 결합한 모형</code>이다. 주로 피처가 많은 데이터 세트에서 적용되며, <code>L1 Regularization으로 피처의 개수를 줄임과 동시에 L2 Regularization으로 계수의 값의 크기를 조정한다.</code></li>
+</ul>
+<h4 id="로지스틱-Logistic"><a href="#로지스틱-Logistic" class="headerlink" title="로지스틱(Logistic)"></a>로지스틱(Logistic)</h4><ul>
+<li>로지스틱 회귀는 회귀라는 이름이 붙어 있지만, 사실은 분류에 사용되는 선형 모형이다. 로지스틱 회귀는 매우 강력한 분류 알고리즘이다. <code>일반적으로 이진 분류 뿐만아니라 희소 영역의 분류, 예를 들어 텍스트 분류와 같은 영역에서 뛰어난 예측 성능을 보인다.</code></li>
+</ul>
 <p><img src="/image/regression_02.png" alt="단순 선형 회귀분석"></p>
 <h4 id="가정에서-잔차-epsilon-i-와-target-값인-Y가-정규분포를-따른다는-것이-중요하다"><a href="#가정에서-잔차-epsilon-i-와-target-값인-Y가-정규분포를-따른다는-것이-중요하다" class="headerlink" title="가정에서 잔차( $\epsilon_{i}$ )와 target 값인 Y가 정규분포를 따른다는 것이 중요하다."></a>가정에서 잔차( $\epsilon_{i}$ )와 target 값인 Y가 정규분포를 따른다는 것이 중요하다.</h4><p><img src="/image/regression_03.png" alt="단순 선형 회귀분석 - 01"></p>
 <h3 id="회귀-계수-추정"><a href="#회귀-계수-추정" class="headerlink" title="회귀 계수 추정"></a>회귀 계수 추정</h3><p><img src="/image/estimation_of_regression_coefficient.png" alt="단순 선형 회귀 계수 추정"></p>
@@ -346,7 +373,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-01-04",
         "dateCreated": "2020-01-04",
-        "dateModified": "2020-01-08",
+        "dateModified": "2020-01-09",
         "url": "https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/",
         "description": "회귀분석이란?
 
@@ -355,7 +382,7 @@ ga('send', 'pageview');
 
 
 회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회"
-        "wordCount": 585
+        "wordCount": 759
     }
 </script>
 
@@ -438,6 +465,15 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/01/08/machine_learning_02/" class="title">Regression(02)</a></p>
+                            <p class="item-date"><time datetime="2020-01-08T14:22:36.000Z" itemprop="datePublished">2020-01-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
                             <p class="item-title"><a href="/2020/01/07/NLP_00/" class="title">NLP를 공부하는데 도움되는 사이트 모음</a></p>
                             <p class="item-date"><time datetime="2020-01-07T11:57:26.000Z" itemprop="datePublished">2020-01-07</time></p>
@@ -471,15 +507,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
-                            <p class="item-title"><a href="/2019/12/15/data_engineering_04/" class="title">data engineering (AWS로 DB 만들기)</a></p>
-                            <p class="item-date"><time datetime="2019-12-15T06:16:36.000Z" itemprop="datePublished">2019-12-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -489,7 +516,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">2</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -499,7 +526,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
