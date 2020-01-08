@@ -9,7 +9,14 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/categories/machine-learning/</loc>
-        <lastmod>2019-12-30T09:39:21.825Z</lastmod>
+        <lastmod>2020-01-08T07:45:51.536Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/categories/NLP/</loc>
+        <lastmod>2020-01-08T04:39:48.523Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
