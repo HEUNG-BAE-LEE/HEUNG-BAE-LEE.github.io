@@ -21,7 +21,7 @@
 <meta property="og:description" content="다중 선형 회귀    다중회귀방정식에서 회귀계수에 대한 해석은 자주 혼동되는 것 중 하나이다. 단순회귀방정식은 직선을 표현하지만 다중회귀방정식은 평면(독립(설명)변수가 두개인 경우) 혹은 초평면(독립(설명)변수가 두개보다 많은 경우)을 표현한다. 위의 예에서 회귀계수의 해석은 다른 변수들이 고정되어 있을때 TV가 1단위 증가할 때 매출액은 0.046단위 증">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Multiple_linear_regression.png">
-<meta property="og:updated_time" content="2020-01-08T20:43:07.218Z">
+<meta property="og:updated_time" content="2020-01-09T06:06:24.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(02)">
 <meta name="twitter:description" content="다중 선형 회귀    다중회귀방정식에서 회귀계수에 대한 해석은 자주 혼동되는 것 중 하나이다. 단순회귀방정식은 직선을 표현하지만 다중회귀방정식은 평면(독립(설명)변수가 두개인 경우) 혹은 초평면(독립(설명)변수가 두개보다 많은 경우)을 표현한다. 위의 예에서 회귀계수의 해석은 다른 변수들이 고정되어 있을때 TV가 1단위 증가할 때 매출액은 0.046단위 증">
@@ -259,9 +259,9 @@ ga('send', 'pageview');
 <li><p><code>중심화(centering)</code> 변수는 <code>각 관측값에서 모든 관측값의 평균을 빼는 것</code>으로 얻어진다. 중심화된 변수 <code>척도화</code> 또한 가능하다. <code>두 가지 형태의 척도화(scaling)가 통상적으로 가능한데, 단위 길이 척도화(unit length scaling or normalization)</code>와 <code>표준화(Standardization)</code>이다. <code>단위길이 척도화는 피처 벡터의 길이로 나누어주거나 min-max scaling 같은 것을 의미</code>한다. <code>표준화는 말 그대로 편차를 표준편차로 나누어 표준정규분포를 띄게끔해주는 작업</code>을 의미한다.</p>
 </li>
 </ul>
-<h3 id="다중-공선성-Multi-collinearity"><a href="#다중-공선성-Multi-collinearity" class="headerlink" title="다중 공선성(Multi-collinearity)"></a>다중 공선성(Multi-collinearity)</h3><p><img src="/image/multicollinearity_00" alt="다중 공선성 - 01"></p>
-<p><img src="/image/multicollinearity_01" alt="다중 공선성 - 02"></p>
-<p><img src="/image/multicollinearity_02" alt="다중 공선성 - 03"></p>
+<h3 id="다중-공선성-Multi-collinearity"><a href="#다중-공선성-Multi-collinearity" class="headerlink" title="다중 공선성(Multi-collinearity)"></a>다중 공선성(Multi-collinearity)</h3><p><img src="/image/multicollinearity_00.png" alt="다중 공선성 - 01"></p>
+<p><img src="/image/multicollinearity_01.png" alt="다중 공선성 - 02"></p>
+<p><img src="/image/multicollinearity_02.png" alt="다중 공선성 - 03"></p>
 <ul>
 <li><p>Ordinary Least Squares(OLS) 즉 최소 제곱법 기반의 회귀 계수 계산은 독립 변수(입력 피처)의 독립성에 많은 영향을 받는다. <code>피처간의 상관관계가 매우 높은 경우 분산이 매우 커져서 오류에 매우 민감해지며 선형대수의 관점에서 보면, 모든 컬럼들이 linearly independent해야 최소한 하나 이상의 해가 존재하기 때문</code>이다. 만약 위의 말이 이해가 가지 않는다면, 필자가 추전하는 선형대수학 강의를 듣는 것을 권한다. 다음 페이지를 가면 찾을 수 있다. <a href="https://heung-bae-lee.github.io/2019/12/14/linear_algebra_00/">선형대수학 강의 추천</a></p>
 </li>
@@ -614,22 +614,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
