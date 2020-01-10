@@ -8,6 +8,13 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/categories/crawling/</loc>
+        <lastmod>2020-01-10T20:01:51.393Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/categories/hexo/</loc>
         <lastmod>2020-01-10T19:58:16.175Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -101,13 +108,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/categories/Bayes/</loc>
         <lastmod>2019-07-20T03:36:10.633Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/categories/crawling/</loc>
-        <lastmod>2019-01-16T12:08:35.899Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

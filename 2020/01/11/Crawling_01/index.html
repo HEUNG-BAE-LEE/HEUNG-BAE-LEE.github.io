@@ -6,28 +6,30 @@
     
 
     
-    <title>크롤링과 스크래핑 및 unix명령어 기초지식(1) | DataLatte&#39;s IT Blog</title>
+    <title>Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
     
-    <meta name="description" content="크롤링과 스크래핑 웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저">
+    <meta name="description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
 <meta property="og:type" content="article">
-<meta property="og:title" content="크롤링과 스크래핑 및 unix명령어 기초지식(1)">
-<meta property="og:url" content="https://heung-bae-lee.github.io/2018/12/23/unix/index.html">
+<meta property="og:title" content="Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/11/Crawling_01/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="크롤링과 스크래핑 웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저">
+<meta property="og:description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-16T12:08:35.899Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/add_many_site.png">
+<meta property="og:updated_time" content="2020-01-10T20:01:48.458Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="크롤링과 스크래핑 및 unix명령어 기초지식(1)">
-<meta name="twitter:description" content="크롤링과 스크래핑 웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저">
+<meta name="twitter:title" content="Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors">
+<meta name="twitter:description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/add_many_site.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/2018/12/23/unix/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/11/crawling_01/">
    
     
 
@@ -157,14 +159,14 @@ ga('send', 'pageview');
 </div>
 
                         <div class="main-body-content">
-			    <article id="post-unix" class="article article-single article-type-post" itemscope itemprop="blogPost">
+			    <article id="post-Crawling_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        크롤링과 스크래핑 및 unix명령어 기초지식(1)
+        Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors
         </h1>
     
 
@@ -174,8 +176,8 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/12/23/unix/" class="article-date">
-            <time datetime="2018-12-23T09:34:53.000Z" itemprop="datePublished">2018-12-23</time>
+        <a href="/2020/01/11/Crawling_01/" class="article-date">
+            <time datetime="2020-01-10T18:39:47.000Z" itemprop="datePublished">2020-01-11</time>
         </a>
     </div>
 
@@ -186,17 +188,25 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="크롤링과-스크래핑"><a href="#크롤링과-스크래핑" class="headerlink" title="크롤링과 스크래핑"></a>크롤링과 스크래핑</h2><ul>
-<li><p>웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다.<br> 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유<br> 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저장함으로 가능한 일이다. 또한 RSS 리더는 사람 대신 크롤러가<br> RSS 피드를 확인하고, 변경 사항이 있는 경우에 업데이트된 항목이 있다고 알려주기도 한다. 가장 공감할 수 있는 부분은 바로 트위터,<br> 페이스북 등의 SNS에서 웹 페이지 URL을 공유하면 페이지의 제목과 이미지를 미리 보기로 출력해 주는데, 이것도 크롤러가 해당 페이<br> 지를 방문해서 관련된 정보를 추출하기 때문에 가능한 것이다.</p>
-<h3 id="그렇다면-크롤러와-스크래핑-두-용어의-차이점은-무엇인가"><a href="#그렇다면-크롤러와-스크래핑-두-용어의-차이점은-무엇인가" class="headerlink" title="그렇다면 크롤러와 스크래핑 두 용어의 차이점은 무엇인가???"></a>그렇다면 크롤러와 스크래핑 두 용어의 차이점은 무엇인가???</h3></li>
-<li><p>크롤링<br>  웹 페이지의 하이퍼링크를 순회하면서 웹 페이지를 다운로드 하는 작업</p>
-</li>
-<li><p>스크래핑<br>  다운로드한 웹 페이지에서 필요한 정보를 추출하는 작업</p>
+            <h3 id="Spider"><a href="#Spider" class="headerlink" title="Spider"></a>Spider</h3><ul>
+<li>Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.)<ul>
+<li>CrawlSpider</li>
+<li>XMLFeedSpider</li>
+<li>CSVFeedSpider</li>
+<li>SitemapSpider</li>
+</ul>
 </li>
 </ul>
-<p>그렇다면 우리는 결국 크롤링한 후 스크래핑까지 하게 되는 일련의 작업을 앞으로 할 것이라고 생각한다.</p>
-<h2 id="Wget으로-크롤링하기"><a href="#Wget으로-크롤링하기" class="headerlink" title="Wget으로 크롤링하기"></a>Wget으로 크롤링하기</h2><p>가장 먼저 Wget으로 크롤링하는 법을 소개 할 것이다. 크롤링과 스크래핑이 무엇인지 감을 잡기 위함이다.</p>
-<p>W</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 여러사이트를 크롤링하기 위한 spider를 생성</span></span><br><span class="line">scrapy genspider many_site hub.scraping.com</span><br></pre></td></tr></table></figure>
+<p><img src="/image/add_many_site.png" alt="여러사이트를 크롤링하기 위한 새로운 spider 생성"></p>
+<ul>
+<li>spider 폴더의 many_site.py파일에서 코드를 작성하기에 앞서 settings.py에서 naver와 daum은 robots.txt에서 크롤링을 불허하기에 다음과 같은 수정작업을 해주어야 크롤링이 가능하다.</li>
+</ul>
+<p><img src="/image/modify_settings_py_03" alt="daum과 naver를 크롤링하기 위한 setting.py 수정"></p>
+<ul>
+<li>아래의 코드처럼 여러 도메인을 크롤링할 수 있는 방법은 크게 3가지 정도가 있다.</li>
+</ul>
+<p><img src="/image/many_site_py_in.png" alt="여러 사이트 크롤링 방법"></p>
 
         </div>
         <footer class="article-footer">
@@ -267,17 +277,28 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "크롤링과 스크래핑 및 unix명령어 기초지식(1)",
-        "image": "https://heung-bae-lee.github.io",
+        "headline": "Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors",
+        "image": "https://heung-bae-lee.github.io/image/add_many_site.png",
         "keywords": "",
         "genre": "crawling",
-        "datePublished": "2018-12-23",
-        "dateCreated": "2018-12-23",
-        "dateModified": "2019-01-16",
-        "url": "https://heung-bae-lee.github.io/2018/12/23/unix/",
-        "description": "크롤링과 스크래핑
-웹페이지에의 정보를 추출하기 위한 프로그램을 웹 크롤러(Web Crawler) 또는 단순하게 크롤러(Crawler)라고 한다. 크롤러는 스파이더(Spider) 또는 봇(Bot)이라고 부르기도 하는데, 예를 들어 구글에서 우리가 검색할 경우 빠르게 검색 할 수 있는 이유 중의 하나는 바로 웹검색 엔진이 미리 전 세계의 웹사이트를 수집하고 저"
-        "wordCount": 166
+        "datePublished": "2020-01-11",
+        "dateCreated": "2020-01-11",
+        "dateModified": "2020-01-11",
+        "url": "https://heung-bae-lee.github.io/2020/01/11/Crawling_01/",
+        "description": "Spider
+Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.)
+CrawlSpider
+XMLFeedSpider
+CSVFeedSpider
+SitemapSpider
+
+
+
+12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com
+
+
+spider 폴더의 "
+        "wordCount": 78
     }
 </script>
 
@@ -325,20 +346,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/01/14/Front_end/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            HTML이란?
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/12/22/1day/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/01/09/Crawling_00/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">hexo를 이용한 블로그 만들기</p>
+        <p class="article-nav-title">Scrapy 웹 크롤링 01 - 환경설정 및 기초</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -497,7 +508,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://heung-bae-lee.github.io/2018/12/23/unix/';
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/11/Crawling_01/';
     
     (function() {
     var dsq = document.createElement('script');

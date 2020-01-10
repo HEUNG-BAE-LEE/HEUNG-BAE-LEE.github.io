@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Scrapy 웹 크롤링 01 - 환경설정 및 기초 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Scrapy VS Beautiful SoupBeautiful Soup Beautiful Soup는 웹 상의 정보를 빠르게 크롤링 하기위한 도구이며, 정적인 정보를 가져 올 수 있다. 즉, 해당 API(URL)에 요청했을때 바로 가져올수 있는 정보들만 가져올 수 있다. 시간이 좀 더 걸린 후에 나오는 정보들은 가져올 수 없다는 것이다. 진입 장벽이 매우 낮고">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy 웹 크롤링 01 - 환경설정 및 기초">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/09/Crawling_00/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Scrapy VS Beautiful SoupBeautiful Soup Beautiful Soup는 웹 상의 정보를 빠르게 크롤링 하기위한 도구이며, 정적인 정보를 가져 올 수 있다. 즉, 해당 API(URL)에 요청했을때 바로 가져올수 있는 정보들만 가져올 수 있다. 시간이 좀 더 걸린 후에 나오는 정보들은 가져올 수 없다는 것이다. 진입 장벽이 매우 낮고">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/scrapy_startproject.png">
+<meta property="og:updated_time" content="2020-01-10T20:01:51.393Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scrapy 웹 크롤링 01 - 환경설정 및 기초">
+<meta name="twitter:description" content="Scrapy VS Beautiful SoupBeautiful Soup Beautiful Soup는 웹 상의 정보를 빠르게 크롤링 하기위한 도구이며, 정적인 정보를 가져 올 수 있다. 즉, 해당 API(URL)에 요청했을때 바로 가져올수 있는 정보들만 가져올 수 있다. 시간이 좀 더 걸린 후에 나오는 정보들은 가져올 수 없다는 것이다. 진입 장벽이 매우 낮고">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/scrapy_startproject.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/09/crawling_00/">
+   
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script data-ad-client="ca-pub-4604833066889492" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/crawling/">crawling</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+			    <article id="post-Crawling_00" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Scrapy 웹 크롤링 01 - 환경설정 및 기초
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/09/Crawling_00/" class="article-date">
+            <time datetime="2020-01-09T12:08:12.000Z" itemprop="datePublished">2020-01-09</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="Scrapy-VS-Beautiful-Soup"><a href="#Scrapy-VS-Beautiful-Soup" class="headerlink" title="Scrapy VS Beautiful Soup"></a>Scrapy VS Beautiful Soup</h2><h3 id="Beautiful-Soup"><a href="#Beautiful-Soup" class="headerlink" title="Beautiful Soup"></a>Beautiful Soup</h3><ul>
+<li>Beautiful Soup는 웹 상의 정보를 빠르게 크롤링 하기위한 도구이며, <code>정적인 정보를 가져 올 수 있다. 즉, 해당 API(URL)에 요청했을때 바로 가져올수 있는 정보들만 가져올 수 있다. 시간이 좀 더 걸린 후에 나오는 정보들은 가져올 수 없다는 것이다.</code> 진입 장벽이 매우 낮고 간결해서, 입문 개발자에게 안성맞춤이다. 그리고 이 라이브러리는 스스로 크롤링을 하는 것이 아니라 <code>urlib2</code> 또는 <code>requests</code> 모듈을 통해 HTML 소스를 가져와야 한다.</li>
+</ul>
+<h3 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h3><ul>
+<li>Scrapy는 Python으로 작성된 Framework이며, spider(bot)을 작성해서 크롤링을 한다. Scrapy에서는 직접 <code>Beautiful Soup</code> 이나 <code>lxml</code>을 사용할 수 있다. 하지만 Beautiful Soup에서는 지원하지 않는 <code>Xpath</code>를 사용할 수 있다. 또한, Xpath를 사용함으롴써 복잡한 HTML소스를 쉽게 크롤링 할 수 있게 해준다. 또한 Xpath를 통한 crawling이 가능한 모듈로는 selenium도 존재한다. selenium도 Scrapy와 연동해서 가능하다.</li>
+</ul>
+<h3 id="Anaconda-env"><a href="#Anaconda-env" class="headerlink" title="Anaconda env"></a>Anaconda env</h3><ul>
+<li>먼저 사전에 anaconda를 통해 가상환경을을 만들어준다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># env 생성</span></span><br><span class="line">conda create -n env_name python=3.5</span><br><span class="line"></span><br><span class="line"><span class="comment"># env 리스트 보기</span></span><br><span class="line">conda env list</span><br><span class="line"></span><br><span class="line"><span class="comment"># env 활성화</span></span><br><span class="line">conda activate env_name</span><br><span class="line"></span><br><span class="line"><span class="comment"># env 비활성화</span></span><br><span class="line">conda deavtivate</span><br><span class="line"></span><br><span class="line"><span class="comment"># env 삭제</span></span><br><span class="line">conda env remove -n env_name</span><br></pre></td></tr></table></figure>
+<h3 id="Scrapy-환경설정"><a href="#Scrapy-환경설정" class="headerlink" title="Scrapy 환경설정"></a>Scrapy 환경설정</h3><ul>
+<li>먼저 가상환경을 활성화시켜준 후에, spider bot을 만들 폴더의 상위 폴더에서 다음의 명령어를 실행시켜준다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">conda activate env_name</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"></span><br><span class="line">scrapy startproject project_name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>다음과 같이 설정한 project명을 갖는 폴더가 만들어지며, 필자는 section01_2라고 명명했다.</li>
+</ul>
+<p><img src="/image/scrapy_startproject.png" alt="create project folder"></p>
+<ul>
+<li>위의 단계까지 실행했다면, 다음과 같은 출력이 보일 것이다. 빨간줄 아래에 나와있는 예시 명령어를 따라서 실행시키면 spider bot을 만들수 있다.</li>
+</ul>
+<p><img src="/image/scrapy_startproject_then.png" alt="scrapy startproject"></p>
+<ul>
+<li>또한, <code>모든 앞으로의 모든 명령어는 scrapy.cfg라는 파일이 존재하는 directory path에서 해야한다.</code></li>
+</ul>
+<p><img src="/image/scrapy_commend_site.png" alt="scrapy 명령어 실행하는 path"></p>
+<h3 id="genspider"><a href="#genspider" class="headerlink" title="genspider"></a>genspider</h3><ul>
+<li>scrapy에서 가장 중요한 spider class를 만들어준다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># spider를 만들기 위해 명령어를 실행하려면 scrapy.cfg파일의 경로로 이동해야하기 때문에</span></span><br><span class="line"><span class="built_in">cd</span> section01_2</span><br><span class="line"></span><br><span class="line"><span class="comment"># scrapy.cfg파일이 존재하는지 다시 한번 확인</span></span><br><span class="line">ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://blog.scrapinghub.com/은 crawling 테스트를 위한 사이트로 유명하다.</span></span><br><span class="line"><span class="comment"># https://blog.scrapinghub.com/이라는 사이트를 크롤링할 testspider라는 이름으로 spider 을 만들어라는 명령어</span></span><br><span class="line">scrapy genspider testspider blog.scrapinghub.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li>다음과 같은 출력결과를 볼 수 있으며, section01_2에 spiders라는 폴더의 testspider라고 만들어졌다는 것을 의미한다.<br><img src="/image/genspider.png" alt="genspider"></li>
+</ul>
+<p><img src="/image/genspider_then.png" alt="genspider 실행 후 파일 변경"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 만들어진 spider 파일 확일을 위해 이동</span></span><br><span class="line"><span class="built_in">cd</span> section01_2/spiders</span><br><span class="line"></span><br><span class="line"><span class="comment"># 위에서 만들어 놓았던 testspider라는 spider가 있는지 확인</span></span><br><span class="line">ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># testspider.py 확인</span></span><br><span class="line">vim testspider.py</span><br></pre></td></tr></table></figure>
+<p><img src="/image/testspider.png" alt="만들어진 spider 파일 확인"></p>
+<ul>
+<li><p>먼저 straturl과 우리가 크롤링하려는 URL endpoint가 https인지 확인한 후 고쳐준다.(여기서 필자는 vim으로 수정하였기에 pep8에 의거하여 space 4번으로 indent를 사용하였다. <code>space와 tap을 번갈아가며 사용하면 python interpreter가 다르게 인식하므로 에러를 발생시킨다!</code>)</p>
+</li>
+<li><p>앞으로의 실습에 헷갈림을 방지하기 위해서 name을 test1으로 변동해주었고, allowed_domains과 start_urls를 보면 설정해 놓은 대로 들어가 있는 것을 알 수 있다. 여기서 <code>scrapy는 allowed_domains과 start_urls가 리스트 구조로 되어있는데 다른 URL과 도메인들을 추가하면 해당 사이트들을 돌아가며 크롤링을 할 수 있는 병렬처리가 가능하다는 것이 가장 큰 장점</code>이다. 추후에 설명하겠지만, 눈치 빠르신 분들은 아래 <code>parse</code>함수에서 response를 parameter로 받는 함수이므로 이 함수에 크롤링하고 싶은 부분에 대한 코드를 만들면 크롤링이 가능하다는 것을 알 것이다!! 혹시 response에서 어떤 명령어가 사용가능한지 보고 싶다면</p>
+</li>
+</ul>
+<p><img src="/image/testspider_in.png" alt="크롤링 상태 확인을 하기 위해 parse에 print문 추가"></p>
+<h3 id="runspider-vs-crawl"><a href="#runspider-vs-crawl" class="headerlink" title="runspider vs crawl"></a>runspider vs crawl</h3><ul>
+<li>runspider와 crawl의 차이점은 <code>runspider는 spiders폴더에서 실행할 수 있고, crawl은 scrapy.cfg파일이 존재하는 폴더에서 실행하여햐 한다는 점이 차이점이다!!</code> genspider 명령어를 통해 spider bot spider는 단위 테스트라고 소위 불리는 방식을 할 때 유용하고 crawl은 우리가 원하는 구조를 다 만들어 놓은 후 테스트를 할 때나 실제로 크롤링을 할 경우 사용하는 것이 유용하다.  </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># runspider는 spiders 폴더에서 실행하여야한다.</span></span><br><span class="line">scrapy runspider testspider.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># crawl은 scrapy.cfg파일이 존재하는 path에서 실행시켜주어야한다.</span></span><br><span class="line">scrapy crawl test1 --nolog</span><br></pre></td></tr></table></figure>
+<p><img src="/image/dir.png" alt="spider 실행후 결과 중 parse함수에서 reponse뒤에 사용할 수 있는 명령어의 종류"></p>
+<h3 id="settings-py"><a href="#settings-py" class="headerlink" title="settings.py"></a>settings.py</h3><p><img src="/image/settings_py.png" alt="settings.py의 위치"></p>
+<ul>
+<li>spider의 속성에 관련된 parameter들이 있는 파일이라고 생각하면 된다. 예를 들면, 아래의 그림에서 볼 수 있듯이 <code>SPIDER MODULES</code>는 현재 SPIDER의 위치를 의미하고, <code>NEWSPIDER MODULE</code>은 Spider를 새로 생성시 어느 위치에 추가되는지를 의미한다. <code>ROBOTSTXT_OBEY</code>는 robots.txt의 규칙에 의거하여 crawling을 하겠다는 의미이며, <code>DOWNLOAD_DELAY</code>는 몇초간격으로 서버에 요청을 할지에 대한 수치이다. 필자는 1로 정했는데 여기서는 1초마다라는 의미이다. <code>만약에 0.2라고 하게 되면 0.2초마다 서버에 요청하게 되어 서버에 부하를 일으키게 되면 심할경우 영구 van을 당할 수도 있기에 간격을 1초이상으로 하는 것을 권장한다.</code></li>
+</ul>
+<p><img src="/image/settings_py_in.png" alt="settings.py"></p>
+<h3 id="실습-blog-scrapinghub-com에서-기사-제목들만-크롤링-하기"><a href="#실습-blog-scrapinghub-com에서-기사-제목들만-크롤링-하기" class="headerlink" title="실습)blog.scrapinghub.com에서 기사 제목들만 크롤링 하기!"></a>실습)blog.scrapinghub.com에서 기사 제목들만 크롤링 하기!</h3><ul>
+<li><p>위의 실습주제로 실습을 진행하기 위해서는 앞서 만들어본 spider 파일에서 parse함수를 수정해야할 것이다. 그에 앞서 크롤링할 blog.scrapinghub.com의 제목에 해당하는 css path를 보면 전체 html의 body 부분에서 div element 중 class의 이름이 post-header인 부분에만 존재하는 것을 개발자 도구를 통해 알아내었다. <code>다른 부분에 동일한 element나 class명을 가질 수도 있으므로 find를 해보아야한다!</code></p>
+</li>
+<li><p>다음과 같이 제목을 크롤링하기 위해 testspider.py을 수정해 주었다.</p>
+</li>
+</ul>
+<p><img src="/image/modify_spider_00.png" alt="크롤링을 위한 testspider.py 수정"></p>
+<ul>
+<li>참고로 결과를 파일로 저장할때 scrapy가 지원하는 파일 형식은 <code>json, jsonlines, jl, csv, xml, marshal, pickle</code>이다. <code>결과를 저장할때 동일한 파일명과 확장자명을 가진 파일이 이미 존재한다면 그 파일에 데이터를 추가해주므로 주의</code>하자!</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 필자는 spider 폴더에서 실행함.</span></span><br><span class="line">scrapy runspider testspider.py -o result.csv -t csv</span><br><span class="line"></span><br><span class="line"><span class="comment"># result 파일인 result.csv가 만들어진 것을 확인할 수 있다.</span></span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<h3 id="Requests를-사용하여-페이지-순회하며-크롤링"><a href="#Requests를-사용하여-페이지-순회하며-크롤링" class="headerlink" title="Requests를 사용하여 페이지 순회하며 크롤링"></a>Requests를 사용하여 페이지 순회하며 크롤링</h3><ul>
+<li><p>우리가 예를 들어 어떤 페이지내에서 여러 항목에 대해 해당 url로 이동 후 크롤링하고 다시 그 전 페이지로 돌아가서 다음 항목의 url로 이동 후 크롤링하는 이런 순회를 거쳐야하는 작업은 request나 selenium으로 하게되면 iterable한 코드를 통해 가능하게 되며, 그렇지 않다면, 동일한 구성을 지닌 페이지들이라면 함수를 여러번 실행하는 등의 multiprocessing을 통해 병렬처리를 따로 해주어여하는 불편함이 있다. 허나, scrapy는 코드 몇 줄로 가능하다.</p>
+</li>
+<li><p>먼저 앞의 spider말고 새로운 spider를 만들어 사용할 것이다. spider를 만든 설정은 위에서 만든 것과 동일하다. spider 이름만 pagerutine이라고 명명했을 뿐이다.</p>
+</li>
+</ul>
+<p><img src="/image/new_spider.png" alt="새로운 spider 만들기"></p>
+<ul>
+<li><p>이전에 blog.scrapinghub.com의 페이지에 해당 10개의 기사들에 대한 path가 “div.post-header h2 &gt; a” 이며, a tag의 href 속성 값들을 통해 각각의 기사에 해당 페이지로 이동이 가능할 수 있다는 사실을 확인 할 수 있다.   </p>
+</li>
+<li><p>첫번째 <code>parse 함수</code>에서 미리 추출한 url을 request하여 얻은 response를 다른 함수로 전달해주기 위해 Request 명령어를 사용하였으며, urljoin을 사용한 이유는 절대주소가 아닌 상대주소로 되어있는 경우 위의 start_urls에 설정해 놓은 주소를 앞에 붙여 절대 주소로 바꿔주는 기능이다. 물론 절대주소인 경우는 이런 작업을 생략한다.</p>
+</li>
+</ul>
+<p><img src="/image/pagerutine_py_in.png" alt="pagerutine.py 파일"></p>
+<h3 id="Scrapy-Shell-사용법"><a href="#Scrapy-Shell-사용법" class="headerlink" title="Scrapy Shell 사용법"></a>Scrapy Shell 사용법</h3><ul>
+<li>쉽게 말해 이전에 크롤링을 할때 Spider 폴더에서 파일을 수정하고 테스트해보는 방식으로는 작업의 효율성이 떨어지므로 그 전에 css나 xpath selector를 테스트해볼 수 있는 것이 Shell mode이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shell 모드 접속</span></span><br><span class="line">scrapy shell</span><br><span class="line"></span><br><span class="line"><span class="comment">################ shell 모드 접속했다고 가정 ###############</span></span><br><span class="line"><span class="comment"># url 설정(request하는 대상을 바꾸는 역할)</span></span><br><span class="line">fetch(<span class="string">'url'</span>)</span><br><span class="line"></span><br><span class="line">quit</span><br><span class="line"></span><br><span class="line"><span class="comment">################# 다른 방법 ############################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 위의 단계를 한번에 하는 방법</span></span><br><span class="line">scrapy shell https://blog.scrapinghub.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># response data가 무엇이 있는지 확인 할 수 있다. 소스페이지를 현재 내 컴퓨저에 가져와서 보여주는 방식</span></span><br><span class="line">view(response)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 예시</span></span><br><span class="line">fetch(https://daum.net)</span><br><span class="line">view(response)</span><br><span class="line"></span><br><span class="line"><span class="comment"># response가 사용할수있는 method 확인</span></span><br><span class="line">dir(response)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 현재 reponse의 url 확인</span></span><br><span class="line">response.url</span><br><span class="line"></span><br><span class="line"><span class="comment"># 현재 response의 body정보 확인</span></span><br><span class="line">response.body</span><br><span class="line"></span><br><span class="line"><span class="comment"># 현재 reponse의 status 확인</span></span><br><span class="line">response.status</span><br><span class="line"></span><br><span class="line"><span class="comment"># robot.txt에 크롤링이 허용되지 않았으면 shell script가 실행되지 않는다.</span></span><br><span class="line"><span class="comment"># settings 파일에서의 설정 파라미터들을 동적으로 설정하며 실행 가능!</span></span><br><span class="line">scrapy shell https://daum.net --<span class="built_in">set</span>=<span class="string">"ROBOTSTXT_OBEY=False"</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Scrapy 웹 크롤링 01 - 환경설정 및 기초",
+        "image": "https://heung-bae-lee.github.io/image/scrapy_startproject.png",
+        "keywords": "",
+        "genre": "crawling",
+        "datePublished": "2020-01-09",
+        "dateCreated": "2020-01-09",
+        "dateModified": "2020-01-11",
+        "url": "https://heung-bae-lee.github.io/2020/01/09/Crawling_00/",
+        "description": "Scrapy VS Beautiful SoupBeautiful Soup
+Beautiful Soup는 웹 상의 정보를 빠르게 크롤링 하기위한 도구이며, 정적인 정보를 가져 올 수 있다. 즉, 해당 API(URL)에 요청했을때 바로 가져올수 있는 정보들만 가져올 수 있다. 시간이 좀 더 걸린 후에 나오는 정보들은 가져올 수 없다는 것이다. 진입 장벽이 매우 낮고"
+        "wordCount": 1217
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/01/11/Crawling_01/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/01/09/machine_learning_03/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">모형 성능 평가 지표</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
+                            <p class="item-title"><a href="/2020/01/11/Crawling_01/" class="title">Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors</a></p>
+                            <p class="item-date"><time datetime="2020-01-10T18:39:47.000Z" itemprop="datePublished">2020-01-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
+                            <p class="item-title"><a href="/2020/01/09/Crawling_00/" class="title">Scrapy 웹 크롤링 01 - 환경설정 및 기초</a></p>
+                            <p class="item-date"><time datetime="2020-01-09T12:08:12.000Z" itemprop="datePublished">2020-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/01/09/machine_learning_03/" class="title">모형 성능 평가 지표</a></p>
+                            <p class="item-date"><time datetime="2020-01-09T06:12:42.000Z" itemprop="datePublished">2020-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/01/08/machine_learning_02/" class="title">Regression(02)</a></p>
+                            <p class="item-date"><time datetime="2020-01-08T14:22:36.000Z" itemprop="datePublished">2020-01-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/01/07/NLP_00/" class="title">NLP를 공부하는데 도움되는 사이트 모음</a></p>
+                            <p class="item-date"><time datetime="2020-01-07T11:57:26.000Z" itemprop="datePublished">2020-01-07</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/09/Crawling_00/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
