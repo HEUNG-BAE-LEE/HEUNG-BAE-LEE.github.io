@@ -8,6 +8,13 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/categories/hexo/</loc>
+        <lastmod>2020-01-10T19:58:16.175Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/categories/machine-learning/</loc>
         <lastmod>2020-01-09T12:09:29.936Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -87,13 +94,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/categories/growth-hacking/</loc>
         <lastmod>2019-07-20T03:36:19.296Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/categories/hexo/</loc>
-        <lastmod>2019-07-20T03:36:13.910Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

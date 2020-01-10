@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2018/12/22/1day/</loc>
+        <lastmod>2020-01-10T19:58:16.175Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/08/machine_learning_02/</loc>
         <lastmod>2020-01-09T12:09:29.936Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -282,14 +290,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/</loc>
         <lastmod>2019-07-20T03:36:16.967Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2018/12/22/1day/</loc>
-        <lastmod>2019-07-20T03:36:13.910Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

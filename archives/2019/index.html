@@ -548,19 +548,22 @@ command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결�
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/12/08/deep_learning03/">심층 신경망의 구조</a>
+        <a href="/2019/12/08/deep_learning02/">쉽게 배우는 경사하강 학습법</a>
         </h1>
     
 
         <p class="article-excerpt">
-            심층 신경망의 구조
+            쉽게 배우는 경사하강 학습법
 
 
 
 
-은닉 계층 추가 = 특징의 비선형 변환 추가!!선형 변환의 이해
 
-선형대수의 선형 변환을 함수의 개념에서 보았을때, 입력 차원(n)이 출력 차원(m)보다 크다면 Onto(전사함수: 모든 공역이 치역이 되있는 상태)가 될 수 있지만, 그 반대인 경우는 적은 차원을 갖는 입력벡터의 차원으로 일부분의 출력 벡터의 차원을 커버하는 것이 
+어떤 손실 함수를 사용하느냐에 따라서 학습이 어떻게 이루어질 것인지, 그리고 학습을 할 때 정답의 형태를 결정하기 때문에 손실 함수는 중요하다!
+
+
+
+Traning Data를 Model에 입력해 우리가 학습시키고자 하는 Trainable Parameters를 얻게 되는데 Trainable Parameters들을 inpu
         </p>
     </div>
 </article>
@@ -582,22 +585,19 @@ command &gt; file : 기존의 파일 내용은 지우고 현재 command한 결�
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/12/08/deep_learning02/">쉽게 배우는 경사하강 학습법</a>
+        <a href="/2019/12/08/deep_learning03/">심층 신경망의 구조</a>
         </h1>
     
 
         <p class="article-excerpt">
-            쉽게 배우는 경사하강 학습법
+            심층 신경망의 구조
 
 
 
 
+은닉 계층 추가 = 특징의 비선형 변환 추가!!선형 변환의 이해
 
-어떤 손실 함수를 사용하느냐에 따라서 학습이 어떻게 이루어질 것인지, 그리고 학습을 할 때 정답의 형태를 결정하기 때문에 손실 함수는 중요하다!
-
-
-
-Traning Data를 Model에 입력해 우리가 학습시키고자 하는 Trainable Parameters를 얻게 되는데 Trainable Parameters들을 inpu
+선형대수의 선형 변환을 함수의 개념에서 보았을때, 입력 차원(n)이 출력 차원(m)보다 크다면 Onto(전사함수: 모든 공역이 치역이 되있는 상태)가 될 수 있지만, 그 반대인 경우는 적은 차원을 갖는 입력벡터의 차원으로 일부분의 출력 벡터의 차원을 커버하는 것이 
         </p>
     </div>
 </article>
@@ -1438,5 +1438,22 @@ CNN의 기본적인 구조기존의 Fully connected Layer와 CNN의 주된 차�
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

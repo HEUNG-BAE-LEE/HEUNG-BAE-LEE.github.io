@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="Hexo로 나만의 블로그 만들기! Hexo는  쉽고 빠르고 강력한 블로그 프레임워크입니다.  Node.js만 조금 알고 있다면 자신의 취향에 맞게 커스터마이징 할 수 있어서 좋습니다. 또한 템플릿 엔진으로는 Swig 또는 EJS 를 주로 사용합니다. 작성 시 사용할 수 있는 언어로는 HTML, Markdown, AsciiDoc 등이 있습니다. 이 글은 그">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-20T03:36:13.910Z">
+<meta property="og:updated_time" content="2020-01-10T19:58:16.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo를 이용한 블로그 만들기">
 <meta name="twitter:description" content="Hexo로 나만의 블로그 만들기! Hexo는  쉽고 빠르고 강력한 블로그 프레임워크입니다.  Node.js만 조금 알고 있다면 자신의 취향에 맞게 커스터마이징 할 수 있어서 좋습니다. 또한 템플릿 엔진으로는 Swig 또는 EJS 를 주로 사용합니다. 작성 시 사용할 수 있는 언어로는 HTML, Markdown, AsciiDoc 등이 있습니다. 이 글은 그">
@@ -271,7 +271,7 @@ ga('send', 'pageview');
         "genre": "hexo",
         "datePublished": "2018-12-22",
         "dateCreated": "2018-12-22",
-        "dateModified": "2019-07-20",
+        "dateModified": "2020-01-11",
         "url": "https://heung-bae-lee.github.io/2018/12/22/1day/",
         "description": "Hexo로 나만의 블로그 만들기! Hexo는  쉽고 빠르고 강력한 블로그 프레임워크입니다.  Node.js만 조금 알고 있다면 자신의 취향에 맞게 커스터마이징 할 수 있어서 좋습니다. 또한 템플릿 엔진으로는 Swig 또는 EJS 를 주로 사용합니다. 작성 시 사용할 수 있는 언어로는 HTML, Markdown, AsciiDoc 등이 있습니다. 이 글은 그 "
         "wordCount": 103
@@ -529,5 +529,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
