@@ -8,8 +8,24 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/09/Crawling_00/</loc>
+        <lastmod>2020-01-10T17:41:42.647Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/08/machine_learning_02/</loc>
-        <lastmod>2020-01-09T06:06:24.790Z</lastmod>
+        <lastmod>2020-01-09T12:09:29.936Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/09/machine_learning_03/</loc>
+        <lastmod>2020-01-09T11:35:59.197Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +33,7 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/</loc>
-        <lastmod>2020-01-08T17:12:07.615Z</lastmod>
+        <lastmod>2020-01-08T20:32:01.859Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
