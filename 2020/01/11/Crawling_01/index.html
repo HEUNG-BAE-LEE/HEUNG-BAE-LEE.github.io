@@ -6,7 +6,7 @@
     
 
     
-    <title>Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors | DataLatte&#39;s IT Blog</title>
+    <title>Scrapy 웹 크롤링 02 - Spider, Scrapy selectors, Items | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -15,15 +15,15 @@
     
     <meta name="description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors">
+<meta property="og:title" content="Scrapy 웹 크롤링 02 - Spider, Scrapy selectors, Items">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/11/Crawling_01/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/add_many_site.png">
-<meta property="og:updated_time" content="2020-01-10T20:01:48.458Z">
+<meta property="og:updated_time" content="2020-01-12T03:27:51.961Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors">
+<meta name="twitter:title" content="Scrapy 웹 크롤링 02 - Spider, Scrapy selectors, Items">
 <meta name="twitter:description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/add_many_site.png">
 <meta property="fb:app_id" content="100003222637819">
@@ -166,7 +166,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors
+        Scrapy 웹 크롤링 02 - Spider, Scrapy selectors, Items
         </h1>
     
 
@@ -207,6 +207,85 @@ ga('send', 'pageview');
 <li>아래의 코드처럼 여러 도메인을 크롤링할 수 있는 방법은 크게 3가지 정도가 있다.</li>
 </ul>
 <p><img src="/image/many_site_py_in.png" alt="여러 사이트 크롤링 방법"></p>
+<ul>
+<li>다음과 같이 1번째 방법을 사용해서 로깅 및 분기처리로 여러 사이트를 크롤링할 수 있게끔 코드를 수정해 주었다.<br><img src="/image/many_site_py_in_last.png" alt="여러 사이트 크롤링 방법 1"></li>
+</ul>
+<h3 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h3><h4 id="xpath-selector-도움-사이트"><a href="#xpath-selector-도움-사이트" class="headerlink" title="xpath selector 도움 사이트"></a>xpath selector 도움 사이트</h4><ul>
+<li><a href="https://docs.scrapy.org/en/latest/topics/selectors.html#working-with-xpath" target="_blank" rel="noopener">https://docs.scrapy.org/en/latest/topics/selectors.html#working-with-xpath</a></li>
+<li><a href="www.nextree.co.kr/p6278">www.nextree.co.kr/p6278</a></li>
+</ul>
+<h4 id="css-selector-도움-사이트"><a href="#css-selector-도움-사이트" class="headerlink" title="css selector 도움 사이트"></a>css selector 도움 사이트</h4><ul>
+<li><a href="https://docs.scrapy.org/en/latest/topics/selectors.html#extension-to-css-selectors" target="_blank" rel="noopener">https://docs.scrapy.org/en/latest/topics/selectors.html#extension-to-css-selectors</a></li>
+</ul>
+<h4 id="crawling시-활용-tip"><a href="#crawling시-활용-tip" class="headerlink" title="crawling시 활용 tip"></a>crawling시 활용 tip</h4><ul>
+<li>타겟 데이터는 크롬 개발자 도구 사용</li>
+<li>선택자 연습 팁 : scrapy shell 에서 테스트(효율성)</li>
+<li><p>scrapy shell 도메인</p>
+</li>
+<li><p>중요(완전 동치는 아니다!)</p>
+<ul>
+<li>get() == extract_first()</li>
+<li>getall() == extract()</li>
+</ul>
+</li>
+</ul>
+<h4 id="CSS-선택자"><a href="#CSS-선택자" class="headerlink" title="CSS 선택자"></a>CSS 선택자</h4><ul>
+<li>div#chan div : (자손) chan이라는 class속성값으로 갖는 div tag의 아래에 존재하는 모든 div</li>
+<li>div#chan &gt; div : (자식) chan이라는 class속성값으로 갖는 div tag의 직계자식 div들</li>
+<li>::text -&gt; 노드의 텍스트만 추출</li>
+<li>::attr(name) -&gt; 노드 속성값 추출            </li>
+<li><p>get(default=’’) : get으로 추출할 때 해당사항이 없다면 공백으로 출력</p>
+</li>
+<li><p>예시)</p>
+<ul>
+<li>response.css(‘title::text’).get() : title tag의 텍스트만 추출</li>
+<li>response.css(‘div &gt; a::attr(href)’).getall() : div tag의 자식 a tag의 href속성값 전부 추출</li>
+</ul>
+</li>
+</ul>
+<h4 id="Xpath-선택자"><a href="#Xpath-선택자" class="headerlink" title="Xpath 선택자"></a>Xpath 선택자</h4><ul>
+<li>nodename : 이름이 nodename 선택</li>
+<li>text() -&gt; 노드 텍스트만 추출</li>
+<li>/ : 루트부터 시작</li>
+<li>// : 현재 node 부터 문서상의 모든 노드 조회</li>
+<li>. : 현재 node</li>
+<li>.. : 현재 node의 부모노드</li>
+<li>@ : 속성 선택자</li>
+<li>예시)<ul>
+<li>response.xpath(‘/div’) : 루트노드부터 모든 div tag 선택</li>
+<li>response.xpath(‘//div[@id=”id”]/a/text()’).get() : div tag 중 id가 ‘id’인 자식 a tag의 텍스트 하나만 추출</li>
+</ul>
+</li>
+</ul>
+<h4 id="혼합-사용-가능"><a href="#혼합-사용-가능" class="headerlink" title="혼합 사용 가능!!"></a>혼합 사용 가능!!</h4><ul>
+<li>response.css(‘img’).xpath(‘@src’).getall()</li>
+</ul>
+<h4 id="실습-w3school-웹에-관한-정보들이-있는-사이트"><a href="#실습-w3school-웹에-관한-정보들이-있는-사이트" class="headerlink" title="실습) w3school(웹에 관한 정보들이 있는 사이트)"></a>실습) w3school(웹에 관한 정보들이 있는 사이트)</h4><ul>
+<li>실습 목표 : <code>nav 메뉴 이름 크롤링 실습</code></li>
+<li>과정 : shell 실행 -&gt; 선택자 확인 -&gt; 코딩 -&gt; 데이터 저장(프로그램 테스트)</li>
+</ul>
+<p><img src="/image/css_selector_practice.png" alt="실습을 위한 spider 코드"></p>
+<h3 id="Items"><a href="#Items" class="headerlink" title="Items"></a>Items</h3><ul>
+<li>구조적으로 데이터를 크롤링할 수 있게 해주는 역할을 한다. 예를 들면 내가 크롤링할 데이터를 정확하게 구분(신문기사의 이름, 본문, 이미지 이렇게 구조적으로 구분)하게 구조적으로 규칙을 정하고 그 규칙들을 Items라는 파일안에 작성하여 나중에 Items를 return하면 명확하게 구분된 우리가 원하는 여러가지 형식으로 저장할 수 있다. <code>spider는 직접 크롤링을 하는 역할, Items는 크롤링 될 타겟 데이터를 명확히 해주는 역할이라고 생각하면 될 것이다.</code></li>
+</ul>
+<h4 id="Scrapy-Item"><a href="#Scrapy-Item" class="headerlink" title="Scrapy Item"></a>Scrapy Item</h4><h5 id="장점"><a href="#장점" class="headerlink" title="장점"></a>장점</h5><ul>
+<li>1) 수집 데이터를 일관성있게 관리 가능</li>
+<li>2) 데이터를 사전형(Dict)로 관리, 오타 방지</li>
+<li><p>3) 추후 가공 및 DB 저장 용이</p>
+</li>
+<li><p>Items를 사용한 scrapy는 새로운 사이트를 크롤링할 것이므로 새로운 spider를 만들어준다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy genspider using_items itnews.com</span><br></pre></td></tr></table></figure>
+<p><img src="/image/add_using_items_spider.png" alt="using_items spider 생성"></p>
+<ul>
+<li>items.py 파일에서 우리의 타켓 데이터를 정의해준다.</li>
+</ul>
+<p><img src="/image/make_rule_items.png" alt="items.py 파일에 데이터 정의"></p>
+<ul>
+<li><code>items.py를 활용기 위해 import를 할 경우 다음과 같이 절대경로를 사용한 path 추가 방법을 사용</code>해야한다. 다음과 같이 items의 ItArticle class를 활용하여 spider를 좀 더 깔끔하게 작성할 수 있다.</li>
+</ul>
+<p><img src="/image/using_items_spider_in.png" alt="using_items.py spider 작성"></p>
 
         </div>
         <footer class="article-footer">
@@ -277,13 +356,13 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors",
+        "headline": "Scrapy 웹 크롤링 02 - Spider, Scrapy selectors, Items",
         "image": "https://heung-bae-lee.github.io/image/add_many_site.png",
         "keywords": "",
         "genre": "crawling",
         "datePublished": "2020-01-11",
         "dateCreated": "2020-01-11",
-        "dateModified": "2020-01-11",
+        "dateModified": "2020-01-12",
         "url": "https://heung-bae-lee.github.io/2020/01/11/Crawling_01/",
         "description": "Spider
 Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.)
@@ -298,7 +377,7 @@ SitemapSpider
 
 
 spider 폴더의 "
-        "wordCount": 78
+        "wordCount": 478
     }
 </script>
 
@@ -372,7 +451,7 @@ spider 폴더의 "
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
-                            <p class="item-title"><a href="/2020/01/11/Crawling_01/" class="title">Scrapy 웹 크롤링 02 - Spider와 Scrapy selectors</a></p>
+                            <p class="item-title"><a href="/2020/01/11/Crawling_01/" class="title">Scrapy 웹 크롤링 02 - Spider, Scrapy selectors, Items</a></p>
                             <p class="item-date"><time datetime="2020-01-10T18:39:47.000Z" itemprop="datePublished">2020-01-11</time></p>
                         </div>
                     </li>
