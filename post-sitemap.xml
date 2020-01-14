@@ -8,8 +8,40 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_08/</loc>
+        <lastmod>2020-01-14T14:30:37.547Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/13/deep_learning_05/</loc>
+        <lastmod>2020-01-12T16:26:13.503Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_07/</loc>
+        <lastmod>2020-01-12T06:25:30.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_06/</loc>
+        <lastmod>2020-01-12T06:24:38.480Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/11/Crawling_01/</loc>
-        <lastmod>2020-01-12T03:27:51.961Z</lastmod>
+        <lastmod>2020-01-12T06:16:45.065Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -80,7 +112,7 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning03/</loc>
+        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning_03/</loc>
         <lastmod>2019-12-20T04:38:06.937Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -136,15 +168,7 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/13/deep_learning_05/</loc>
-        <lastmod>2019-12-13T05:44:14.797Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning02/</loc>
+        <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning_02/</loc>
         <lastmod>2019-12-13T03:55:29.137Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -192,7 +216,7 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/06/deep_learning01/</loc>
+        <loc>https://heung-bae-lee.github.io/2019/12/06/deep_learning_01/</loc>
         <lastmod>2019-12-08T12:33:35.852Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
