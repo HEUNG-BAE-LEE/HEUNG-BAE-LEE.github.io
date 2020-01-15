@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/09/machine_learning_03/</loc>
+        <lastmod>2020-01-15T07:49:13.524Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_08/</loc>
         <lastmod>2020-01-14T14:30:37.547Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -66,14 +74,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/01/08/machine_learning_02/</loc>
         <lastmod>2020-01-09T12:09:29.936Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/09/machine_learning_03/</loc>
-        <lastmod>2020-01-09T11:35:59.197Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
