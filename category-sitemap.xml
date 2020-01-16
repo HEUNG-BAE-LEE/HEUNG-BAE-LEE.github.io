@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/categories/NLP/</loc>
+        <lastmod>2020-01-16T16:25:22.614Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/categories/crawling/</loc>
+        <lastmod>2020-01-16T13:46:09.623Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/categories/machine-learning/</loc>
         <lastmod>2020-01-16T08:10:22.954Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -22,22 +36,8 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/categories/crawling/</loc>
-        <lastmod>2020-01-12T06:16:45.065Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://heung-bae-lee.github.io/categories/hexo/</loc>
         <lastmod>2020-01-10T19:58:16.175Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/categories/NLP/</loc>
-        <lastmod>2020-01-08T04:39:48.523Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
