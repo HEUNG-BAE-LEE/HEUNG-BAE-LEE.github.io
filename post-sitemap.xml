@@ -8,8 +8,32 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/</loc>
+        <lastmod>2020-01-16T08:10:22.954Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/08/machine_learning_02/</loc>
+        <lastmod>2020-01-15T13:27:04.785Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/</loc>
+        <lastmod>2020-01-15T13:15:06.113Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/09/machine_learning_03/</loc>
-        <lastmod>2020-01-15T07:49:13.524Z</lastmod>
+        <lastmod>2020-01-15T09:24:04.397Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -66,22 +90,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2018/12/22/1day/</loc>
         <lastmod>2020-01-10T19:58:16.175Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/08/machine_learning_02/</loc>
-        <lastmod>2020-01-09T12:09:29.936Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/</loc>
-        <lastmod>2020-01-08T20:32:01.859Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
