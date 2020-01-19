@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="임베딩(Embedding)이란? 자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. 단어-문서 행렬(Term-Doc">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-18T16:32:29.557Z">
+<meta property="og:updated_time" content="2020-01-19T06:28:11.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="임베딩이란?">
 <meta name="twitter:description" content="임베딩(Embedding)이란? 자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. 단어-문서 행렬(Term-Doc">
@@ -402,7 +402,7 @@ ga('send', 'pageview');
 </li>
 <li><p>두 모델의 확실한 차이점은 <code>CBOW에서는 입력값으로 여러 개의 단어를 사용하고, 학습을 위해 하나의 단어와 비교하지만, Skip-gram에서는 입력값이 하나의 단어를 사용하고, 학습을 위해 주변의 여러 단어와 비교</code>한다.</p>
 </li>
-<li><p><code>위의 학습 과정을 모두 끝낸 후 가중치 행렬의 각 행을 단어 벡터로 사용한다. 카운트 기반 방법(Bag of Words 가정 방법들)로 만든 단어 벡터보다 단어 간의 유사도를 잘 측정하며, 단어들의 복잡한 특징까지도 잘 잡아낸다는 장점</code>이 있다. <code>보통 CBOW보다 Skip-gram의 성능이 더 좋아 자주 사용된다. 하지만 무조건적으로 좋은 것은 아니다!</code> </p>
+<li><p><code>위의 학습 과정을 모두 끝낸 후 가중치 행렬의 각 행을 단어 벡터로 사용한다. 카운트 기반 방법(Bag of Words 가정 방법들)로 만든 단어 벡터보다 단어 간의 유사도를 잘 측정하며, 단어들의 복잡한 특징까지도 잘 잡아낸다는 장점</code>이 있다. <code>보통 CBOW보다 Skip-gram의 성능이 더 좋아 자주 사용된다. 하지만 무조건적으로 좋은 것은 아니다!</code></p>
 </li>
 </ul>
 </li>
@@ -487,7 +487,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/01/16/NLP_01/",
         "description": "임베딩(Embedding)이란?
 자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. 단어-문서 행렬(Term-Doc"
-        "wordCount": 1817
+        "wordCount": 1816
     }
 </script>
 
@@ -738,22 +738,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
