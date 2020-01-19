@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>NLP 전처리 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 전처리">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/19/NLP_02/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-01-19T13:41:12.486Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 전처리">
+<meta name="twitter:description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/19/nlp_02/">
+   
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script data-ad-client="ca-pub-4604833066889492" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+			    <article id="post-NLP_02" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        NLP 전처리
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/19/NLP_02/" class="article-date">
+            <time datetime="2020-01-19T06:29:26.000Z" itemprop="datePublished">2020-01-19</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Tokenizing-라이브러리"><a href="#Tokenizing-라이브러리" class="headerlink" title="Tokenizing 라이브러리"></a>Tokenizing 라이브러리</h1><h3 id="영어-Tokenizing-라이브러리"><a href="#영어-Tokenizing-라이브러리" class="headerlink" title="영어 Tokenizing 라이브러리"></a>영어 Tokenizing 라이브러리</h3><ul>
+<li><p>1) NLTK</p>
+<ul>
+<li>파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 <code>단어 단위 토크나이징</code>과 <code>문장 단위 토크나이징</code>을 하는 모듈이 <code>따로</code> 있으며 ‘a’, ‘the’ 같은 관사나 ‘is’와 같이 자주 의미는 별로 없지만 자주 등장하는 단어인 불용어들을 모아 불용어 사전을 구성하고 있어 <code>따로 불용어를 정의할 필요없이 바로 사용가능</code>하다.</li>
+</ul>
+</li>
+<li><p>2) <a href="https:spacy.io/usage/training" target="_blank" rel="noopener">Spacy</a></p>
+<ul>
+<li>NLTK와 같은 오픈소스 라이브러리이다. 주로 <code>상업용 목적</code>으로 만들어졌다는 점이 NLTK와 다르며, <code>영어를 포함한 8개 언어에 대한 자연어 전처리 모듈을 제공</code>하고, 빠른 속도로 전처리할 수 있다. <code>원하는 언어에 대한 전처리를 한 번에 해결할 수 있다는 장점</code>이 있으며, <code>특히 딥러닝 언어 모델의 개발도 지원하고 있어 매력적</code>이다. NLTK와 다르게 <code>단어 단위, 문장 단위 토크나이징을 한가지 모듈을 통해 처리</code>한다.</li>
+</ul>
+</li>
+<li><p><code>이러한 영어 토크나이징 도구는 한국어에 적용할 수 없다!!</code></p>
+</li>
+</ul>
+<h3 id="한글-토크나이징-라이브러리"><a href="#한글-토크나이징-라이브러리" class="headerlink" title="한글 토크나이징 라이브러리"></a>한글 토크나이징 라이브러리</h3><ul>
+<li><p>자연어 처리에서 각 언어마다 모두 특징이 다르기 때문에 천편일률적으로 동일한 방법을 적용하기는 어렵다. 한국어 자연어 처리에 많이 사용되는 파이썬 라이브러리 KoNLPy를 소개하겠다.</p>
+</li>
+<li><p>1) <code>KoNLPy</code>(지도학습 기법으로 학습)</p>
+<ul>
+<li><p>한글 자연어 처리를 쉽고 간결하게 처리할 수 있도록 만들어진 오픈소스 라이브러리이다. 또한 국내에 이미 만드어져 사용되고 있는 여러 형태소 분석기를 사용할 수 있게 허용한다. 형태소 분석으로 형태소 단위의 토크나이징을 가능하게 할뿐만 아니라 구문 분석을 가능하게 해서 언어 분석을 하는 데 유용한 도구다.</p>
+</li>
+<li><p>한글 텍스트의 경우에는 형태소 단위 토크나이징이 필요할 때가 있다. KoNLPy에서는 여러 형태소 분석기를 제공하며, 각 형태소 분석기별로 분석한 결과가 다르므로 자신의 분석 데이터에 맞는 형태소 분석기를 선택해서 사용할 것을 권한다. <code>Mecab의 경우 원도우에서는 사용할 수 없으니 참고</code>해서 사용하자.</p>
+<ul>
+<li>Hannanum (한나눔)</li>
+<li>Kkma (꼬꼬마)</li>
+<li>Komoran (코모란)</li>
+<li>Mecab (메케브)</li>
+<li>Okt(Twitter)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>macOS에서 설치<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># JPype1은 파이썬에서 자바 클래스를 사용할 수 있도록 만들어주는 라이브러리이다.</span></span><br><span class="line"><span class="comment"># 만약 window라면 https://www.lfd.uci.edu/~gohlke/pythonlibs/#jpype에서 맞는 사양을 설치</span></span><br><span class="line"><span class="comment"># 64bit-python3.6 버전이라면 JPype1-0.63-cp36-cp36m-win_amd64.whl 을 설치하면된다.</span></span><br><span class="line"><span class="comment"># pip install JPype1-0.63-cp36-cp36m-win_amd64.whl</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># MacOs에선</span></span><br><span class="line">conda install -c conda-forge jpype1</span><br><span class="line"></span><br><span class="line">pip install konlpy</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>형태소 분석기 사용법</p>
+<ul>
+<li><p>각각의 형태소 분석기는 클래스생성만 다르고 나머지는 동일한 함수를 사용하므로 아래 예시에서는 형태소 분석기 중 제일 속도가 빠르다고 알려져 있는 Mecab을 사용할 것이다.</p>
+</li>
+<li><p>pos를 통해 얻는 품사의 태깅의 의미를 알고 싶다면 <a href="https://docs.google.com/spreadsheets/d/1OGAjUvalBuX-oZvZ_-9tEfYD2gQe7hTGsgUpiiBSXI8/edit#gid=0" target="_blank" rel="noopener">클릭</a></p>
+</li>
+<li><p>tokenizer.morphs()</p>
+<ul>
+<li><code>텍스트를 형태소 단위로 나눈다.</code> 옵션으로는 norm과 stem이있다. 각각 True 혹은 False 값을 받으며, <code>norm</code>은 normalize의 약자로서 문장을 <code>정규화하는 역힐</code>을 하고, <code>stem</code>은 각 단어에서 <code>어간을 추출하는 기능</code>(예시: 해야지 -&gt; 하다)이다. 각각 True로 설정하면 각 기능이 적용 된다. 둘 다 default는 False이다.</li>
+</ul>
+</li>
+<li><p>tokenizer.nouns()</p>
+<ul>
+<li>텍스트에서 <code>명사만 뽑아</code>낸다.</li>
+</ul>
+</li>
+<li><p>tokenizer.phrases()</p>
+<ul>
+<li>텍스트에서 <code>어절을 뽑아</code>낸다.</li>
+</ul>
+</li>
+<li><p>tokenizer.pos()</p>
+<ul>
+<li>위의 세 함수는 추출기인 반면에, pos 함수는 태깅함수이다. <code>각 품사를 태깅하는 역할</code>을 한다. <code>norm, stem 옵션이 존재하며 join=True로 하게 되면 (형태소, 품사)의 형태에서 형태소/품사 형태로 붙여서 리스트화한다.</code></li>
+</ul>
+</li>
+<li><p><code>어떤 형태소 분석기를 사용할지는 자신이 가진 데이터로 실험 삼아 형태소 분석을 해보고 속도나 품질을 비교해서 고르는 것이 좋다.</code> 자신의 분석에서 사전에 추가해야할 단어들이 있다면 사용자 사전에 추가해 주면 된다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">from konlpy.tag import Mecab</span><br><span class="line">tokenizer = Mecab()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 형태소 단위로 나누기</span></span><br><span class="line">tokenizer.morphs(<span class="string">"아버지가방에들어가신다."</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">"아버지"</span>, <span class="string">"가"</span>, <span class="string">"방"</span>, <span class="string">"에"</span>, <span class="string">"들어가"</span>, <span class="string">"신다"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 품사 태그</span></span><br><span class="line">tokenizer.pos(<span class="string">'아버지가방에들어가신다.'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#결과</span></span><br><span class="line">[(<span class="string">'아버지'</span>, <span class="string">'NNG'</span>), (<span class="string">'가'</span>, <span class="string">'JKS'</span>), (<span class="string">'방'</span>, <span class="string">'NNG'</span>), (<span class="string">'에'</span>, <span class="string">'JKB'</span>), (<span class="string">'들어가'</span>, <span class="string">'VV'</span>), (<span class="string">'신다'</span>, <span class="string">'EP+EC'</span>)]</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">- Mecab에 사용자 사전 추가하기</span><br><span class="line"></span><br><span class="line">    - Komoran은 추가할 내용의 txt를 만들어 객체 생성시 userdic 파라미터에 만든 path를 입력해 주면되고, Hannanum은 konlpy/java/data/kE/dic_user.txt에 존재하며 여기에 새로운 단어를 형식에 맞춰 추가해주면된다. Kkma는 ~/anaconda3/lib/python3.6/site-packages/konlpy/java/kkma-2.0.jar 압축파일 내의 .dic 형식의 파일들이 dictionary 파일이므로 압축을 푼뒤 해당 품사에 맞는 파일에 단어를 추가해주면된다. 그리고나서 다시 .jar로 압축을 해주고 원본은 만약을 위해 다른 곳에 보관하며 사용한다.</span><br><span class="line"></span><br><span class="line">    - 형태소 분석기를 사용하다 보면 가장 신경 써야 하는 점이 `중요 token들을 어떻게 처리해야 할지다.` 예를들면 우리가 <span class="string">'천리마전자'</span>라는 기업의 데이터 분석 팀에 속해 있고 천리마저나에 관한 Corpus를 분석하거나 이로부터 임베딩을 만들어야 한다고 가정해보자. 이 경우 <span class="string">'천리마전자'</span>라는 token은 섬세하게 처리해야한다. 만약 <span class="string">'천리마전자 텔레비전 정말 좋네요'</span>라는 가상의 리뷰를 분석한다면 천리마 전자 보다 천리마전자로 분석됐을 때 임베딩 품질이 더 좋을 것이다. 이럴 경우 `사용자 사전에 추가하여 하나의 토큰으로 분석될 수 있도록 강제해야한다.`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 2) `Khaiii` 사용법 (지도학습기법으로 학습)</span><br><span class="line">    - [reference](http://tech.kakao.com/2018/12/13/khaiii)</span><br><span class="line">    - Khaiii(Kakao Hangul Analyzer iii)는 kakao가 2018년 말 공개한 오픈소스 한국어 형태소 분석기다. 국립국어원이 구축한 세종 코퍼스를 이용해 CNN 모델을 적용해 학습했다. Khaiii의 아키텍처는 입력 문장을 문자 단위로 읽어 들인 뒤 convolution filter가 이 문자들을 슬라이딩해 가면서 정보를 추출한다. 출력 노드에서는 이렇게 모은 정보들을 종합해 형태소의 경계와 품사 태그를 예측한다. 카카오 측 설명에 따르면 모델을 `C++로 구현해 GPU 없이도 형태소 분석이 가능하며 실행 속도 역시 빠르다고 한다.`</span><br><span class="line"></span><br><span class="line">``` bash</span><br><span class="line">from khaiii import KhaiiiApi</span><br><span class="line">tokenizer = KhaiiiApi()</span><br><span class="line"></span><br><span class="line">data = tokenizer.analyze(<span class="string">'아버지가방에들어가신다'</span>)</span><br><span class="line">tokens = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> data:</span><br><span class="line">    token.extend([str(m).split(<span class="string">"/"</span>)[0] <span class="keyword">for</span> m <span class="keyword">in</span> word.morphs])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">'아버지'</span>, <span class="string">'가'</span>, <span class="string">'방에'</span>, <span class="string">'들'</span>, <span class="string">'어'</span>, <span class="string">'가'</span>, <span class="string">'시'</span>, <span class="string">'ㄴ다'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 품사 정보 확인 tagging</span></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> data:</span><br><span class="line">    token.extend([str(m) <span class="keyword">for</span> m <span class="keyword">in</span> word.morphs])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">'아버지/NNG'</span>, <span class="string">'가/JKS'</span>, <span class="string">'방에/NNG'</span>, <span class="string">'들/VV'</span>, <span class="string">'어/EC'</span>, <span class="string">'가/VV'</span>, <span class="string">'시/EP'</span>, <span class="string">'ㄴ다/EC'</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>3) <code>soynlp</code> (비지도학습으로 학습)</p>
+<ul>
+<li><p>형태소 분석, 품사 판별 등을 지원하는 파이썬 기반 한국어 자연어 처리 패키지다. 데이터 패턴을 스스로 학습하는 <code>비지도 학습 접근법을 지향하기 때문에 하나의 문장 혹은 문서에서보다는 어느 정도 규모가 있으면서 동질적인 문서 집합(homogeneous documents)에서 잘 작동</code>한다.</p>
+</li>
+<li><p>soynlp 패키지에 포함된 형태소 분석기는 데이터의 통계량을 확인해 만든 단어 점수 표로 작동한다. 단어 점수는 크게 <code>응집확률(Cohesion Probability) 과 브랜칭 엔트로피(Branching Entropy)</code>를 활용한다. <code>구체적으로는 주어진 문자령이 유기적으로 연결돼 함께 자주 나타나고(응집 확률이 높을 때), 그 단어 앞뒤로 다양한 조사, 어미 혹은 다른 단어가 등장하는 경우(브랜칭 엔트로피가 높을 때) 해당 문자열을 형태소로 취급</code>한다.</p>
+</li>
+<li><p>예를 들어, 주어진 Corpus에서 ‘꿀잼’이라는 단어가 연결돼 자주 나타났다면 ‘꿀잼’을 형태소라고 본다(응집 확률이 높음). 한편 ‘꿀잼’ 앞에 ‘영화’, ‘정말’, ‘너무’ 등 문자열이, 뒤에 ‘ㅋㅋ’, ‘ㅎㅎ’, ‘!!’ 등 패턴이 다양하게 나타났다면 이 역시 ‘꿀잼’을 형태소로 취급한다.(브랜칭 엔트로피가 높음)</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from soynlp.word import WordExtractor</span><br><span class="line"></span><br><span class="line">sentence = [데이터]</span><br><span class="line">word_extractor = WordExtractor(min_frequency=100,</span><br><span class="line">                               min_cohesion_forward=0.05,</span><br><span class="line">                               min_right_branching_entropy=0.0)</span><br><span class="line"></span><br><span class="line">word_extractor.train(sentence)</span><br><span class="line"><span class="comment"># model 저장</span></span><br><span class="line">word_extractor.save(model_fname_and_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 위에서 저장한 모델 load</span></span><br><span class="line">import math</span><br><span class="line">from soynlp.tokenizer import LTokenizer</span><br><span class="line"></span><br><span class="line">model_fname = <span class="string">'위에서 저장했던 model path'</span></span><br><span class="line"></span><br><span class="line">word_extractor = WordExtractor(min_frequency=100,</span><br><span class="line">                               min_cohesion_forward=0.05,</span><br><span class="line">                               min_right_branching_entropy=0.0)</span><br><span class="line"></span><br><span class="line">word_extractor.load(model_fname)</span><br><span class="line">scores = word_extractor.word_scores()</span><br><span class="line">scores = &#123;key ; (scores[key].cohesion_forward * math.exp(scores[key].min_right_branching_entropy)) <span class="keyword">for</span> key <span class="keyword">in</span> scores.keys()&#125;</span><br><span class="line">tokenizer = LTokenizer(scores=scores)</span><br><span class="line">tokens = tokenizer.tokenize(<span class="string">'애비는 종이었다.'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>4) <code>구글 센텐스피스(sentencepiece)</code></p>
+<ul>
+<li><p>구글에서 공개한 비지도 학습기반 형태소 분석 패키지이며, 1994년 제안된 <code>바이트 페어 인코딩(BPE : Byte Pair Encoding)기법 등을 지원</code>하며 pip 설치를 통해 파이썬 콘솔에서도 사용할 수 있다.</p>
+</li>
+<li><p>BPE의 기본 원리</p>
+<ul>
+<li>Corpus에서 가장 많이 등장한 문자열을 병합해 문자열을 압축하는 것</li>
+<li><p>예시</p>
+<ul>
+<li>aaabdaaabac</li>
+<li>위의 문자열에서는 aa가 가장 많이 나타났다. 이를 Z로 치환하면 원래 문자열을 다음과 같이 압축할 수 있다.</li>
+<li>ZabdZabac</li>
+<li>이번에는 ab가 가장 많이 나타났으므로 Y로 치환하겠다.</li>
+<li>ZYdZYac</li>
+</ul>
+</li>
+<li><p>자연어 처리에서 BPE가 처음 쓰인 것은 기계 번역 분야다. BPE를 활용해 토크나이즈하는 메커니즘의 핵심은 <code>원하는 어휘 집합 크기가 될 때까지 반복적으로 고빈도 문자열들을 병합해 어휘 집합에 추가한다.</code> 이것이 BPE학습이다. 학습이 끝난 이후의 예측과정은 문장 내 각 어절(띄어쓰기로 문장을 나눈 것)에 어휘 집합에 있는 subword가 포함돼 있을 경우 해당 subword를 어절에서 분리한다.(최장 일치 기준) 이후 어절의 나머지에서 어휘 집합에 있는 subword를 다시 찾고, 또 분리한다. 어절 끝까지 찾았는데 어휘 집합에 없으면 미등록 단어(Unknown word)로 취급한다.</p>
+</li>
+</ul>
+</li>
+<li><p>BERT 모델은 BPE로 학습한 어휘 집합을 쓴다. BPE는 문자열 기반의 비지도 학습 기법이기 때문에 데이터만 확보할 수 있다면 어떤 언어에든 적용이 가능하다. 물론 BERT 모델에 사용할 수 있는 어휘 집합으로 쓸 수 있게 하기 위해서는 언더바(_) 문자를 ‘##’로 바꾸고 [PAD], [UNK], [CLS], [MASK], [SEP] 등 스페셜 토큰을 추가한다.</p>
+</li>
+</ul>
+</li>
+<li><p>구글이 공개한 BERT 모델 코드에서 BPE로 학습한 어휘 집합으로 토큰을 분리하는 클래스를 실행</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import sentencepiece as spm</span><br><span class="line">train =<span class="string">""</span><span class="string">"--input=input_file_path \</span></span><br><span class="line"><span class="string">          --model_prefix=sentence \</span></span><br><span class="line"><span class="string">          --vocab_size=32000 \</span></span><br><span class="line"><span class="string">          --model_type=bpe --character_coverage=0.9995"</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line">spm.SentencePieceTrainer.Train(train)</span><br><span class="line"></span><br><span class="line">from bert.tokenization import FullTokenizer</span><br><span class="line"></span><br><span class="line">vocab_fname = <span class="string">"vocabulary_file_path.vocab"</span></span><br><span class="line">tokenizer = FullTokenizer(vocab_file=vocab_fname, do_lower_case=False)</span><br><span class="line"></span><br><span class="line">tokenizer.tokenize(<span class="string">"집에좀 가자"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">'집에'</span>, <span class="string">'##좀'</span>, <span class="string">'가자'</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="soynlp-형태소-분석이나-BPE-방식의-토크나이즈-기법은-띄어쓰기에-따라-분석-결과가-크게-달라지므로-이들-모델을-학습하기-전-띄어쓰기-교정을-먼저-적용하면-그-분석-품질이-개선될-수-있다"><a href="#soynlp-형태소-분석이나-BPE-방식의-토크나이즈-기법은-띄어쓰기에-따라-분석-결과가-크게-달라지므로-이들-모델을-학습하기-전-띄어쓰기-교정을-먼저-적용하면-그-분석-품질이-개선될-수-있다" class="headerlink" title="soynlp 형태소 분석이나 BPE 방식의 토크나이즈 기법은 띄어쓰기에 따라 분석 결과가 크게 달라지므로 이들 모델을 학습하기 전 띄어쓰기 교정을 먼저 적용하면 그 분석 품질이 개선될 수 있다."></a>soynlp 형태소 분석이나 BPE 방식의 토크나이즈 기법은 띄어쓰기에 따라 분석 결과가 크게 달라지므로 이들 모델을 학습하기 전 띄어쓰기 교정을 먼저 적용하면 그 분석 품질이 개선될 수 있다.</h4><h3 id="띄어쓰기-교정"><a href="#띄어쓰기-교정" class="headerlink" title="띄어쓰기 교정"></a>띄어쓰기 교정</h3><ul>
+<li>soynlp에서는 띄어쓰기 교정 모듈도 제공한다. <code>Corpus에서 띄어쓰기 패턴을 학습한 뒤 해당 패턴대로 교정을 수행</code>한다. 예를 들어, 학습 데이터에서 ‘하자고’라는 문자 앞뒤로 다수의 공백이 발견됐다면 예측단계에서 ‘하자고’가 출현한다면 앞뒤를 띄어서 교정하는 방식이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from soyspacing.countbase importCountSpace</span><br><span class="line"></span><br><span class="line"><span class="comment"># corpus가 띄어쓰기가 이미 올바로 되어있어야 품질이 높아질 것이다.</span></span><br><span class="line">corpus_fname = <span class="string">'corpus_path'</span></span><br><span class="line">model_fname = <span class="string">'저장할때 사용할 모델 path'</span></span><br><span class="line"></span><br><span class="line">model = CountSpace()</span><br><span class="line">model.train(corpus_fname)</span><br><span class="line">model.save(model_fname, json_format=False)</span><br><span class="line"></span><br><span class="line">model.load_model(model_fname, json_format=False)</span><br><span class="line">model.correct(<span class="string">"어릴때보고 지금다시봐도 재밌어요"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[어릴때 보고 지금 다시봐도 재밌어요]</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "NLP 전처리",
+        "image": "https://heung-bae-lee.github.io",
+        "keywords": "",
+        "genre": "NLP",
+        "datePublished": "2020-01-19",
+        "dateCreated": "2020-01-19",
+        "dateModified": "2020-01-19",
+        "url": "https://heung-bae-lee.github.io/2020/01/19/NLP_02/",
+        "description": "Tokenizing 라이브러리영어 Tokenizing 라이브러리
+1) NLTK
+
+파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크"
+        "wordCount": 1703
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/01/16/NLP_01/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">임베딩이란?</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/01/19/NLP_02/" class="title">NLP 전처리</a></p>
+                            <p class="item-date"><time datetime="2020-01-19T06:29:26.000Z" itemprop="datePublished">2020-01-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/01/16/NLP_01/" class="title">임베딩이란?</a></p>
+                            <p class="item-date"><time datetime="2020-01-16T08:29:53.000Z" itemprop="datePublished">2020-01-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/01/15/machine_learning_04/" class="title">Regression(03) - 회귀진단</a></p>
+                            <p class="item-date"><time datetime="2020-01-15T09:24:28.000Z" itemprop="datePublished">2020-01-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2020/01/12/deep_learning_08/" class="title">순환 신경망(RNN) - 순차 데이터의 이해</a></p>
+                            <p class="item-date"><time datetime="2020-01-12T06:25:39.000Z" itemprop="datePublished">2020-01-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2020/01/12/deep_learning_07/" class="title">DenseNet 구현 및 학습</a></p>
+                            <p class="item-date"><time datetime="2020-01-12T06:23:36.000Z" itemprop="datePublished">2020-01-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/19/NLP_02/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
