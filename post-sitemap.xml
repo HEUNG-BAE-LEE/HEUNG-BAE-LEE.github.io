@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/</loc>
+        <lastmod>2020-01-20T05:53:41.787Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_06/</loc>
+        <lastmod>2020-01-20T05:53:36.208Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/19/NLP_02/</loc>
         <lastmod>2020-01-19T13:41:12.486Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -90,14 +106,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_07/</loc>
         <lastmod>2020-01-12T06:25:30.364Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_06/</loc>
-        <lastmod>2020-01-12T06:24:38.480Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -194,14 +202,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning_02/</loc>
         <lastmod>2019-12-13T03:55:29.137Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/10/deep_learning_04/</loc>
-        <lastmod>2019-12-13T03:47:57.795Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
