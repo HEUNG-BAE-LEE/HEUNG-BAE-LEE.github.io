@@ -6,28 +6,30 @@
     
 
     
-    <title>deep learning_01 | DataLatte&#39;s IT Blog</title>
+    <title>순환신경망(Vanilla RNN 및 LSTM 구현) | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
     
-    <meta name="description" content="우선 지금부터 설명하는 내용은 패스트캠퍼스의 교육과정에서 배운 내용과 제 나름대로 책을 읽어가며 정리하는 내용을 바탕으로 작성하는 글입니다. 딥러닝 기초딥러닝? ML분야에서나 AI분야에서 활발하게 이용하고 있는데 간단히 말하자면, 여기서 말하는 ‘deep’은 학습을 수행하는 신경망(혹은 그에 상응하는 다른 것)의 층수가 ‘깊다’라는 의미이다. 즉, 여러층을">
+    <meta name="description" content="순환 신경망 구현 및 학습Vanilla RNN1!pip install tensorflow==2.0.0-beta1 1import tensorflow as tf tensorflow version 확인1print(tf.__version__) 하이퍼 파라미터 설정1234EPOCHS = 10# 우리가 분석할 때 10000개의 단어만 사용하겠다는 의미로 설정하였다.N">
 <meta property="og:type" content="article">
-<meta property="og:title" content="deep learning_01">
-<meta property="og:url" content="https://heung-bae-lee.github.io/2019/01/16/deep_learning1/index.html">
+<meta property="og:title" content="순환신경망(Vanilla RNN 및 LSTM 구현)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/21/deep_learning_09/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="우선 지금부터 설명하는 내용은 패스트캠퍼스의 교육과정에서 배운 내용과 제 나름대로 책을 읽어가며 정리하는 내용을 바탕으로 작성하는 글입니다. 딥러닝 기초딥러닝? ML분야에서나 AI분야에서 활발하게 이용하고 있는데 간단히 말하자면, 여기서 말하는 ‘deep’은 학습을 수행하는 신경망(혹은 그에 상응하는 다른 것)의 층수가 ‘깊다’라는 의미이다. 즉, 여러층을">
+<meta property="og:description" content="순환 신경망 구현 및 학습Vanilla RNN1!pip install tensorflow==2.0.0-beta1 1import tensorflow as tf tensorflow version 확인1print(tf.__version__) 하이퍼 파라미터 설정1234EPOCHS = 10# 우리가 분석할 때 10000개의 단어만 사용하겠다는 의미로 설정하였다.N">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-08T05:35:02.857Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/list_and_not.png">
+<meta property="og:updated_time" content="2020-01-20T20:59:30.810Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="deep learning_01">
-<meta name="twitter:description" content="우선 지금부터 설명하는 내용은 패스트캠퍼스의 교육과정에서 배운 내용과 제 나름대로 책을 읽어가며 정리하는 내용을 바탕으로 작성하는 글입니다. 딥러닝 기초딥러닝? ML분야에서나 AI분야에서 활발하게 이용하고 있는데 간단히 말하자면, 여기서 말하는 ‘deep’은 학습을 수행하는 신경망(혹은 그에 상응하는 다른 것)의 층수가 ‘깊다’라는 의미이다. 즉, 여러층을">
+<meta name="twitter:title" content="순환신경망(Vanilla RNN 및 LSTM 구현)">
+<meta name="twitter:description" content="순환 신경망 구현 및 학습Vanilla RNN1!pip install tensorflow==2.0.0-beta1 1import tensorflow as tf tensorflow version 확인1print(tf.__version__) 하이퍼 파라미터 설정1234EPOCHS = 10# 우리가 분석할 때 10000개의 단어만 사용하겠다는 의미로 설정하였다.N">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/list_and_not.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/01/16/deep_learning1/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/21/deep_learning_09/">
    
     
 
@@ -157,14 +159,14 @@ ga('send', 'pageview');
 </div>
 
                         <div class="main-body-content">
-			    <article id="post-deep_learning1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+			    <article id="post-deep_learning_09" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        deep learning_01
+        순환신경망(Vanilla RNN 및 LSTM 구현)
         </h1>
     
 
@@ -174,8 +176,8 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/01/16/deep_learning1/" class="article-date">
-            <time datetime="2019-01-16T13:59:30.000Z" itemprop="datePublished">2019-01-16</time>
+        <a href="/2020/01/21/deep_learning_09/" class="article-date">
+            <time datetime="2020-01-20T20:39:33.000Z" itemprop="datePublished">2020-01-21</time>
         </a>
     </div>
 
@@ -186,16 +188,30 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>우선 지금부터 설명하는 내용은 패스트캠퍼스의 교육과정에서 배운 내용과 제 나름대로 책을 읽어가며 정리하는 내용을 바탕으로 작성하는 글입니다.</p>
-<h3 id="딥러닝-기초"><a href="#딥러닝-기초" class="headerlink" title="딥러닝 기초"></a>딥러닝 기초</h3><p>딥러닝? ML분야에서나 AI분야에서 활발하게 이용하고 있는데 간단히 말하자면, 여기서 말하는 ‘deep’은 학습을 수행하는 신경망(혹은 그에 상응하는 다른 것)의 층수가 ‘깊다’라는 의미이다. 즉, 여러층을 가진 구조를 사용한 학습을 말한다.</p>
-<h3 id="신경망-기초-이론"><a href="#신경망-기초-이론" class="headerlink" title="신경망 기초 이론"></a>신경망 기초 이론</h3><ul>
-<li>신경망(neural network) 모형은 기저 함수(basis function)의 형태를 모수(parameter)값으로 변화 시킬 수 있는 적응형 기저 함수 모형(adaptive basis function model)이며 구조적으로는 복수의 퍼셉트론을 쌓아놓은 형태이므로 MLP(multi-layer perceptron)로도 불린다.</li>
+            <h1 id="순환-신경망-구현-및-학습"><a href="#순환-신경망-구현-및-학습" class="headerlink" title="순환 신경망 구현 및 학습"></a>순환 신경망 구현 및 학습</h1><h2 id="Vanilla-RNN"><a href="#Vanilla-RNN" class="headerlink" title="Vanilla RNN"></a>Vanilla RNN</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!pip install tensorflow==2.0.0-beta1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br></pre></td></tr></table></figure>
+<h3 id="tensorflow-version-확인"><a href="#tensorflow-version-확인" class="headerlink" title="tensorflow version 확인"></a>tensorflow version 확인</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br></pre></td></tr></table></figure>
+<h3 id="하이퍼-파라미터-설정"><a href="#하이퍼-파라미터-설정" class="headerlink" title="하이퍼 파라미터 설정"></a>하이퍼 파라미터 설정</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">EPOCHS = 10</span><br><span class="line"></span><br><span class="line"><span class="comment"># 우리가 분석할 때 10000개의 단어만 사용하겠다는 의미로 설정하였다.</span></span><br><span class="line">NUM_WORDS = 10000</span><br></pre></td></tr></table></figure>
+<h3 id="모델정의"><a href="#모델정의" class="headerlink" title="모델정의"></a>모델정의</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class MyModel(tf.keras.Model):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(MyModel, self).__init__()</span><br><span class="line">        <span class="comment"># input_dim, output_dim</span></span><br><span class="line">        self.emb = tf.keras.layers.Embedding(NUM_WORDS, 16)</span><br><span class="line">        self.rnn = tf.keras.layers.SimpleRNN(32)</span><br><span class="line">        self.dense = tf.keras.layers.Dense(2, activation=<span class="string">'softmax'</span>)</span><br><span class="line"></span><br><span class="line">    def call(self, x, training=None, mask=None):</span><br><span class="line">        x = self.emb(x)</span><br><span class="line">        x = self.rnn(x)</span><br><span class="line">        <span class="built_in">return</span> self.dense(x)</span><br></pre></td></tr></table></figure>
+<h3 id="학습-테스트-루프-정의"><a href="#학습-테스트-루프-정의" class="headerlink" title="학습, 테스트 루프 정의"></a>학습, 테스트 루프 정의</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Implement training loop</span></span><br><span class="line">@tf.function</span><br><span class="line">def train_step(model, inputs, labels, loss_object, optimizer, train_loss, train_accuracy):</span><br><span class="line">    with tf.GradientTape() as tape:</span><br><span class="line">        predictions = model(inputs, training=True)</span><br><span class="line">        loss = loss_object(labels, predictions)</span><br><span class="line">    gradients = tape.gradient(loss, model.trainable_variables)</span><br><span class="line"></span><br><span class="line">    optimizer.apply_gradients(zip(gradients, model.trainable_variables))</span><br><span class="line">    train_loss(loss)</span><br><span class="line">    train_accuracy(labels, predictions)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Implement algorithm test</span></span><br><span class="line">@tf.function</span><br><span class="line">def test_step(model, images, labels, loss_object, test_loss, test_accuracy):</span><br><span class="line">    predictions = model(images, training=False)</span><br><span class="line"></span><br><span class="line">    t_loss = loss_object(labels, predictions)</span><br><span class="line">    test_loss(t_loss)</span><br><span class="line">    test_accuracy(labels, predictions)</span><br></pre></td></tr></table></figure>
+<h3 id="데이터셋-준비"><a href="#데이터셋-준비" class="headerlink" title="데이터셋 준비"></a>데이터셋 준비</h3><p>IMDB</p>
+<ul>
+<li><p>review를 보고 긍정인지 부정인지를 예측하는 문제이며, y(target value)는 binary value(0 or 1)를 가지지만 x_data(feature)에서 각각의 review의 길이가 다르므로 입력에서 출력이 나오는 기준을 맞추기 위해 zero-padding을 해주는 작업을 실행할 것이다. 아래의 ‘pad_sequence’함수에서 maxlen=32는 최대 길이를 32글자로 맞추겠다는 의미이다.</p>
+</li>
+<li><p>maxlen=32로 함으로써 원래 본 데이터의 <code>맨 뒤부분에서 시작해서 32번째 데이터 까지를 잘라서 사용하는 것이며, 이 부분에 데이터가 없을 시 0으로 padding 처리를 해주는 함수</code>이다.</p>
+</li>
 </ul>
-<h3 id="시그모이드-활성화-함수"><a href="#시그모이드-활성화-함수" class="headerlink" title="시그모이드 활성화 함수"></a>시그모이드 활성화 함수</h3><ul>
-<li>일반적으로 활성화 함수 h로는 위와 아래가 막혀있는(bounded) 시그모이드 함수 \( \sigma \)를 사용하는데 가장 많이 사용하는 활성화 함수는 로지스틱 함수이다.</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">imdb = tf.keras.datasets.imdb</span><br><span class="line"></span><br><span class="line">(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=NUM_WORDS)</span><br><span class="line"></span><br><span class="line"><span class="comment"># padding='post' 뒤쪽으로 padding해준다.</span></span><br><span class="line">x_train = tf.keras.preprocessing.sequence.pad_sequences(x_train,</span><br><span class="line">                                                       value=0,</span><br><span class="line">                                                       padding=<span class="string">'pre'</span>,</span><br><span class="line">                                                       maxlen=32)</span><br><span class="line"></span><br><span class="line">x_test = tf.keras.preprocessing.sequence.pad_sequences(x_test,</span><br><span class="line">                                                       value=0,</span><br><span class="line">                                                       padding=<span class="string">'pre'</span>,</span><br><span class="line">                                                       maxlen=32)</span><br><span class="line"></span><br><span class="line">train_ds = tf.data.Dataset.from_tensor_slices((x_train, y_train)).shuffle(10000).batch(32)</span><br><span class="line">test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(32)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/list_and_not.png" alt="numpy에서 list로 묶은 것과 아닌 것의 차이"></p>
+<p><img src="/image/IMDB_preprocessing.png" alt="IMDB 전처리"></p>
+<h3 id="학습-환경-정의"><a href="#학습-환경-정의" class="headerlink" title="학습 환경 정의"></a>학습 환경 정의</h3><h4 id="모델-생성-손실함수-최적화-알고리즘-평가지표-정의"><a href="#모델-생성-손실함수-최적화-알고리즘-평가지표-정의" class="headerlink" title="모델 생성, 손실함수, 최적화 알고리즘, 평가지표 정의"></a>모델 생성, 손실함수, 최적화 알고리즘, 평가지표 정의</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 모델 생성</span></span><br><span class="line">model = MyModel()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 손실함수 및 최적화 기법 정의</span></span><br><span class="line">loss_object = tf.keras.losses.SparseCategoricalCrossentropy()</span><br><span class="line">optimizer = tf.keras.optimizers.Adam()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 성능 지표 정의</span></span><br><span class="line">train_loss = tf.keras.metrics.Mean(name=<span class="string">"train_loss"</span>)</span><br><span class="line">train_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name=<span class="string">"train_accuracy"</span>)</span><br><span class="line"></span><br><span class="line">test_loss = tf.keras.metrics.Mean(name=<span class="string">"test_loss"</span>)</span><br><span class="line">test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name=<span class="string">"test_accuracy"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="학습-루프-동작"><a href="#학습-루프-동작" class="headerlink" title="학습 루프 동작"></a>학습 루프 동작</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">  <span class="keyword">for</span> seqs, labels, <span class="keyword">in</span> train_ds:</span><br><span class="line">    train_step(model, seqs, labels, loss_object, optimizer, train_loss, train_accuracy)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> test_seqs, test_labels <span class="keyword">in</span> test_ds:</span><br><span class="line">    test_step(model, test_seqs, test_labels, loss_object, test_loss, test_accuracy)</span><br><span class="line"></span><br><span class="line">  template = <span class="string">"Epoch &#123;&#125;, Loss: &#123;&#125;, Accuracy: &#123;&#125;, Test Loss: &#123;&#125;, Test Accuracy: &#123;&#125;"</span></span><br><span class="line">  <span class="built_in">print</span>(template.format(epoch + 1,</span><br><span class="line">                        train_loss.result(),</span><br><span class="line">                        train_accuracy.result() * 100,</span><br><span class="line">                        test_loss.result(),</span><br><span class="line">                        test_accuracy.result() * 100))</span><br></pre></td></tr></table></figure>
+<p><img src="/image/vanilla_RNN_result.png" alt="IMDB에 대한 vanilla RNN의 성능"></p>
+<h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><ul>
+<li>keras는 고수준 API이므로 이미 내부에 구현이 되어있어 다음과 같이 변경해주는 것만으로 LSTM을 구현 할 수 있다.</li>
 </ul>
-<h3 id="비선형-기저-함수"><a href="#비선형-기저-함수" class="headerlink" title="비선형 기저 함수"></a>비선형 기저 함수</h3><p>퍼셉트론에서 x 대신 기저함수 \( \phi(x) \)를 사용하면 XOR 문제 등의 비선형 문제를 해결할 수 있다. 그러나 고정된 기저 함수를 사용해야 하므로 문제에 맞는 기저 함수를 찾아야 한다는 단점이 있다. 따라서 많은 기저 함수를 사용할 수 밖에 없는 것이 보통이다.</p>
-<h3 id="하이퍼-파라미터에-의해-모양이-바뀌는-비선형-기저-함수"><a href="#하이퍼-파라미터에-의해-모양이-바뀌는-비선형-기저-함수" class="headerlink" title="하이퍼 파라미터에 의해 모양이 바뀌는 비선형 기저 함수"></a>하이퍼 파라미터에 의해 모양이 바뀌는 비선형 기저 함수</h3><p>만약 기저 함수 \( \phi(x) \)의 형태를 추가적인 모수 \( \theta \)를 사용하여 조절할 수 있다면 즉, 기저함수 \( \phi(x;\theta) \)를 사용하면 \( \theta \)값을 바꾸는 것만으로 다양한 시도를 하여 다양한 모양의 기저함수를 테스트해 볼 수 있을 것이다. 앞으로 설명할 신경망 즉, MLP(Multi-Layer-Perceptron)은 퍼셉트론이 사용하고 있는 로지스틱 시그모이드 함수를 기저 함수로 사용하는 모형이다. 기저 함수의 형태는 하이퍼 파라미터인 w</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class MyModel(tf.keras.Model):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(MyModel, self).__init__()</span><br><span class="line">        <span class="comment"># input_dim, output_dim</span></span><br><span class="line">        self.emb = tf.keras.layers.Embedding(NUM_WORDS, 16)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># tf.keras.layers.GRU(32)도 가능</span></span><br><span class="line">        <span class="comment"># 참고로 RNN은 층을 쌓을수록 성능이 안좋아질 가능성이 높다는 점을 주의하자!</span></span><br><span class="line">        self.rnn = tf.keras.layers.LSTM(32)</span><br><span class="line">        self.dense = tf.keras.layers.Dense(2, activation=<span class="string">'softmax'</span>)</span><br><span class="line"></span><br><span class="line">    def call(self, x, training=None, mask=None):</span><br><span class="line">        x = self.emb(x)</span><br><span class="line">        x = self.rnn(x)</span><br><span class="line">        <span class="built_in">return</span> self.dense(x)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/LSTM_result.png" alt="IMDB에 대한 LSTM의 성능"></p>
 
         </div>
         <footer class="article-footer">
@@ -266,17 +282,19 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "deep learning_01",
-        "image": "https://heung-bae-lee.github.io",
+        "headline": "순환신경망(Vanilla RNN 및 LSTM 구현)",
+        "image": "https://heung-bae-lee.github.io/image/list_and_not.png",
         "keywords": "",
         "genre": "deep learning",
-        "datePublished": "2019-01-16",
-        "dateCreated": "2019-01-16",
-        "dateModified": "2019-12-08",
-        "url": "https://heung-bae-lee.github.io/2019/01/16/deep_learning1/",
-        "description": "우선 지금부터 설명하는 내용은 패스트캠퍼스의 교육과정에서 배운 내용과 제 나름대로 책을 읽어가며 정리하는 내용을 바탕으로 작성하는 글입니다.
-딥러닝 기초딥러닝? ML분야에서나 AI분야에서 활발하게 이용하고 있는데 간단히 말하자면, 여기서 말하는 ‘deep’은 학습을 수행하는 신경망(혹은 그에 상응하는 다른 것)의 층수가 ‘깊다’라는 의미이다. 즉, 여러층을"
-        "wordCount": 234
+        "datePublished": "2020-01-21",
+        "dateCreated": "2020-01-21",
+        "dateModified": "2020-01-21",
+        "url": "https://heung-bae-lee.github.io/2020/01/21/deep_learning_09/",
+        "description": "순환 신경망 구현 및 학습Vanilla RNN1!pip install tensorflow==2.0.0-beta1
+1import tensorflow as tf
+tensorflow version 확인1print(tf.__version__)
+하이퍼 파라미터 설정1234EPOCHS = 10# 우리가 분석할 때 10000개의 단어만 사용하겠다는 의미로 설정하였다.N"
+        "wordCount": 1303
     }
 </script>
 
@@ -324,20 +342,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/02/12/frontent3/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            HTML의 DOCTYPE?
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/01/15/Foront_end2/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/01/19/NLP_02/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">HTML이란?</p>
+        <p class="article-nav-title">NLP 전처리</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -496,7 +504,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://heung-bae-lee.github.io/2019/01/16/deep_learning1/';
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/21/deep_learning_09/';
     
     (function() {
     var dsq = document.createElement('script');

@@ -21,7 +21,7 @@
 <meta property="og:description" content="순차 데이터의 이해 우리가 순환 신경망을 사용하는 이유는 입력을 순환 신경망으로 받거나 출력을 순환 신경망으로 내기 위해서이다.    일정한 시간차을 갖는 Time Series라면, x축이 특정 시간을 의미하는 Temporal Sequence와는 다르게 하나하나의 Step으로 간주한다.    일반적으로는 위에서 보는 것과 같이 Temporal Sequenc">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Sequential_Data.png">
-<meta property="og:updated_time" content="2020-01-14T14:30:37.547Z">
+<meta property="og:updated_time" content="2020-01-20T18:19:07.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="순환 신경망(RNN) - 순차 데이터의 이해">
 <meta name="twitter:description" content="순차 데이터의 이해 우리가 순환 신경망을 사용하는 이유는 입력을 순환 신경망으로 받거나 출력을 순환 신경망으로 내기 위해서이다.    일정한 시간차을 갖는 Time Series라면, x축이 특정 시간을 의미하는 Temporal Sequence와는 다르게 하나하나의 Step으로 간주한다.    일반적으로는 위에서 보는 것과 같이 Temporal Sequenc">
@@ -228,11 +228,11 @@ ga('send', 'pageview');
 <p><img src="/image/Cell_State_and_Hidden_State.png" alt="Cell State, Hidden State"></p>
 <p><img src="/image/Forget_Gate.png" alt="Forget Gate"></p>
 <ul>
-<li>검정색 선이 Input Gated이다. 빨간색 선은 Vanilla RNN에서의 Hidden State와 동일하다. 입력이 들어오고 이전 Hidden State를 받아서 같이 tanh activation function을 FC(Fully connected) Layer를 통과시켜 출력을 내주면 RNN의 Hidden Layer이기 때문이다.</li>
+<li>검정색 선이 Input Gate이다. 빨간색 선은 Vanilla RNN에서의 Hidden State와 동일하다. 입력이 들어오고 이전 Hidden State를 받아서 같이 tanh activation function을 FC(Fully connected) Layer를 통과시켜 출력을 내주면 RNN의 Hidden Layer이기 때문이다.</li>
 </ul>
 <p><img src="/image/Input_Gate.png" alt="Input Gate"></p>
 <ul>
-<li>해당 Layer에서 필요한 정보만을 출력층으로 내주고, 필요하지 않은 정보는 기억하는 것이며, 필요없는 것을 빼주지만, 다음 time step으로 넘겨주어서 이전에 어떤 출력을 내주었었나를 Cell State와는 별개로 또 넘겨주게된다. 아래 그림에서 출력을 내보내기위해 Cell State에서 tanh를 거쳐 주는데 이 작업은 <code>다른 activation function들이 존재하는 노드들과 달리 FC layer로 이루어져 있지 않고 그냥 activation function만 거치게 된다.</code> 그 이유는 <code>Cell State가 Forget gate를 지나면서는 0~1사이의 값이 곱해지므로 크게 문제가 없지만 Input Gate를 지나면서 Feature가 추가적으로 더해질때 tanh를 지나면 -1~1사이의 값이 되므로 범위 -2~2로 늘어나게 되어 추후에 Gradient Explode가 일어날 수 있어 예방차원에서 tanh을 사용해주는 것</code>이다.</li>
+<li>해당 Layer에서 필요한 정보만을 출력층으로 내주고, 필요하지 않은 정보는 계속 기억하게끔 다음 time step으로 넘겨주어서 이전에 어떤 출력을 내주었었나를 Cell State와는 별개로 또 넘겨주어 기억하게끔 한다. 아래 그림에서 출력을 내보내기 위해 Cell State에서 tanh를 거쳐 주는데 이 작업은 <code>다른 activation function들이 존재하는 노드들과 달리 FC layer로 이루어져 있지 않고 그냥 activation function만 거치게 된다.</code> 그 이유는 <code>Cell State가 Forget gate를 지나면서는 0~1사이의 값이 곱해지므로 크게 문제가 없지만 Input Gate를 지나면서 Feature가 추가적으로 더해질때 tanh를 지나면 -1~1사이의 값이 되므로 범위 -2~2로 늘어나게 되어 추후에 Gradient Explode가 일어날 수 있어 예방차원에서 tanh을 사용</code>하는 것이기 때문이다.</li>
 </ul>
 <p><img src="/image/Output_Gate.png" alt="Output Gate"></p>
 <p><img src="/image/GRU.png" alt="GRU(Gated Recurrent Unit)"></p>
@@ -259,7 +259,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Back_Propagation_Through_Time.png" alt="시간 펼침 역전파(Back Propagation Trough Time)"></p>
 <ul>
-<li>위에서 언급했던 것과 같이 출력(또는 입력)의 길이가 정해져있지 않은 RNN의 경우, 아래는 마지막 출력에 EOS 출력을 내게끔 학습시켜야 모든 출력이 나왔다는 것을 알 수가 있다. 또한, Back propagation도 마찬가지로 각각의 출력에 대한 Loss값 부터 시작해서 Input지점까지 해주면 된다. 실제 모델에서는 다른 층에서는 0을 입력하거나 미리 정해놓은 입력을 넣어주어 학습을 시키는 것이 일반적이다.</li>
+<li>위에서 언급했던 것과 같이 출력(또는 입력)의 길이가 정해져있지 않은 RNN의 경우, 아래는 마지막 출력에 EOS 출력을 내게끔 학습시켜야 모든 출력이 나왔다는 것을 알 수가 있다. 또한, Back propagation도 마찬가지로 각각의 출력에 대한 Loss값 부터 시작해서 Input지점까지 해주면 된다. 단일 입력, 다중 출력의 실제 모델에서는 입력이 없는 다른 층에서는 0을 입력하거나 미리 정해놓은 입력을 넣어주어 학습을 시키는 것이 일반적이다.</li>
 </ul>
 <p><img src="/image/one_to_many_inference.png" alt="단일 입력, 다중 출력"></p>
 <ul>
@@ -288,7 +288,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/GRU_Reset_gate_equation.png" alt="Reset gate"></p>
 <ul>
-<li>예를 들어 아래와 같은 상황일때, 마지막 박 아무개의 답을 추론하고자 한다면, 먼저 “나는 사과가 좋다.”, “너는 과일을 싫어한다.”라는 문장 2개는 분리가 된 문장이지만 “나는 사과가 좋다” 내에서는 ‘나’하고 ‘사과’는 잘 기억이 되어야 하지만 “너는 과일을 싫어한다”라는 문장은 다른 문장이므로 기억이 안되어야 할 것이다. 하지만, “나는 어떤 과일이 먹고 싶을까?”에 답을 하려면, 최근에 문장인 “너는 과일을 싫어한다”에서는 추론할 때 필요한 정보가 없기 때문에 그 이전 문장인 “나는 사과가 좋다.”는 context를 계속해서 가지고 있어야한다. 이 정보가 Hidden state를 타고 움직여야 하는 정보이고, 여기서 “나는 사과가 좋다.”와 “너는 과일을 싫어한다.”라는 문장을 구분하여 단계적으로 활용하지 않기 위한 작업이 Reset gate이다.</li>
+<li>예를 들어 아래와 같은 상황일때, 마지막 박 아무개의 답을 추론하고자 한다면, 먼저 “나는 사과가 좋다.”, “너는 과일을 싫어한다.”라는 문장 2개는 분리가 된 문장이지만 “나는 사과가 좋다” 내에서는 ‘나’하고 ‘사과’는 잘 기억이 되어야 하지만 “너는 과일을 싫어한다”라는 문장은 다른 문장이므로 기억이 안되어야 할 것이다. 하지만, “나는 어떤 과일이 먹고 싶을까?”에 답을 하려면, 최근에 문장인 “너는 과일을 싫어한다”에서는 추론할 때 필요한 정보가 없기 때문에 그 이전 문장인 “나는 사과가 좋다.”는 context를 계속해서 가지고 있어야한다. 이 정보가 Hidden state를 타고 움직여야 하는 정보이고, 여기서 “나는 사과가 좋다.”와 “너는 과일을 싫어한다.”라는 문장을 구분하여 단계적으로 활용하지 않기 위한 작업이 Reset gate를 통한 작업이다.</li>
 </ul>
 <p><img src="/image/GRU_Forget_gate_equation_example.png" alt="Reset gate 예시"></p>
 <ul>
@@ -314,7 +314,7 @@ ga('send', 'pageview');
 <h1 id="순환-신경망의-학습법"><a href="#순환-신경망의-학습법" class="headerlink" title="순환 신경망의 학습법"></a>순환 신경망의 학습법</h1><p><img src="/image/BPTT_with_backpropagation.png" alt="BPTT"></p>
 <p><img src="/image/BPTT_data_input.png" alt="BPTT 데이터 입력"></p>
 <ul>
-<li>시간에 대해서 펼쳐있고, 추가적으로 Batch로도 펼쳐 주어야 하는데, 즉, 아래와 같은 구조가 Bath size만큼 더 있어주어야 한다는 의미이다. 그래서 <code>시간적으로 펼칠 때 역전파를 위한 추가적인 메모리가 필요</code>하다. 일반적인 CNN이나 DNN은 시간적으로 펼치는 것이 없기 때문에 Batch에 대해서 크게 엄격하지 않다. 하지만 <code>RNN은 아래와 같이 시간적으로 펼치기 때문에 Batch size를 늘리는데 엄격하다.</code></li>
+<li>시간에 대해서 펼쳐있고, 추가적으로 Batch로도 펼쳐 주어야 하는데, 즉, 아래와 같은 구조가 Batch size만큼 더 있어주어야 한다는 의미이다. 그래서 <code>시간적으로 펼칠 때 역전파를 위한 추가적인 메모리가 필요</code>하다. 일반적인 CNN이나 DNN은 시간적으로 펼치는 것이 없기 때문에 Batch에 대해서 크게 엄격하지 않다. 하지만 <code>RNN은 아래와 같이 시간적으로 펼치기 때문에 Batch size를 늘리는데 엄격하다.</code></li>
 </ul>
 <p><img src="/image/BPTT_batch_training.png" alt="BPTT의 배치 학습법"></p>
 <ul>
@@ -407,7 +407,7 @@ ga('send', 'pageview');
         "genre": "deep learning",
         "datePublished": "2020-01-12",
         "dateCreated": "2020-01-12",
-        "dateModified": "2020-01-14",
+        "dateModified": "2020-01-21",
         "url": "https://heung-bae-lee.github.io/2020/01/12/deep_learning_08/",
         "description": "순차 데이터의 이해
 우리가 순환 신경망을 사용하는 이유는 입력을 순환 신경망으로 받거나 출력을 순환 신경망으로 내기 위해서이다.
@@ -419,7 +419,7 @@ ga('send', 'pageview');
 
 
 일반적으로는 위에서 보는 것과 같이 Temporal Sequenc"
-        "wordCount": 1334
+        "wordCount": 1343
     }
 </script>
 
@@ -502,6 +502,15 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2020/01/21/deep_learning_09/" class="title">순환신경망(Vanilla RNN 및 LSTM 구현)</a></p>
+                            <p class="item-date"><time datetime="2020-01-20T20:39:33.000Z" itemprop="datePublished">2020-01-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
                             <p class="item-title"><a href="/2020/01/19/NLP_02/" class="title">NLP 전처리</a></p>
                             <p class="item-date"><time datetime="2020-01-19T06:29:26.000Z" itemprop="datePublished">2020-01-19</time></p>
@@ -535,15 +544,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
-                            <p class="item-title"><a href="/2020/01/12/deep_learning_07/" class="title">DenseNet 구현 및 학습</a></p>
-                            <p class="item-date"><time datetime="2020-01-12T06:23:36.000Z" itemprop="datePublished">2020-01-12</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -553,7 +553,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -563,7 +563,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
