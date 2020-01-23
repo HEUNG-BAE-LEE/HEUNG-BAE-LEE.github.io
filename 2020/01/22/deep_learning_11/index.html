@@ -21,7 +21,7 @@
 <meta property="og:description" content="Vallina Seq2seq tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.  한글 텍스트의 형태소분석을 위해 konlpy에서 Okt(Original Korean tag, Twitter에서 공개한 오픈소스 라이브러리)를 사용하기 위해 설치해준다.   12!pip install tensorflow==2.0.0-b">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/chatbot_data.png">
-<meta property="og:updated_time" content="2020-01-22T20:41:15.930Z">
+<meta property="og:updated_time" content="2020-01-23T11:57:59.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="post">
 <meta name="twitter:description" content="Vallina Seq2seq tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.  한글 텍스트의 형태소분석을 위해 konlpy에서 Okt(Original Korean tag, Twitter에서 공개한 오픈소스 라이브러리)를 사용하기 위해 설치해준다.   12!pip install tensorflow==2.0.0-b">
@@ -235,11 +235,43 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/seq2seq_prediction_result.png" alt="test data를 통한 예측 결과"></p>
 <h3 id="이제-여기서-Attention-mechanism을-적용시켜보자"><a href="#이제-여기서-Attention-mechanism을-적용시켜보자" class="headerlink" title="이제 여기서 Attention mechanism을 적용시켜보자."></a>이제 여기서 Attention mechanism을 적용시켜보자.</h3><h4 id="Encoder-Decoder-Seq2seq-부분을-수정하면된다"><a href="#Encoder-Decoder-Seq2seq-부분을-수정하면된다" class="headerlink" title="Encoder, Decoder, Seq2seq 부분을 수정하면된다."></a>Encoder, Decoder, Seq2seq 부분을 수정하면된다.</h4><h3 id="Encoder-1"><a href="#Encoder-1" class="headerlink" title="Encoder"></a>Encoder</h3><ul>
-<li>이전과 다르게 <code>LSTM 구조에서 return_sequences=True를 넣어 전체 Hidden State를 출력하게 해주었다. 이를 Key-Value로 사용할 것이다</code></li>
+<li><p>이전과 다르게 <code>LSTM 구조에서 return_sequences=True를 넣어 전체 Hidden State를 출력하게 해주었다. 이를 Key-Value로 사용할 것이다.</code></p>
+</li>
+<li><p>Embedding 결과의 Dimension : (32(batch_szie), 64(sequence의 길이), 64(Embedding Feature의 수))</p>
+</li>
+<li><p>LSTM의 결과의 Dimension : (32(batch_szie), 64(sequence의 길이), 512(LSTM unit의 갯수))</p>
+<ul>
+<li>H : 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit수)</li>
+<li>h(s0) : 32(batch size) * 512 (LSTM unit수)</li>
+<li>c(c0) : 32(batch size) * 512 (LSTM unit수)<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Encoder(tf.keras.Model):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    super(Encoder, self).__init__()</span><br><span class="line">    <span class="comment"># 2000개의 단어들을 64크기의 vector로 Embedding해줌.</span></span><br><span class="line">    self.emb = tf.keras.layers.Embedding(NUM_WORDS, 64)</span><br><span class="line">    <span class="comment"># return_state는 return하는 Output에 최근의 state를 더해주느냐에 대한 옵션</span></span><br><span class="line">    <span class="comment"># 즉, Hidden state와 Cell state를 출력해주기 위한 옵션이라고 볼 수 있다.</span></span><br><span class="line">    <span class="comment"># default는 False이므로 주의하자!</span></span><br><span class="line">    <span class="comment"># return_sequence=True로하는 이유는 Attention mechanism을 사용할 때 우리가 key와 value는</span></span><br><span class="line">    <span class="comment"># Encoder에서 나오는 Hidden state 부분을 사용했어야 했다. 그러므로 모든 Hidden State를 사용하기 위해 바꿔준다.</span></span><br><span class="line">    self.lstm = tf.keras.layers.LSTM(512, return_sequences=True, return_state=True)</span><br><span class="line"></span><br><span class="line">  def call(self, x, training=False, mask=None):</span><br><span class="line">    x = self.emb(x)</span><br><span class="line">    H, h, c = self.lstm(x)</span><br><span class="line">    <span class="built_in">return</span> H, h, c</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Encoder(tf.keras.Model):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    super(Encoder, self).__init__()</span><br><span class="line">    <span class="comment"># 2000개의 단어들을 64크기의 vector로 Embedding해줌.</span></span><br><span class="line">    self.emb = tf.keras.layers.Embedding(NUM_WORDS, 64)</span><br><span class="line">    <span class="comment"># return_state는 return하는 Output에 최근의 state를 더해주느냐에 대한 옵션</span></span><br><span class="line">    <span class="comment"># 즉, Hidden state와 Cell state를 출력해주기 위한 옵션이라고 볼 수 있다.</span></span><br><span class="line">    <span class="comment"># default는 False이므로 주의하자!</span></span><br><span class="line">    <span class="comment"># return_sequence=True로하는 이유는 Attention mechanism을 사용할 때 우리가 key와 value는</span></span><br><span class="line">    <span class="comment"># Encoder에서 나오는 Hidden state 부분을 사용했어야 했다. 그러므로 모든 Hidden State를 사용하기 위해 바꿔준다.</span></span><br><span class="line">    self.lstm = tf.keras.layers.LSTM(512, return_sequences=True, return_state=True)</span><br><span class="line"></span><br><span class="line">  def call(self, x, training=False, mask=None):</span><br><span class="line">    x = self.emb(x)</span><br><span class="line">    H, h, c = self.lstm(x)</span><br><span class="line">    <span class="built_in">return</span> H, h, c</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h3 id="Decoder-1"><a href="#Decoder-1" class="headerlink" title="Decoder"></a>Decoder</h3><ul>
-<li>LSTM 다음에 Attention 구조를 넣어주고, Encoder의 출력 중 모든 sequence의 Hidden State를 모아놓은 H와 s0, c0, shifted Output을 받아서 Attention value를 구하기 위한 코드를 수정시킨다.</li>
+<li><p>LSTM 다음에 Attention 구조를 넣어주고, Encoder의 출력 중 모든 sequence의 Hidden State를 모아놓은 H와 s0, c0, shifted Output을 받아서 Attention value를 구하기 위한 코드를 수정시킨다.</p>
+</li>
+<li><p>Dimension :</p>
+<ul>
+<li>x : shifted_labels로 맨마지막을 제외한 나머지데이터들 =&gt; 32(batch szie) * 64(sequence의 길이)</li>
+<li>s0 : 이전 step의 hidden state =&gt; 32(batch size) * 512(LSTM의 Unit 갯수)</li>
+<li>c0 : 이전 step의 cell state =&gt; 32(batch size) * 512(LSTM의 Unit 갯수)</li>
+<li>H : Encoder단의 모든 Hidden state를 모은 것 =&gt; 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM의 Feature의 갯수)</li>
+</ul>
+</li>
+<li><p>embedding 결과 =&gt; 32(batch size) <em> 64(sequence의 길이) </em> 64(Embedding Feature의 수)</p>
+</li>
+<li><p>LSTM의 결과의 Dimension : (32(batch_szie), 64(sequence의 길이), 512(LSTM unit의 갯수))</p>
+<ul>
+<li>S : 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit수)</li>
+<li>h : 32(batch size) * 512 (LSTM unit수)</li>
+<li>c : 32(batch size) * 512 (LSTM unit수)</li>
+</ul>
+</li>
+<li><p>S_의 Dimension: 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit 수)</p>
+</li>
+<li>A의 Dimension: 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit 수)</li>
+<li>y의 Dimension: 32(batch size) <em> 64(sequence의 길이) </em> 1024</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Decoder(tf.keras.Model):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    super(Decoder, self).__init__()</span><br><span class="line">    self.emb = tf.keras.layers.Embedding(NUM_WORDS, 64)</span><br><span class="line">    <span class="comment"># return_sequence는 return 할 Output을 full sequence 또는 Sequence의 마지막에서 출력할지를 결정하는 옵션</span></span><br><span class="line">    <span class="comment"># False는 마지막에만 출력, True는 모든 곳에서의 출력</span></span><br><span class="line">    self.lstm = tf.keras.layers.LSTM(512, return_sequences=True, return_state=True)</span><br><span class="line">    <span class="comment"># LSTM 출력에다가 Attention value를 dense에 넘겨주는 것이 Attention mechanism이므로</span></span><br><span class="line">    self.att = tf.keras.layers.Attention()</span><br><span class="line">    self.dense = tf.keras.layers.Dense(NUM_WORDS, activation=<span class="string">'softmax'</span>)</span><br><span class="line"></span><br><span class="line">  def call(self, inputs, training=False, mask=None):</span><br><span class="line">    <span class="comment"># x : shifted output, s0 : Decoder단의 처음들어오는 Hidden state</span></span><br><span class="line">    <span class="comment"># c0 : Decoder단의 처음들어오는 cell state H: Encoder단의 Hidden state(Key와 value로 사용)</span></span><br><span class="line">    x, s0, c0, H = inputs</span><br><span class="line">    x = self.emb(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># initial_state는 셀의 첫 번째 호출로 전달 될 초기 상태 텐서 목록을 의미</span></span><br><span class="line">    <span class="comment"># 이전의 Encoder에서 만들어진 Hidden state와 Cell state를 입력으로 받아야 하므로</span></span><br><span class="line">    <span class="comment"># S : Hidden state를 전부다 모아놓은 것이 될 것이다.(Query로 사용)</span></span><br><span class="line">    S, h, c = self.lstm(x, initial_state=[s0, c0])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Query로 사용할 때는 하나 앞선 시점을 사용해줘야 하므로</span></span><br><span class="line">    <span class="comment"># s0가 제일 앞에 입력으로 들어가는데 현재 Encoder 부분에서의 출력이 batch 크기에 따라서 length가 현재 1이기 때문에 2차원형태로 들어오게 된다.</span></span><br><span class="line">    <span class="comment"># 그러므로 이제 3차원 형태로 확장해 주기 위해서 newaxis를 넣어준다.</span></span><br><span class="line">    <span class="comment"># 또한 decoder의 S(Hidden state) 중에 마지막은 예측할 다음이 없으므로 배제해준다.</span></span><br><span class="line">    S_ = tf.concat([s0[:, tf.newaxis, :], S[:, :-1, :]], axis=1)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Attention 적용</span></span><br><span class="line">    <span class="comment"># 아래 []안에는 원래 Query, Key와 value 순으로 입력해야하는데 아래처럼 두가지만 입력한다면</span></span><br><span class="line">    <span class="comment"># 마지막 것을 Key와 value로 사용한다.</span></span><br><span class="line">    A = self.att([S_, H])</span><br><span class="line"></span><br><span class="line">    y = tf.concat([S, A], axis=-1)</span><br><span class="line">    <span class="built_in">return</span> self.dense(y), h, c</span><br></pre></td></tr></table></figure>
 <h3 id="Seq2seq-1"><a href="#Seq2seq-1" class="headerlink" title="Seq2seq"></a>Seq2seq</h3><ul>
@@ -333,7 +365,7 @@ tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.
 
 
 12!pip install tensorflow==2.0.0-b"
-        "wordCount": 4125
+        "wordCount": 4290
     }
 </script>
 
