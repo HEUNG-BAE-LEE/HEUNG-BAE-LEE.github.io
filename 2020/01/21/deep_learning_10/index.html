@@ -21,7 +21,7 @@
 <meta property="og:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Sequence_to_sequence.png">
-<meta property="og:updated_time" content="2020-01-21T20:14:13.504Z">
+<meta property="og:updated_time" content="2020-01-23T16:59:28.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention 기법">
 <meta name="twitter:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
@@ -312,7 +312,7 @@ ga('send', 'pageview');
 <ul>
 <li>아래 그림에서 출력과 RNN 구조사이에 실제로는 FC Layer가 하나 존재해서 출력을 One-hot vector로 만들어준다.</li>
 </ul>
-<p><img src="/image/seq2seq_application_01.png" alt="Seq2seq -  Application"></p>
+<p><img src="/image/seq2seq_application.png" alt="Seq2seq -  Application"></p>
 <p><img src="/image/Attention_paractice.png" alt="Attention의 구현"></p>
 <ul>
 <li>$X\in R^{BXLXN}$에서 B:Batch size, L:문장의 길이, N:One-hot vetor나 embedding Feature의 길이를 의미하며, 여기서 Decode 쪽으로 Context를 넘길때는 LSTM이라면 Hidden State와 Cell State 둘다 넘겨주어야 하기에 Batch_size X Hidden state의 Feature 갯수인 M을 사이즈로 갖는 tensor를 넘겨줄 것이다.</li>
@@ -417,7 +417,7 @@ ga('send', 'pageview');
         "genre": "deep learning",
         "datePublished": "2020-01-21",
         "dateCreated": "2020-01-21",
-        "dateModified": "2020-01-22",
+        "dateModified": "2020-01-24",
         "url": "https://heung-bae-lee.github.io/2020/01/21/deep_learning_10/",
         "description": "Attention 기법Sequence-to-sequence
 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.
@@ -475,7 +475,7 @@ ga('send', 'pageview');
         <strong class="article-nav-caption">newer</strong>
         <p class="article-nav-title">
         
-            post
+            Attention mechanism을 사용한 Seq2seq 구현
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
@@ -506,8 +506,17 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2020/01/22/deep_learning_11/" class="title">post</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
+                            <p class="item-title"><a href="/2020/01/24/Crawling_02/" class="title">Scrapy 웹 크롤링 02 - Exports,</a></p>
+                            <p class="item-date"><time datetime="2020-01-23T16:56:11.000Z" itemprop="datePublished">2020-01-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/deep-learning/">deep learning</a></p>
+                            <p class="item-title"><a href="/2020/01/22/deep_learning_11/" class="title">Attention mechanism을 사용한 Seq2seq 구현</a></p>
                             <p class="item-date"><time datetime="2020-01-21T20:15:09.000Z" itemprop="datePublished">2020-01-22</time></p>
                         </div>
                     </li>
@@ -539,15 +548,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/01/16/NLP_01/" class="title">임베딩이란?</a></p>
-                            <p class="item-date"><time datetime="2020-01-16T08:29:53.000Z" itemprop="datePublished">2020-01-16</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -557,7 +557,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -567,7 +567,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -684,22 +684,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
