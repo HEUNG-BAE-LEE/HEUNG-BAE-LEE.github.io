@@ -182,7 +182,7 @@ ga('send', 'pageview');
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2020/01/24/Crawling_02/">Scrapy 웹 크롤링 02 - Exports,</a>
+        <a href="/2020/01/24/Crawling_02/">Scrapy 웹 크롤링 03 - Exports, Settings, pipeline</a>
         </h1>
     
 
@@ -190,7 +190,10 @@ ga('send', 'pageview');
             Exports
 우리가 실행후 크롤링한 데이터를 저장하는 path를 실행할때마다 지정하거나 실행했는데, 일종의 template같이 미리 만들어 놓을 수 있는 기능이 Exports이다.
 
+Exports 참조 사이트 : https://docs.scrapy.org/en/latest/topics/feed-exports.html
 
+
+1234# 아래 2가지 방법은 동일
         </p>
     </div>
 </article>
@@ -760,7 +763,7 @@ DeepNLP(모두의연구소 자연어 처리 스터디):http://www.modulabs.co.kr
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
-                            <p class="item-title"><a href="/2020/01/24/Crawling_02/" class="title">Scrapy 웹 크롤링 02 - Exports,</a></p>
+                            <p class="item-title"><a href="/2020/01/24/Crawling_02/" class="title">Scrapy 웹 크롤링 03 - Exports, Settings, pipeline</a></p>
                             <p class="item-date"><time datetime="2020-01-23T16:56:11.000Z" itemprop="datePublished">2020-01-24</time></p>
                         </div>
                     </li>
@@ -935,5 +938,22 @@ DeepNLP(모두의연구소 자연어 처리 스터디):http://www.modulabs.co.kr
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

@@ -21,7 +21,7 @@
 <meta property="og:description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/add_many_site_py.png">
-<meta property="og:updated_time" content="2020-01-23T17:44:53.649Z">
+<meta property="og:updated_time" content="2020-01-25T01:24:11.247Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scrapy 웹 크롤링 02 - Spider, Scrapy selectors, Items">
 <meta name="twitter:description" content="Spider Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.) CrawlSpider XMLFeedSpider CSVFeedSpider SitemapSpider    12# 여러사이트를 크롤링하기 위한 spider를 생성scrapy genspider many_site hub.scraping.com   spider 폴더의">
@@ -283,7 +283,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/make_rule_items.png" alt="items.py 파일에 데이터 정의"></p>
 <ul>
-<li><code>items.py를 활용기 위해 import를 할 경우 다음과 같이 절대경로를 사용한 path 추가 방법을 사용</code>해야한다. 다음과 같이 items의 ItArticle class를 활용하여 spider를 좀 더 깔끔하게 작성할 수 있다.</li>
+<li><code>items.py를 활용하기 위해 import를 할 경우 다음과 같이 절대경로를 사용한 path 추가 방법을 사용</code>해야한다. 다음과 같이 items의 ItArticle class를 활용하여 spider를 좀 더 깔끔하게 작성할 수 있다.</li>
 </ul>
 <p><img src="/image/using_items_spider_in.png" alt="using_items.py spider 작성"></p>
 
@@ -362,7 +362,7 @@ ga('send', 'pageview');
         "genre": "crawling",
         "datePublished": "2020-01-11",
         "dateCreated": "2020-01-11",
-        "dateModified": "2020-01-24",
+        "dateModified": "2020-01-25",
         "url": "https://heung-bae-lee.github.io/2020/01/11/Crawling_01/",
         "description": "Spider
 Spider의 종류 (참고로, 아래 3가지 종류의 Spider는 잘 사용되지 않는다.)
@@ -461,7 +461,7 @@ spider 폴더의 "
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
-                            <p class="item-title"><a href="/2020/01/24/Crawling_02/" class="title">Scrapy 웹 크롤링 02 - Exports,</a></p>
+                            <p class="item-title"><a href="/2020/01/24/Crawling_02/" class="title">Scrapy 웹 크롤링 03 - Exports, Settings, pipeline</a></p>
                             <p class="item-date"><time datetime="2020-01-23T16:56:11.000Z" itemprop="datePublished">2020-01-24</time></p>
                         </div>
                     </li>
@@ -638,5 +638,22 @@ spider 폴더의 "
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
