@@ -8,8 +8,8 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/24/Crawling_02/</loc>
-        <lastmod>2020-01-27T07:45:49.867Z</lastmod>
+        <loc>https://heung-bae-lee.github.io/2020/01/28/Crawling_03/</loc>
+        <lastmod>2020-01-28T13:34:26.104Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,15 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/2020/01/11/Crawling_01/</loc>
-        <lastmod>2020-01-25T01:24:11.247Z</lastmod>
+        <lastmod>2020-01-28T08:26:14.810Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/24/Crawling_02/</loc>
+        <lastmod>2020-01-27T16:05:56.552Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
