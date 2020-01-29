@@ -6,7 +6,7 @@
     
 
     
-    <title>텍스트 분류 | DataLatte&#39;s IT Blog</title>
+    <title>텍스트 분류 - 01 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -15,15 +15,17 @@
     
     <meta name="description" content="영어 텍스트 분류 한국어는 띄어쓰기를 기준으로 모든 단어를 처리할 수 없으므로 상대적으로 전처리하기 쉬운 영어 텍스트를 가지고 먼저 감각을 키워보겠다.  데이터 이름 : Bag of Words Meets Bags of Popcorn 데이터 용도 : 텍스트 분류 학습을 목적으로 사용 데이터 권한 : MIT 데이터 출처 : https://www.kaggle.c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="텍스트 분류">
+<meta property="og:title" content="텍스트 분류 - 01">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/29/NLP_03/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="영어 텍스트 분류 한국어는 띄어쓰기를 기준으로 모든 단어를 처리할 수 없으므로 상대적으로 전처리하기 쉬운 영어 텍스트를 가지고 먼저 감각을 키워보겠다.  데이터 이름 : Bag of Words Meets Bags of Popcorn 데이터 용도 : 텍스트 분류 학습을 목적으로 사용 데이터 권한 : MIT 데이터 출처 : https://www.kaggle.c">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-29T14:52:27.858Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/">
+<meta property="og:updated_time" content="2020-01-29T15:10:25.455Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="텍스트 분류">
+<meta name="twitter:title" content="텍스트 분류 - 01">
 <meta name="twitter:description" content="영어 텍스트 분류 한국어는 띄어쓰기를 기준으로 모든 단어를 처리할 수 없으므로 상대적으로 전처리하기 쉬운 영어 텍스트를 가지고 먼저 감각을 키워보겠다.  데이터 이름 : Bag of Words Meets Bags of Popcorn 데이터 용도 : 텍스트 분류 학습을 목적으로 사용 데이터 권한 : MIT 데이터 출처 : https://www.kaggle.c">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -164,7 +166,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        텍스트 분류
+        텍스트 분류 - 01
         </h1>
     
 
@@ -240,8 +242,51 @@ ga('send', 'pageview');
 <li>6) 각 리뷰의 단어 개수 분포</li>
 <li>7) 특수문자 및 대문자, 소문자 비율</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 크기</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"파일 크기 : "</span>)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(DATA_IN_PATH):</span><br><span class="line">  <span class="keyword">if</span> <span class="string">'tsv'</span> <span class="keyword">in</span> file and <span class="string">'zip'</span> not <span class="keyword">in</span> file:</span><br><span class="line">    <span class="built_in">print</span>(file.ljust(30) + str(round(os.path.getsize(DATA_IN_PATH + file) / 1000000, 2)) + <span class="string">'MB'</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습 데이터의 개수</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'전체 학습 데이터의 개수: &#123;&#125;'</span>.format(len(train_data)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 크기</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"파일 크기 : "</span>)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(DATA_IN_PATH):</span><br><span class="line">  <span class="keyword">if</span> <span class="string">'tsv'</span> <span class="keyword">in</span> file and <span class="string">'zip'</span> not <span class="keyword">in</span> file:</span><br><span class="line">    <span class="built_in">print</span>(file.ljust(30) + str(round(os.path.getsize(DATA_IN_PATH + file) / 1000000, 2)) + <span class="string">'MB'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 학습 데이터의 개수</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'전체 학습 데이터의 개수: &#123;&#125;'</span>.format(len(train_data)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line"><span class="comment"># 전체 학습 데이터의 개수: 25000</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>각 review의 길이를 분석</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_length = train_data[<span class="string">'review'</span>].apply(len)</span><br><span class="line">train_length.head()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>각 리뷰의 문자 길이가 대부분 6,000 이하이고 대부분 2,000이하에 분포돼 있음을 알 수 있다. 그리고 일부 데이터의 경우 이상치로 10,000 이상의 값을 가지고 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12, 5))</span><br><span class="line"></span><br><span class="line">plt.hist(train_length, bins=200, alpha=0.5, color=<span class="string">'r'</span>, label=<span class="string">'word'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># y축의 범위를 log단위로 바꿔주고 non-positive에 대해서는 아주작은 양수로 클리핑한다.</span></span><br><span class="line">plt.yscale(<span class="string">'log'</span>, nonposy=<span class="string">'clip'</span>)</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">'Log-Histogram of length of review'</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'Length of review'</span>)</span><br><span class="line"></span><br><span class="line">plt.ylabel(<span class="string">'Number of review'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/" alt="각 review의 길이에 대한 히스토그램"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 기초 통계량 확인</span></span><br><span class="line">train_length.describe()</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12, 5))</span><br><span class="line"></span><br><span class="line">plt.boxplot(train_length, labels=[<span class="string">'train data review length'</span>], showmeans=True)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/" alt="학습 데이터의 길이에 대한 boxplot"></p>
+<ul>
+<li><p>wordcloud를 통해 시각적으로 빈도수를 확인하기 위해 설치한다.</p>
+</li>
+<li><p>워드 클라우드를 보면 가장 많이 사용된 단어는 br이라는 것을 확인할 수 있다. HTML 태그인 br 해당 데이터가 높은 빈도수를 보이는 것으로 미루어보아 정제되지 않은 인터넷 상의 리뷰 형태로 작성돼 있음을 알 수 있다. 이후 전처리 작업에서 이 태그들을 모두 제거하겠다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!pip install wordcloud</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from wordcloud import WordCloud</span><br><span class="line">cloud = WordCloud(width=800, height=600).generate(<span class="string">' '</span>.join(train_data[<span class="string">'review'</span>]))</span><br><span class="line">plt.figure(figsize=(20, 15))</span><br><span class="line">plt.imshow(cloud)</span><br><span class="line">plt.axis(<span class="string">'off'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/" alt="학습데이터에 대한 wordcloud"></p>
+<ul>
+<li><p>이제 각 라벨의 분포를 확인해 본다. 해당 데이터의 경우 긍정과 부정이라는 두 가지 라벨만 가지고 있다. 분포의 경우 또 다른 시각화 도구인 seaborn을 사용해 시각화하겠다.</p>
+</li>
+<li><p>label의 분포 그래프를 보면 거의 동일한 개수로 분포돼 있음을 확인 할 수 있다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fig, axe = plt.subplots(ncols=1)</span><br><span class="line">fig.set_size_inches(6, 3)</span><br><span class="line">sns.countplot(train_data[<span class="string">'sentiment'</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="/image/" alt="긍정 부정에 대한 count plot"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">"긍정 리뷰 개수: &#123;&#125;"</span>.format(train_data[<span class="string">'sentiment'</span>].value_counts()[1]))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"부정 리뷰 개수: &#123;&#125;"</span>.format(train_data[<span class="string">'sentiment'</span>].value_counts()[0]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line"><span class="comment"># 긍정 리뷰 개수: 12500</span></span><br><span class="line"><span class="comment"># 부정 리뷰 개수: 12500</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>각 리뷰를 단어 기준으로 나눠서 각 리뷰당 단어의 개수를 확인해 본다. 단어는 띄어쓰기 기준으로 하나의 단어라 생각하고 개수를 계산한다. 우선 각 단어의 길이를 가지는 변수를 하나 설정하자.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_word_counts = train_data[<span class="string">'review'</span>].apply(lambda x: len(x.split(<span class="string">' '</span>)))</span><br></pre></td></tr></table></figure>
+<h4 id="대부분의-단어가-1000개-미만의-단어를-가지고-있고-대부분-200개-정도의-단어를-가지고-있음을-확인할-수-있다"><a href="#대부분의-단어가-1000개-미만의-단어를-가지고-있고-대부분-200개-정도의-단어를-가지고-있음을-확인할-수-있다" class="headerlink" title="대부분의 단어가 1000개 미만의 단어를 가지고 있고, 대부분 200개 정도의 단어를 가지고 있음을 확인할 수 있다."></a>대부분의 단어가 1000개 미만의 단어를 가지고 있고, 대부분 200개 정도의 단어를 가지고 있음을 확인할 수 있다.</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(15,10))</span><br><span class="line">plt.hist(train_word_counts, bins=50, facecolor=<span class="string">'r'</span>, label=<span class="string">'train'</span>)</span><br><span class="line">plt.title(<span class="string">'Log-Histogram of word count in review'</span>, fontsize=15)</span><br><span class="line">plt.yscale(<span class="string">'log'</span>, nonposy=<span class="string">'clip'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlabel(<span class="string">'Number of words'</span>, fontsize=15)</span><br><span class="line">plt.ylabel(<span class="string">'Number of reviews'</span>, fontsize=15)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/" alt="공백을 기준으로 분리한 각 review가 갖는 단어 수에 대한 histogram"></p>
+<h4 id="review의-75-가-300개-이하의-단어를-가지고-있음을-확인-할-수-있다"><a href="#review의-75-가-300개-이하의-단어를-가지고-있음을-확인-할-수-있다" class="headerlink" title="review의 75%가 300개 이하의 단어를 가지고 있음을 확인 할 수 있다."></a>review의 75%가 300개 이하의 단어를 가지고 있음을 확인 할 수 있다.</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_word_counts.describe()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>마지막으로 각 review에 대해 구두점과 대소문자 비율 값을 확인한다.</p>
+</li>
+<li><p>대부분 마침표를 포함하고 있고, 대문자도 대부분 사용하고 있다. 따라서 전처리 과정에서 대문자의 경우 모두 소문자로 바꾸고 특수 문자의 경우 제거한다. <code>이 과정은 학습에 방해가 되는 요소들을 제거하기 위함</code>이다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 물음표가 구두점으로 사용되는 비율</span></span><br><span class="line">qmarks = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : <span class="string">'?'</span> <span class="keyword">in</span> x))</span><br><span class="line"><span class="comment"># 마침표가 구두점으로 사용되는 비율</span></span><br><span class="line">fullstop = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : <span class="string">'.'</span> <span class="keyword">in</span> x))</span><br><span class="line"><span class="comment"># 첫 번째 대문자의 비율</span></span><br><span class="line">capital_first = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : x[0].isupper()))</span><br><span class="line"><span class="comment"># 대문자 비율</span></span><br><span class="line">capitals = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : max([y.isupper() <span class="keyword">for</span> y <span class="keyword">in</span> x])))</span><br><span class="line"><span class="comment"># 숫자 비율</span></span><br><span class="line">numbers = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : max([y.isdigit() <span class="keyword">for</span> y <span class="keyword">in</span> x])))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'물음표가 있는 질문: &#123;:.2f&#125;%'</span>.format(qmarks * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'마침표가 있는 질문: &#123;:.2f&#125;%'</span>.format(fullstop * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'첫 글자가 대문자인 질문: &#123;:.2f&#125;%'</span>.format(capital_first * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'대문자가 있는 질문: &#123;:.2f&#125;%'</span>.format(capitals * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'숫자가 있는 질문: &#123;:.2f&#125;%'</span>.format(numbers * 100))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line"><span class="comment"># 물음표가 있는 질문: 29.55%</span></span><br><span class="line"><span class="comment"># 마침표가 있는 질문: 99.69%</span></span><br><span class="line"><span class="comment"># 첫 글자가 대문자인 질문: 0.00%</span></span><br><span class="line"><span class="comment"># 대문자가 있는 질문: 99.59%</span></span><br><span class="line"><span class="comment"># 숫자가 있는 질문: 56.66%</span></span><br></pre></td></tr></table></figure>
 
         </div>
         <footer class="article-footer">
@@ -312,13 +357,13 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "텍스트 분류",
-        "image": "https://heung-bae-lee.github.io",
+        "headline": "텍스트 분류 - 01",
+        "image": "https://heung-bae-lee.github.io/image/",
         "keywords": "",
         "genre": "NLP",
         "datePublished": "2020-01-29",
         "dateCreated": "2020-01-29",
-        "dateModified": "2020-01-29",
+        "dateModified": "2020-01-30",
         "url": "https://heung-bae-lee.github.io/2020/01/29/NLP_03/",
         "description": "영어 텍스트 분류
 한국어는 띄어쓰기를 기준으로 모든 단어를 처리할 수 없으므로 상대적으로 전처리하기 쉬운 영어 텍스트를 가지고 먼저 감각을 키워보겠다.
@@ -327,7 +372,7 @@ ga('send', 'pageview');
 데이터 용도 : 텍스트 분류 학습을 목적으로 사용
 데이터 권한 : MIT
 데이터 출처 : https://www.kaggle.c"
-        "wordCount": 627
+        "wordCount": 1330
     }
 </script>
 
@@ -401,7 +446,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/01/29/NLP_03/" class="title">텍스트 분류</a></p>
+                            <p class="item-title"><a href="/2020/01/29/NLP_03/" class="title">텍스트 분류 - 01</a></p>
                             <p class="item-date"><time datetime="2020-01-29T14:40:09.000Z" itemprop="datePublished">2020-01-29</time></p>
                         </div>
                     </li>
