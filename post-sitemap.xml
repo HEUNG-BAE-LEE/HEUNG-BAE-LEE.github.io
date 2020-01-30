@@ -9,7 +9,15 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/2020/01/29/NLP_03/</loc>
-        <lastmod>2020-01-29T15:10:25.455Z</lastmod>
+        <lastmod>2020-01-30T14:47:07.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/30/post/</loc>
+        <lastmod>2020-01-29T15:13:48.719Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
