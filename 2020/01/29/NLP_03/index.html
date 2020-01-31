@@ -21,7 +21,7 @@
 <meta property="og:description" content="영어 텍스트 분류 한국어는 띄어쓰기를 기준으로 모든 단어를 처리할 수 없으므로 상대적으로 전처리하기 쉬운 영어 텍스트를 가지고 먼저 감각을 키워보겠다.  데이터 이름 : Bag of Words Meets Bags of Popcorn 데이터 용도 : 텍스트 분류 학습을 목적으로 사용 데이터 권한 : MIT 데이터 출처 : https://www.kaggle.c">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/">
-<meta property="og:updated_time" content="2020-01-30T14:47:07.820Z">
+<meta property="og:updated_time" content="2020-01-31T14:32:03.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="텍스트 분류 - 01">
 <meta name="twitter:description" content="영어 텍스트 분류 한국어는 띄어쓰기를 기준으로 모든 단어를 처리할 수 없으므로 상대적으로 전처리하기 쉬운 영어 텍스트를 가지고 먼저 감각을 키워보겠다.  데이터 이름 : Bag of Words Meets Bags of Popcorn 데이터 용도 : 텍스트 분류 학습을 목적으로 사용 데이터 권한 : MIT 데이터 출처 : https://www.kaggle.c">
@@ -288,7 +288,7 @@ ga('send', 'pageview');
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 물음표가 구두점으로 사용되는 비율</span></span><br><span class="line">qmarks = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : <span class="string">'?'</span> <span class="keyword">in</span> x))</span><br><span class="line"><span class="comment"># 마침표가 구두점으로 사용되는 비율</span></span><br><span class="line">fullstop = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : <span class="string">'.'</span> <span class="keyword">in</span> x))</span><br><span class="line"><span class="comment"># 첫 번째 대문자의 비율</span></span><br><span class="line">capital_first = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : x[0].isupper()))</span><br><span class="line"><span class="comment"># 대문자 비율</span></span><br><span class="line">capitals = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : max([y.isupper() <span class="keyword">for</span> y <span class="keyword">in</span> x])))</span><br><span class="line"><span class="comment"># 숫자 비율</span></span><br><span class="line">numbers = np.mean(train_data[<span class="string">'review'</span>].apply(lambda x : max([y.isdigit() <span class="keyword">for</span> y <span class="keyword">in</span> x])))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'물음표가 있는 질문: &#123;:.2f&#125;%'</span>.format(qmarks * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'마침표가 있는 질문: &#123;:.2f&#125;%'</span>.format(fullstop * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'첫 글자가 대문자인 질문: &#123;:.2f&#125;%'</span>.format(capital_first * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'대문자가 있는 질문: &#123;:.2f&#125;%'</span>.format(capitals * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'숫자가 있는 질문: &#123;:.2f&#125;%'</span>.format(numbers * 100))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line"><span class="comment"># 물음표가 있는 질문: 29.55%</span></span><br><span class="line"><span class="comment"># 마침표가 있는 질문: 99.69%</span></span><br><span class="line"><span class="comment"># 첫 글자가 대문자인 질문: 0.00%</span></span><br><span class="line"><span class="comment"># 대문자가 있는 질문: 99.59%</span></span><br><span class="line"><span class="comment"># 숫자가 있는 질문: 56.66%</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>다음 단계 전처리 및 로지스틱 회귀를 통한 분석결과</li>
+<li>다음 단계 전처리 및 로지스틱 회귀를 통한 분석결과를 보여준다.</li>
 </ul>
 
         </div>
@@ -366,7 +366,7 @@ ga('send', 'pageview');
         "genre": "NLP",
         "datePublished": "2020-01-29",
         "dateCreated": "2020-01-29",
-        "dateModified": "2020-01-30",
+        "dateModified": "2020-01-31",
         "url": "https://heung-bae-lee.github.io/2020/01/29/NLP_03/",
         "description": "영어 텍스트 분류
 한국어는 띄어쓰기를 기준으로 모든 단어를 처리할 수 없으므로 상대적으로 전처리하기 쉬운 영어 텍스트를 가지고 먼저 감각을 키워보겠다.
@@ -375,7 +375,7 @@ ga('send', 'pageview');
 데이터 용도 : 텍스트 분류 학습을 목적으로 사용
 데이터 권한 : MIT
 데이터 출처 : https://www.kaggle.c"
-        "wordCount": 1337
+        "wordCount": 1338
     }
 </script>
 
