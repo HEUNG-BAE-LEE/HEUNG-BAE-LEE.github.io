@@ -6,28 +6,30 @@
     
 
     
-    <title>growth_hacking_01 | DataLatte&#39;s IT Blog</title>
+    <title>NLP - 단어 수준 임베딩 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
     
-    <meta name="description" content="결국 문제는 Distribution 모바일 앱 시장을 생각해 보면 알수 있듯이 초창기에는 신기해서 앱을 다운로드하던 시정이 있었지만, 현재는 앱을 다운로드하지 않는 트렌드를 알 수 있다. 클라우드 서비스의 성장과 SaaS의 성장으로 인래 많은 스타트업이 생겼지만, 그 중 대부분이 실패를 한다. 그 이유는 유통때문이다. 즉, 빈약한 유통채널을 가지고 있기 때">
+    <meta name="description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
 <meta property="og:type" content="article">
-<meta property="og:title" content="growth_hacking_01">
-<meta property="og:url" content="https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/index.html">
+<meta property="og:title" content="NLP - 단어 수준 임베딩">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/01/NLP_06/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="결국 문제는 Distribution 모바일 앱 시장을 생각해 보면 알수 있듯이 초창기에는 신기해서 앱을 다운로드하던 시정이 있었지만, 현재는 앱을 다운로드하지 않는 트렌드를 알 수 있다. 클라우드 서비스의 성장과 SaaS의 성장으로 인래 많은 스타트업이 생겼지만, 그 중 대부분이 실패를 한다. 그 이유는 유통때문이다. 즉, 빈약한 유통채널을 가지고 있기 때">
+<meta property="og:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-20T03:36:16.967Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/NPLM_principal.png">
+<meta property="og:updated_time" content="2020-02-01T15:27:06.651Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="growth_hacking_01">
-<meta name="twitter:description" content="결국 문제는 Distribution 모바일 앱 시장을 생각해 보면 알수 있듯이 초창기에는 신기해서 앱을 다운로드하던 시정이 있었지만, 현재는 앱을 다운로드하지 않는 트렌드를 알 수 있다. 클라우드 서비스의 성장과 SaaS의 성장으로 인래 많은 스타트업이 생겼지만, 그 중 대부분이 실패를 한다. 그 이유는 유통때문이다. 즉, 빈약한 유통채널을 가지고 있기 때">
+<meta name="twitter:title" content="NLP - 단어 수준 임베딩">
+<meta name="twitter:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/NPLM_principal.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/01/nlp_06/">
    
     
 
@@ -152,19 +154,19 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/growth-hacking/">growth hacking</a>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
 
                         <div class="main-body-content">
-			    <article id="post-growth_hacking_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+			    <article id="post-NLP_06" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        growth_hacking_01
+        NLP - 단어 수준 임베딩
         </h1>
     
 
@@ -174,8 +176,8 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/05/18/growth_hacking_01/" class="article-date">
-            <time datetime="2019-05-17T23:38:10.000Z" itemprop="datePublished">2019-05-18</time>
+        <a href="/2020/02/01/NLP_06/" class="article-date">
+            <time datetime="2020-02-01T11:47:03.000Z" itemprop="datePublished">2020-02-01</time>
         </a>
     </div>
 
@@ -186,10 +188,87 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="결국-문제는-Distribution"><a href="#결국-문제는-Distribution" class="headerlink" title="결국 문제는 Distribution"></a>결국 문제는 Distribution</h2><ul>
-<li><p>모바일 앱 시장을 생각해 보면 알수 있듯이 초창기에는 신기해서 앱을 다운로드하던 시정이 있었지만, 현재는 앱을 다운로드하지 않는 트렌드를 알 수 있다. 클라우드 서비스의 성장과 SaaS의 성장으로 인래 많은 스타트업이 생겼지만, 그 중 대부분이 실패를 한다. 그 이유는 <code>유통</code>때문이다. 즉, 빈약한 유통채널을 가지고 있기 때문이다. 그러한 대표적인 사례로 TiVo를 꼽을 수 있다. 즉, 컨텐츠가 있어야 디지털 비디오 레코드 상품을 판매하는 것이 의미있는 것인데, 컨텐츠들은 모두 케이블 TV 사업자와 위성 TV 사업자가 컨텐츠 유통을 쥐고있기 때문에 유통이 어려웠다. 결국 Tivo는 Patent Troll(특허 전쟁)로 전락하였다.</p>
+            <h1 id="단어-수준-임베딩"><a href="#단어-수준-임베딩" class="headerlink" title="단어 수준 임베딩"></a>단어 수준 임베딩</h1><ul>
+<li><p>예측 기반 모델</p>
+<ul>
+<li>NPLM</li>
+<li>Word2Vec</li>
+<li>FastText</li>
+</ul>
 </li>
-<li><p><code>성공적인 기술 기업의 일반적인 모델은, 제품 중심기업이 아니라 유통 중심 기업이 되는 것</code>이다. 구글, 페이스북등의 기업은 그 자체가 유통 플랫폼이 되어, 계속해서 새로운 제품을 고객들에게 선보이고 있다. 허나 위의 유통 중심의 기업으로 성장하기가 어려운 현실이 되었다. 시장에 많은 제품과 서비스가 나와있으며 소비자와 고객들이 가진 시간과 돈은 한정되어있으므로 모든 제품과 서비스가 고객들에게 도달하지 못하기 때문이다. 또한, 페이스북, 인스타그램 등 광고 플랫폼의 지면에는 한계가 있지만, 광고하고 싶은 기업은 점점 늘어나기 때문에 광고비는 상승한다. 사람들은 점점 광고를 클릭하지 않으며, 사람들이 기업의 마케팅 활동에 적응하고 피로감을 느끼고있는 상황은 더욱 더 유통이 이루어지기 힘들게 하고 있다.</p>
+<li><p>행렬 분해 기반 모델</p>
+<ul>
+<li>LSA</li>
+<li>GloVe</li>
+<li>Swivel</li>
+</ul>
+</li>
+<li><p>단어 임베딩을 문장 수준 임베딩으로 확장하는 방법</p>
+<ul>
+<li>가중 임베딩(Weighted Embedding)</li>
+</ul>
+</li>
+</ul>
+<h2 id="NPLM-Neural-Probabilistic-Language-Model"><a href="#NPLM-Neural-Probabilistic-Language-Model" class="headerlink" title="NPLM(Neural Probabilistic Language Model)"></a>NPLM(Neural Probabilistic Language Model)</h2><ul>
+<li><p>NLP 분야에서 임베딩 개념을 널리 퍼뜨리는 데 일조한 선구자적 모델로서 임베딩 역사에서 차지하는 역할이 작지 않다.</p>
+</li>
+<li><p>‘단어가 어떤 순서로 쓰였는가’라는 가정을 통해 만들어진 통계 기반의 전통적인 언어 모델의 한계를 극복하는 과정에서 만들어졌다는데 의의가 있으며 <code>NPLM 자체가 단어 임베딩 역할</code>을 수행할 수 있다. 다음과 같은 한계점들이 기존에는 존재했다.</p>
+<ul>
+<li><p>1) 학습 데이터에 존재하지 않는 데이터에 대해 나타날 확률을 0으로 부여 한다. 물론, 백오프(back-off)나 스무딩(smoothing)으로 완화시켜 줄 순 있지만 근본적인 해결방안은 아니였다.</p>
+</li>
+<li><p>2) 문장의 장기 의존성(long-term dependency)을 포착해내기 어렵다. 다시 말해서 n-gram모델의 n을 5 이상으로 길게 설정할 수 없다. <code>n이 커질수록 확률이 0이될 가능성이 높기 때문이다.</code></p>
+</li>
+<li><p>3) 단어/문장 간 유사도를 계산할 수 없다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="NLPM의-학습"><a href="#NLPM의-학습" class="headerlink" title="NLPM의 학습"></a>NLPM의 학습</h3><ul>
+<li>NLPM은 직전까지 등장한 n-1개(n: gram으로 묶을 수) 단어들로 다음 단어를 맞추는 <code>n-gram 언어 모델</code>이다.</li>
+</ul>
+<p><img src="/image/NPLM_principal.png" alt="NPLM의 학습 원리"></p>
+<ul>
+<li>NLPM 구조의 말단 출력<ul>
+<li>$|V|$(corpus의 token vector, 어휘집합의 크기) 차원의 score 벡터 $y_{w_{t}}$에 softmax 함수를 적용한 $|V|$차원의 확률 벡터이다. <code>NPLM은 확률 벡터에서 가장 높은 요소의 인덱스에 해당하는 단어가 실제 정답 단어와 일치하도록 학습 한다.</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">P(w_{t})|w_{t-1}, \cdots ,w_{t-n+1}) = \frac{exp(y_{w_{t}})}{\sum_{i} exp(y_{i}) }</script><script type="math/tex; mode=display">y_{w_{t}} \in R^{|V|} : w_{t}라는 단어에 해당하는 점수 벡터</script><ul>
+<li><p>NLPM 구조의 입력</p>
+<ul>
+<li><p>문장 내 t번째 단어($w_{t}$)에 대응하는 단어 벡터 $x_{t}$를 만드는 과정은 다음과 같다. 먼저 $|V| x m (m: x_{t}의 차원 수)$크기를 갖는 행렬 C에서 $w_{t}$에 해당하는 벡터를 참조하는 형태이다. <code>C 행렬의 원소값은 초기에 랜덤 설정</code>한다. 참조한다는 의미는 예를 들어 아래 그림에서 처럼 어휘 집합에 속한 단어가 5개이고 $w_{t}$가 4번째 인덱스를 의미한다고 하면 행렬 $C$와 $w_{t}$에 해당하는 one-hot 벡터를 내적한 것과 같다. 즉 $C$라는 행렬에서 $w_{t}$에 해당하는 행만 참조하는 것과 동일한 결과를 얻을 수 있다. 따라서 이 과정을 Look-up table이라는 용어로 많이 사용한다</p>
+</li>
+<li><p><code>문장 내 모든 단어들을 한 단어씩 훑으면서 Corpus 전체를 학습하게 된다면 NPLM 모델의 C 행렬에 각 단어의 문맥 정보를 내재할 수 있게 된다.</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">x_{t} = w_{t} \cdot C = C(w_{t}), C \in R^{|v|xm}</script><p><img src="/image/NPLM_C_matrix.png" alt="NPLM 입력 벡터"></p>
+<h3 id="모델-구조-및-의미정보"><a href="#모델-구조-및-의미정보" class="headerlink" title="모델 구조 및 의미정보"></a>모델 구조 및 의미정보</h3><p>이 때, walking을 맞추는 과정에서 발생한 손실(train loss)를 최소화하는 그래디언트(gradient)를 받아 각 단어에 해당하는 행들이 동일하게 업데이트 된다. 따라서 이 단어들의 벡터는 벡터 공간에서 같은 방향으로 조금씩 움직인다고 볼 수 있다. <code>결과적으로 임베딩 벡터 공간에서 해당 단어들 사이의 거리가 가깝다는 것은 의미가 유사하다라는 의미로 해석</code>할 수 있다.</p>
+<p><img src="/image/NLPM_input.png" alt="NPLM의 input 벡터"></p>
+<p><img src="/image/NPLM_structure.png" alt="NPLM의 구조"></p>
+<h3 id="NPLM의-특징"><a href="#NPLM의-특징" class="headerlink" title="NPLM의 특징"></a>NPLM의 특징</h3><ul>
+<li><code>NPLM은 그 자체로 언어 모델 역할을 수행</code>할 수 있다. 기존의 통계 기반 n-gram 모델은 학습 데이터에 한 번도 등장하지 않은 패턴에 대해서는 그 등장 확률을 0으로 부여하는 문제점을 NPLM은 <code>문장이 Corpus에 없어도 문맥이 비슷한 다른 문장을 참고해 확률을 부여</code>하는 방식으로 극복하는데 큰 의의가 있다. 하지만, 학습 파라미터가 너무 많아 계산이 복잡해지고, 자연스럽게 모델 과적합(overfitting)이 발생할 가능성이 높다는 한계를 가진다.</li>
+</ul>
+<p>이 한계를 극복하기 위해 다음 임베딩 방법론인 Word2Vec이 등장하였다.</p>
+<h2 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h2><p>Word2vec은 가장 널리 쓰이고 있는 단어 임베딩 모델이다. <code>Skip-gram</code>과 <code>CBOW</code>라는 모델이 제안되었고, 이 두 모델을 근간으로 하되 negative sampling등 학습 최적화 기법을 제안한 내용이 핵심이다.</p>
+<ul>
+<li>CBOW<ul>
+<li><code>주변에 있는 context word들을 가지고 target word 하나를 맟추는 과정에서 학습</code>된다.</li>
+<li>입,출력 데이터 쌍<ul>
+<li>{context words, target word}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Skip-gram<ul>
+<li><code>target word 하나를 가지고 context word들이 무엇일지 예측하는 과정에서 학습</code>된다.</li>
+<li><code>skip-gram이 같은 말뭉치로도 더 많은 학습 데이터를 확보할 수 있어 임베딩 품질이 CBOW보다 좋은 경향</code>이 있다.</li>
+<li>입,출력 데이터 쌍<ul>
+<li>{target word, target word 전전 단어}, {target word, target word 직전 단어}, {target word, target word 다음 단어}, {target word, target word 다다음 단어}</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -262,17 +341,38 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "growth_hacking_01",
-        "image": "https://heung-bae-lee.github.io",
+        "headline": "NLP - 단어 수준 임베딩",
+        "image": "https://heung-bae-lee.github.io/image/NPLM_principal.png",
         "keywords": "",
-        "genre": "growth hacking",
-        "datePublished": "2019-05-18",
-        "dateCreated": "2019-05-18",
-        "dateModified": "2019-07-20",
-        "url": "https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/",
-        "description": "결국 문제는 Distribution
-모바일 앱 시장을 생각해 보면 알수 있듯이 초창기에는 신기해서 앱을 다운로드하던 시정이 있었지만, 현재는 앱을 다운로드하지 않는 트렌드를 알 수 있다. 클라우드 서비스의 성장과 SaaS의 성장으로 인래 많은 스타트업이 생겼지만, 그 중 대부분이 실패를 한다. 그 이유는 유통때문이다. 즉, 빈약한 유통채널을 가지고 있기 때"
-        "wordCount": 180
+        "genre": "NLP",
+        "datePublished": "2020-02-01",
+        "dateCreated": "2020-02-01",
+        "dateModified": "2020-02-02",
+        "url": "https://heung-bae-lee.github.io/2020/02/01/NLP_06/",
+        "description": "단어 수준 임베딩
+예측 기반 모델
+
+NPLM
+Word2Vec
+FastText
+
+
+행렬 분해 기반 모델
+
+LSA
+GloVe
+Swivel
+
+
+단어 임베딩을 문장 수준 임베딩으로 확장하는 방법
+
+가중 임베딩(Weighted Embedding)
+
+
+
+NPLM(Neural Probabilistic Language Model)
+NLP 분야에서 임베딩 개념을 널리 퍼뜨"
+        "wordCount": 546
     }
 </script>
 
@@ -320,20 +420,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/07/18/cs231n_02/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            [CS231n]Lecture02-Image classification pipeline
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/05/18/growth_hacking_00/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/02/01/NLP_05/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">growth_hacking_00</p>
+        <p class="article-nav-title">NLP 실습 텍스트 분류(Conv1d CNN, LSTM) -03</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -492,7 +582,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://heung-bae-lee.github.io/2019/05/18/growth_hacking_01/';
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/01/NLP_06/';
     
     (function() {
     var dsq = document.createElement('script');
