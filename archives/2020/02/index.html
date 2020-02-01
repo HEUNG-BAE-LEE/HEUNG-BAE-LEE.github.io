@@ -182,12 +182,15 @@ ga('send', 'pageview');
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2020/02/01/NLP_05/">NLP 실습 텍스트 분류 -03</a>
+        <a href="/2020/02/01/NLP_05/">NLP 실습 텍스트 분류(Conv1d CNN, LSTM) -03</a>
         </h1>
     
 
         <p class="article-excerpt">
-            
+            순환신경망 분류 모델
+앞선 모델들과 달리 이미 주어진 단어 특징 벡터를 활용해 모델을 학습하지 않고 텍스트 정보를 입력해서 문장에 대한 특징 정보를 추출한다.
+
+RNN은 현재 정보는 이전 정보가 점층적으로 쌓이면서 정보를 표현할 수 있는 모델이다. 따라서 시간에 의존적인 또는 순차적인 데이터에 대한 문제에 활용된다. 이 모델은 한단에 대한 정보를 입력하면 
         </p>
     </div>
 </article>
@@ -243,7 +246,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/02/01/NLP_05/" class="title">NLP 실습 텍스트 분류 -03</a></p>
+                            <p class="item-title"><a href="/2020/02/01/NLP_05/" class="title">NLP 실습 텍스트 분류(Conv1d CNN, LSTM) -03</a></p>
                             <p class="item-date"><time datetime="2020-02-01T07:57:48.000Z" itemprop="datePublished">2020-02-01</time></p>
                         </div>
                     </li>
@@ -252,7 +255,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/01/30/NLP_04/" class="title">NLP 실습 텍스트 분류 -02</a></p>
+                            <p class="item-title"><a href="/2020/01/30/NLP_04/" class="title">NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02</a></p>
                             <p class="item-date"><time datetime="2020-01-29T15:13:48.000Z" itemprop="datePublished">2020-01-30</time></p>
                         </div>
                     </li>
@@ -418,5 +421,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

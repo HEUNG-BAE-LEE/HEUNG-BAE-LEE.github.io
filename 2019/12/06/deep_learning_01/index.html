@@ -399,7 +399,7 @@ Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 �
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/02/01/NLP_05/" class="title">NLP 실습 텍스트 분류 -03</a></p>
+                            <p class="item-title"><a href="/2020/02/01/NLP_05/" class="title">NLP 실습 텍스트 분류(Conv1d CNN, LSTM) -03</a></p>
                             <p class="item-date"><time datetime="2020-02-01T07:57:48.000Z" itemprop="datePublished">2020-02-01</time></p>
                         </div>
                     </li>
@@ -408,7 +408,7 @@ Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 �
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/01/30/NLP_04/" class="title">NLP 실습 텍스트 분류 -02</a></p>
+                            <p class="item-title"><a href="/2020/01/30/NLP_04/" class="title">NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02</a></p>
                             <p class="item-date"><time datetime="2020-01-29T15:13:48.000Z" itemprop="datePublished">2020-01-30</time></p>
                         </div>
                     </li>
@@ -576,5 +576,22 @@ Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 �
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
