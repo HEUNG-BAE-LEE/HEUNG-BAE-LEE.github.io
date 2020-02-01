@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-19T16:50:25.164Z">
+<meta property="og:updated_time" content="2020-02-01T19:08:10.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 전처리">
 <meta name="twitter:description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
@@ -262,6 +262,16 @@ ga('send', 'pageview');
 </li>
 <li><p>예를 들어, 주어진 Corpus에서 ‘꿀잼’이라는 단어가 연결돼 자주 나타났다면 ‘꿀잼’을 형태소라고 본다(응집 확률이 높음). 한편 ‘꿀잼’ 앞에 ‘영화’, ‘정말’, ‘너무’ 등 문자열이, 뒤에 ‘ㅋㅋ’, ‘ㅎㅎ’, ‘!!’ 등 패턴이 다양하게 나타났다면 이 역시 ‘꿀잼’을 형태소로 취급한다.(브랜칭 엔트로피가 높음)</p>
 </li>
+<li><p><code>Cohesion score + L-Tokenizer</code></p>
+<ul>
+<li><p>Cohesion score는 한국어의 단어 추출을 위하여 character n-gram 을 이용한다. 새로운 개념을 설명하기 위해 새로운 단어가 만들어지기 때문에 모든 단어를 포함하는 사전은 존재할 수 없다. 학습데이터를 이용하는 supervised algorithms 은 가르쳐주지 않은 단어를 인식하기가 어렵다. 실질적으로는 사전에 등록되지 않은 단어는 형태소 분석을 할 수 없다는 것이다. <code>통계 기반 단어 추출 기법은 ‘우리가 분석하려는 데이터에서 최대한 단어를 인식’하여 학습데이터를 기반으로 하는 supervised approach 를 보완하기 위한 방법이다.</code> 단어의 경계에 가까워질수록 P(xy|x)의 값이 커지고, 단어의 경계를 넘어서면 P(xy|x)의 값이 줄어든다. 이 현상을 이용하여 L part 에서 단어를 추출할 수 있는 character n-gram 기반 score 를 정의한다.</p>
+</li>
+<li><p>필자가 이해하기로는 간단하게 말하면 corpus에서 사용되는 단어 중 의미를 갖는 단위를 나누는 기준으로써 Cohesion score가 높은 것을 사용한다는 것이다.</p>
+</li>
+<li><p><a href="https://lovit.github.io/nlp/2018/04/09/cohesion_ltokenizer/" target="_blank" rel="noopener">참조</a></p>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -375,13 +385,13 @@ ga('send', 'pageview');
         "genre": "NLP",
         "datePublished": "2020-01-19",
         "dateCreated": "2020-01-19",
-        "dateModified": "2020-01-20",
+        "dateModified": "2020-02-02",
         "url": "https://heung-bae-lee.github.io/2020/01/19/NLP_02/",
         "description": "Tokenizing 라이브러리영어 Tokenizing 라이브러리
 1) NLTK
 
 파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크"
-        "wordCount": 1703
+        "wordCount": 1820
     }
 </script>
 
