@@ -21,7 +21,7 @@
 <meta property="og:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Sequence_to_sequence.png">
-<meta property="og:updated_time" content="2020-02-03T14:30:44.535Z">
+<meta property="og:updated_time" content="2020-02-03T15:34:11.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention 기법">
 <meta name="twitter:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
@@ -279,7 +279,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Multi_Head_Attention_in_action.png" alt="Transformer에 적용된 Multi-Head Attention"></p>
 <ul>
-<li>Position-wise Feed-Forward는 특별한 것은 아니고 앞서서 말했던 것과 같이 아래 초록색 박스는 가로가 문장의 길이, 세로가 One-hot vector로 표현된 단어인데 단어 하나마다 입력으로 들어가서 출력으로 나온다라는 의미이다.</li>
+<li>Position-wise Feed-Forward는 특별한 것은 아니고 앞서서 말했던 것과 같이 아래 초록색 박스는 가로가 문장의 길이, 세로가 One-hot vector를 크기로 갖는 행렬인데 <code>병렬적을 처리되는 input 단어 하나마다 동일한 구조의 activation이 ReLu인 FC Layer층을 공유해서 사용하여 출력을 내보낸다는 의미</code>이다. 이를 통해 병렬적으로 계산하지만 기존의 FeedForward propagation을 구현할 수 있다.</li>
 </ul>
 <p><img src="/image/Position_wise_Feed_Forward.png" alt="Position-wise Feed-Forward"></p>
 <ul>
@@ -317,7 +317,7 @@ ga('send', 'pageview');
 <ul>
 <li>아래 그림에서 출력과 RNN 구조사이에 실제로는 FC Layer가 하나 존재해서 출력을 One-hot vector로 만들어준다.</li>
 </ul>
-<p><img src="/image/seq2seq_application.png" alt="Seq2seq -  Application"></p>
+<p><img src="/image/seq2seq_application_01.png" alt="Seq2seq -  Application"></p>
 <p><img src="/image/Attention_paractice.png" alt="Attention의 구현"></p>
 <ul>
 <li>$X\in R^{BXLXN}$에서 B:Batch size, L:문장의 길이, N:One-hot vetor나 embedding Feature의 길이를 의미하며, 여기서 Decode 쪽으로 Context를 넘길때는 LSTM이라면 Hidden State와 Cell State 둘다 넘겨주어야 하기에 Batch_size X Hidden state의 Feature 갯수인 M을 사이즈로 갖는 tensor를 넘겨줄 것이다.</li>
@@ -342,9 +342,17 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/SCALED_DOT_PRODUCT_ATTENTION_01.png" alt="Scaled Dot-Product Attention"></p>
 <ul>
-<li><code>Q,K,V의 차원을 감소시킨다는 것이 중요</code>하다. 또한 아래 수식에서 가중치 $W_{V,i}, W_{K,i}, W_{Q,i}$의 각각의 Dimension보다 더 작은 값으로 모델의 Dimension($d_{model}$)을 해준다.</li>
+<li>제일 아래 단계의 Linear연산을 통해<code>Q,K,V의 차원을 감소(h개로 나눠짐)시킨다는 것이 중요</code>하다. 또한 아래 수식에서 가중치 $W_{V,i}, W_{K,i}, W_{Q,i}$의 각각의 Dimension보다 더 작은 값으로 모델의 Dimension($d_{model}$)을 해준다. 이는 value, key, query의 차원을 모델에 사용하는 차원으로 차원을 변환시켜주는 의미이기도 하다.</li>
 </ul>
 <p><img src="/image/MULTI_HEAD_ATTENTION_01.png" alt="Multi-Head Attention"></p>
+<ul>
+<li>Mask는 RNN의 Decoder단을 생각해보았을때, context가 앞에서 뒤로 넘어가면서 이미 구한 것들만 참조를 할 수 있는데, <code>Transformer구조에서는 병렬적으로 계산을 하기 때문에 self-attention을 할 경우에는 시간적으로 앞에서 일어난 것들에 대해서만 영향을 받게해주어야 RNN과 동일한 구조가 되기 때문에 Mask를 이용해서 예측하고자 하는 시점을 포함한 미래값들을 가려준다.</code></li>
+</ul>
+<p><img src="/image/" alt="Masked Multi-Head Attention"></p>
+<ul>
+<li>실제로는 Multi-Head Attention이 병렬적으로 계산됨으로써 self-attention이 RNN을 대체해서 들어간다고 볼 수 있다.</li>
+</ul>
+<p><img src="/image/" alt="Multi-Head Attention in Action"></p>
 <p><img src="/image/TRANSFORMER_MODEL_REVIEW.png" alt="Transformer Model Review"></p>
 
         </div>
@@ -422,13 +430,13 @@ ga('send', 'pageview');
         "genre": "deep learning",
         "datePublished": "2020-01-21",
         "dateCreated": "2020-01-21",
-        "dateModified": "2020-02-03",
+        "dateModified": "2020-02-04",
         "url": "https://heung-bae-lee.github.io/2020/01/21/deep_learning_10/",
         "description": "Attention 기법Sequence-to-sequence
 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.
 
 아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다. "
-        "wordCount": 1752
+        "wordCount": 1851
     }
 </script>
 
