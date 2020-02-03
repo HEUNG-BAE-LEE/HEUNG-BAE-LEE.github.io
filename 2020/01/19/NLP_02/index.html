@@ -13,17 +13,19 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
+    <meta name="description" content="형태소  Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP 전처리">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/19/NLP_02/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
+<meta property="og:description" content="형태소  Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-01T19:08:10.756Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/Morphs.png">
+<meta property="og:updated_time" content="2020-02-03T10:53:23.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 전처리">
-<meta name="twitter:description" content="Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크">
+<meta name="twitter:description" content="형태소  Tokenizing 라이브러리영어 Tokenizing 라이브러리 1) NLTK  파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Morphs.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -186,7 +188,9 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h1 id="Tokenizing-라이브러리"><a href="#Tokenizing-라이브러리" class="headerlink" title="Tokenizing 라이브러리"></a>Tokenizing 라이브러리</h1><h3 id="영어-Tokenizing-라이브러리"><a href="#영어-Tokenizing-라이브러리" class="headerlink" title="영어 Tokenizing 라이브러리"></a>영어 Tokenizing 라이브러리</h3><ul>
+            <h1 id="형태소"><a href="#형태소" class="headerlink" title="형태소"></a>형태소</h1><p><img src="/image/Morphs.png" alt="형태소란?"></p>
+<p><img src="/image/Morphs_analysis.png" alt="형태소 분석이란?"></p>
+<h1 id="Tokenizing-라이브러리"><a href="#Tokenizing-라이브러리" class="headerlink" title="Tokenizing 라이브러리"></a>Tokenizing 라이브러리</h1><h3 id="영어-Tokenizing-라이브러리"><a href="#영어-Tokenizing-라이브러리" class="headerlink" title="영어 Tokenizing 라이브러리"></a>영어 Tokenizing 라이브러리</h3><ul>
 <li><p>1) NLTK</p>
 <ul>
 <li>파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 <code>단어 단위 토크나이징</code>과 <code>문장 단위 토크나이징</code>을 하는 모듈이 <code>따로</code> 있으며 ‘a’, ‘the’ 같은 관사나 ‘is’와 같이 자주 의미는 별로 없지만 자주 등장하는 단어인 불용어들을 모아 불용어 사전을 구성하고 있어 <code>따로 불용어를 정의할 필요없이 바로 사용가능</code>하다.</li>
@@ -201,8 +205,10 @@ ga('send', 'pageview');
 </li>
 </ul>
 <h3 id="한글-토크나이징-라이브러리"><a href="#한글-토크나이징-라이브러리" class="headerlink" title="한글 토크나이징 라이브러리"></a>한글 토크나이징 라이브러리</h3><ul>
-<li><p>자연어 처리에서 각 언어마다 모두 특징이 다르기 때문에 천편일률적으로 동일한 방법을 적용하기는 어렵다. 한국어 자연어 처리에 많이 사용되는 파이썬 라이브러리 KoNLPy를 소개하겠다.</p>
-</li>
+<li>자연어 처리에서 각 언어마다 모두 특징이 다르기 때문에 천편일률적으로 동일한 방법을 적용하기는 어렵다. 한국어 자연어 처리에 많이 사용되는 파이썬 라이브러리 KoNLPy를 소개하겠다.</li>
+</ul>
+<p><img src="/image/Konlpy.png" alt="KoNLPy"></p>
+<ul>
 <li><p>1) <code>KoNLPy</code>(지도학습 기법으로 학습)</p>
 <ul>
 <li><p>한글 자연어 처리를 쉽고 간결하게 처리할 수 있도록 만들어진 오픈소스 라이브러리이다. 또한 국내에 이미 만드어져 사용되고 있는 여러 형태소 분석기를 사용할 수 있게 허용한다. 형태소 분석으로 형태소 단위의 토크나이징을 가능하게 할뿐만 아니라 구문 분석을 가능하게 해서 언어 분석을 하는 데 유용한 도구다.</p>
@@ -218,7 +224,26 @@ ga('send', 'pageview');
 </li>
 </ul>
 </li>
+<li><p>KAIST에서 개발된 한나눔은 다음과 같은 메소드를 제공한다.</p>
+</li>
 </ul>
+<p><img src="/image/Hannanum_tokenizer.png" alt="한나눔 형태소 분석기"></p>
+<ul>
+<li>서울대학교에서 개발된 한나눔은 다음과 같은 메소드를 제공한다.</li>
+</ul>
+<p><img src="/image/kkma_tokenizer.png" alt="꼬꼬마 형태소 분석기"></p>
+<ul>
+<li>코모란은 다음과 같은 메소드를 제공한다.</li>
+</ul>
+<p><img src="/image/Komoran_tokenizer.png" alt="코모란 형태소 분석기"></p>
+<ul>
+<li>mecab은 은전한닢이란 의미를 지니고 있으며(TMI인듯), 빠르고 성능이 우수한 것으로 알려져 있다. 다음과 같은 메소드를 제공한다.</li>
+</ul>
+<p><img src="/image/Mecab_tokenizer.png" alt="Mecab 형태소 분석기"></p>
+<ul>
+<li>Okt는 구 Twitter로 불리며, Twitter에서 만들었다. 다음과 같은 메소들르 제공한다.</li>
+</ul>
+<p><img src="/image/Okt_tokenizer.png" alt="Okt 형태소 분석기"></p>
 <p>macOS에서 설치<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># JPype1은 파이썬에서 자바 클래스를 사용할 수 있도록 만들어주는 라이브러리이다.</span></span><br><span class="line"><span class="comment"># 만약 window라면 https://www.lfd.uci.edu/~gohlke/pythonlibs/#jpype에서 맞는 사양을 설치</span></span><br><span class="line"><span class="comment"># 64bit-python3.6 버전이라면 JPype1-0.63-cp36-cp36m-win_amd64.whl 을 설치하면된다.</span></span><br><span class="line"><span class="comment"># pip install JPype1-0.63-cp36-cp36m-win_amd64.whl</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># MacOs에선</span></span><br><span class="line">conda install -c conda-forge jpype1</span><br><span class="line"></span><br><span class="line">pip install konlpy</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li><p>형태소 분석기 사용법</p>
@@ -252,7 +277,26 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">from konlpy.tag import Mecab</span><br><span class="line">tokenizer = Mecab()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 형태소 단위로 나누기</span></span><br><span class="line">tokenizer.morphs(<span class="string">"아버지가방에들어가신다."</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">"아버지"</span>, <span class="string">"가"</span>, <span class="string">"방"</span>, <span class="string">"에"</span>, <span class="string">"들어가"</span>, <span class="string">"신다"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 품사 태그</span></span><br><span class="line">tokenizer.pos(<span class="string">'아버지가방에들어가신다.'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#결과</span></span><br><span class="line">[(<span class="string">'아버지'</span>, <span class="string">'NNG'</span>), (<span class="string">'가'</span>, <span class="string">'JKS'</span>), (<span class="string">'방'</span>, <span class="string">'NNG'</span>), (<span class="string">'에'</span>, <span class="string">'JKB'</span>), (<span class="string">'들어가'</span>, <span class="string">'VV'</span>), (<span class="string">'신다'</span>, <span class="string">'EP+EC'</span>)]</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">- Mecab에 사용자 사전 추가하기</span><br><span class="line"></span><br><span class="line">    - Komoran은 추가할 내용의 txt를 만들어 객체 생성시 userdic 파라미터에 만든 path를 입력해 주면되고, Hannanum은 konlpy/java/data/kE/dic_user.txt에 존재하며 여기에 새로운 단어를 형식에 맞춰 추가해주면된다. Kkma는 ~/anaconda3/lib/python3.6/site-packages/konlpy/java/kkma-2.0.jar 압축파일 내의 .dic 형식의 파일들이 dictionary 파일이므로 압축을 푼뒤 해당 품사에 맞는 파일에 단어를 추가해주면된다. 그리고나서 다시 .jar로 압축을 해주고 원본은 만약을 위해 다른 곳에 보관하며 사용한다.</span><br><span class="line"></span><br><span class="line">    - 형태소 분석기를 사용하다 보면 가장 신경 써야 하는 점이 `중요 token들을 어떻게 처리해야 할지다.` 예를들면 우리가 <span class="string">'천리마전자'</span>라는 기업의 데이터 분석 팀에 속해 있고 천리마저나에 관한 Corpus를 분석하거나 이로부터 임베딩을 만들어야 한다고 가정해보자. 이 경우 <span class="string">'천리마전자'</span>라는 token은 섬세하게 처리해야한다. 만약 <span class="string">'천리마전자 텔레비전 정말 좋네요'</span>라는 가상의 리뷰를 분석한다면 천리마 전자 보다 천리마전자로 분석됐을 때 임베딩 품질이 더 좋을 것이다. 이럴 경우 `사용자 사전에 추가하여 하나의 토큰으로 분석될 수 있도록 강제해야한다.`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 2) `Khaiii` 사용법 (지도학습기법으로 학습)</span><br><span class="line">    - [reference](http://tech.kakao.com/2018/12/13/khaiii)</span><br><span class="line">    - Khaiii(Kakao Hangul Analyzer iii)는 kakao가 2018년 말 공개한 오픈소스 한국어 형태소 분석기다. 국립국어원이 구축한 세종 코퍼스를 이용해 CNN 모델을 적용해 학습했다. Khaiii의 아키텍처는 입력 문장을 문자 단위로 읽어 들인 뒤 convolution filter가 이 문자들을 슬라이딩해 가면서 정보를 추출한다. 출력 노드에서는 이렇게 모은 정보들을 종합해 형태소의 경계와 품사 태그를 예측한다. 카카오 측 설명에 따르면 모델을 `C++로 구현해 GPU 없이도 형태소 분석이 가능하며 실행 속도 역시 빠르다고 한다.`</span><br><span class="line"></span><br><span class="line">``` bash</span><br><span class="line">from khaiii import KhaiiiApi</span><br><span class="line">tokenizer = KhaiiiApi()</span><br><span class="line"></span><br><span class="line">data = tokenizer.analyze(<span class="string">'아버지가방에들어가신다'</span>)</span><br><span class="line">tokens = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> data:</span><br><span class="line">    token.extend([str(m).split(<span class="string">"/"</span>)[0] <span class="keyword">for</span> m <span class="keyword">in</span> word.morphs])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">'아버지'</span>, <span class="string">'가'</span>, <span class="string">'방에'</span>, <span class="string">'들'</span>, <span class="string">'어'</span>, <span class="string">'가'</span>, <span class="string">'시'</span>, <span class="string">'ㄴ다'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 품사 정보 확인 tagging</span></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> data:</span><br><span class="line">    token.extend([str(m) <span class="keyword">for</span> m <span class="keyword">in</span> word.morphs])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">'아버지/NNG'</span>, <span class="string">'가/JKS'</span>, <span class="string">'방에/NNG'</span>, <span class="string">'들/VV'</span>, <span class="string">'어/EC'</span>, <span class="string">'가/VV'</span>, <span class="string">'시/EP'</span>, <span class="string">'ㄴ다/EC'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from konlpy.tag import Mecab</span><br><span class="line">tokenizer = Mecab()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 형태소 단위로 나누기</span></span><br><span class="line">tokenizer.morphs(<span class="string">"아버지가방에들어가신다."</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">"아버지"</span>, <span class="string">"가"</span>, <span class="string">"방"</span>, <span class="string">"에"</span>, <span class="string">"들어가"</span>, <span class="string">"신다"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 품사 태그</span></span><br><span class="line">tokenizer.pos(<span class="string">'아버지가방에들어가신다.'</span>)</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"><span class="comment">##### 결과</span></span><br><span class="line">``` bash</span><br><span class="line">[(<span class="string">'아버지'</span>, <span class="string">'NNG'</span>), (<span class="string">'가'</span>, <span class="string">'JKS'</span>), (<span class="string">'방'</span>, <span class="string">'NNG'</span>), (<span class="string">'에'</span>, <span class="string">'JKB'</span>), (<span class="string">'들어가'</span>, <span class="string">'VV'</span>), (<span class="string">'신다'</span>, <span class="string">'EP+EC'</span>)]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Mecab에 사용자 사전 추가하기</p>
+<ul>
+<li><p>Komoran은 추가할 내용의 txt를 만들어 객체 생성시 userdic 파라미터에 만든 path를 입력해 주면되고, Hannanum은 konlpy/java/data/kE/dic_user.txt에 존재하며 여기에 새로운 단어를 형식에 맞춰 추가해주면된다. Kkma는 ~/anaconda3/lib/python3.6/site-packages/konlpy/java/kkma-2.0.jar 압축파일 내의 .dic 형식의 파일들이 dictionary 파일이므로 압축을 푼뒤 해당 품사에 맞는 파일에 단어를 추가해주면된다. 그리고나서 다시 .jar로 압축을 해주고 원본은 만약을 위해 다른 곳에 보관하며 사용한다.</p>
+</li>
+<li><p>형태소 분석기를 사용하다 보면 가장 신경 써야 하는 점이 <code>중요 token들을 어떻게 처리해야 할지다.</code> 예를들면 우리가 ‘천리마전자’라는 기업의 데이터 분석 팀에 속해 있고 천리마저나에 관한 Corpus를 분석하거나 이로부터 임베딩을 만들어야 한다고 가정해보자. 이 경우 ‘천리마전자’라는 token은 섬세하게 처리해야한다. 만약 ‘천리마전자 텔레비전 정말 좋네요’라는 가상의 리뷰를 분석한다면 천리마 전자 보다 천리마전자로 분석됐을 때 임베딩 품질이 더 좋을 것이다. 이럴 경우 <code>사용자 사전에 추가하여 하나의 토큰으로 분석될 수 있도록 강제해야한다.</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>2) <code>Khaiii</code> 사용법 (지도학습기법으로 학습)<ul>
+<li><a href="http://tech.kakao.com/2018/12/13/khaiii" target="_blank" rel="noopener">reference</a></li>
+<li>Khaiii(Kakao Hangul Analyzer iii)는 kakao가 2018년 말 공개한 오픈소스 한국어 형태소 분석기다. 국립국어원이 구축한 세종 코퍼스를 이용해 CNN 모델을 적용해 학습했다. Khaiii의 아키텍처는 입력 문장을 문자 단위로 읽어 들인 뒤 convolution filter가 이 문자들을 슬라이딩해 가면서 정보를 추출한다. 출력 노드에서는 이렇게 모은 정보들을 종합해 형태소의 경계와 품사 태그를 예측한다. 카카오 측 설명에 따르면 모델을 <code>C++로 구현해 GPU 없이도 형태소 분석이 가능하며 실행 속도 역시 빠르다고 한다.</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from khaiii import KhaiiiApi</span><br><span class="line">tokenizer = KhaiiiApi()</span><br><span class="line"></span><br><span class="line">data = tokenizer.analyze(<span class="string">'아버지가방에들어가신다'</span>)</span><br><span class="line">tokens = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> data:</span><br><span class="line">    token.extend([str(m).split(<span class="string">"/"</span>)[0] <span class="keyword">for</span> m <span class="keyword">in</span> word.morphs])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">'아버지'</span>, <span class="string">'가'</span>, <span class="string">'방에'</span>, <span class="string">'들'</span>, <span class="string">'어'</span>, <span class="string">'가'</span>, <span class="string">'시'</span>, <span class="string">'ㄴ다'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 품사 정보 확인 tagging</span></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> data:</span><br><span class="line">    token.extend([str(m) <span class="keyword">for</span> m <span class="keyword">in</span> word.morphs])</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">'아버지/NNG'</span>, <span class="string">'가/JKS'</span>, <span class="string">'방에/NNG'</span>, <span class="string">'들/VV'</span>, <span class="string">'어/EC'</span>, <span class="string">'가/VV'</span>, <span class="string">'시/EP'</span>, <span class="string">'ㄴ다/EC'</span>]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>3) <code>soynlp</code> (비지도학습으로 학습)</p>
 <ul>
@@ -304,11 +348,13 @@ ga('send', 'pageview');
 <li><p>구글이 공개한 BERT 모델 코드에서 BPE로 학습한 어휘 집합으로 토큰을 분리하는 클래스를 실행</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import sentencepiece as spm</span><br><span class="line">train =<span class="string">""</span><span class="string">"--input=input_file_path \</span></span><br><span class="line"><span class="string">          --model_prefix=sentence \</span></span><br><span class="line"><span class="string">          --vocab_size=32000 \</span></span><br><span class="line"><span class="string">          --model_type=bpe --character_coverage=0.9995"</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line">spm.SentencePieceTrainer.Train(train)</span><br><span class="line"></span><br><span class="line">from bert.tokenization import FullTokenizer</span><br><span class="line"></span><br><span class="line">vocab_fname = <span class="string">"vocabulary_file_path.vocab"</span></span><br><span class="line">tokenizer = FullTokenizer(vocab_file=vocab_fname, do_lower_case=False)</span><br><span class="line"></span><br><span class="line">tokenizer.tokenize(<span class="string">"집에좀 가자"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[<span class="string">'집에'</span>, <span class="string">'##좀'</span>, <span class="string">'가자'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import sentencepiece as spm</span><br><span class="line">train =<span class="string">""</span><span class="string">"--input=input_file_path \</span></span><br><span class="line"><span class="string">          --model_prefix=sentence \</span></span><br><span class="line"><span class="string">          --vocab_size=32000 \</span></span><br><span class="line"><span class="string">          --model_type=bpe --character_coverage=0.9995"</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line">spm.SentencePieceTrainer.Train(train)</span><br><span class="line"></span><br><span class="line">from bert.tokenization import FullTokenizer</span><br><span class="line"></span><br><span class="line">vocab_fname = <span class="string">"vocabulary_file_path.vocab"</span></span><br><span class="line">tokenizer = FullTokenizer(vocab_file=vocab_fname, do_lower_case=False)</span><br><span class="line"></span><br><span class="line">tokenizer.tokenize(<span class="string">"집에좀 가자"</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">'집에'</span>, <span class="string">'##좀'</span>, <span class="string">'가자'</span>]</span><br></pre></td></tr></table></figure>
 <h4 id="soynlp-형태소-분석이나-BPE-방식의-토크나이즈-기법은-띄어쓰기에-따라-분석-결과가-크게-달라지므로-이들-모델을-학습하기-전-띄어쓰기-교정을-먼저-적용하면-그-분석-품질이-개선될-수-있다"><a href="#soynlp-형태소-분석이나-BPE-방식의-토크나이즈-기법은-띄어쓰기에-따라-분석-결과가-크게-달라지므로-이들-모델을-학습하기-전-띄어쓰기-교정을-먼저-적용하면-그-분석-품질이-개선될-수-있다" class="headerlink" title="soynlp 형태소 분석이나 BPE 방식의 토크나이즈 기법은 띄어쓰기에 따라 분석 결과가 크게 달라지므로 이들 모델을 학습하기 전 띄어쓰기 교정을 먼저 적용하면 그 분석 품질이 개선될 수 있다."></a>soynlp 형태소 분석이나 BPE 방식의 토크나이즈 기법은 띄어쓰기에 따라 분석 결과가 크게 달라지므로 이들 모델을 학습하기 전 띄어쓰기 교정을 먼저 적용하면 그 분석 품질이 개선될 수 있다.</h4><h3 id="띄어쓰기-교정"><a href="#띄어쓰기-교정" class="headerlink" title="띄어쓰기 교정"></a>띄어쓰기 교정</h3><ul>
 <li>soynlp에서는 띄어쓰기 교정 모듈도 제공한다. <code>Corpus에서 띄어쓰기 패턴을 학습한 뒤 해당 패턴대로 교정을 수행</code>한다. 예를 들어, 학습 데이터에서 ‘하자고’라는 문자 앞뒤로 다수의 공백이 발견됐다면 예측단계에서 ‘하자고’가 출현한다면 앞뒤를 띄어서 교정하는 방식이다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from soyspacing.countbase importCountSpace</span><br><span class="line"></span><br><span class="line"><span class="comment"># corpus가 띄어쓰기가 이미 올바로 되어있어야 품질이 높아질 것이다.</span></span><br><span class="line">corpus_fname = <span class="string">'corpus_path'</span></span><br><span class="line">model_fname = <span class="string">'저장할때 사용할 모델 path'</span></span><br><span class="line"></span><br><span class="line">model = CountSpace()</span><br><span class="line">model.train(corpus_fname)</span><br><span class="line">model.save(model_fname, json_format=False)</span><br><span class="line"></span><br><span class="line">model.load_model(model_fname, json_format=False)</span><br><span class="line">model.correct(<span class="string">"어릴때보고 지금다시봐도 재밌어요"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 결과</span></span><br><span class="line">[어릴때 보고 지금 다시봐도 재밌어요]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from soyspacing.countbase importCountSpace</span><br><span class="line"></span><br><span class="line"><span class="comment"># corpus가 띄어쓰기가 이미 올바로 되어있어야 품질이 높아질 것이다.</span></span><br><span class="line">corpus_fname = <span class="string">'corpus_path'</span></span><br><span class="line">model_fname = <span class="string">'저장할때 사용할 모델 path'</span></span><br><span class="line"></span><br><span class="line">model = CountSpace()</span><br><span class="line">model.train(corpus_fname)</span><br><span class="line">model.save(model_fname, json_format=False)</span><br><span class="line"></span><br><span class="line">model.load_model(model_fname, json_format=False)</span><br><span class="line">model.correct(<span class="string">"어릴때보고 지금다시봐도 재밌어요"</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[어릴때 보고 지금 다시봐도 재밌어요]</span><br></pre></td></tr></table></figure>
 
         </div>
         <footer class="article-footer">
@@ -380,18 +426,20 @@ ga('send', 'pageview');
             "name": "HeungBae Lee"
         },
         "headline": "NLP 전처리",
-        "image": "https://heung-bae-lee.github.io",
+        "image": "https://heung-bae-lee.github.io/image/Morphs.png",
         "keywords": "",
         "genre": "NLP",
         "datePublished": "2020-01-19",
         "dateCreated": "2020-01-19",
-        "dateModified": "2020-02-02",
+        "dateModified": "2020-02-03",
         "url": "https://heung-bae-lee.github.io/2020/01/19/NLP_02/",
-        "description": "Tokenizing 라이브러리영어 Tokenizing 라이브러리
+        "description": "형태소
+
+Tokenizing 라이브러리영어 Tokenizing 라이브러리
 1) NLTK
 
-파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 단위 토크"
-        "wordCount": 1820
+파이썬에서 영어 텍스트 전처리 작업을 하는데 많 쓰이는 라이브러리로, 이 라이브러리는 50여 개가 넘는 말뭉치 리소를 활용해 영어 텍스트를 분석할 수 있게 제공 한다. 직관적으로 함수를 쉽게 사용할 수 있게 구성돼 있어 빠르게 텍스트 전처리를 할 수 있다. 또한 단어 "
+        "wordCount": 1855
     }
 </script>
 
