@@ -13,17 +13,19 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="임베딩(Embedding)이란? 자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. 단어-문서 행렬(Term-Doc">
+    <meta name="description" content="컴퓨터가 바라보는 문자  아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.    이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="임베딩이란?">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/16/NLP_01/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="임베딩(Embedding)이란? 자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. 단어-문서 행렬(Term-Doc">
+<meta property="og:description" content="컴퓨터가 바라보는 문자  아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.    이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-19T06:28:11.192Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/encoding_with_asciii.png">
+<meta property="og:updated_time" content="2020-02-03T10:24:08.549Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="임베딩이란?">
-<meta name="twitter:description" content="임베딩(Embedding)이란? 자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. 단어-문서 행렬(Term-Doc">
+<meta name="twitter:description" content="컴퓨터가 바라보는 문자  아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.    이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/encoding_with_asciii.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -186,7 +188,17 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h1 id="임베딩-Embedding-이란"><a href="#임베딩-Embedding-이란" class="headerlink" title="임베딩(Embedding)이란?"></a>임베딩(Embedding)이란?</h1><ul>
+            <h2 id="컴퓨터가-바라보는-문자"><a href="#컴퓨터가-바라보는-문자" class="headerlink" title="컴퓨터가 바라보는 문자"></a>컴퓨터가 바라보는 문자</h2><p><img src="/image/encoding_with_asciii.png" alt="컴퓨터가 문자를 해석하는 방법"></p>
+<ul>
+<li>아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.</li>
+</ul>
+<p><img src="/image/what_is_different_love_like.png" alt="컴퓨터가 보는 단어"></p>
+<ul>
+<li>이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot encoding을 통한 것이다. 허나, 이러한 Sparse matrix를 통한 계산은 너무 비효율 적이다. 그렇다면 어떻게 dense하게 표현할 수 있을지를 고민하는 것이 바로 Embedding이라는 개념의 본질일 것이다.</li>
+</ul>
+<p><img src="/image/why_is_sparse_matirx_one_hot_encoding.png" alt="One-hot encoding"></p>
+<p><img src="/image/Dense_representation.png" alt="Dense representation"></p>
+<h1 id="임베딩-Embedding-이란"><a href="#임베딩-Embedding-이란" class="headerlink" title="임베딩(Embedding)이란?"></a>임베딩(Embedding)이란?</h1><ul>
 <li>자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 <code>사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미</code>한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. <code>단어-문서 행렬(Term-Document Matrix)</code>는 row는 단어 column은 문서에 대응한다.</li>
 </ul>
 <div class="table-container">
@@ -303,6 +315,7 @@ ga('send', 'pageview');
 <h2 id="NLP-용어-정리"><a href="#NLP-용어-정리" class="headerlink" title="NLP 용어 정리"></a>NLP 용어 정리</h2><h3 id="Corpus-말뭉치"><a href="#Corpus-말뭉치" class="headerlink" title="Corpus(말뭉치)"></a>Corpus(말뭉치)</h3><ul>
 <li>임베딩 학습이라는 특정한 목적을 가지고 수집한 표본이다.</li>
 </ul>
+<p><img src="/image/what_is_Corpus.png" alt="Corpus"></p>
 <h3 id="Collection-컬렉션"><a href="#Collection-컬렉션" class="headerlink" title="Collection(컬렉션)"></a>Collection(컬렉션)</h3><ul>
 <li>Corpus에 속한 각가의 집합을 칭한다.<ul>
 <li>예를 들어, 한국어 위키백과와 네이버 영화 리뷰를 말뭉치로 쓴다면 이들 각각이 컬렉션이 된다.</li>
@@ -373,12 +386,14 @@ ga('send', 'pageview');
 </li>
 </ul>
 <script type="math/tex; mode=display">PMI(A, B) = log\frac{P(A,B)}{P(A)P(B)}</script><ul>
-<li><p>Term-context matrix는 특정 단어 기준으로 Window에 존재하는 단어들을 count하는 방식으로 만들어지는데, 여기에서 PMI 수식을 적용시키면된다. 이렇게 구축한 <code>PMI 행렬의 행 벡터 자체를 해당 단어의 임베딩으로 사용할 수도 있다.</code></p>
-</li>
-<li><p>대표 모델 : <code>Word2Vec</code></p>
+<li>Term-context matrix는 특정 단어 기준으로 Window에 존재하는 단어들을 count하는 방식으로 만들어지는데, 여기에서 PMI 수식을 적용시키면된다. 이렇게 구축한 <code>PMI 행렬의 행 벡터 자체를 해당 단어의 임베딩으로 사용할 수도 있다.</code></li>
+</ul>
 <ul>
-<li><p>CBOW 모델</p>
+<li>대표 모델 : <code>Word2Vec</code></li>
+</ul>
+<p><img src="/image/word_smillarity_in_word2vec.png" alt="word2vec"></p>
 <ul>
+<li><code>CBOW 모델</code><ul>
 <li>문맥 단어들을 가지고 타깃 단어 하나를 맞추는 과정에서 학습된다.<ul>
 <li>1) 각 주변 단어들을 one-hot 벡터로 만들어 입력값으로 사용 (입력층 벡터)</li>
 <li>2) 가중치 행렬을 각 one-hot 벡터에 곱해서 n-차원 벡터를 만든다. (N-차원 은닉층)</li>
@@ -389,15 +404,20 @@ ga('send', 'pageview');
 </li>
 </ul>
 </li>
-<li><p>Skip-gram 모델</p>
+</ul>
+<p><img src="/image/step_by_step_CBOW.png" alt="CBOW 모델 01"></p>
+<p><img src="/image/step_by_step_CBOW_01.png" alt="CBOW 모델 02"></p>
+<p><img src="/image/Projection_layer_in_CBOW.png" alt="CBOW 모델의 Projection Layer"></p>
+<p><img src="/image/Output_layer_in_CBOW.png" alt="CBOW 모델의 Output Layer"></p>
 <ul>
-<li>타깃 단어를 가지고 문맥 단어가 무엇일지 예측하는 과정에서 학습된다.<ul>
+<li><p><code>Skip-gram 모델</code></p>
+<ul>
+<li><p>타깃 단어를 가지고 문맥 단어가 무엇일지 예측하는 과정에서 학습된다.</p>
+<ul>
 <li>1) 하나의 단어를 one-hot 벡터로 만들어서 입력값으로 사용한다.(입력층 벡터)</li>
 <li>2) 가중치 행렬을 one-hot 벡터에 곱해서 n-차원 벡터를 만든다.(N-차원 은닉층)</li>
 <li>3) n-차원 벡터에 다시 가중치 행렬을 곱해서 one-hot 벡터와 같은 차원의 벡터로 만든다.(출력층 벡터)</li>
 <li>4) 만들어진 벡터를 실제 예측하려는 주변 단어들 각각의 one-hot 벡터와 비교해서 학습한다.</li>
-</ul>
-</li>
 </ul>
 </li>
 <li><p>두 모델의 확실한 차이점은 <code>CBOW에서는 입력값으로 여러 개의 단어를 사용하고, 학습을 위해 하나의 단어와 비교하지만, Skip-gram에서는 입력값이 하나의 단어를 사용하고, 학습을 위해 주변의 여러 단어와 비교</code>한다.</p>
@@ -407,6 +427,7 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+<p><img src="/image/skip_gram_model_in_word2vec.png" alt="Skip-gram 모델"></p>
 
         </div>
         <footer class="article-footer">
@@ -478,16 +499,21 @@ ga('send', 'pageview');
             "name": "HeungBae Lee"
         },
         "headline": "임베딩이란?",
-        "image": "https://heung-bae-lee.github.io",
+        "image": "https://heung-bae-lee.github.io/image/encoding_with_asciii.png",
         "keywords": "",
         "genre": "NLP",
         "datePublished": "2020-01-16",
         "dateCreated": "2020-01-16",
-        "dateModified": "2020-01-19",
+        "dateModified": "2020-02-03",
         "url": "https://heung-bae-lee.github.io/2020/01/16/NLP_01/",
-        "description": "임베딩(Embedding)이란?
-자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. 단어-문서 행렬(Term-Doc"
-        "wordCount": 1816
+        "description": "컴퓨터가 바라보는 문자
+
+아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.
+
+
+
+이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc"
+        "wordCount": 1935
     }
 </script>
 
@@ -571,6 +597,15 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/03/NLP_07/" class="title">NLP란?</a></p>
+                            <p class="item-date"><time datetime="2020-02-02T19:01:52.000Z" itemprop="datePublished">2020-02-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
                             <p class="item-title"><a href="/2020/02/01/NLP_06/" class="title">NLP - 단어 수준 임베딩</a></p>
                             <p class="item-date"><time datetime="2020-02-01T11:47:03.000Z" itemprop="datePublished">2020-02-01</time></p>
                         </div>
@@ -603,15 +638,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
-                            <p class="item-title"><a href="/2020/01/28/Crawling_03/" class="title">Scrapy 웹 크롤링 04 - 실습</a></p>
-                            <p class="item-date"><time datetime="2020-01-28T05:55:17.000Z" itemprop="datePublished">2020-01-28</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -621,7 +647,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -631,7 +657,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -748,22 +774,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
