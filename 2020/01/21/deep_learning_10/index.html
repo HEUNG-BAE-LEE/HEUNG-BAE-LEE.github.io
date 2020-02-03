@@ -21,7 +21,7 @@
 <meta property="og:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Sequence_to_sequence.png">
-<meta property="og:updated_time" content="2020-02-03T15:34:11.463Z">
+<meta property="og:updated_time" content="2020-02-03T15:45:05.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention 기법">
 <meta name="twitter:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
@@ -270,12 +270,21 @@ ga('send', 'pageview');
 <p><img src="/image/Scaled_Dot_Product_Attention.png" alt="Scaled Dot-Product Attention"></p>
 <p><img src="/image/Principal_of_self_attention.png" alt="Self Attention의 원리"></p>
 <ul>
-<li>Multi-Head Attention은 쉽게 말해 <code>Scaled Dot-Product Attention을 h개를 모아서 병렬적으로 연산을 할 수 있게끔하는 것</code>이다. h개를 사용함으로써 <code>같은 입력에 대해서 더 풍부한 출력이 나타날 수 있다.</code> 또한, 여기서 처음 Linear 연산(Matrix Mult)을 하는 것은 Query, Key, Value 각각 중 특정 차원만을 보겠다는 이야기이며, 차원을 줄여주어 병렬에 유리한 구조를 만드는 역할도 있다. 그러므로 이 연산을 한 후에 h가지로 병렬처리함으로써 풍부한 출력을 얻을 수 있는 것을 이해할 수 있다.</li>
+<li><p>Multi-Head Attention은 쉽게 말해 <code>Scaled Dot-Product Attention을 h개를 모아서 병렬적으로 연산을 할 수 있게끔하는 것</code>이다. h개를 사용함으로써 <code>같은 입력에 대해서 더 풍부한 출력이 나타날 수 있다.</code> 또한, 여기서 처음 Linear 연산(Matrix Mult)을 하는 것은 Query, Key, Value 각각 중 특정 차원만을 보겠다는 이야기이며, 차원을 줄여주어 병렬에 유리한 구조를 만드는 역할도 있다. 그러므로 이 연산을 한 후에 h가지로 병렬처리함으로써 풍부한 출력을 얻을 수 있는 것을 이해할 수 있다.</p>
+</li>
+<li><p>제일 아래 단계의 Linear연산을 통해<code>Q,K,V의 차원을 감소(h개로 나눠짐)시킨다는 것이 중요</code>하다. 또한 아래 수식에서 가중치 $W_{V,i}, W_{K,i}, W_{Q,i}$의 각각의 Dimension보다 더 작은 값으로 모델의 Dimension($d_{model}$)을 해준다. 이는 value, key, query의 차원을 모델에 사용하는 차원으로 차원을 변환시켜주는 의미이기도 하다.</p>
+</li>
 </ul>
 <p><img src="/image/Multi_Head_Attention.png" alt="Multi-Head Attention"></p>
+<ul>
+<li>Mask는 RNN의 Decoder단을 생각해보았을때, context가 앞에서 뒤로 넘어가면서 이미 구한 것들만 참조를 할 수 있는데, <code>Transformer구조에서는 병렬적으로 계산을 하기 때문에 self-attention을 할 경우에는 시간적으로 앞에서 일어난 것들에 대해서만 영향을 받게해주어야 RNN과 동일한 구조가 되기 때문에 Mask를 이용해서 예측하고자 하는 시점을 포함한 미래값들을 가려준다.</code></li>
+</ul>
 <p><img src="/image/Masked_Multi_Head_Attention.png" alt="Masked Multi-Head Attention"></p>
 <ul>
-<li>Multi-Head Attention이 Transformer에 어떻게 적용되어 있는지 살펴보자. <code>Self-Attention은 Decoder와 동일한 Decoder를 참조하므로 Key와 Query와 Value는 모두 같은 것</code>이다. Encoding 같은 경우에는 causual system일 필요가 딱히 없기 때문에 Mask 없이 Key, Value, Query가 그대로 사용될 수 있지만, Decoder 부분같은 경우에는 현재 Query하려고 하는 것이 Key와 value가 Query보다 더 앞서서 나올수 없기 때문에 Mask를 활용한 Masked Multi-Head Attention을 사용한다. 이렇게 Encoder단의 Self-Attention을 통해서 Attention이 강조되어 있는 Feature들을 추출을 해주고 Decoder단에서는 Output Embedding(or 이전의 출력값)이 들어왔을 때 이것을 통해 Masked Multi-Head Attention을 통해 Feature 추출을 해주고, 그 다음에 붉은 색 박스 부분에서는 이 Decoder를 통해 추출된 Feature가 Query로 들어가고, 나머지 Key, Value는 Encoder를 통해 만들어진 출력을 가지고 입력을 받게된다. 결국에는 이런 구조는 <code>Seq2seq 모델의 Attention과 동일한 구조가 되게 될 것이다.</code></li>
+<li><p>Multi-Head Attention이 Transformer에 어떻게 적용되어 있는지 살펴보자. <code>Self-Attention은 Decoder와 동일한 Decoder를 참조하므로 Key와 Query와 Value는 모두 같은 것</code>이다. Encoding 같은 경우에는 causual system일 필요가 딱히 없기 때문에 Mask 없이 Key, Value, Query가 그대로 사용될 수 있지만, Decoder 부분같은 경우에는 현재 Query하려고 하는 것이 Key와 value가 Query보다 더 앞서서 나올수 없기 때문에 Mask를 활용한 Masked Multi-Head Attention을 사용한다. 이렇게 Encoder단의 Self-Attention을 통해서 Attention이 강조되어 있는 Feature들을 추출을 해주고 Decoder단에서는 Output Embedding(or 이전의 출력값)이 들어왔을 때 이것을 통해 Masked Multi-Head Attention을 통해 Feature 추출을 해주고, 그 다음에 붉은 색 박스 부분에서는 이 Decoder를 통해 추출된 Feature가 Query로 들어가고, 나머지 Key, Value는 Encoder를 통해 만들어진 출력을 가지고 입력을 받게된다. 결국에는 이런 구조는 <code>Seq2seq 모델의 Attention과 동일한 구조가 되게 될 것이다.</code></p>
+</li>
+<li><p>실제로는 Multi-Head Attention이 병렬적으로 계산됨으로써 self-attention이 RNN을 대체해서 들어간다고 볼 수 있다.</p>
+</li>
 </ul>
 <p><img src="/image/Multi_Head_Attention_in_action.png" alt="Transformer에 적용된 Multi-Head Attention"></p>
 <ul>
@@ -345,14 +354,6 @@ ga('send', 'pageview');
 <li>제일 아래 단계의 Linear연산을 통해<code>Q,K,V의 차원을 감소(h개로 나눠짐)시킨다는 것이 중요</code>하다. 또한 아래 수식에서 가중치 $W_{V,i}, W_{K,i}, W_{Q,i}$의 각각의 Dimension보다 더 작은 값으로 모델의 Dimension($d_{model}$)을 해준다. 이는 value, key, query의 차원을 모델에 사용하는 차원으로 차원을 변환시켜주는 의미이기도 하다.</li>
 </ul>
 <p><img src="/image/MULTI_HEAD_ATTENTION_01.png" alt="Multi-Head Attention"></p>
-<ul>
-<li>Mask는 RNN의 Decoder단을 생각해보았을때, context가 앞에서 뒤로 넘어가면서 이미 구한 것들만 참조를 할 수 있는데, <code>Transformer구조에서는 병렬적으로 계산을 하기 때문에 self-attention을 할 경우에는 시간적으로 앞에서 일어난 것들에 대해서만 영향을 받게해주어야 RNN과 동일한 구조가 되기 때문에 Mask를 이용해서 예측하고자 하는 시점을 포함한 미래값들을 가려준다.</code></li>
-</ul>
-<p><img src="/image/" alt="Masked Multi-Head Attention"></p>
-<ul>
-<li>실제로는 Multi-Head Attention이 병렬적으로 계산됨으로써 self-attention이 RNN을 대체해서 들어간다고 볼 수 있다.</li>
-</ul>
-<p><img src="/image/" alt="Multi-Head Attention in Action"></p>
 <p><img src="/image/TRANSFORMER_MODEL_REVIEW.png" alt="Transformer Model Review"></p>
 
         </div>
@@ -436,7 +437,7 @@ ga('send', 'pageview');
 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.
 
 아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다. "
-        "wordCount": 1851
+        "wordCount": 1878
     }
 </script>
 
