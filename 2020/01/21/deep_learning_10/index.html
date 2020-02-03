@@ -21,7 +21,7 @@
 <meta property="og:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Sequence_to_sequence.png">
-<meta property="og:updated_time" content="2020-01-23T16:59:28.017Z">
+<meta property="og:updated_time" content="2020-02-03T14:30:44.535Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention 기법">
 <meta name="twitter:description" content="Attention 기법Sequence-to-sequence 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.  아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다.">
@@ -197,6 +197,7 @@ ga('send', 'pageview');
 </li>
 </ul>
 <p><img src="/image/Sequence_to_sequence.png" alt="Sequence-to-sequence"></p>
+<p><img src="/image/Seq2seq_model_structures.png" alt="Seq2seq 간단한 모델 구조도"></p>
 <h3 id="영어-문장의-데이터화"><a href="#영어-문장의-데이터화" class="headerlink" title="영어 문장의 데이터화"></a>영어 문장의 데이터화</h3><p><img src="/image/English_data.png" alt="영어 문장의 데이터화"></p>
 <h3 id="한글-문장의-데이터화"><a href="#한글-문장의-데이터화" class="headerlink" title="한글 문장의 데이터화"></a>한글 문장의 데이터화</h3><p><img src="/image/Korean_data.png" alt="한들 문장의 데이터화"></p>
 <ul>
@@ -204,16 +205,20 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Gradient_vanishing_in_RNN.png" alt="RNN에서의  Gradient Vanishing"></p>
 <ul>
-<li>위에서 언급했던 것과 같이 그렇다면 Gradient Vanishing 문제를 해결할 수 있는 방법이 없을까? 그에 대한 답을 아래의 그림을 통해 설명하겠다. 이전에는 Encoder 부분에서 Context 하나(Feature vector 하나)만 넘겨줘서 그 Context를 통해 Decoder가 출력을 내주었어야 했는데, 직관적으로 볼때 Input들을 통해 만든 Feature vector가 Input들의 많은 부분을 커버할 수 있기도 힘들것이라는 생각이들지만, Decoder 부분의 RNN을 통해 지나면서 우리가 원하는 방향대로 넘어갈것이라는 보장 또한 없다. 그래서 이제는 <code>Encoder Hidden state를 모아서 Decoder로 각각 전달시켜 줌으로써 각 출력에 필요한 Context를 새로이 뽑을 수 있는 구조로 변경</code>해주어 기울기 소실 문제를 해결할 수 있을 것이다. 이런 구조를 어떻게 효율적으로 구성할 수 있을까에 대한 답이 <code>Attention 메커니즘</code>이다.</li>
+<li>위에서 언급했던 것과 같이 그렇다면 Gradient Vanishing 문제를 해결할 수 있는 방법이 없을까? 그에 대한 답을 아래의 그림을 통해 설명하겠다. 이전에는 Encoder 부분에서 Context 하나(Feature vector 하나)만 넘겨줘서 그 Context를 통해 Decoder가 출력을 내주었어야 했는데, 직관적으로 볼때 Input들을 통해 만든 마지막 Hidden state인 Feature vector가 Encoder단의 모든 Input들을 많은 부분 커버할 수 없으며, Decoder 부분의 RNN을 통해 지나면서 우리가 원하는 방향대로 넘어갈것이라는 보장 또한 없다. 그래서 이제는 <code>Encoder Hidden state를 모아서 Decoder로 각각 전달시켜 줌으로써 각 출력에 필요한 Context를 새로이 뽑을 수 있는 구조로 변경</code>해주어 기울기 소실 문제를 해결할 수 있을 것이다. 그렇다해서 모든 Encoder단의 모든 Hidden state를 다 concate해서 하나의 긴 Feature vector로 넘겨준다면 좋은 성능을 기대하긴 어렵울 것이다. 왜냐하면 무조건 Feature vector의 데이터량을 늘려 준다면, 그만큼 많은 데이터셋을 통해 데이터셋이 cover를 해주어야 하기 때문이다. (자세히 말하면 학습데이터량은 고정적으로 동일한데, Input vector인 Feature vector의 차원만 늘려주게 된다면 Underfitting 문제가 발생하면서 Sparsity 문제가 발생해서 학습이 제대로 동작하지 않기 때문이다.) 이런 구조를 어떻게 효율적으로 구성할 수 있을까에 대한 답이 <code>Attention 메커니즘</code>이다.</li>
 </ul>
 <p><img src="/image/No_more_Gradient_Vanishing.png" alt="Gradient Vanishing을 해결할 수 있는 방법"></p>
+<p><img src="/image/develop_the_context_info.png" alt="Context를 개선하려면?"></p>
 <ul>
 <li>Attention 메커니즘에서는 예를 들어 Encoder 부분과 Decoder 부분의 Layer들이 아래 그림에서 처럼 색깔별로 연관되어 있다고 했을때, 각 연관되어 있는 부분을 알게 해주는 것이 Attention Mechanism의 기본 아이디어이다.</li>
 </ul>
 <p><img src="/image/Attention.png" alt="Attention 메커니즘"></p>
 <h1 id="Attention-신경망"><a href="#Attention-신경망" class="headerlink" title="Attention 신경망"></a>Attention 신경망</h1><p><img src="/image/Query_key_value.png" alt="Query, Key-Value"></p>
 <ul>
-<li>질의-응답이 이루어지는 메커니즘을 살펴보면, query를 날려주게 되면, 우선 key들을 나열하여 동일한 것을 찾아낸다. 그 후에는 key-value쌍에서 동일한 부분의 value를 출력해준다.</li>
+<li><p><code>Dictionary형태로 이루어져 있다는 점은 순서는 상관 없다는 의미임을 명심하자!</code></p>
+</li>
+<li><p>질의-응답이 이루어지는 메커니즘을 살펴보면, query를 날려주게 되면, 우선 key들을 나열하여 동일한 것을 찾아낸다. 그 후에는 key-value쌍에서 동일한 부분의 value를 출력해준다.</p>
+</li>
 </ul>
 <p><img src="/image/Querying.png" alt="Querying"></p>
 <ul>
@@ -417,13 +422,13 @@ ga('send', 'pageview');
         "genre": "deep learning",
         "datePublished": "2020-01-21",
         "dateCreated": "2020-01-21",
-        "dateModified": "2020-01-24",
+        "dateModified": "2020-02-03",
         "url": "https://heung-bae-lee.github.io/2020/01/21/deep_learning_10/",
         "description": "Attention 기법Sequence-to-sequence
 우선, Attention 기법이 가장 먼저 적용되었던 모델인 Sequence-to-sequence 모델을 살펴보면서 간략하게 conception적인 것을 살펴보겠다.
 
 아래 그림의 왼쪽 부분은 Encoder 구조로 되어 있어, Input에 번역하고자 하는 문장을 단어 하나씩 받는 형태로 되어있다. "
-        "wordCount": 1676
+        "wordCount": 1752
     }
 </script>
 
@@ -507,15 +512,6 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/02/03/NLP_07/" class="title">NLP란?</a></p>
-                            <p class="item-date"><time datetime="2020-02-02T19:01:52.000Z" itemprop="datePublished">2020-02-03</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
                             <p class="item-title"><a href="/2020/02/01/NLP_06/" class="title">NLP - 단어 수준 임베딩</a></p>
                             <p class="item-date"><time datetime="2020-02-01T11:47:03.000Z" itemprop="datePublished">2020-02-01</time></p>
                         </div>
@@ -548,6 +544,15 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
+                            <p class="item-title"><a href="/2020/01/28/Crawling_03/" class="title">Scrapy 웹 크롤링 04 - 실습</a></p>
+                            <p class="item-date"><time datetime="2020-01-28T05:55:17.000Z" itemprop="datePublished">2020-01-28</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -567,7 +572,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

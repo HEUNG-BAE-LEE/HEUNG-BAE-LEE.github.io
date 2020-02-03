@@ -9,7 +9,14 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/categories/NLP/</loc>
-        <lastmod>2020-02-03T10:56:53.711Z</lastmod>
+        <lastmod>2020-02-03T14:30:51.344Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/categories/deep-learning/</loc>
+        <lastmod>2020-02-03T14:30:44.535Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -17,13 +24,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/categories/crawling/</loc>
         <lastmod>2020-01-28T15:50:27.205Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/categories/deep-learning/</loc>
-        <lastmod>2020-01-23T17:01:03.099Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

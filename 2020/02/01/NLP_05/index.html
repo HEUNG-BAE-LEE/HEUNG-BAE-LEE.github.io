@@ -21,7 +21,7 @@
 <meta property="og:description" content="순환신경망 분류 모델 앞선 모델들과 달리 이미 주어진 단어 특징 벡터를 활용해 모델을 학습하지 않고 텍스트 정보를 입력해서 문장에 대한 특징 정보를 추출한다.  RNN은 현재 정보는 이전 정보가 점층적으로 쌓이면서 정보를 표현할 수 있는 모델이다. 따라서 시간에 의존적인 또는 순차적인 데이터에 대한 문제에 활용된다. 이 모델은 한단에 대한 정보를 입력하면">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/BOW_LSTM_performence.png">
-<meta property="og:updated_time" content="2020-02-01T11:45:47.969Z">
+<meta property="og:updated_time" content="2020-02-03T14:30:51.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 실습 텍스트 분류(Conv1d CNN, LSTM) -03">
 <meta name="twitter:description" content="순환신경망 분류 모델 앞선 모델들과 달리 이미 주어진 단어 특징 벡터를 활용해 모델을 학습하지 않고 텍스트 정보를 입력해서 문장에 대한 특징 정보를 추출한다.  RNN은 현재 정보는 이전 정보가 점층적으로 쌓이면서 정보를 표현할 수 있는 모델이다. 따라서 시간에 의존적인 또는 순차적인 데이터에 대한 문제에 활용된다. 이 모델은 한단에 대한 정보를 입력하면">
@@ -238,9 +238,13 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TEST_ID_DATA = <span class="string">'test_id.npy'</span></span><br><span class="line">test_id = np.load(open(DATA_IN_PATH + TEST_ID_DATA, <span class="string">'rb'</span>), allow_pickle=<span class="string">'True'</span>)</span><br><span class="line">output = pd.DataFrame(&#123;<span class="string">'id'</span>: test_id, <span class="string">'sentiment'</span>: list(predictions)&#125;)</span><br><span class="line">output.to_csv(DATA_OUT_PATH + <span class="string">"rnn_predic.csv"</span>, index=False, quoting=3)</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!kaggle competitions submit word2vec-nlp-tutorial -f <span class="string">"rnn_predic.csv"</span> -m <span class="string">"LSTM Model with Epoch 10"</span></span><br></pre></td></tr></table></figure>
 <p><img src="/image/BOW_LSTM_performence.png" alt="LSTM의 성능"></p>
-<h3 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h3><ul>
+<h3 id="CNN을-이용한-문장-분류"><a href="#CNN을-이용한-문장-분류" class="headerlink" title="CNN을 이용한 문장 분류"></a>CNN을 이용한 문장 분류</h3><ul>
 <li>CNN은 보통 image에서 많이 사용된다고 생각들지만, 텍스트에서도 좋은 효과를 낼 수 있다는 점을 Yoon Kimm(2014) 박사가 쓴 “Convolutional Neural Network for Sentence Classification”을 통해 입증되었다. <code>RNN이 단어의 입력 순서를 중요하게 반영한다면 CNN은 문장의 지역정보를 보존하면서 각 문장 성분의 등장 정보를 학습에 반영하는 구조로 풀어가고 있다. 학습할 때 각 필터 크기를 조절하면서 언어의 특징 값을 추출하게 되는데, 기존의 n-gram(2그램, 3그램) 방식과 유사하다고 볼 수 있다.</code></li>
 </ul>
+<p><img src="/image/Convnets_with_text_classification.png" alt="합성곱 신경망"></p>
+<p><img src="/image/2D_Convnets_with_text_classification.png" alt="2-D 합성곱 신경망"></p>
+<p><img src="/image/1D_Convnets_with_text_classification.png" alt="1-D 합성곱 신경망"></p>
+<p><img src="/image/Convnets_with_text_classification_explanin.png" alt="CNN을 이용한 문장 분류"></p>
 <h4 id="모델-구현-1"><a href="#모델-구현-1" class="headerlink" title="모델 구현"></a>모델 구현</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 기본적인 라이브러리들을 불러온다</span></span><br><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">import numpy as np</span><br><span class="line">import json</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">import tensorflow as tf</span><br><span class="line">from tensorflow import keras</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 이전에 저장했던 학습에 필요한 디렉터리 설정 및 학습/평가 데이터를 불러온다.</span></span><br><span class="line"></span><br><span class="line">DATA_IN_PATH = <span class="string">'/content/'</span></span><br><span class="line">DATA_OUT_PATH = <span class="string">'/content/'</span></span><br><span class="line">INPUT_TRAIN_DATA_FILE_NAME = <span class="string">'train_input.npy'</span></span><br><span class="line">LABEL_TRAIN_DATA_FILE_NAME = <span class="string">'train_label.npy'</span></span><br><span class="line">INPUT_TEST_DATA_FILE_NAME = <span class="string">'test_input.npy'</span></span><br><span class="line"></span><br><span class="line">DATA_CONFIGS_FILE_NAME = <span class="string">'data_configs.json'</span></span><br><span class="line"></span><br><span class="line">train_input_data = np.load(open(DATA_IN_PATH + INPUT_TRAIN_DATA_FILE_NAME, <span class="string">'rb'</span>))</span><br><span class="line">train_label_data = np.load(open(DATA_IN_PATH + LABEL_TRAIN_DATA_FILE_NAME, <span class="string">'rb'</span>))</span><br><span class="line">test_input_data = np.load(open(DATA_IN_PATH + INPUT_TEST_DATA_FILE_NAME, <span class="string">'rb'</span>))</span><br><span class="line"></span><br><span class="line">with open(DATA_IN_PATH + DATA_CONFIGS_FILE_NAME, <span class="string">'r'</span>) as f:</span><br><span class="line">  prepro_configs = json.load(f)</span><br><span class="line">  <span class="built_in">print</span>(prepro_configs.keys())</span><br></pre></td></tr></table></figure>
 <h4 id="학습과-검증-데이터셋-분리-1"><a href="#학습과-검증-데이터셋-분리-1" class="headerlink" title="학습과 검증 데이터셋 분리"></a>학습과 검증 데이터셋 분리</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파라미터 변수</span></span><br><span class="line">RNG_SEED = 1234</span><br><span class="line">BATCH_SIZE = 16</span><br><span class="line">NUM_EPOCHS = 10</span><br><span class="line">VOCAB_SIZE = prepro_configs[<span class="string">'vocab_size'</span>]</span><br><span class="line">EMB_SIZE = 128</span><br><span class="line">VALID_SPLIT = 0.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 학습 데이터와 검증 데이터를 train_test_split 함수를 활용해 나눈다.</span></span><br><span class="line">train_input, eval_input, train_label, eval_label = train_test_split(train_input_data, train_label_data, test_size=VALID_SPLIT, random_state=RNG_SEED)</span><br></pre></td></tr></table></figure>
@@ -334,13 +338,13 @@ ga('send', 'pageview');
         "genre": "NLP",
         "datePublished": "2020-02-01",
         "dateCreated": "2020-02-01",
-        "dateModified": "2020-02-01",
+        "dateModified": "2020-02-03",
         "url": "https://heung-bae-lee.github.io/2020/02/01/NLP_05/",
         "description": "순환신경망 분류 모델
 앞선 모델들과 달리 이미 주어진 단어 특징 벡터를 활용해 모델을 학습하지 않고 텍스트 정보를 입력해서 문장에 대한 특징 정보를 추출한다.
 
 RNN은 현재 정보는 이전 정보가 점층적으로 쌓이면서 정보를 표현할 수 있는 모델이다. 따라서 시간에 의존적인 또는 순차적인 데이터에 대한 문제에 활용된다. 이 모델은 한단에 대한 정보를 입력하면 "
-        "wordCount": 2298
+        "wordCount": 2320
     }
 </script>
 
@@ -424,15 +428,6 @@ RNN은 현재 정보는 이전 정보가 점층적으로 쌓이면서 정보를 
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/02/03/NLP_07/" class="title">NLP란?</a></p>
-                            <p class="item-date"><time datetime="2020-02-02T19:01:52.000Z" itemprop="datePublished">2020-02-03</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
                             <p class="item-title"><a href="/2020/02/01/NLP_06/" class="title">NLP - 단어 수준 임베딩</a></p>
                             <p class="item-date"><time datetime="2020-02-01T11:47:03.000Z" itemprop="datePublished">2020-02-01</time></p>
                         </div>
@@ -465,6 +460,15 @@ RNN은 현재 정보는 이전 정보가 점층적으로 쌓이면서 정보를 
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/crawling/">crawling</a></p>
+                            <p class="item-title"><a href="/2020/01/28/Crawling_03/" class="title">Scrapy 웹 크롤링 04 - 실습</a></p>
+                            <p class="item-date"><time datetime="2020-01-28T05:55:17.000Z" itemprop="datePublished">2020-01-28</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -484,7 +488,7 @@ RNN은 현재 정보는 이전 정보가 점층적으로 쌓이면서 정보를 
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
