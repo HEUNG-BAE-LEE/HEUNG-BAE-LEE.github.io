@@ -21,7 +21,7 @@
 <meta property="og:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/NPLM_principal.png">
-<meta property="og:updated_time" content="2020-02-04T14:13:03.599Z">
+<meta property="og:updated_time" content="2020-02-04T19:58:20.369Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP - 단어 수준 임베딩">
 <meta name="twitter:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
@@ -290,7 +290,7 @@ ga('send', 'pageview');
 <p><img src="/image/skip_gram_model_in_word2vec.png" alt="Skip-gram 모델"></p>
 <ul>
 <li><p>negative sample Prob</p>
-<script type="math/tex; mode=display">P_{negative}(w_{i}) =  \frac{U(w_{i})^{3/4}}{sum^{n}_{j=0}} U(w_{i]}^{3/4})</script><script type="math/tex; mode=display">U(w_{i]}) = \frac{해당 단어 빈도}{전체 단어 수} = 해당 단어의 Unigram Prob</script></li>
+<script type="math/tex; mode=display">P_{negative}(w_{i}) =  \frac{U(w_{i})^{3/4}}{\sum^{n}_{j=0}} U(w_{i]}^{3/4})</script><script type="math/tex; mode=display">U(w_{i]}) = \frac{해당 단어 빈도}{전체 단어 수} = 해당 단어의 Unigram Prob</script></li>
 <li><p>subsampling Prob</p>
 <script type="math/tex; mode=display">P_{subsampling}(w_{i}) = 1 - \sqrt(\frac{t}{f(w_{i})}) = w_{i}가 학습에서 제외될 확률</script><script type="math/tex; mode=display">f(w_{i]}) = w_{i]}'s frequency, t = 0.00001</script></li>
 <li><p>t, c가 positive sample(=target word 주변에 context word가 존재)일 확률</p>
@@ -315,16 +315,112 @@ ga('send', 'pageview');
 </li>
 </ul>
 <script type="math/tex; mode=display">P(-|t, c) = 1 - P(+|t,c) = \frac{exp(-u_{t}v_{c})}{1 + exp(-u_{t}v_{c})}</script><ul>
-<li><p>모델의 손실함수를 이제 알았으니 최대화를 하는 파라미터를 찾으려면 MLE를 구해야 할 것이다. 그렇다면 log likelihood function은 아래와 같을 것이다. 임의의 모수인 모델 파라미터인 $\seta$라고 가정 했을때, $\seta$를 한 번 업데이트할 때 1개 쌍의 positive sample과 k개의 negative sample이 학습된다는 의미이다. <code>Word2vec은 결국 두 단어벡터의 유사도 뿐만아니라 전체 Corpus 분포 정보를 단어 Embedding에 함축시키게 된다.</code></p>
+<li><p>모델의 손실함수를 이제 알았으니 최대화를 하는 파라미터를 찾으려면 MLE를 구해야 할 것이다. 그렇다면 log likelihood function은 아래와 같을 것이다. 임의의 모수인 모델 파라미터인 $\seta$라고 가정 했을때, $\seta$를 한 번 업데이트할 때 1개 쌍의 positive sample과 k개의 negative sample이 학습된다는 의미이다. <code>Word2vec은 결국 두 단어벡터의 유사도 뿐만아니라 전체 Corpus 분포 정보를 단어 Embedding에 함축시키게 된다. 분포가 유사한 단어 쌍은 그 속성 또한 공유할 가능성이 높다.</code> 유사도 검사를 통해 비슷한 단어들을 출력 했을때, <code>그 단어들이 반드시 유의 관계를 보여준다기 보다는 동일한 속성을 갖는 관련성이 높은 단어를 출력한다는 의미로 이해해야한다.</code></p>
 </li>
 <li><p><code>모델 학습이 완료되면 U(target_word에 관한 행렬)만 d차원의 단어 임베딩으로 사용할 수도 있고, U+V.t 행렬을 임베딩으로 쓸 수도 있다. 혹은 concatenate([U, V.t])를 사용할 수도 있다.</code></p>
 </li>
 </ul>
-<script type="math/tex; mode=display">L(\seta) = log P (+|t_{p},c_{p}) + \sum^{k}_{i=1} log P (-|t_{n_{i}},c_{n_{i}})</script><p><a href="https://radimrehurek.com/gensim/models/word2vec.html" target="_blank" rel="noopener">참고</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># from gensim.models import word2vec</span></span><br><span class="line">from gensim.models import Word2Vec</span><br><span class="line">corpus = <span class="string">'원하는 텍스트를 단어를 기준으로 tokenize한 상태의 파일(가장 쉽게는 공백을 기준으로)'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># model = word2vec.Word2Vec()</span></span><br><span class="line">model = Word2Vec(corpus,</span><br><span class="line">                 size=임베딩 특징 벡터 차원수,</span><br><span class="line">                 <span class="comment"># 모델에 의미 있는 단어를 가지고 학습하기 위해 적은 빈도 수의 단어들은 학습하지 않는다.</span></span><br><span class="line">                 min_count=단어에 대한 최소 빈도 수,</span><br><span class="line">                 workers=학습시 사용하는 프로세스 개수,</span><br><span class="line">                 window=context window 크기,</span><br><span class="line">                 <span class="comment"># 학습을 수행할 때 빠른 학습을 위해 정답 단어 라벨에 대한 다운샘플링 비율을 지정한다.</span></span><br><span class="line">                 <span class="comment"># 유용한 범위는 (0, 1e-5)이며, 보통 0.001이 좋은 성능을 낸다고 한다.</span></span><br><span class="line">                 sample=다운 샘플링 비율,</span><br><span class="line">                 <span class="comment"># default sg=0 =&gt; CBOW, if sg=1 =&gt; skip-gram</span></span><br><span class="line">                 sg=1</span><br><span class="line">                 )</span><br><span class="line"></span><br><span class="line">model.save(<span class="string">"모델을 저장할 directory path"</span>)</span><br></pre></td></tr></table></figure></p>
+<script type="math/tex; mode=display">L(\seta) = log P (+|t_{p},c_{p}) + \sum^{k}_{i=1} log P (-|t_{n_{i}},c_{n_{i}})</script><p><a href="https://radimrehurek.com/gensim/models/word2vec.html" target="_blank" rel="noopener">참고</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># from gensim.models import word2vec</span></span><br><span class="line">from gensim.models import Word2Vec</span><br><span class="line">corpus = <span class="string">'원하는 텍스트를 단어를 기준으로 tokenize한 상태의 파일(가장 쉽게는 공백을 기준으로)'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># model = word2vec.Word2Vec()</span></span><br><span class="line">model = Word2Vec(corpus,</span><br><span class="line">                 size=임베딩 특징 벡터 차원수,</span><br><span class="line">                 <span class="comment"># 모델에 의미 있는 단어를 가지고 학습하기 위해 적은 빈도 수의 단어들은 학습하지 않는다.</span></span><br><span class="line">                 min_count=단어에 대한 최소 빈도 수,</span><br><span class="line">                 <span class="comment"># default negative=5, 보통 5~20을 많이 사용</span></span><br><span class="line">                 negative=negative sample을 뽑는 k,</span><br><span class="line">                 workers=학습시 사용하는 프로세스 개수,</span><br><span class="line">                 window=context window 크기,</span><br><span class="line">                 <span class="comment"># 학습을 수행할 때 빠른 학습을 위해 정답 단어 라벨에 대한 다운샘플링 비율을 지정한다.</span></span><br><span class="line">                 <span class="comment"># 유용한 범위는 (0, 1e-5)이며, 보통 0.001이 좋은 성능을 낸다고 한다.</span></span><br><span class="line">                 sample=다운 샘플링 비율,</span><br><span class="line">                 <span class="comment"># default sg=0 =&gt; CBOW, if sg=1 =&gt; skip-gram</span></span><br><span class="line">                 sg=1</span><br><span class="line">                 )</span><br><span class="line"></span><br><span class="line">model.save(<span class="string">"모델을 저장할 directory path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 저장했던 모델을 불러와서 추가적으로 훈련시킬 수 있다.</span></span><br><span class="line">model = Word2Vec.load(<span class="string">"이미 존재하는 모델의 directory path"</span>)</span><br><span class="line">model.train([[<span class="string">"hello"</span>, <span class="string">"world"</span>]], total_examples=1, epochs=1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 훈련된 벡터를 KeyedVector로 분리하는 이유는 전체 모델 상태가 더 이상 필요하지 않을 경우(훈련을 계속할 필요가 없음)</span></span><br><span class="line"><span class="comment"># 모델이 폐기될 수 있기 때문에 프로세스 간에 RAM의 벡터를 빠르게 로드하고 공유할 수 있는 훨씬 작고 빠른 상태로 만드는 것이다.</span></span><br><span class="line">vector = model.wv[<span class="string">'computer'</span>]</span><br><span class="line"></span><br><span class="line">from gensim.models import KeyedVectors</span><br><span class="line"></span><br><span class="line">path = get_tmpfile(<span class="string">"wordvectors 파일명"</span>)</span><br><span class="line"></span><br><span class="line">model.wv.save(path)</span><br><span class="line">wv = KeyedVectors.load(<span class="string">"model.wv"</span>, mmap=<span class="string">'r'</span>)</span><br><span class="line">vector = wv[<span class="string">'computer'</span>]</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>학습이 완료된 임베딩 결과물을 활요하여 코사인 유사도가 가장 높은 단어들을 뽑아 임베딩을 평가해 볼 수도 있다. 이는 추후에 한번에 소개할 것이다.</li>
 </ul>
-<h2 id="FastText"><a href="#FastText" class="headerlink" title="FastText"></a>FastText</h2>
+<h2 id="FastText"><a href="#FastText" class="headerlink" title="FastText"></a>FastText</h2><ul>
+<li><p>Facebook에서 개발해 공개한 <code>단어 임베딩 기법</code>이다. <code>각 단어를 문자단위 n-gram으로 표현한다. 이외의 점은 모두 Word2Vec과 같다.</code> 동일하게 negative sampling을 사용하며, 조금 다른 점은 <code>Fasttext는 target word(t), context word(c) 쌍을 학습할 때 target word(t)에 속한 문자 단위 n-gram 벡터(z)들을 모두 업데이트 한다는 점이다.</code></p>
+</li>
+<li><p>설치 방법은 gensim에서 FastText를 제공하고 있기에 pip를 통해 설치해주거나 이 방법이 안된다면, <a href="https://ratsgo.github.io/from%20frequency%20to%20semantics/2017/07/06/fasttext/" target="_blank" rel="noopener">참조페이지</a>를 클릭해서 직접 C++방식으로 받아도 상관없다.</p>
+</li>
+</ul>
+<h4 id="모델-기본-구조"><a href="#모델-기본-구조" class="headerlink" title="모델 기본 구조"></a>모델 기본 구조</h4><ul>
+<li><p>예를 들어 시나브로라는 단어의 문자 단위 3-gram은 다음과 같이 n-gram 벡터의 합으로 표현한다. 아래 식에서 $G_{t}$는 target word t에 속한 문자 단위 n-gram집합을 의미한다.</p>
+</li>
+<li><p>Fasttext의 단어 벡터 표현(&lt;,&gt;는 단어의 경계를 나타내 주기 위해 모델이 사용하는 기호)</p>
+<script type="math/tex; mode=display">u_{시나브로} = z_{<시나} + z_{시나브} + z_{나브로} + z_{브로>} + z_{시나브로}, u_{t}=\sum_{g \in G_{t}} z_{g}</script></li>
+</ul>
+<p><img src="/image/FastText_embedding_little.png" alt="FastText를 통한 임베딩"></p>
+<ul>
+<li><p><a href="https://wikidocs.net/21692" target="_blank" rel="noopener">n-gram 참조 및 NLP에 도움이 되는 사이트</a></p>
+<ul>
+<li>n을 작게 선택하면 훈련 코퍼스에서 카운트는 잘 되겠지만 근사의 정확도는 현실의 확률분포와 멀어진다. 그렇기 때문에 적절한 n을 선택해야 한다. <code>trade-off 문제로 인해 정확도를 높이려면 n은 최대 5를 넘게 잡아서는 안 된다고 권장되고 있다.</code></li>
+</ul>
+</li>
+<li><p>손실함수 자체는 위의 식을 word2vec 손실함수 $u_{t}$에 대입해 주기만 하면된다.</p>
+</li>
+<li><p><code>FastText 모델의 강점은 조사나 어미가 발달한 한국어에 좋은 성능을 낼 수 있다는 점</code>이다. 용언(동사, 형용사)의 활용이나 그와 관계된 어미들이 벡터 공간상 가깝게 임베딩 되기 때문이다.(예를들면, ‘하였다’가 t이고, ‘공부’가 c라면 ‘공부’와 ‘했(다), 하(다), 하(였으며)’등에 해당하는 벡터도 비슷한 공간상에 있다는 의미이다.) <code>한글은 자소 단위(초성, 중성, 종성)로 분해할 수 있고, 이 자소 각각을 하나의 문자로 보고 FastText를 실행할 수 있다는 점도 강점</code>이다.</p>
+</li>
+<li><p><code>또한, 각 단어의 임베딩을 문자 단위 n-gram 벡터의 합으로 표현하기 때문에 오타나 미등록단어(unknown word)에도 robust하다. 그래서 미등록된 단어도 벡터를 뽑아낼수 있다.</code> 동일한 음절이나 단어를 가진 공간상의 벡터를 추출할 수 있기 때문이다. <code>다른 단어 임베딩 기법이 미등록 단어 벡터를 아예 추출할 수 없다는 사실을 감안하면 FastText는 경쟁력이 있다.</code></p>
+</li>
+</ul>
+<p><a href="https://radimrehurek.com/gensim/models/fasttext.html" target="_blank" rel="noopener">Fasttext 참조</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from gensim.models import FastText</span><br><span class="line"></span><br><span class="line">corpus = <span class="string">'원하는 텍스트를 단어를 기준으로 tokenize한 상태의 파일(가장 쉽게는 공백을 기준으로)'</span></span><br><span class="line"></span><br><span class="line">model = Word2Vec(corpus,</span><br><span class="line">                 size=임베딩 특징 벡터 차원수,</span><br><span class="line">                 <span class="comment"># 모델에 의미 있는 단어를 가지고 학습하기 위해 적은 빈도 수의 단어들은 학습하지 않는다.</span></span><br><span class="line">                 min_count=단어에 대한 최소 빈도 수,</span><br><span class="line">                 <span class="comment"># default negative=5, 보통 5~20을 많이 사용</span></span><br><span class="line">                 negative=negative sample을 뽑는 k,</span><br><span class="line">                 workers=학습시 사용하는 프로세스 개수,</span><br><span class="line">                 window=context window 크기,</span><br><span class="line">                 <span class="comment"># 학습을 수행할 때 빠른 학습을 위해 정답 단어 라벨에 대한 다운샘플링 비율을 지정한다.</span></span><br><span class="line">                 <span class="comment"># 유용한 범위는 (0, 1e-5)이며, 보통 0.001이 좋은 성능을 낸다고 한다.</span></span><br><span class="line">                 sample=다운 샘플링 비율,</span><br><span class="line">                 <span class="comment"># default sg=0 =&gt; CBOW, if sg=1 =&gt; skip-gram</span></span><br><span class="line">                 sg=1,</span><br><span class="line">                 <span class="comment"># default word_ngrams=1 =&gt; n-gram 사용, 0 =&gt; 미사용(word2vec과 동일)</span></span><br><span class="line">                 word_ngrams=1,</span><br><span class="line">                 <span class="comment"># n-gram 최소 단위</span></span><br><span class="line">                 min_n=3,</span><br><span class="line">                 <span class="comment"># n-gram 최대 단위 (최소단위보단 커야한다.)</span></span><br><span class="line">                 max_n=6,</span><br><span class="line">                 )</span><br></pre></td></tr></table></figure>
+<h2 id="잠재-의미-분석-LSA-Latent-Semantic-Analysis"><a href="#잠재-의미-분석-LSA-Latent-Semantic-Analysis" class="headerlink" title="잠재 의미 분석(LSA, Latent Semantic Analysis)"></a>잠재 의미 분석(LSA, Latent Semantic Analysis)</h2><ul>
+<li><p>word-document 행렬이나 TF-IDF 행렬, word-context 행렬 같은 <code>커다란 행렬에 차원 축소 방법의 일종인 특이값 분해를 수행해 데이터의 차원 수를 줄여 계산 효율성을 키우는 한편 행간에 숨어있는 잠재 의미를 추출해내는 방법론</code>이다.</p>
+</li>
+<li><p>예를 들면, word-documents 행렬이나 word-context 행렬 등에 SVD를 한 다음 그 결과로 도출되는 행벡터들을 단어 임베딩으로 사용할 수 있다. <code>잠재 의미 분석은 GloVe나 Swivel과 더불어 Matrix Factorization 기반의 기법으로 분류</code>된다.</p>
+</li>
+</ul>
+<h4 id="PPMI-점별-상호-정보량-행렬"><a href="#PPMI-점별-상호-정보량-행렬" class="headerlink" title="PPMI(점별 상호 정보량) 행렬"></a>PPMI(점별 상호 정보량) 행렬</h4><ul>
+<li><p>word-document 행렬, TF-IDF 행렬, word-context 행렬, PMI 행렬에 모두 LSA를 수행할 수 있다. 이 중 PMI 행렬을 보완하는 PPMI 행렬에 대해 소개하고자한다. <a href="https://heung-bae-lee.github.io/2020/01/16/NLP_01/">PMI 행렬과 위의 행렬들을 모른다면 클릭!</a></p>
+</li>
+<li><p>PPMI란 간단히 말해 우리가 가진 말뭉치의 크기가 충분히 크지 않다면, PMI식의 로그 안 분자가 분모보다 작을 때 음수가 되거나, 극단적으로 단어 A,B가 단 한번도 같이 등장하지 않는다면 $-inf$값을 갖게 된다. 이러한 이유로 <code>NLP 분야에서는 PMI 대신 PPMI(Positive Pointwise Mutual Information)를 지표로 사용한다.</code> PMI가 양수가 아닌 경우 그 값을 신뢰하기 힘들어 0으로 치환해 무시한다는 뜻이다.</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">PPMI(A, B) = max(PMI(A,B), 0)</script><ul>
+<li><code>Shifted PMI(SPMI)는 Word2Vec과 깊은 연관이 있다는 논문이 발표되기도 했다.</code></li>
+</ul>
+<script type="math/tex; mode=display">SPMI(A, B) = PMI(A, B) - log k, k > 0</script><h4 id="행렬-분해로-이해하는-잠재-의미-분석"><a href="#행렬-분해로-이해하는-잠재-의미-분석" class="headerlink" title="행렬 분해로 이해하는 잠재 의미 분석"></a>행렬 분해로 이해하는 잠재 의미 분석</h4><ul>
+<li>Eigenvalue Decomposition(고유값 분해)를 우선 알고 있다는 전제조건으로 SVD를 모르실수도 있는 분들을 위해 간략히 설명하자면, 고유값 분해는 행렬 A가 정방행렬일 경우만 가능한데, 만약 정방행렬이 아닌 행렬은 고유값 분해를 어떻게 해야 하는지에 대한 개념이라고 말할 수 있겠다. 혹시 고유값 분해도 잘 모르시겠다면 <a href="https://heung-bae-lee.github.io/2019/12/14/linear_algebra_00/">이곳</a>을 클릭해서 필자가 추천하는 강의들을 꼭 공부해 보시길 추천한다. 필자는 개인적으로 선형대수는 Computer Science(or 데이터 분석)를 하는데 기본적으로 어느 정도 알고 있어야 한다고 생각한다.</li>
+</ul>
+<p><a href="https://ratsgo.github.io/from%20frequency%20to%20semantics/2017/04/06/pcasvdlsa/" target="_blank" rel="noopener">참조</a></p>
+<p><img src="/image/SVD_NLP.png" alt="특이값 분해 - SVD"></p>
+<ul>
+<li><p>예를 들어, 행렬 A의 m개의 word, n개 documents로 이루어져 shape이 mxn인 word-documents 행렬에 truncated SVD를 하여 LSA를 수행한다고 가정해본다. 그렇다면 <code>U는 단어 임베딩, V.t는 문서 임베딩에 대응</code>한다. 마찬가지로 <code>m개 단어, m개 단어로 이루어진 PMI 행렬에 LSA를 하면 d차원 크기의 단어 임베딩을 얻을 수 있다</code>.</p>
+</li>
+<li><p><code>각종 연구들에 따르면 LSA를 적용하면 단어와 문맥 간의 내재적인 의미를 효과적으로 보존할 수 있게 돼 결과적으로 문서 간 유사도 측정 등 모델의 성능 향상에 도움을 줄 수 있다고 한다. 또한 입력 데이터의 노이즈, sparsity(희소)를 줄일 수 있다.</code></p>
+</li>
+</ul>
+<p><img src="/image/Truncated_SVD_NLP.png" alt="Truncated SVD"></p>
+<h4 id="행렬-분해로-이해하는-Word2Vec"><a href="#행렬-분해로-이해하는-Word2Vec" class="headerlink" title="행렬 분해로 이해하는 Word2Vec"></a>행렬 분해로 이해하는 Word2Vec</h4><ul>
+<li><code>negative sampling 기법으로 학습된 Word2Vec의 Skip-gram 모델(SGNS, Skip-Gram with Negative Sampling)은 Shifted PMI 행렬을 분해한 것과 같다는 것을 볼 수 있다.</code></li>
+</ul>
+<p><img src="/image/word2vec_whith_aspect_of_matrix_decomposition.png" alt="행렬 분해 관점에서 이해하는 word2vec"></p>
+<ul>
+<li>$A_{ij}$는 SPMI행렬의 i,j번째 원소이다. k는 Skip-gram 모델의 negative sample 수를 의미한다. 그러므로 k=1인 negative sample 수가 1개인 Skip-gram 모델은 PMI 행렬을 분해하는 것과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">A^{SGNS}_{ij} = U_{i} \cdot V_{j} = PMI(i,j) - log k</script><ul>
+<li>soynlp에서 제공하는 sent_to_word_contexts_matrix 함수를 활용하면 word-context 행렬을 구축할 수 있다. <code>dynamic_weight=True는 target word에서 멀어질수록 카운트하는 동시 등장 점수(co-occurrence score)를 조금씩 깎는다는 의미</code>이다. dynamic_weight=False라면 window 내에 포함된 context word들의 동시 등장 점수는 target word와의 거리와 관계 없이 모두 1로 계산한다. 예를 들어서 window=3이고 ‘도대체 언제쯤이면 데이터 사이언스 분야를 조금은 공부했다고 말할 수 있을까…’라는 문장의 target word가 ‘분야’라면, ‘를’과 ‘사이언스’의 동시 등장 점수는 1, ‘데이터’, ‘조금’은 0.66, ‘은’, ‘이면’은 0.33이 된다.    </li>
+</ul>
+<ul>
+<li><p>word-context 행렬을 활용한 LSA</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.decomposition import TruncatedSVD</span><br><span class="line">from soynlp.vectorizer import sent_to_word_contexts_matrix</span><br><span class="line"></span><br><span class="line">corpus_file</span><br><span class="line"></span><br><span class="line">corpus = [sent.replace(<span class="string">'\n'</span>, <span class="string">''</span>).strip() <span class="keyword">for</span> sent <span class="keyword">in</span> open(corpus_file, <span class="string">'r'</span>).readlines()]</span><br><span class="line"></span><br><span class="line">input_matrix, idx2vocab = sent_to_word_contexts_matrix(corpus,</span><br><span class="line">                                                       window=3,</span><br><span class="line">                                                       <span class="comment"># 최소 단어 빈도 수</span></span><br><span class="line">                                                       min_tf=10,</span><br><span class="line">                                                       dynamic_weight=True,</span><br><span class="line">                                                       verbose=True)</span><br><span class="line"></span><br><span class="line">cooc_svd = TruncatedSVD(n_components=100)</span><br><span class="line">cooc_vecs = cooc_svd.fit_transform(input_matrix)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>구축한 word-context 행렬에 soynlp에서 제공하는 pmi 함수를 적용한다. min_pmi 보다 낮은 PMI 값은 0으로 치환한다. 따라서 <code>min_pmi=0으로 설정하면 정확히 PPMI와 같다.</code> 또한, pmi matrix의 차원수는 어휘 수 x 어휘 수의 정방 행렬이다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from soynlp import pmi</span><br><span class="line">ppmi_matrix, _, _ = pmi(input_matrix, min_pmi=0)</span><br><span class="line">ppmi_svd = TruncatedSVD(n_components=100)</span><br><span class="line">ppmi_vecs = ppmi_svd.fit_transform(input_matrix)</span><br></pre></td></tr></table></figure>
+<h4 id="GloVe-Global-Word-Vectors"><a href="#GloVe-Global-Word-Vectors" class="headerlink" title="GloVe(Global Word Vectors)"></a>GloVe(Global Word Vectors)</h4><ul>
+<li>미국 스탠포트대학교연구팀에서 개발한 단어 임베딩 기법이다. 임베딩된 단어 벡터 간 유사도 측정을 수월하게 하면서도 Corpus 전체의 통계 정보를 좀 더 잘 반영하는 것을 지향하여 <code>Vanilla Word2Vec과 LSA 두 기법의 단점을 극복하고자 했다.</code> LSA(잠재 의미 분석)은 Corpus 전체의 통계량을 모두 활용할 수 있지만, 그 결과물로 단어 간 유사도를 측정하기는 어렵다. 반대로 Vanilla Word2Vec은 단어 벡터 사이의 유사도를 측정하는 데는 LSA보다 유리하지만 사용자가 지정한 window 내의 local context만 학습하기 때문에 Corpus 전체의 통계 정보는 반영되기 어렵다는 단점을 지닌다. <code>물론 GloVe 이후 발표된 Skip-gram 모델이 Corpus 전체의 Global한 통계량인 SPMI 행렬을 분해하는 것과 동치라는 점을 증명하기는 했다.</code></li>
+</ul>
+<p><img src="/image/GloVe_model.png" alt="그림으로 이해하는 GloVe"></p>
+<ul>
+<li><p>손실 함수</p>
+<ul>
+<li><p>임베딩된 두 단어 벡터의 내적이 말뭉치 전체에서의 동시 증장 빈도의 로그 값이 되도록 정의했다.</p>
+</li>
+<li><p>단어 i,j 각각에 해당하는 벡터 $U_{i}$, $V_{j}$ 사이의 내적값과 두 단어 동시 등장 빈도 $A_{ij}$의 로그값 사이의 차이가 최소화될수록 학습 손실이 작아진다. bias항 2개와 f(A_{ij})는 임베딩 품질을 높이기 위해 고안된 장치이다.</p>
+</li>
+<li><p>Glove는 word-context 행렬 A를 만든 후에 학습이 끝나면 <code>U를 단어 임베딩으로 사용하거나 U+V.t, concatenate([U, V.t])를 임베딩으로 사용할 수 있다.</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">J = \sum^{|V|}_{i,j=1} f(A_{ij}) (U_{i} \cdot V_{j} + b_{i} + b+{j} - log A_{ij})^{2}</script><h2 id="Swivel"><a href="#Swivel" class="headerlink" title="Swivel"></a>Swivel</h2><ul>
+<li><p>Google 연구팀이 발표한 행렬 분해 기반의 단어 임베딩 기법이다. PMI 행렬을 U와 V로 분해하고, 학습이 종료되면 <code>U를 단어 임베딩으로 쓸 수 있으며 U+V.t, concatenate([U, V.t])도 임베딩으로 사용할 수 있다.</code></p>
+</li>
+<li><p><code>PMI 행렬을 분해한다는 점에서 word-context 행렬을 분해하는 GloVe와 다르며, Swivel은 목적함수를 PMI의 단점을 보완할 수 있도록 설계했다.</code> 두 단어가 한번도 등장하지 않았을 경우 PMI가 -inf로 가능 현상을 보완하기 위해 이런경우의 손실함수를 따로 정의했다. 그 결과, <code>i,j가 각각 고빈도 단어인데 두 단어의 동시 등장빈도가 0이라면 두 단어는 정말로 등장하지 않는 의미상 무관계한 단어라고 가정하고, 단어 i,j가 저빈도 단어인데 두 단어의 동시 등장빈도가 0인 경우에는 두 단어는 의미상 관계가 일부 있을 수 있다고 가정한다.</code> </p>
+</li>
+</ul>
+<p><img src="/image/Swivel_model.png" alt="그림으로 이해하는 Swivel"></p>
+
         </div>
         <footer class="article-footer">
             
@@ -400,7 +496,7 @@ ga('send', 'pageview');
         "genre": "NLP",
         "datePublished": "2020-02-01",
         "dateCreated": "2020-02-01",
-        "dateModified": "2020-02-04",
+        "dateModified": "2020-02-05",
         "url": "https://heung-bae-lee.github.io/2020/02/01/NLP_06/",
         "description": "단어 수준 임베딩
 예측 기반 모델
@@ -425,7 +521,7 @@ Swivel
 
 NPLM(Neural Probabilistic Language Model)
 NLP 분야에서 임베딩 개념을 널리 퍼뜨"
-        "wordCount": 1382
+        "wordCount": 3525
     }
 </script>
 

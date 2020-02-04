@@ -9,7 +9,15 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/2020/02/01/NLP_06/</loc>
-        <lastmod>2020-02-04T14:13:03.599Z</lastmod>
+        <lastmod>2020-02-04T19:58:20.369Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/14/linear_algebra_00/</loc>
+        <lastmod>2020-02-04T17:54:33.939Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -250,14 +258,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/12/09/data_engineering_01/</loc>
         <lastmod>2019-12-17T04:17:10.108Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/14/linear_algebra_00/</loc>
-        <lastmod>2019-12-17T01:20:31.153Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
