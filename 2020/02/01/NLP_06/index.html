@@ -21,7 +21,7 @@
 <meta property="og:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/NPLM_principal.png">
-<meta property="og:updated_time" content="2020-02-03T10:55:10.549Z">
+<meta property="og:updated_time" content="2020-02-04T14:13:03.599Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP - 단어 수준 임베딩">
 <meta name="twitter:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
@@ -228,7 +228,8 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/NPLM_principal.png" alt="NPLM의 학습 원리"></p>
 <ul>
-<li>NLPM 구조의 말단 출력<ul>
+<li><p>NLPM 구조의 말단 출력</p>
+<ul>
 <li>$|V|$(corpus의 token vector, 어휘집합의 크기) 차원의 score 벡터 $y_{w_{t}}$에 softmax 함수를 적용한 $|V|$차원의 확률 벡터이다. <code>NPLM은 확률 벡터에서 가장 높은 요소의 인덱스에 해당하는 단어가 실제 정답 단어와 일치하도록 학습 한다.</code></li>
 </ul>
 </li>
@@ -253,9 +254,12 @@ ga('send', 'pageview');
 <p>이 한계를 극복하기 위해 다음 임베딩 방법론인 Word2Vec이 등장하였다.</p>
 <h2 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h2><p>Word2vec은 가장 널리 쓰이고 있는 단어 임베딩 모델이다. <code>Skip-gram</code>과 <code>CBOW</code>라는 모델이 제안되었고, 이 두 모델을 근간으로 하되 negative sampling등 학습 최적화 기법을 제안한 내용이 핵심이다.</p>
 <ul>
-<li>CBOW<ul>
-<li><code>주변에 있는 context word들을 가지고 target word 하나를 맟추는 과정에서 학습</code>된다.</li>
-<li>입,출력 데이터 쌍<ul>
+<li><p>CBOW</p>
+<ul>
+<li><p><code>주변에 있는 context word들을 가지고 target word 하나를 맟추는 과정에서 학습</code>된다.</p>
+</li>
+<li><p>입,출력 데이터 쌍</p>
+<ul>
 <li>{context words, target word}</li>
 </ul>
 </li>
@@ -267,10 +271,16 @@ ga('send', 'pageview');
 <p><img src="/image/Projection_layer_in_CBOW.png" alt="CBOW 모델의 Projection Layer"></p>
 <p><img src="/image/Output_layer_in_CBOW.png" alt="CBOW 모델의 Output Layer"></p>
 <ul>
-<li>Skip-gram<ul>
-<li><code>target word 하나를 가지고 context word들이 무엇일지 예측하는 과정에서 학습</code>된다.</li>
-<li><code>skip-gram이 같은 말뭉치로도 더 많은 학습 데이터를 확보할 수 있어 임베딩 품질이 CBOW보다 좋은 경향</code>이 있다.</li>
-<li>입,출력 데이터 쌍<ul>
+<li><p>Skip-gram</p>
+<ul>
+<li><p>처음 제안된 방식은 <code>target word 하나를 가지고 context word들이 무엇일지 예측하는 과정에서 학습</code>된다. 하지만, 이 방식은 정답 문맥 단어가 나타날 확률은 높이고 나머지 단어들 확률은 그에 맞게 낮춰야 한다. 그런데 어휘 집합에 속한 단어 수는 보통 수십만 개나되므로 이를 모두 계산하려면 비효율 적이다. 이런 점을 극복하기 위해 <code>negative sampling</code>이라는 <code>target word와 context word 쌍이 주어졌을 때 해당 쌍이 positive sample인지 negative sample인지 이진 분류하는 과정에서 학습하는 방식</code>을 제안했다. 이런다면 학습 step마다 1개의 positive sample과 나머지 k개(임의의 k:target 단어의 negative sampling 개수)만 계산하면 되므로 차원수가 2인 시그모이드를 k+1회만 계산하면된다. 이전의 매 step마다 어휘 집합 크기만큼의 차원을 갖는 softmax를 1회 계산하는 방법보다 <code>계산량이 훨씬 적다.</code> 또한 <code>Corpus에서 자주 등장하지 않는 희귀한 단어가 negative sample로 조금 더 잘 뽑힐 수 있도록 하고 자주 등장하는 단어는 학습에서 제외하는 subsampling이라는 기법을</code> 적용하였다. Skip-gram은 Corpus로 부터 엄청나게 많은 학습 데이터 쌍을 만들어 낼 수 있기 때문에 고빈도 단어의 경우 등장 횟수만큼 모두 학습시키는 것이 비효울적이라고 보았다. 이 또한, 학습량을 효과적으로 줄여 계산량을 감소시키는 전략이다.</p>
+</li>
+<li><p><code>작은 Corpus는 k=5~20, 큰 Corpus는 k=2~5로 하는 것이 성능이 좋다고 알려져 있다.</code></p>
+</li>
+<li><p><code>skip-gram이 같은 말뭉치로도 더 많은 학습 데이터를 확보할 수 있어 임베딩 품질이 CBOW보다 좋은 경향</code>이 있다.</p>
+</li>
+<li><p>입,출력 데이터 쌍</p>
+<ul>
 <li>{target word, target word 전전 단어}, {target word, target word 직전 단어}, {target word, target word 다음 단어}, {target word, target word 다다음 단어}</li>
 </ul>
 </li>
@@ -278,7 +288,43 @@ ga('send', 'pageview');
 </li>
 </ul>
 <p><img src="/image/skip_gram_model_in_word2vec.png" alt="Skip-gram 모델"></p>
-
+<ul>
+<li><p>negative sample Prob</p>
+<script type="math/tex; mode=display">P_{negative}(w_{i}) =  \frac{U(w_{i})^{3/4}}{sum^{n}_{j=0}} U(w_{i]}^{3/4})</script><script type="math/tex; mode=display">U(w_{i]}) = \frac{해당 단어 빈도}{전체 단어 수} = 해당 단어의 Unigram Prob</script></li>
+<li><p>subsampling Prob</p>
+<script type="math/tex; mode=display">P_{subsampling}(w_{i}) = 1 - \sqrt(\frac{t}{f(w_{i})}) = w_{i}가 학습에서 제외될 확률</script><script type="math/tex; mode=display">f(w_{i]}) = w_{i]}'s frequency, t = 0.00001</script></li>
+<li><p>t, c가 positive sample(=target word 주변에 context word가 존재)일 확률</p>
+<ul>
+<li>target word와 context가 실제 positive sample이라면 아래의 조건부 확률을 최대화해야 한다. 모델의 학습 parameter는 U와 V 행렬 두개 인데, 둘의 크기는 어휘 집합 크기$(|V|) X 임베딩 차원 수(d)$로 동일하다. <code>U와 V는 각각 target word와 context word에 대응</code>한다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/Skip_gram_model_parameter.png" alt="Skip-gram 모델의 파라미터"></p>
+<script type="math/tex; mode=display">P(+|t, c) = \frac{1}{1 + exp(-u_{t}v_{c})}</script><ul>
+<li>위의 식을 최대화 하려면 분모를 줄여야한다. 분모를 줄이려면 $exp(-u_{t}v_{c})$를 줄여야 한다. 그러려면 두 벡터의 내적값이 커지게 해야한다. 이는 <code>코사인유사도와 비례</code>함을 알 수 있다. 결론적으로 <code>두 벡터간의 유사도를 높인다는 의미</code>이다.</li>
+</ul>
+<p><img src="/image/exponential_function.png" alt="Exponential 함수"></p>
+<ul>
+<li>잘 이해가 가지 않는다면 아래과 그림을 보자. A 가 B에 정확히 포개어져 있을 때(θ=0도) cos(θ)는 1이다. 녹색선의 길이가 단위원 반지름과 일치하기 때문이다. B는 고정한 채 A가 y축 상단으로 옮겨간다(θ가 0도에서 90도로 증가)고 할때 cos(θ)는 점점 감소하여 0이 되게 됩니다. 아래 그림의 경우 빨간색 직선이 x축과 만나는 점이 바로 cos(θ)를 의미한다.</li>
+</ul>
+<p><img src="/image/cosine_value.png" alt="cosine함수와 벡터간의 내적과의 관계"></p>
+<ul>
+<li>t, c가 negative sample(target word와 context word가 무관할때)일 확률<ul>
+<li>만약 학습데이터가 negative sample에 해당한다면 아래의 조건부 확률을 최대화하여야 한다. 이 때는 분자를 최대화 해주어야 하므로, 두 벡터의 내적값을 줄여야 한다.</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">P(-|t, c) = 1 - P(+|t,c) = \frac{exp(-u_{t}v_{c})}{1 + exp(-u_{t}v_{c})}</script><ul>
+<li><p>모델의 손실함수를 이제 알았으니 최대화를 하는 파라미터를 찾으려면 MLE를 구해야 할 것이다. 그렇다면 log likelihood function은 아래와 같을 것이다. 임의의 모수인 모델 파라미터인 $\seta$라고 가정 했을때, $\seta$를 한 번 업데이트할 때 1개 쌍의 positive sample과 k개의 negative sample이 학습된다는 의미이다. <code>Word2vec은 결국 두 단어벡터의 유사도 뿐만아니라 전체 Corpus 분포 정보를 단어 Embedding에 함축시키게 된다.</code></p>
+</li>
+<li><p><code>모델 학습이 완료되면 U(target_word에 관한 행렬)만 d차원의 단어 임베딩으로 사용할 수도 있고, U+V.t 행렬을 임베딩으로 쓸 수도 있다. 혹은 concatenate([U, V.t])를 사용할 수도 있다.</code></p>
+</li>
+</ul>
+<script type="math/tex; mode=display">L(\seta) = log P (+|t_{p},c_{p}) + \sum^{k}_{i=1} log P (-|t_{n_{i}},c_{n_{i}})</script><p><a href="https://radimrehurek.com/gensim/models/word2vec.html" target="_blank" rel="noopener">참고</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># from gensim.models import word2vec</span></span><br><span class="line">from gensim.models import Word2Vec</span><br><span class="line">corpus = <span class="string">'원하는 텍스트를 단어를 기준으로 tokenize한 상태의 파일(가장 쉽게는 공백을 기준으로)'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># model = word2vec.Word2Vec()</span></span><br><span class="line">model = Word2Vec(corpus,</span><br><span class="line">                 size=임베딩 특징 벡터 차원수,</span><br><span class="line">                 <span class="comment"># 모델에 의미 있는 단어를 가지고 학습하기 위해 적은 빈도 수의 단어들은 학습하지 않는다.</span></span><br><span class="line">                 min_count=단어에 대한 최소 빈도 수,</span><br><span class="line">                 workers=학습시 사용하는 프로세스 개수,</span><br><span class="line">                 window=context window 크기,</span><br><span class="line">                 <span class="comment"># 학습을 수행할 때 빠른 학습을 위해 정답 단어 라벨에 대한 다운샘플링 비율을 지정한다.</span></span><br><span class="line">                 <span class="comment"># 유용한 범위는 (0, 1e-5)이며, 보통 0.001이 좋은 성능을 낸다고 한다.</span></span><br><span class="line">                 sample=다운 샘플링 비율,</span><br><span class="line">                 <span class="comment"># default sg=0 =&gt; CBOW, if sg=1 =&gt; skip-gram</span></span><br><span class="line">                 sg=1</span><br><span class="line">                 )</span><br><span class="line"></span><br><span class="line">model.save(<span class="string">"모델을 저장할 directory path"</span>)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>학습이 완료된 임베딩 결과물을 활요하여 코사인 유사도가 가장 높은 단어들을 뽑아 임베딩을 평가해 볼 수도 있다. 이는 추후에 한번에 소개할 것이다.</li>
+</ul>
+<h2 id="FastText"><a href="#FastText" class="headerlink" title="FastText"></a>FastText</h2>
         </div>
         <footer class="article-footer">
             
@@ -354,7 +400,7 @@ ga('send', 'pageview');
         "genre": "NLP",
         "datePublished": "2020-02-01",
         "dateCreated": "2020-02-01",
-        "dateModified": "2020-02-03",
+        "dateModified": "2020-02-04",
         "url": "https://heung-bae-lee.github.io/2020/02/01/NLP_06/",
         "description": "단어 수준 임베딩
 예측 기반 모델
@@ -379,7 +425,7 @@ Swivel
 
 NPLM(Neural Probabilistic Language Model)
 NLP 분야에서 임베딩 개념을 널리 퍼뜨"
-        "wordCount": 567
+        "wordCount": 1382
     }
 </script>
 

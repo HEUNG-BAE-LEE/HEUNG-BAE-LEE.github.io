@@ -21,7 +21,7 @@
 <meta property="og:description" content="모델링 소개 선형모델  로지스틱회귀 모델 입력 벡터를 word2vec과 tf-idf를 사용해본다.     랜던포레스트   TF-IDF를 활용한 모델 구현 모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다.">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/LogisticRegression_with_fiidf_vectorizing.png">
-<meta property="og:updated_time" content="2020-02-01T08:45:32.836Z">
+<meta property="og:updated_time" content="2020-02-04T13:24:23.984Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02">
 <meta name="twitter:description" content="모델링 소개 선형모델  로지스틱회귀 모델 입력 벡터를 word2vec과 tf-idf를 사용해본다.     랜던포레스트   TF-IDF를 활용한 모델 구현 모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다.">
@@ -232,7 +232,7 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> not os.path.exists(DATA_OUT_PATH):</span><br><span class="line">  os.makedirs(DATA_OUT_PATH)</span><br><span class="line"></span><br><span class="line">ids = list(test_data[<span class="string">'id'</span>])</span><br><span class="line">answer_dataset = pd.DataFrame(&#123;<span class="string">'id'</span> : ids, <span class="string">"sentiment"</span> : test_predicted&#125;)</span><br><span class="line">answer_dataset.to_csv(DATA_OUT_PATH + <span class="string">'lgs_tfidf_answer.csv'</span>, index=False, quoting=3)</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!kaggle competitions submit word2vec-nlp-tutorial -f <span class="string">"lgs_tfidf_answer.csv"</span> -m <span class="string">"LogisticRegression Model with tf-idf"</span></span><br></pre></td></tr></table></figure>
 <p><img src="/image/LogisticRegression_with_fiidf_vectorizing.png" alt="TfidfVectorizer를 사용한 LogisticRegression모델의 test data 정확도"></p>
-<h3 id="Woed2vec을-활용한-모델-구현"><a href="#Woed2vec을-활용한-모델-구현" class="headerlink" title="Woed2vec을 활용한 모델 구현"></a>Woed2vec을 활용한 모델 구현</h3><ul>
+<h3 id="Woed2vec-CBOW-을-활용한-모델-구현"><a href="#Woed2vec-CBOW-을-활용한-모델-구현" class="headerlink" title="Woed2vec(CBOW)을 활용한 모델 구현"></a>Woed2vec(CBOW)을 활용한 모델 구현</h3><ul>
 <li>이번에는 word2vec을 활용해 모델을 구현할 것이다. 우선 각 단어에 대해 word2vec으로 벡터화해야 한다. word2vec의 경우 <code>단어로 표현된 리스트를 입력값</code>으로 넣어야 하기 때문에 전처리한 넘파이 배열을 바로 사용하지 않는다. 따라서 <code>전처리된 텍스트 데이터를 불러온 후 각 단어들의 리스트로 나눠야 한다.</code></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DATA_IN_PATH = <span class="string">"/content/"</span></span><br><span class="line"></span><br><span class="line">TRAIN_CLEAN_DATA = <span class="string">'train_clean.csv'</span></span><br><span class="line"></span><br><span class="line">train_data = pd.read_csv(DATA_IN_PATH + TRAIN_CLEAN_DATA)</span><br><span class="line"></span><br><span class="line">reviews = list(train_data[<span class="string">'review'</span>])</span><br><span class="line">sentiments = list(train_data[<span class="string">'sentiment'</span>])</span><br><span class="line"></span><br><span class="line">sentences = []</span><br><span class="line"><span class="keyword">for</span> review <span class="keyword">in</span> reviews:</span><br><span class="line">  sentences.append(review.split())</span><br></pre></td></tr></table></figure>
@@ -243,7 +243,7 @@ ga('send', 'pageview');
 <li>context : word2vec을 수행하기 위한 context 윈도우 크기를 지정한다.</li>
 <li>downsampling : word2vec 학습을 수행할 때 빠른 학습을 위해 정답 단어 label에 대한 downsampling 비율을 지정한다. 보통 0.001이 좋은 성능을 낸다고 한다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num_features = 300</span><br><span class="line">min_word_count = 40</span><br><span class="line">num_workers = 4</span><br><span class="line">context = 10</span><br><span class="line">downsampling = 1e-3</span><br></pre></td></tr></table></figure>
+<h3 id="참고로-parameter-중에-sg의-default값인-0을-사용했으므로-이-모델은-Word2vec의-CBOW모델이다"><a href="#참고로-parameter-중에-sg의-default값인-0을-사용했으므로-이-모델은-Word2vec의-CBOW모델이다" class="headerlink" title="참고로 parameter 중에 sg의 default값인 0을 사용했으므로 이 모델은 Word2vec의 CBOW모델이다."></a>참고로 parameter 중에 sg의 default값인 0을 사용했으므로 이 모델은 Word2vec의 CBOW모델이다.</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num_features = 300</span><br><span class="line">min_word_count = 40</span><br><span class="line">num_workers = 4</span><br><span class="line">context = 10</span><br><span class="line">downsampling = 1e-3</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!pip install gensim</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>word2vec을 학습하는 과정에서 진행 상황을 확인해 보기 위해 다음과 같이 logging을 통해 확인해 볼 수 있다.</p>
@@ -381,7 +381,7 @@ ga('send', 'pageview');
         "genre": "NLP",
         "datePublished": "2020-01-30",
         "dateCreated": "2020-01-30",
-        "dateModified": "2020-02-01",
+        "dateModified": "2020-02-04",
         "url": "https://heung-bae-lee.github.io/2020/01/30/NLP_04/",
         "description": "모델링 소개
 선형모델
@@ -397,7 +397,7 @@ ga('send', 'pageview');
 
 TF-IDF를 활용한 모델 구현
 모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다."
-        "wordCount": 1655
+        "wordCount": 1679
     }
 </script>
 
