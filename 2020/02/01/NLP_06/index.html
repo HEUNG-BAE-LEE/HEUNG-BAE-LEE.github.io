@@ -21,7 +21,7 @@
 <meta property="og:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/NPLM_principal.png">
-<meta property="og:updated_time" content="2020-02-04T19:58:20.369Z">
+<meta property="og:updated_time" content="2020-02-05T07:20:01.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP - 단어 수준 임베딩">
 <meta name="twitter:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
@@ -237,14 +237,14 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">P(w_{t})|w_{t-1}, \cdots ,w_{t-n+1}) = \frac{exp(y_{w_{t}})}{\sum_{i} exp(y_{i}) }</script><script type="math/tex; mode=display">y_{w_{t}} \in R^{|V|} : w_{t}라는 단어에 해당하는 점수 벡터</script><ul>
 <li><p>NLPM 구조의 입력</p>
 <ul>
-<li><p>문장 내 t번째 단어($w_{t}$)에 대응하는 단어 벡터 $x_{t}$를 만드는 과정은 다음과 같다. 먼저 $|V| x m (m: x_{t}의 차원 수)$크기를 갖는 행렬 C에서 $w_{t}$에 해당하는 벡터를 참조하는 형태이다. <code>C 행렬의 원소값은 초기에 랜덤 설정</code>한다. 참조한다는 의미는 예를 들어 아래 그림에서 처럼 어휘 집합에 속한 단어가 5개이고 $w_{t}$가 4번째 인덱스를 의미한다고 하면 행렬 $C$와 $w_{t}$에 해당하는 one-hot 벡터를 내적한 것과 같다. 즉 $C$라는 행렬에서 $w_{t}$에 해당하는 행만 참조하는 것과 동일한 결과를 얻을 수 있다. 따라서 이 과정을 Look-up table이라는 용어로 많이 사용한다</p>
+<li><p>문장 내 t번째 단어($w_{t}$)에 대응하는 단어 벡터 $x_{t}$를 만드는 과정은 다음과 같다. 먼저 $|V| \times m (m: x_{t}의 차원 수)$크기를 갖는 행렬 C에서 $w_{t}$에 해당하는 벡터를 참조하는 형태이다. <code>C 행렬의 원소값은 초기에 랜덤 설정</code>한다. 참조한다는 의미는 예를 들어 아래 그림에서 처럼 어휘 집합에 속한 단어가 5개이고 $w_{t}$가 4번째 인덱스를 의미한다고 하면 행렬 $C$와 $w_{t}$에 해당하는 one-hot 벡터를 내적한 것과 같다. 즉 $C$라는 행렬에서 $w_{t}$에 해당하는 행만 참조하는 것과 동일한 결과를 얻을 수 있다. 따라서 이 과정을 Look-up table이라는 용어로 많이 사용한다</p>
 </li>
 <li><p><code>문장 내 모든 단어들을 한 단어씩 훑으면서 Corpus 전체를 학습하게 된다면 NPLM 모델의 C 행렬에 각 단어의 문맥 정보를 내재할 수 있게 된다.</code></p>
 </li>
 </ul>
 </li>
 </ul>
-<script type="math/tex; mode=display">x_{t} = w_{t} \cdot C = C(w_{t}), C \in R^{|v|xm}</script><p><img src="/image/NPLM_C_matrix.png" alt="NPLM 입력 벡터"></p>
+<script type="math/tex; mode=display">x_{t} = w_{t} \cdot C = C(w_{t}), C \in R^{|v| \times m}</script><p><img src="/image/NPLM_C_matrix.png" alt="NPLM 입력 벡터"></p>
 <h3 id="모델-구조-및-의미정보"><a href="#모델-구조-및-의미정보" class="headerlink" title="모델 구조 및 의미정보"></a>모델 구조 및 의미정보</h3><p>이 때, walking을 맞추는 과정에서 발생한 손실(train loss)를 최소화하는 그래디언트(gradient)를 받아 각 단어에 해당하는 행들이 동일하게 업데이트 된다. 따라서 이 단어들의 벡터는 벡터 공간에서 같은 방향으로 조금씩 움직인다고 볼 수 있다. <code>결과적으로 임베딩 벡터 공간에서 해당 단어들 사이의 거리가 가깝다는 것은 의미가 유사하다라는 의미로 해석</code>할 수 있다.</p>
 <p><img src="/image/NLPM_input.png" alt="NPLM의 input 벡터"></p>
 <p><img src="/image/NPLM_structure.png" alt="NPLM의 구조"></p>
@@ -295,7 +295,7 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">P_{subsampling}(w_{i}) = 1 - \sqrt(\frac{t}{f(w_{i})}) = w_{i}가 학습에서 제외될 확률</script><script type="math/tex; mode=display">f(w_{i]}) = w_{i]}'s frequency, t = 0.00001</script></li>
 <li><p>t, c가 positive sample(=target word 주변에 context word가 존재)일 확률</p>
 <ul>
-<li>target word와 context가 실제 positive sample이라면 아래의 조건부 확률을 최대화해야 한다. 모델의 학습 parameter는 U와 V 행렬 두개 인데, 둘의 크기는 어휘 집합 크기$(|V|) X 임베딩 차원 수(d)$로 동일하다. <code>U와 V는 각각 target word와 context word에 대응</code>한다.</li>
+<li>target word와 context가 실제 positive sample이라면 아래의 조건부 확률을 최대화해야 한다. 모델의 학습 parameter는 U와 V 행렬 두개 인데, 둘의 크기는 어휘 집합 크기$(|V|) \times 임베딩 차원 수(d)$로 동일하다. <code>U와 V는 각각 target word와 context word에 대응</code>한다.</li>
 </ul>
 </li>
 </ul>
@@ -373,7 +373,7 @@ ga('send', 'pageview');
 <p><a href="https://ratsgo.github.io/from%20frequency%20to%20semantics/2017/04/06/pcasvdlsa/" target="_blank" rel="noopener">참조</a></p>
 <p><img src="/image/SVD_NLP.png" alt="특이값 분해 - SVD"></p>
 <ul>
-<li><p>예를 들어, 행렬 A의 m개의 word, n개 documents로 이루어져 shape이 mxn인 word-documents 행렬에 truncated SVD를 하여 LSA를 수행한다고 가정해본다. 그렇다면 <code>U는 단어 임베딩, V.t는 문서 임베딩에 대응</code>한다. 마찬가지로 <code>m개 단어, m개 단어로 이루어진 PMI 행렬에 LSA를 하면 d차원 크기의 단어 임베딩을 얻을 수 있다</code>.</p>
+<li><p>예를 들어, 행렬 A의 m개의 word, n개 documents로 이루어져 shape이 $ m \times n $인 word-documents 행렬에 truncated SVD를 하여 LSA를 수행한다고 가정해본다. 그렇다면 <code>U는 단어 임베딩, V.t는 문서 임베딩에 대응</code>한다. 마찬가지로 <code>m개 단어, m개 단어로 이루어진 PMI 행렬에 LSA를 하면 d차원 크기의 단어 임베딩을 얻을 수 있다</code>.</p>
 </li>
 <li><p><code>각종 연구들에 따르면 LSA를 적용하면 단어와 문맥 간의 내재적인 의미를 효과적으로 보존할 수 있게 돼 결과적으로 문서 간 유사도 측정 등 모델의 성능 향상에 도움을 줄 수 있다고 한다. 또한 입력 데이터의 노이즈, sparsity(희소)를 줄일 수 있다.</code></p>
 </li>
@@ -416,11 +416,30 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">J = \sum^{|V|}_{i,j=1} f(A_{ij}) (U_{i} \cdot V_{j} + b_{i} + b+{j} - log A_{ij})^{2}</script><h2 id="Swivel"><a href="#Swivel" class="headerlink" title="Swivel"></a>Swivel</h2><ul>
 <li><p>Google 연구팀이 발표한 행렬 분해 기반의 단어 임베딩 기법이다. PMI 행렬을 U와 V로 분해하고, 학습이 종료되면 <code>U를 단어 임베딩으로 쓸 수 있으며 U+V.t, concatenate([U, V.t])도 임베딩으로 사용할 수 있다.</code></p>
 </li>
-<li><p><code>PMI 행렬을 분해한다는 점에서 word-context 행렬을 분해하는 GloVe와 다르며, Swivel은 목적함수를 PMI의 단점을 보완할 수 있도록 설계했다.</code> 두 단어가 한번도 등장하지 않았을 경우 PMI가 -inf로 가능 현상을 보완하기 위해 이런경우의 손실함수를 따로 정의했다. 그 결과, <code>i,j가 각각 고빈도 단어인데 두 단어의 동시 등장빈도가 0이라면 두 단어는 정말로 등장하지 않는 의미상 무관계한 단어라고 가정하고, 단어 i,j가 저빈도 단어인데 두 단어의 동시 등장빈도가 0인 경우에는 두 단어는 의미상 관계가 일부 있을 수 있다고 가정한다.</code> </p>
+<li><p><code>PMI 행렬을 분해한다는 점에서 word-context 행렬을 분해하는 GloVe와 다르며, Swivel은 목적함수를 PMI의 단점을 보완할 수 있도록 설계했다.</code> 두 단어가 한번도 등장하지 않았을 경우 PMI가 -inf로 가능 현상을 보완하기 위해 이런경우의 손실함수를 따로 정의했다. 그 결과, <code>i,j가 각각 고빈도 단어인데 두 단어의 동시 등장빈도가 0이라면 두 단어는 정말로 등장하지 않는 의미상 무관계한 단어라고 가정하고, 단어 i,j가 저빈도 단어인데 두 단어의 동시 등장빈도가 0인 경우에는 두 단어는 의미상 관계가 일부 있을 수 있다고 가정한다.</code></p>
 </li>
 </ul>
 <p><img src="/image/Swivel_model.png" alt="그림으로 이해하는 Swivel"></p>
-
+<h2 id="단어-임베딩-평가-방법"><a href="#단어-임베딩-평가-방법" class="headerlink" title="단어 임베딩 평가 방법"></a>단어 임베딩 평가 방법</h2><ul>
+<li><p>참고로 카카오브레인 박규병 님께서는 한국어, 일본어, 중국어 등 30개 언어의 단어 임베딩을 학습해 공개했다. 모델은 주로 해당 언어의 위키백과 등으로 학습됐으며 벡터 차원 수는 100, 3000차원 두 종류가 있다.</p>
+<ul>
+<li><a href="https://github.com/Kyubyong/wordvectors" target="_blank" rel="noopener">https://github.com/Kyubyong/wordvectors</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="단어-유사도-평가-word-similarity-test"><a href="#단어-유사도-평가-word-similarity-test" class="headerlink" title="단어 유사도 평가(word similarity test)"></a>단어 유사도 평가(word similarity test)</h4><ul>
+<li><p>일련의 단어 쌍을 미리 구성한 후에 사람이 평가한 점수와 단어 벡터 간 코사인 유사도 사이의 상관관계를 계산해 단어 임베딩의 품질을 평가하는 방법이다.</p>
+</li>
+<li><p><code>Word2Vec과 FastText 같은 예측 기반 임베딩 기법들이 GloVe, Swivel 등 행렬 분해 방법들에 비해 상관관계가 상대적으로 강한 것을 알 수 있다. 물론 무조건 예측기반이 좋다는 의미는 아니다. 데이터에 다르겠지만 보통은 저런 결과를 얻을 것이다.</code></p>
+</li>
+</ul>
+<h4 id="단어-유추-평가-word-analogy-test"><a href="#단어-유추-평가-word-analogy-test" class="headerlink" title="단어 유추 평가(word analogy test)"></a>단어 유추 평가(word analogy test)</h4><ul>
+<li>의미론적 유추에서 단어 벡터 간 계산을 통해 <code>갑 - 을  + 병 = 정</code>을 통해 평가하는 방법이다. <code>갑 - 을 + 병</code>에 해당하는 벡터에 대해 코사인 유사도가 가장 높은 벡터에 해당하는 단어가 실제 <code>정</code>인지를 확인한다.</li>
+</ul>
+<h4 id="단어-임베딩-시각화"><a href="#단어-임베딩-시각화" class="headerlink" title="단어 임베딩 시각화"></a>단어 임베딩 시각화</h4><ul>
+<li>시각화 또한 단어 임베딩을 평가하는 방법이다. 다만 단어 임베딩은 보통 고차원 벡터이기 때문에 사람이 인식하는 2, 3차원으로 축소해 시각화를 하게 된다. <code>t-SNE(t-Stochastic Neighbor Embedding)은 고차원의 원공간에 존재하는 벡터 x의 이웃 간의 거리를 최대한 보존하는 저차원 벡터 y를 학습하는 방법론</code>이다. 원 공간의 데이터 확률 분포와 축소된 공간의 분포 사이의 차이를 최소화하는 방향으로 벡터 공간을 업데이트한다.</li>
+</ul>
+<h2 id="가중-임베딩"><a href="#가중-임베딩" class="headerlink" title="가중 임베딩"></a>가중 임베딩</h2>
         </div>
         <footer class="article-footer">
             
@@ -521,7 +540,7 @@ Swivel
 
 NPLM(Neural Probabilistic Language Model)
 NLP 분야에서 임베딩 개념을 널리 퍼뜨"
-        "wordCount": 3525
+        "wordCount": 3751
     }
 </script>
 
