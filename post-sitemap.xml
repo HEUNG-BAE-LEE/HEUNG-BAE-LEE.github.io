@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/02/06/NLP_08/</loc>
+        <lastmod>2020-02-06T10:59:40.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/02/01/NLP_06/</loc>
-        <lastmod>2020-02-05T15:25:17.747Z</lastmod>
+        <lastmod>2020-02-05T15:57:16.806Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -32,8 +40,16 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/15/NLP_07/</loc>
+        <lastmod>2020-02-04T07:55:06.549Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/21/deep_learning_10/</loc>
-        <lastmod>2020-02-03T15:45:05.140Z</lastmod>
+        <lastmod>2020-02-03T15:46:55.627Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -48,8 +64,8 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/15/NLP_07/</loc>
-        <lastmod>2020-02-03T14:22:51.342Z</lastmod>
+        <loc>https://heung-bae-lee.github.io/2020/01/16/NLP_01/</loc>
+        <lastmod>2020-02-03T14:23:01.815Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -58,14 +74,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/01/19/NLP_02/</loc>
         <lastmod>2020-02-03T10:53:23.888Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/16/NLP_01/</loc>
-        <lastmod>2020-02-03T10:24:08.549Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

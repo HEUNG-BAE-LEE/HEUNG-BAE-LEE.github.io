@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>NLP 문장 수준 임베딩 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 문장 수준 임베딩">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/06/NLP_08/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/read_lines.png">
+<meta property="og:updated_time" content="2020-02-06T10:59:40.144Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 문장 수준 임베딩">
+<meta name="twitter:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/read_lines.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/06/nlp_08/">
+   
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script data-ad-client="ca-pub-4604833066889492" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+			    <article id="post-NLP_08" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        NLP 문장 수준 임베딩
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/02/06/NLP_08/" class="article-date">
+            <time datetime="2020-02-05T15:32:51.000Z" itemprop="datePublished">2020-02-06</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h4 id="참고로-이-모든-내용은-이기창-님의-한국어-임베딩이라는-책을-기반으로-작성하고-있다"><a href="#참고로-이-모든-내용은-이기창-님의-한국어-임베딩이라는-책을-기반으로-작성하고-있다" class="headerlink" title="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다."></a>참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.</h4><h1 id="문장-수준-임베딩"><a href="#문장-수준-임베딩" class="headerlink" title="문장 수준 임베딩"></a>문장 수준 임베딩</h1><ul>
+<li><p>크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.</p>
+</li>
+<li><p>행렬 분해</p>
+<ul>
+<li>LSA(잠재 의미 분석)</li>
+</ul>
+</li>
+<li><p>확률 모형</p>
+<ul>
+<li>LDA(잠재 디리클레 할당)</li>
+</ul>
+</li>
+<li><p>Neural Network</p>
+<ul>
+<li>Doc2Vec</li>
+<li>ELMo</li>
+<li>GPT (transformer 구조 - self-attention)</li>
+<li>BERT (transformer 구조 - self-attention)</li>
+</ul>
+</li>
+</ul>
+<h2 id="잠재-의미-분석-LSA-Latent-Semantic-Analysis"><a href="#잠재-의미-분석-LSA-Latent-Semantic-Analysis" class="headerlink" title="잠재 의미 분석(LSA, Latent Semantic Analysis)"></a>잠재 의미 분석(LSA, Latent Semantic Analysis)</h2><ul>
+<li><p>단어 수준 임베딩에서의 LSA 방법론들은 word-documents 행렬이나 TF-IDF 행렬, word-context 행렬 또는 PMI 행렬에 SVD로 차원 축소를 시행하고, 여기에서 단어에 해당하는 벡터를 취해 임베딩을 만드는 방법이었다. <code>문장 수준 입베딩에서의 LSA 방법은 단어 수준 임베딩에서의 LSA 방법론을 통해 얻게된 정확히 말하자면 SVD를 통해 축소된 행렬에서 문서에 대응하는 벡터를 취해 문서 임베딩을 만드는 방식이다.</code></p>
+</li>
+<li><p>실습 대상 데이터는 ratsgo.github.uo의 아티클 하나로 markdwon 문서의 제목과 본문을 그대로 텍스트로 저장한 형태이다. 1개 라인이 1개 문서에 해당한다. 불필요한 기호나 LaTex math 패기지의 문법으로 작성되어있는 부분들이 다수 존재한다. 우선 <code>이 실습의 가정을 수식이나 기호는 분석에 있어서 큰 의미를 갖지 않는다라고 가정하고 시작하겠다.</code></p>
+</li>
+<li><p>우선, 형태소분석기를 어떤것을 사용하던 가능하게 함수를 하나 만들어준다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from khaiii import KhaiiiApi</span><br><span class="line">from konlpy.tag import Okt, Komoran, Mecab, Hannanum, Kkma</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_tokenizer(tokenizer_name):</span><br><span class="line">    <span class="keyword">if</span> tokenizer_name == <span class="string">"komoran"</span>:</span><br><span class="line">        tokenizer = Komoran()</span><br><span class="line">    <span class="keyword">elif</span> tokenizer_name == <span class="string">"okt"</span>:</span><br><span class="line">        tokenizer = Okt()</span><br><span class="line">    <span class="keyword">elif</span> tokenizer_name == <span class="string">"mecab"</span>:</span><br><span class="line">        tokenizer = Mecab()</span><br><span class="line">    <span class="keyword">elif</span> tokenizer_name == <span class="string">"hannanum"</span>:</span><br><span class="line">        tokenizer = Hannanum()</span><br><span class="line">    <span class="keyword">elif</span> tokenizer_name == <span class="string">"kkma"</span>:</span><br><span class="line">        tokenizer = Kkma()</span><br><span class="line">    <span class="keyword">elif</span> tokenizer_name == <span class="string">"khaiii"</span>:</span><br><span class="line">        tokenizer = KhaiiiApi()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tokenizer = Mecab()</span><br><span class="line">    <span class="built_in">return</span> tokenizer</span><br></pre></td></tr></table></figure>
+<ul>
+<li>한 문단 별로 구분자를 어떤것으로 했는지 확인하기 하나씩 프린트해보았다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">corpus_fname = <span class="string">"./data/processed/processed_blog.txt"</span></span><br><span class="line"></span><br><span class="line">with open(corpus_fname, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>) as f:</span><br><span class="line">    <span class="built_in">print</span>(f.readline())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---------------------------------------------------------------------------------------------------------------------"</span>)</span><br><span class="line">    <span class="built_in">print</span>(f.readline())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---------------------------------------------------------------------------------------------------------------------"</span>)</span><br><span class="line">    <span class="built_in">print</span>(f.readline())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---------------------------------------------------------------------------------------------------------------------"</span>)</span><br><span class="line">    <span class="built_in">print</span>(f.readline())</span><br></pre></td></tr></table></figure>
+<p><img src="/image/read_lines.png" alt="라인 하나씩 출력"></p>
+<ul>
+<li>아래 코드를 실행하면 제일 처음 문서의 임베딩과 코사인 유사도가 가장 높은 문서 임베딩의 제목을 return해준다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_extraction.text import TfidfVectorizer</span><br><span class="line">from sklearn.decomposition import TruncatedSVD</span><br><span class="line">from sklearn.preprocessing import normalize</span><br><span class="line">from sklearn.manifold import TSNE</span><br><span class="line">from sklearn.metrics.pairwise import cosine_similarity</span><br><span class="line"></span><br><span class="line">from bokeh.io import export_png, output_notebook, show</span><br><span class="line">from bokeh.plotting import figure</span><br><span class="line">from bokeh.models import Plot, Range1d, MultiLine, Circle, HoverTool, TapTool, BoxSelectTool, LinearColorMapper, ColumnDataSource, LabelSet, SaveTool, ColorBar, BasicTicker</span><br><span class="line">from bokeh.models.graphs import from_networkx, NodesAndLinkedEdges, EdgesAndLinkedNodes</span><br><span class="line">from bokeh.palettes import Spectral8</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def LSAeval(corpus_file, doc_idx, nth_top):</span><br><span class="line">    tokenizer =  get_tokenizer(<span class="string">"mecab"</span>)</span><br><span class="line">    titles, raw_corpus, noun_corpus = [], [], []</span><br><span class="line"></span><br><span class="line">    with open(corpus_fname, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>) as f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            try:</span><br><span class="line">                title, document = line.strip().split(<span class="string">'\u241E'</span>)</span><br><span class="line">                titles.append(title)</span><br><span class="line">                raw_corpus.append(document)</span><br><span class="line">                nouns = tokenizer.nouns(document)</span><br><span class="line">                noun_corpus.append(<span class="string">' '</span>.join(nouns))</span><br><span class="line">            except:</span><br><span class="line">                <span class="built_in">continue</span></span><br><span class="line">    <span class="comment"># 문서(단락)에서 기호들과 조사를 제외하고 명사들만 추출한 데이터 중 Unigram(ngram_range(1,1)),</span></span><br><span class="line">    <span class="comment"># DF가 1이상(min_df=1)인 데이터를 추려 TF-IDF 행렬을 만들 것이다.</span></span><br><span class="line">    vectorizer = TfidfVectorizer(min_df=1,</span><br><span class="line">                             ngram_range=(1,1),</span><br><span class="line">                             <span class="comment"># tokenizing전에 모든 문자를 소문자로 바꿔준다.</span></span><br><span class="line">                             lowercase=True,</span><br><span class="line">                             <span class="comment"># analyzer == 'word'인 경우만 사용가능.</span></span><br><span class="line">                             tokenizer=lambda x: x.split())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 행은 문서, 열은 단어에 각각 대응한다. (204 x 37153)</span></span><br><span class="line">    input_matrix = vectorizer.fit_transform(noun_corpus)</span><br><span class="line"></span><br><span class="line">    id2vocab = &#123;vectorizer.vocabulary_[token]:token <span class="keyword">for</span> token <span class="keyword">in</span> vectorizer.vocabulary_.keys()&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># curr_doc : Corpus 첫번 째 문서의 TF-IDF 벡터</span></span><br><span class="line">    curr_doc, result = input_matrix[doc_idx], []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># curr_doc에서 TF-IDF 값이 0이 아닌 요소들은 내림차순 정렬</span></span><br><span class="line">    <span class="comment"># curr_doc은 105개의 원소(단어)만이 저장되어 있는 Compressed Sparse Row format이다.</span></span><br><span class="line">    <span class="comment"># 그러므로 indices(CSR format index array of the matrix)로 해당 index에 위치하는 단어와 그에대한 tf-idf값을 쌍으로 tuple형태로 넣어준다.</span></span><br><span class="line">    <span class="keyword">for</span> idx, el <span class="keyword">in</span> zip(curr_doc.indices, curr_doc.data):</span><br><span class="line">        result.append((id2vocab[idx], el))</span><br><span class="line"></span><br><span class="line">    sorted(result, key=lambda x : x[1], reverse=True)[:5]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 이번에는 이 TF-IDF 행렬에 100차원 SVD를 수행할 것이다. 204 x 37153의 희소 행렬을</span></span><br><span class="line">    <span class="comment"># 204 x 100 크기의 Dense Matrix로 linear Transforamtion하는 것이다.</span></span><br><span class="line">    svd =  TruncatedSVD(n_components=100)</span><br><span class="line">    vecs = svd.fit_transform(input_matrix)</span><br><span class="line">    svd_l2norm_vectors = normalize(vecs, axis=1, norm=<span class="string">'l2'</span>)</span><br><span class="line">    cosine_similarity = np.dot(svd_l2norm_vectors, svd_l2norm_vectors[doc_idx])</span><br><span class="line">    query_sentence = titles[doc_idx]</span><br><span class="line">    <span class="built_in">return</span> titles, svd_l2norm_vectors, [query_sentence, sorted(zip(titles, cosine_similarity), key=lambda x: x[1], reverse=True)[1:nth_top + 1]]</span><br></pre></td></tr></table></figure>
+<p><img src="/image/noun_corpus.png" alt="임베딩 벡터를 만든 Corpus는 명사만 추출"></p>
+<ul>
+<li>상위 5개의 벡터의 내적이 높은 순으로 내림차순 정력했을때의 결과물 출력</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">titles, svd_l2norm_vectors, top_five = LSAeval(corpus_file=<span class="string">"./data/processed/processed_blog.txt"</span>, doc_idx=0, nth_top=5)</span><br><span class="line">top_five</span><br></pre></td></tr></table></figure>
+<p><img src="/image/top_5_similarity.png" alt="첫번째 문서와의 높은 유사도를 갖는 상위 5개의 문서"></p>
+<h3 id="임베딩-시각화"><a href="#임베딩-시각화" class="headerlink" title="임베딩 시각화"></a>임베딩 시각화</h3><ul>
+<li>t-SNE 기법을 사용해서 벡터공간을 2차원으로 줄여준 뒤 시각화 할 것이다. 또한 벡터들간의 전체적인 유사도는 시각적으로 그리기보다는 상관행렬 방식으로 나타내 줄 것이다.</li>
+</ul>
+<ul>
+<li><p>시각화에 필요한 함수들 정의</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def visualize(titles, vectors, mode=<span class="string">"between"</span>, num_sents=30, palette=<span class="string">"Viridis256"</span>, use_notebook=False):</span><br><span class="line">        doc_idxes = random.sample(range(len(titles)), num_sents)</span><br><span class="line">        sentences = [titles[idx] <span class="keyword">for</span> idx <span class="keyword">in</span> doc_idxes]</span><br><span class="line">        vecs = [vectors[idx] <span class="keyword">for</span> idx <span class="keyword">in</span> doc_idxes]</span><br><span class="line">        <span class="keyword">if</span> mode == <span class="string">"between"</span>:</span><br><span class="line">            visualize_between_sentences(sentences, vecs, palette, use_notebook=use_notebook)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            visualize_sentences(vecs, sentences, palette, use_notebook=use_notebook)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def visualize_between_sentences(sentences, vec_list, palette=<span class="string">"Viridis256"</span>,</span><br><span class="line">                                filename=<span class="string">"between-sentences.png"</span>,</span><br><span class="line">                                use_notebook=False):</span><br><span class="line">    df_list, score_list = [], []</span><br><span class="line">    <span class="keyword">for</span> sent1_idx, sentence1 <span class="keyword">in</span> enumerate(sentences):</span><br><span class="line">        <span class="keyword">for</span> sent2_idx, sentence2 <span class="keyword">in</span> enumerate(sentences):</span><br><span class="line">            vec1, vec2 = vec_list[sent1_idx], vec_list[sent2_idx]</span><br><span class="line">            <span class="keyword">if</span> np.any(vec1) and np.any(vec2):</span><br><span class="line">                score = cosine_similarity(X=[vec1], Y=[vec2])</span><br><span class="line">                <span class="comment"># [0][0]인 이유는 값만 뽑아 내기 위해서이다.</span></span><br><span class="line">                df_list.append(&#123;<span class="string">'x'</span>: sentence1, <span class="string">'y'</span>: sentence2, <span class="string">'similarity'</span>: score[0][0]&#125;)</span><br><span class="line">                score_list.append(score[0][0])</span><br><span class="line">    df = pd.DataFrame(df_list)</span><br><span class="line">    color_mapper = LinearColorMapper(palette=palette, low=np.max(score_list), high=np.min(score_list))</span><br><span class="line">    TOOLS = <span class="string">"hover,save,pan,box_zoom,reset,wheel_zoom"</span></span><br><span class="line">    p = figure(x_range=sentences, y_range=list(reversed(sentences)),</span><br><span class="line">                x_axis_location=<span class="string">"above"</span>, plot_width=900, plot_height=900,</span><br><span class="line">                toolbar_location=<span class="string">'below'</span>, tools=TOOLS,</span><br><span class="line">                tooltips=[(<span class="string">'sentences'</span>, <span class="string">'@x @y'</span>), (<span class="string">'similarity'</span>, <span class="string">'@similarity'</span>)])</span><br><span class="line">    p.grid.grid_line_color = None</span><br><span class="line">    p.axis.axis_line_color = None</span><br><span class="line">    p.axis.major_tick_line_color = None</span><br><span class="line">    p.axis.major_label_standoff = 0</span><br><span class="line">    p.xaxis.major_label_orientation = 3.14 / 3</span><br><span class="line">    p.rect(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, width=1, height=1,</span><br><span class="line">            <span class="built_in">source</span>=df,</span><br><span class="line">            fill_color=&#123;<span class="string">'field'</span>: <span class="string">'similarity'</span>, <span class="string">'transform'</span>: color_mapper&#125;,</span><br><span class="line">            line_color=None)</span><br><span class="line">    color_bar = ColorBar(ticker=BasicTicker(desired_num_ticks=5),</span><br><span class="line">                        color_mapper=color_mapper, major_label_text_font_size=<span class="string">"7pt"</span>,</span><br><span class="line">                        label_standoff=6, border_line_color=None, location=(0, 0))</span><br><span class="line">    p.add_layout(color_bar, <span class="string">'right'</span>)</span><br><span class="line">    <span class="keyword">if</span> use_notebook:</span><br><span class="line">        output_notebook()</span><br><span class="line">        show(p)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        export_png(p, filename)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"save @ "</span> + filename)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def visualize_sentences(vecs, sentences, palette=<span class="string">"Viridis256"</span>, filename=<span class="string">"/notebooks/embedding/sentences.png"</span>,</span><br><span class="line">                        use_notebook=False):</span><br><span class="line">    tsne = TSNE(n_components=2)</span><br><span class="line">    tsne_results = tsne.fit_transform(vecs)</span><br><span class="line">    df = pd.DataFrame(columns=[<span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'sentence'</span>])</span><br><span class="line">    df[<span class="string">'x'</span>], df[<span class="string">'y'</span>], df[<span class="string">'sentence'</span>] = tsne_results[:, 0], tsne_results[:, 1], sentences</span><br><span class="line">    <span class="built_in">source</span> = ColumnDataSource(ColumnDataSource.from_df(df))</span><br><span class="line">    labels = LabelSet(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, text=<span class="string">"sentence"</span>, y_offset=8,</span><br><span class="line">                      text_font_size=<span class="string">"12pt"</span>, text_color=<span class="string">"#555555"</span>,</span><br><span class="line">                      <span class="built_in">source</span>=<span class="built_in">source</span>, text_align=<span class="string">'center'</span>)</span><br><span class="line">    color_mapper = LinearColorMapper(palette=palette, low=min(tsne_results[:, 1]), high=max(tsne_results[:, 1]))</span><br><span class="line">    plot = figure(plot_width=900, plot_height=900)</span><br><span class="line">    plot.scatter(<span class="string">"x"</span>, <span class="string">"y"</span>, size=12, <span class="built_in">source</span>=<span class="built_in">source</span>, color=&#123;<span class="string">'field'</span>: <span class="string">'y'</span>, <span class="string">'transform'</span>: color_mapper&#125;, line_color=None, fill_alpha=0.8)</span><br><span class="line">    plot.add_layout(labels)</span><br><span class="line">    <span class="keyword">if</span> use_notebook:</span><br><span class="line">        output_notebook()</span><br><span class="line">        show(plot)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        export_png(plot, filename)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"save @ "</span> + filename)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>혹시 이러한 error가 난다면, 다음과 같이 PhantomJS를 설치한다. 간단히 말하자면 PhantomJS도 Selenium같이 웹브라우져 개발용으로 만들어진 프로그램이다. bokeh는 javascript기반으로 짜여져있어서 필요한 것 같다.</p>
+</li>
+</ul>
+<p><img src="/image/phantomjs_error.png" alt="phantomjs error"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c conda-forge phantomjs</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">visualize(titles, svd_l2norm_vectors, mode=<span class="string">"between"</span>, num_sents=30, palette=<span class="string">"Viridis256"</span>, use_notebook=True)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/sentence_between_cosine_simularity.png" alt="벡터들간의 유성성 상관행렬"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">visualize(titles, svd_l2norm_vectors, mode=<span class="string">"tsne"</span>, num_sents=30, palette=<span class="string">"Viridis256"</span>, use_notebook=True)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/t_SNE_plot_bog_source.png" alt="t-SNE를 활용한 임베딩 벡터 시각화"></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "NLP 문장 수준 임베딩",
+        "image": "https://heung-bae-lee.github.io/image/read_lines.png",
+        "keywords": "",
+        "genre": "NLP",
+        "datePublished": "2020-02-06",
+        "dateCreated": "2020-02-06",
+        "dateModified": "2020-02-06",
+        "url": "https://heung-bae-lee.github.io/2020/02/06/NLP_08/",
+        "description": "참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩
+크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.
+
+행렬 분해
+
+LSA(잠재 의미 분석)
+
+
+확률 모형
+
+LDA(잠재 디리클레 할당)
+
+
+Neural Network
+
+Doc2Vec
+ELMo
+GPT (tran"
+        "wordCount": 2337
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/02/01/NLP_06/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">NLP - 단어 수준 임베딩</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/06/NLP_08/" class="title">NLP 문장 수준 임베딩</a></p>
+                            <p class="item-date"><time datetime="2020-02-05T15:32:51.000Z" itemprop="datePublished">2020-02-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/01/NLP_06/" class="title">NLP - 단어 수준 임베딩</a></p>
+                            <p class="item-date"><time datetime="2020-02-01T11:47:03.000Z" itemprop="datePublished">2020-02-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/01/NLP_05/" class="title">NLP 실습 텍스트 분류(Conv1d CNN, LSTM) -03</a></p>
+                            <p class="item-date"><time datetime="2020-02-01T07:57:48.000Z" itemprop="datePublished">2020-02-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/01/30/NLP_04/" class="title">NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02</a></p>
+                            <p class="item-date"><time datetime="2020-01-29T15:13:48.000Z" itemprop="datePublished">2020-01-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/01/29/NLP_03/" class="title">NLP 실습 텍스트 분류 -01</a></p>
+                            <p class="item-date"><time datetime="2020-01-29T14:40:09.000Z" itemprop="datePublished">2020-01-29</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/06/NLP_08/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
