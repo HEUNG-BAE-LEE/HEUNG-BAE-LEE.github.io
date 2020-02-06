@@ -21,7 +21,7 @@
 <meta property="og:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/NPLM_principal.png">
-<meta property="og:updated_time" content="2020-02-05T15:57:16.806Z">
+<meta property="og:updated_time" content="2020-02-06T11:04:36.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP - 단어 수준 임베딩">
 <meta name="twitter:description" content="단어 수준 임베딩 예측 기반 모델  NPLM Word2Vec FastText   행렬 분해 기반 모델  LSA GloVe Swivel   단어 임베딩을 문장 수준 임베딩으로 확장하는 방법  가중 임베딩(Weighted Embedding)    NPLM(Neural Probabilistic Language Model) NLP 분야에서 임베딩 개념을 널리 퍼뜨">
@@ -452,7 +452,7 @@ ga('send', 'pageview');
 <li><p>단어 sequence는 문장이다. <code>문장 등장 확률(단어들이 동시에 등장할 확률)은 문장에 속한 모든 단어들이 등장할 확률의 누적 곱으로 나타낼 수 있다. 그런데 확률을 누적해서 곱하면 너무 작아지는 underflow 문제가 발생하므로 로그를 취해 덧셈을 하는 것으로 대체한다.</code></p>
 </li>
 <li><p>문장 등장확률</p>
-<script type="math/tex; mode=display">P(s|c_{s}) \propto \Sum_{w \in s} log P(w|c_{s}) = \sum_{w \in s} f_{w}(\tilde{c_{s}})</script></li>
+<script type="math/tex; mode=display">P(s|c_{s}) \propto \sum_{w \in s} log P(w|c_{s}) = \sum_{w \in s} f_{w}(\tilde{c_{s}})</script></li>
 <li><p>단어 등장 확률의 Taylor Series approximation</p>
 <script type="math/tex; mode=display">f_{w}(\tilde{c_{s}}) \approx f_{w}(0) + \triangledown f_{w}(0)^{T} \tilde{c_{s}}</script></li>
 </ul>
