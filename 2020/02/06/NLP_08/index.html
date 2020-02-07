@@ -21,7 +21,7 @@
 <meta property="og:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/read_lines.png">
-<meta property="og:updated_time" content="2020-02-06T20:25:44.446Z">
+<meta property="og:updated_time" content="2020-02-07T09:58:39.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 문장 수준 임베딩">
 <meta name="twitter:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
@@ -258,8 +258,7 @@ ga('send', 'pageview');
 <li><p>NPLM에서 설명했던 방식처럼 문장 전체를 한 단어씩 슬라이딩해가면서 다음 target word를 맞추는 과정에서 context word에 해당하는 $(w_{t-k}, \cdots, w_{t-1})$에 해당하는 W 행렬의 벡터들이 업데이트 한다. <code>따라서 주변 이웃 단어 집합 즉 context가 유사한 단어벡터는 벡터 공간에 가깝게 임베딩 된다.</code>학습이 종료되면 W를 각 단어의 임베딩으로 사용한다.</p>
 </li>
 </ul>
-<p>Doc2vec 언어 모델</p>
-<ul>
+<h5 id="Doc2vec-언어-모델"><a href="#Doc2vec-언어-모델" class="headerlink" title="Doc2vec 언어 모델"></a>Doc2vec 언어 모델</h5><ul>
 <li>$T$ : 학습 데이터 문장 하나의 단어 개수</li>
 <li>$w_{t}$ : 문장의 t번째 단어</li>
 <li>$y_{i}$ : corpus 전체 어휘 집합 중 i번째 단어에 해당하는 점수<ul>
@@ -268,8 +267,7 @@ ga('send', 'pageview');
 </li>
 <li>$h$ : 벡터 sequence가 주어졌을 때 평균을 취하거나 concatenate하여 고정된 길이의 벡터 하나를 반환하는 역할을 하는 함수이다.</li>
 </ul>
-<script type="math/tex; mode=display">L = frac{1}{T} \sum^{T-k}-{t=k} log(w_{t}|w_{t-k}, \cdots, w_{t-1})</script><p>Doc2Vec 언어 모델 Score 계산</p>
-<script type="math/tex; mode=display">P(w_{t}| w_{t-k}, \cdots, w_{t-1}) = \frac{exp(y_{w_{t}})}{\sum_{i} exp(y_{i})}</script><script type="math/tex; mode=display">y = b + U \cdot h(w_{t-k}, \cdots, w_{t-1}; W)</script><ul>
+<script type="math/tex; mode=display">L = frac{1}{T} \sum^{T-k}-{t=k} log(w_{t}|w_{t-k}, \cdots, w_{t-1})</script><h5 id="Doc2Vec-언어-모델-Score-계산"><a href="#Doc2Vec-언어-모델-Score-계산" class="headerlink" title="Doc2Vec 언어 모델 Score 계산"></a>Doc2Vec 언어 모델 Score 계산</h5><script type="math/tex; mode=display">P(w_{t}| w_{t-k}, \cdots, w_{t-1}) = \frac{exp(y_{w_{t}})}{\sum_{i} exp(y_{i})}</script><script type="math/tex; mode=display">y = b + U \cdot h(w_{t-k}, \cdots, w_{t-1}; W)</script><ul>
 <li>위의 초기 구조에서 <code>문서 id를 추가해 이전 k개 단어들과 문서 id를 넣어서 다음 단어를 예측</code>하게 했다. <code>y를 계산할 때 D라는 문서 행렬(Paragraph matrix)에서 해당 문서 ID에 해당하는 벡터를 참조해 h 함수에 다른 단어 벡터들과 함께 입력하는 것 외에 나머지 과정은 동일</code>하다. 이런 구조를 <code>PV-DM(the Distributed Memory Model of Paragraph Vectors)</code>이라고 부른다. 학습이 종료되면 문서 수 $\times$ 임베딩 차원 수 크기를 가지는 문서 행렬 D를 각 문서의 임베딩으로 사용한다. 이렇게 만든 <code>문서 임베딩이 해당 문서의 주제 정보를 함축한다고 설명</code>한다. <code>PV-DM은 단어 등장 순서를 고려하는 방식으로 학습하기 때문에 순서 정보를 무시하는 Bag of Words 기법 대비 강점이 있다고 할 수 있을 것</code>이다.</li>
 </ul>
 <p><img src="/image/Doc2vec_model_principal.png" alt="Doc2vec 모델"></p>
@@ -324,10 +322,78 @@ ga('send', 'pageview');
 <li>D : corpus 전체 문서 개수</li>
 <li>K : 전체 topic 수(hyper parameter)</li>
 <li>N : d번째 문서의 단어 수</li>
+<li>네모칸 : 해당 횟수만큼 반복하라는 의미</li>
+<li>$\phi_{k}$ : k번째 topic에 해당하는 벡터 $\phi_{k} \in R^{|V|}$, $\phi_{k}$는 word-topic 행렬의 k번째 열을 의미한다. $\phi_{k}$의 각 요소 값은 해당 단어가 k번째 토픽에서 차지하는 비중을 의미하며 확률값이므로 이 벡터의 요소값의 합은 1이 된다. 이런 topic의 단어비중을 의미하는 $\phi_{k}$는 디리클레 분포를 따른 다는 가정을 취하므로 $\beta$의 영향을 받는다.</li>
+<li>$\theta_{d}$ : d번째 문서가 가진 topic 비중을 나타내는 벡터이다. 그러므로 전체 topic의 개수만큼의 길이 갖으며, 각 벡터는 확률을 의미하므로 합은 1이된다. 문서의 topic 비중 $\theta_{d}$는 디리클레 분포를 따른다는 가정을 취하므로 $\alpha$의 영향을 받는다.</li>
+<li>$\z_{d,n}$ : d번째 문서에서 n번째 단어가 어떤 topic인지를 나타내는 변수이다. 그러므로 이 변수는 d번째 문서의 topic 확률 분포인 $\theta_{d}$에 영향을 받는다.</li>
+<li>동그라미 : 변수를 의미</li>
+<li>화살표가 시작되는 변수는 조건, 화살표가 향하는 변수는 결과에 해당하는 변수</li>
 </ul>
 </li>
 </ul>
+<ul>
+<li><code>관찰 가능한 변수는 d번째 문서에 등장한 n번째 단어 $w_{d,n}$이 유일</code>하다. 우리는 이 정보만을 가지고 하이퍼파라메터(사용자 지정) α,β를 제외한 모든 잠재 변수를 추정해야 한다.</li>
+</ul>
 <p><img src="/image/graphical_model_LDA.png" alt="graphical model로 표현한 LDA"></p>
+<ul>
+<li>예시를 들자면, 아래 Document-topic 행렬을 살펴보자. 3번째 문서에 속한 단어들은 가장 높은 확률값 0.625를 갖는 topic-2일 가능성이 높다. $w_{d,n}$은 d번째 문서 내에 n번째로 등장하는 단어를 의미하며, 동시에 우리가 유일하게 corpus에서 관찰할 수 있는 데이터이다. 이는 $\theta_{d}$와 $\z_{d,n}$에 동시에 영향을 받는다. 예를 들면, $z_{3,1}$가 topic-2이라고 가정했을 경우, $w_{3,1}$은 word-topic 행렬에서 보게되면 제일 높은 확률값 0.393을 갖는 ‘코로나 바이러스’일 가능성이 높다.</li>
+</ul>
+<h4 id="이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다"><a href="#이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다" class="headerlink" title="이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다."></a>이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다.</h4><p>Document-topic 행렬<br>| 문서  | topic-1 | topic-2 | topic-3 |<br>|———-|————-|————-|————-|<br>| 문서1 | 0.400   | 0.000   | 0.600   |<br>| 문서2 | 0.000   | 0.600   | 0.400   |<br>| 문서3 | 0.375   | 0.625   | 0.000   |</p>
+<p>word-topic 행렬<br>| 단어              | topic-1 | topic-2 | topic-3 |<br>|—————————-|————-|————-|————-|<br>| 코로나 바이러스   | 0.000   | 0.393   | 0.000   |<br>| 우한폐렴              | 0.000   | 0.313   | 0.000   |<br>| AWS               | 0.119   | 0.000   | 0.000   |<br>| 데이터 엔지니어링 | 0.181   | 0.000   | 0.000   |<br>| Hadoop            | 0.276   | 0.000   | 0.000   |<br>| Spark             | 0.142   | 0.000   | 0.000   |<br>| 낭만 닥터 김사부2 | 0.000   | 0.012   | 0.468   |<br>| tensorflow        | 0.282   | 0.000   | 0.000   |<br>| 마스크            | 0.000   | 0.282   | 0.000   |<br>| 사랑의 불시착     | 0.000   | 0.000   | 0.532   |<br>| 합                | 1.0     | 1.0     | 1.0     |</p>
+<ul>
+<li>실제 관찰 가능한 corpus를 가지고 알고 싶은 topic의 word 분포, 문서의 topic 분포를 추정하는 과정을 통해 LDA는 학습한다. 즉, <code>topic의 word 분포와 문서의 topic 분포의 결합 확률이 커지는 방향으로 학습을 한다는 의미</code>이다.</li>
+</ul>
+<h5 id="LDA의-단어-생성-과정"><a href="#LDA의-단어-생성-과정" class="headerlink" title="LDA의 단어 생성 과정"></a>LDA의 단어 생성 과정</h5><script type="math/tex; mode=display">p($\phi_{1:K}, \theta_{1:D}, z_{1:D}, w_{1:D}) =</script><script type="math/tex; mode=display">\prod^{K}_{i=1} p(\phi_{i}|\beta) \prod^{D}_{d=1} p(\theta_{d}|\alpha) \left(\prod^{N}_{n=1} p(z_{d,n}|\theta_{d}) p(w_{d,n}|\phi_{1:K}, z_{d, n}) \right)</script><ul>
+<li>우리가 구해야할 사후확률 분포는 $ p(z, \phi, \theta|w) = p(z, \phi, \theta, w)/p(w)$를 최대로 만드는 $ z, \phi, \theta$를 찾아야 한다. 이 사후확률을 직접 계산하려면 분자도 계산하기 어렵겠지만 분모가 되는 $ p(w)$도 반드시 구해야 확률값으로 만들어 줄 수 있다. $ p(w)$는 잠재변수 $ z, \phi, \theta$의 모든 경우의 수를 고려한 각 단어(w)의 등장 확률을 의미하는데, $ z, \phi, \theta$를 직접 관찰하는 것은 불가능하다. 이러한 이유로 <code>깁스 샘플링(gibbs sampling)</code>같은 표본 추출 기법을 사용해 사후확률을 근사시키게 된다. 깁스 샘플링이란 <code>나머지 변수는 고정시킨 채 하나의 랜덤변수만을 대상으로 표본을 뽑는 기법</code>이다. LDA에서는 사후확률 분포 $ p(z, \phi, \theta|w)$를 구할 때 topic의 단어 분포($\phi$)와 문서의 topic 분포($\theta$)를 계산에서 생략하고 topic(z)만을 추론한다. <code>z만 알 수 있으면 나미저 변수를 이를 통해 계산 할 수 있도록 설계 했기 때문이다.</code></li>
+</ul>
+<h5 id="깁스-샘플링을-활용한-LDA"><a href="#깁스-샘플링을-활용한-LDA" class="headerlink" title="깁스 샘플링을 활용한 LDA"></a>깁스 샘플링을 활용한 LDA</h5><script type="math/tex; mode=display">p(z_{d, i} = j|z_{-i}, w) = \frac{ n_{d,k} + \alpha_{j} }{ \sum^{K}_{i=1} (n_{d,i}) + \alpha_{i} } \times \frac{ v_{k, w_{d,n} } + \beta_{w_{d,n}} }{ \sum^{V}_{ㅓ=1} ( v_{k,j} + \beta_{j} ) } = AB</script><h6 id="LDA-변수-표기법"><a href="#LDA-변수-표기법" class="headerlink" title="LDA 변수 표기법"></a>LDA 변수 표기법</h6><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>표기</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$n_{d,k}$</td>
+<td>k번째 topic에 할당된 d번째 문서의 빈도</td>
+</tr>
+<tr>
+<td>$v_{k,w_{d,n}}$</td>
+<td>전체 corpus에서 k번째 topic에 할당된 단어 $w_{d,n}$의 빈도</td>
+</tr>
+<tr>
+<td>$w_{d,n}$</td>
+<td>d번째 문서에 n번째로 등장한 단어</td>
+</tr>
+<tr>
+<td>$\alpha$</td>
+<td>문서의 topic 분포 생성을 위한 디리클레 분포 파라미터</td>
+</tr>
+<tr>
+<td>$\beta$</td>
+<td>topic의 word 분포 생성을 위한 디리클레 분포 파라미터</td>
+</tr>
+<tr>
+<td>K</td>
+<td>사용자가 지정하는 topic 개수</td>
+</tr>
+<tr>
+<td>V</td>
+<td>corpus에 등장하는 전체 word의 수</td>
+</tr>
+<tr>
+<td>A</td>
+<td>d번째 문서가 k번째 topic과 맺고 있는 연관성 정도</td>
+</tr>
+<tr>
+<td>B</td>
+<td>d번째 문서의 n번째 단어($w_{d,n}$)가 k번째 topic과 맺고 있는 연관성 정도</td>
+</tr>
+</tbody>
+</table>
+</div>
 
         </div>
         <footer class="article-footer">
@@ -424,7 +490,7 @@ Neural Network
 Doc2Vec
 ELMo
 GPT (tran"
-        "wordCount": 4130
+        "wordCount": 4981
     }
 </script>
 
