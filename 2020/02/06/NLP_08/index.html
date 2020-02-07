@@ -21,7 +21,7 @@
 <meta property="og:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/read_lines.png">
-<meta property="og:updated_time" content="2020-02-07T09:58:39.363Z">
+<meta property="og:updated_time" content="2020-02-07T10:44:48.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 문장 수준 임베딩">
 <meta name="twitter:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
@@ -325,7 +325,7 @@ ga('send', 'pageview');
 <li>네모칸 : 해당 횟수만큼 반복하라는 의미</li>
 <li>$\phi_{k}$ : k번째 topic에 해당하는 벡터 $\phi_{k} \in R^{|V|}$, $\phi_{k}$는 word-topic 행렬의 k번째 열을 의미한다. $\phi_{k}$의 각 요소 값은 해당 단어가 k번째 토픽에서 차지하는 비중을 의미하며 확률값이므로 이 벡터의 요소값의 합은 1이 된다. 이런 topic의 단어비중을 의미하는 $\phi_{k}$는 디리클레 분포를 따른 다는 가정을 취하므로 $\beta$의 영향을 받는다.</li>
 <li>$\theta_{d}$ : d번째 문서가 가진 topic 비중을 나타내는 벡터이다. 그러므로 전체 topic의 개수만큼의 길이 갖으며, 각 벡터는 확률을 의미하므로 합은 1이된다. 문서의 topic 비중 $\theta_{d}$는 디리클레 분포를 따른다는 가정을 취하므로 $\alpha$의 영향을 받는다.</li>
-<li>$\z_{d,n}$ : d번째 문서에서 n번째 단어가 어떤 topic인지를 나타내는 변수이다. 그러므로 이 변수는 d번째 문서의 topic 확률 분포인 $\theta_{d}$에 영향을 받는다.</li>
+<li>$ z_{d,n}$ : d번째 문서에서 n번째 단어가 어떤 topic인지를 나타내는 변수이다. 그러므로 이 변수는 d번째 문서의 topic 확률 분포인 $\theta_{d}$에 영향을 받는다.</li>
 <li>동그라미 : 변수를 의미</li>
 <li>화살표가 시작되는 변수는 조건, 화살표가 향하는 변수는 결과에 해당하는 변수</li>
 </ul>
@@ -338,12 +338,122 @@ ga('send', 'pageview');
 <ul>
 <li>예시를 들자면, 아래 Document-topic 행렬을 살펴보자. 3번째 문서에 속한 단어들은 가장 높은 확률값 0.625를 갖는 topic-2일 가능성이 높다. $w_{d,n}$은 d번째 문서 내에 n번째로 등장하는 단어를 의미하며, 동시에 우리가 유일하게 corpus에서 관찰할 수 있는 데이터이다. 이는 $\theta_{d}$와 $\z_{d,n}$에 동시에 영향을 받는다. 예를 들면, $z_{3,1}$가 topic-2이라고 가정했을 경우, $w_{3,1}$은 word-topic 행렬에서 보게되면 제일 높은 확률값 0.393을 갖는 ‘코로나 바이러스’일 가능성이 높다.</li>
 </ul>
-<h4 id="이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다"><a href="#이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다" class="headerlink" title="이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다."></a>이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다.</h4><p>Document-topic 행렬<br>| 문서  | topic-1 | topic-2 | topic-3 |<br>|———-|————-|————-|————-|<br>| 문서1 | 0.400   | 0.000   | 0.600   |<br>| 문서2 | 0.000   | 0.600   | 0.400   |<br>| 문서3 | 0.375   | 0.625   | 0.000   |</p>
-<p>word-topic 행렬<br>| 단어              | topic-1 | topic-2 | topic-3 |<br>|—————————-|————-|————-|————-|<br>| 코로나 바이러스   | 0.000   | 0.393   | 0.000   |<br>| 우한폐렴              | 0.000   | 0.313   | 0.000   |<br>| AWS               | 0.119   | 0.000   | 0.000   |<br>| 데이터 엔지니어링 | 0.181   | 0.000   | 0.000   |<br>| Hadoop            | 0.276   | 0.000   | 0.000   |<br>| Spark             | 0.142   | 0.000   | 0.000   |<br>| 낭만 닥터 김사부2 | 0.000   | 0.012   | 0.468   |<br>| tensorflow        | 0.282   | 0.000   | 0.000   |<br>| 마스크            | 0.000   | 0.282   | 0.000   |<br>| 사랑의 불시착     | 0.000   | 0.000   | 0.532   |<br>| 합                | 1.0     | 1.0     | 1.0     |</p>
+<h4 id="이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다"><a href="#이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다" class="headerlink" title="이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다."></a>이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다.</h4><h5 id="Document-topic-행렬"><a href="#Document-topic-행렬" class="headerlink" title="Document-topic 행렬"></a>Document-topic 행렬</h5><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>topic-1</th>
+<th>topic-2</th>
+<th>topic-3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>문서1</td>
+<td>0.400</td>
+<td>0.000</td>
+<td>0.600</td>
+</tr>
+<tr>
+<td>문서2</td>
+<td>0.000</td>
+<td>0.600</td>
+<td>0.400</td>
+</tr>
+<tr>
+<td>문서3</td>
+<td>0.375</td>
+<td>0.625</td>
+<td>0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h6 id="word-topic-행렬"><a href="#word-topic-행렬" class="headerlink" title="word-topic 행렬"></a>word-topic 행렬</h6><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>단어</th>
+<th>topic-1</th>
+<th>topic-2</th>
+<th>topic-3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>코로나 바이러스</td>
+<td>0.000</td>
+<td>0.393</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>우한폐렴</td>
+<td>0.000</td>
+<td>0.313</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>AWS</td>
+<td>0.119</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>데이터 엔지니어링</td>
+<td>0.181</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>Hadoop</td>
+<td>0.276</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>Spark</td>
+<td>0.142</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>낭만 닥터 김사부2</td>
+<td>0.000</td>
+<td>0.012</td>
+<td>0.468</td>
+</tr>
+<tr>
+<td>tensorflow</td>
+<td>0.282</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>마스크</td>
+<td>0.000</td>
+<td>0.282</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>사랑의 불시착</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.532</td>
+</tr>
+<tr>
+<td>합</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+</div>
 <ul>
 <li>실제 관찰 가능한 corpus를 가지고 알고 싶은 topic의 word 분포, 문서의 topic 분포를 추정하는 과정을 통해 LDA는 학습한다. 즉, <code>topic의 word 분포와 문서의 topic 분포의 결합 확률이 커지는 방향으로 학습을 한다는 의미</code>이다.</li>
 </ul>
-<h5 id="LDA의-단어-생성-과정"><a href="#LDA의-단어-생성-과정" class="headerlink" title="LDA의 단어 생성 과정"></a>LDA의 단어 생성 과정</h5><script type="math/tex; mode=display">p($\phi_{1:K}, \theta_{1:D}, z_{1:D}, w_{1:D}) =</script><script type="math/tex; mode=display">\prod^{K}_{i=1} p(\phi_{i}|\beta) \prod^{D}_{d=1} p(\theta_{d}|\alpha) \left(\prod^{N}_{n=1} p(z_{d,n}|\theta_{d}) p(w_{d,n}|\phi_{1:K}, z_{d, n}) \right)</script><ul>
+<h5 id="LDA의-단어-생성-과정"><a href="#LDA의-단어-생성-과정" class="headerlink" title="LDA의 단어 생성 과정"></a>LDA의 단어 생성 과정</h5><script type="math/tex; mode=display">p(\phi_{1:K}, \theta_{1:D}, z_{1:D}, w_{1:D}) =</script><script type="math/tex; mode=display">\prod^{K}_{i=1} p(\phi_{i}|\beta) \prod^{D}_{d=1} p(\theta_{d}|\alpha) \left(\prod^{N}_{n=1} p(z_{d,n}|\theta_{d}) p(w_{d,n}|\phi_{1:K}, z_{d, n}) \right)</script><ul>
 <li>우리가 구해야할 사후확률 분포는 $ p(z, \phi, \theta|w) = p(z, \phi, \theta, w)/p(w)$를 최대로 만드는 $ z, \phi, \theta$를 찾아야 한다. 이 사후확률을 직접 계산하려면 분자도 계산하기 어렵겠지만 분모가 되는 $ p(w)$도 반드시 구해야 확률값으로 만들어 줄 수 있다. $ p(w)$는 잠재변수 $ z, \phi, \theta$의 모든 경우의 수를 고려한 각 단어(w)의 등장 확률을 의미하는데, $ z, \phi, \theta$를 직접 관찰하는 것은 불가능하다. 이러한 이유로 <code>깁스 샘플링(gibbs sampling)</code>같은 표본 추출 기법을 사용해 사후확률을 근사시키게 된다. 깁스 샘플링이란 <code>나머지 변수는 고정시킨 채 하나의 랜덤변수만을 대상으로 표본을 뽑는 기법</code>이다. LDA에서는 사후확률 분포 $ p(z, \phi, \theta|w)$를 구할 때 topic의 단어 분포($\phi$)와 문서의 topic 분포($\theta$)를 계산에서 생략하고 topic(z)만을 추론한다. <code>z만 알 수 있으면 나미저 변수를 이를 통해 계산 할 수 있도록 설계 했기 때문이다.</code></li>
 </ul>
 <h5 id="깁스-샘플링을-활용한-LDA"><a href="#깁스-샘플링을-활용한-LDA" class="headerlink" title="깁스 샘플링을 활용한 LDA"></a>깁스 샘플링을 활용한 LDA</h5><script type="math/tex; mode=display">p(z_{d, i} = j|z_{-i}, w) = \frac{ n_{d,k} + \alpha_{j} }{ \sum^{K}_{i=1} (n_{d,i}) + \alpha_{i} } \times \frac{ v_{k, w_{d,n} } + \beta_{w_{d,n}} }{ \sum^{V}_{ㅓ=1} ( v_{k,j} + \beta_{j} ) } = AB</script><h6 id="LDA-변수-표기법"><a href="#LDA-변수-표기법" class="headerlink" title="LDA 변수 표기법"></a>LDA 변수 표기법</h6><div class="table-container">
@@ -394,6 +504,9 @@ ga('send', 'pageview');
 </tbody>
 </table>
 </div>
+<h4 id="LDA와-깁스-샘플링"><a href="#LDA와-깁스-샘플링" class="headerlink" title="LDA와 깁스 샘플링"></a>LDA와 깁스 샘플링</h4><ul>
+<li>LDA가 각 단어에 잠재된 주제를 추론하는 방식을 살펴본다.</li>
+</ul>
 
         </div>
         <footer class="article-footer">
@@ -490,7 +603,7 @@ Neural Network
 Doc2Vec
 ELMo
 GPT (tran"
-        "wordCount": 4981
+        "wordCount": 4688
     }
 </script>
 
