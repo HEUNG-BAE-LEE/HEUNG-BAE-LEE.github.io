@@ -6,25 +6,30 @@
     
 
     
-    <title>Tag: CS231n | DataLatte&#39;s IT Blog</title>
+    <title>NLP 문장 수준 임베딩 - 01 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
+        <meta name="keywords" content>
     
-    <meta name="description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DataLatte&#39;s IT Blog">
-<meta property="og:url" content="https://heung-bae-lee.github.io/tags/CS231n/index.html">
+    
+    <meta name="description" content="ELMo(Embedding from Language Models) 미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목받았다. Transf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 문장 수준 임베딩 - 01">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/08/NLP_09/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta property="og:description" content="ELMo(Embedding from Language Models) 미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목받았다. Transf">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/ELMo_bidirectional_LSTM.png">
+<meta property="og:updated_time" content="2020-02-07T20:28:09.884Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DataLatte&#39;s IT Blog">
-<meta name="twitter:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta name="twitter:title" content="NLP 문장 수준 임베딩 - 01">
+<meta name="twitter:description" content="ELMo(Embedding from Language Models) 미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목받았다. Transf">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/ELMo_bidirectional_LSTM.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/tags/cs231n/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/08/nlp_09/">
 
     
 
@@ -157,7 +162,7 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>Tag: <em>CS231n</em>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
 
@@ -171,49 +176,187 @@ ga('send', 'pageview');
 });
 </script>
 
-			    
-
-    
-    
+			    <article id="post-NLP_09" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2019-07-29T07:22:55.000Z" itemprop="datePublished">2019-07-29</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/07/29/cs231n_10/">[CS231n]Lecture10-Recurrent Neural Networks</a>
+        NLP 문장 수준 임베딩 - 01
         </h1>
     
 
-        <p class="article-excerpt">
-            
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/02/08/NLP_09/" class="article-date">
+            <time datetime="2020-02-07T16:02:58.000Z" itemprop="datePublished">2020-02-08</time>
+        </a>
     </div>
-</article>
-    
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="ELMo-Embedding-from-Language-Models"><a href="#ELMo-Embedding-from-Language-Models" class="headerlink" title="ELMo(Embedding from Language Models)"></a>ELMo(Embedding from Language Models)</h2><ul>
+<li><p>미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. <code>Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목</code>받았다. Transfer learning이란 이미 학습된 모델을 다른 Deep learning 모델의 입력값 또는 부분으로 재사용하는 기법을 일컫는다. ELMo가 제안된 이후 자연어 처리 분야에서는 모델을 Pretrain한 후 이를 각종 DownStream Task에 적용하는 양상이 일반화됐다. BERT(Bidirectional Encoder Representations from Transfomer), GPT(Generative Pre-Training)등이 이 방식을 따른다. <code>Pretrain한 모델을 downstream task에 맞게 업데이트하는 과정을 Fine-tuning</code>이라고 한다.</p>
+</li>
+<li><p>ELMo는 Language Model이다. 단어 sequence가 얼마나 자연스러운지 확률값을 부여한다. 예를들어, ‘발 없는 말이 천리’라는 단어 sequence 다음에 ‘간다’라는 단어가 자주 등장했다면, 모델은 ‘발 없는 말이 천리’를 일력박아 ‘간다’를 출력해야 한다.</p>
+</li>
+<li><p>ELMo는 크게 3가지 요소로 구성돼 있다.</p>
+<ul>
+<li>1) <code>문자 단위 Convolution Layer</code><ul>
+<li>각 단어 내 <code>문자들 사이의 의미적, 문법적 관계를 도출</code>한다.</li>
+</ul>
+</li>
+<li>2) <code>양방향 LSTM Layer</code><ul>
+<li><code>단어들 사이의 의미적, 문법적 관계를 추출해내는 역할</code>을 한다.</li>
+</ul>
+</li>
+<li>3) <code>ELMo Layer</code><ul>
+<li>문자 단위 convolution Layer와 양방야 LSTM Layer는 ELMo를 Pretrain하는 과정에서 학습된다. 하지만 <code>ELMo Layer는 Pretrain이 끝난 후 구체적인 DownStream task를 수행하는 과정에 학습</code>된다.</li>
+<li><code>문자단위 conv layer와 양방향 LSTM layer의 출력벡터등을 가중합하는 방식으로 계산</code>된다. 이들 가중치들은 downstream task의 학습 손실을 최소화하는 방향으로 업데이트되면서 학습된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="문자-단위-Convolution-Layer"><a href="#문자-단위-Convolution-Layer" class="headerlink" title="문자 단위 Convolution Layer"></a>문자 단위 Convolution Layer</h4><ul>
+<li><p><code>ELMo 입력은 문자</code>다 구체적으로는 <code>유니코드 ID</code>이다. 그러므로 <code>corpus를 해당 단어를 유니코드로 변환</code>해야한다. 한글 유니코드 블록은 UTF-8에서 3byte로 표현되기 때문에 예를 들어 ‘밥’이라는 단어의 유니코드를 10진수로 바꾸면 3가지 숫자가 된다. 여기서 단어(문자가 아님)의 시작과 끝을 알게하기 위해 BOW와 EOW에 해당하는 값을 유니코드 앞 뒤로 붙인다. 이후에 문자 임베딩 행렬에서 각각의 ID에 해당하는 행 벡터를 참조해 붙인다. 문자의 길이가 각각 다르므로 처음에 문자의 최대 길이를 정해주면 그에따른 padding처리를 해준다. Convolution filter의 크기는 (같이 보고 싶은 문자길이) $\times$ (문자 임베딩의 차원 수)가 된다. 이를통해 피처맵을 얻고 여기서 max pooling을 해주어 결과를 낸다.</p>
+</li>
+<li><p>위에서 같이 보고 싶은 문자길이를 조정해 가면서 여러개의 filter를 사용해 얻은 풀링 벡터들을 concatenate한 뒤 highway network와 projection(차원 조정)을 한다.</p>
+</li>
+</ul>
+<h4 id="양방향-LSTM-스코어-레이어"><a href="#양방향-LSTM-스코어-레이어" class="headerlink" title="양방향 LSTM, 스코어 레이어"></a>양방향 LSTM, 스코어 레이어</h4><ul>
+<li>문자 단위 convolution layer가 반환 한 단어벡터 sequence(맨 하단의 보라색 벡터들)에서 시작과 끝을 알이는 <bos>, <eos> 토큰을 앞 뒤로 붙인 뒤 학습 시킨다. 순방향 LSTM layer와 역방향 LSTM layer에 모두 위의 벡터 sequence들을 입력하는데 각각 n개의 LSTM layer를 구성한다. ELMo 기본 모델은 n=2로 설정하고 있다. <code>ELMo에는 LSTM layer에 residual connection 구조를 적용</code>시켜 일부 계산 노드를 생략하게하여 효율적인 Gradient 전파를 돕는다. 프리트레인 단계에서 Word2vec에서 사용되었던 negative sampling 기법이 사용된다.</eos></bos></li>
+</ul>
+<p><img src="/image/ELMo_bidirectional_LSTM.png" alt="ELMo 양방향 LSTM 및 출력 레이어"></p>
+<h4 id="ELMo-레이어"><a href="#ELMo-레이어" class="headerlink" title="ELMo 레이어"></a>ELMo 레이어</h4><ul>
+<li><p>ELMo 입베딩은 Pretrain이 끝나고 구체적인 DownStream task를 학습하는 과정에서 도출되며, <code>각 layer별 hidden state를 가중합한 결과</code>이다. 임의의 task를 수행하기 위한 문장 k번째 Token의 ELMo 임베딩의 구체적인 수식은 다음과 같다.</p>
+<ul>
+<li>$h_{k,j}^{LM}$ : k번째 Token의 j번째 layer의 순방향, 역방향 LSTM hidden state를 concatenate한 벡터를 의미한다.</li>
+<li>$s_{j}^{task}$ : j번째 layer가 해당 task 수행에 얼마나 중요한지를 의미하는 scalar값이다. downstream task를 학습하는 과정에서 loss를 최소화하는 방향을 업데이트한다.</li>
+<li>$\gamma^{task}$ : ELMo 벡터의 크기를 scaling하여 해당 task 수행을 돕는 역할을 한다.</li>
+<li>L : 양방향 LSTM layer 개수(보통 2로 설정함)<ul>
+<li>j=0 -&gt; 문자 단위 convolution Layer</li>
+<li>j=1 -&gt; 양방향 LSTM layer의 첫번째 출력</li>
+<li>j=2 -&gt; 양방향 LSTM layer의 두번째 출력</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">ELMo_{k}^{task} = \gamma^{task} \sum^{L}_{j=0} s_{j}^{task} h_{k,j}^{LM}</script>
         </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- data-ad-client="ca-pub-4604833066889492" -->
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-4604833066889492",
+    enabel_page_level_ads: true
+});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "NLP 문장 수준 임베딩 - 01",
+        "image": "https://heung-bae-lee.github.io/image/ELMo_bidirectional_LSTM.png",
+        "keywords": "",
+        "genre": "NLP",
+        "datePublished": "2020-02-08",
+        "dateCreated": "2020-02-08",
+        "dateModified": "2020-02-08",
+        "url": "https://heung-bae-lee.github.io/2020/02/08/NLP_09/",
+        "description": "ELMo(Embedding from Language Models)
+미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목받았다. Transf"
+        "wordCount": 493
+    }
+</script>
+
+</article>
+
+    <section id="comments">
     
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
 
-
-    </div></section>
+    
+    </section>
 
 
 
@@ -243,6 +386,19 @@ ga('send', 'pageview');
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/02/06/NLP_08/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">NLP 문장 수준 임베딩 - 01</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -405,11 +561,13 @@ ga('send', 'pageview');
     var disqus_shortname = 'hexo-theme-hueman';
     
     
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/08/NLP_09/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>

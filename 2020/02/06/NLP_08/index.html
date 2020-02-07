@@ -6,7 +6,7 @@
     
 
     
-    <title>NLP 문장 수준 임베딩 | DataLatte&#39;s IT Blog</title>
+    <title>NLP 문장 수준 임베딩 - 01 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -15,15 +15,15 @@
     
     <meta name="description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NLP 문장 수준 임베딩">
+<meta property="og:title" content="NLP 문장 수준 임베딩 - 01">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/06/NLP_08/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/read_lines.png">
-<meta property="og:updated_time" content="2020-02-07T16:00:29.647Z">
+<meta property="og:updated_time" content="2020-02-07T19:58:36.698Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NLP 문장 수준 임베딩">
+<meta name="twitter:title" content="NLP 문장 수준 임베딩 - 01">
 <meta name="twitter:description" content="참고로 이 모든 내용은 이기창 님의 한국어 임베딩이라는 책을 기반으로 작성하고 있다.문장 수준 임베딩 크게는 행렬 분해, 확률 모형, Neural Network 기반 모델 등 세 종류를 소개할 것이다.  행렬 분해  LSA(잠재 의미 분석)   확률 모형  LDA(잠재 디리클레 할당)   Neural Network  Doc2Vec ELMo GPT (tran">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/read_lines.png">
 <meta property="fb:app_id" content="100003222637819">
@@ -183,7 +183,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        NLP 문장 수준 임베딩
+        NLP 문장 수준 임베딩 - 01
         </h1>
     
 
@@ -284,7 +284,7 @@ ga('send', 'pageview');
 </li>
 <li>$h$ : 벡터 sequence가 주어졌을 때 평균을 취하거나 concatenate하여 고정된 길이의 벡터 하나를 반환하는 역할을 하는 함수이다.</li>
 </ul>
-<script type="math/tex; mode=display">L = frac{1}{T} \sum^{T-k}-{t=k} log(w_{t}|w_{t-k}, \cdots, w_{t-1})</script><h5 id="Doc2Vec-언어-모델-Score-계산"><a href="#Doc2Vec-언어-모델-Score-계산" class="headerlink" title="Doc2Vec 언어 모델 Score 계산"></a>Doc2Vec 언어 모델 Score 계산</h5><script type="math/tex; mode=display">P(w_{t}| w_{t-k}, \cdots, w_{t-1}) = \frac{exp(y_{w_{t}})}{\sum_{i} exp(y_{i})}</script><script type="math/tex; mode=display">y = b + U \cdot h(w_{t-k}, \cdots, w_{t-1}; W)</script><ul>
+<script type="math/tex; mode=display">L = frac{1}{T} \sum^{T-1}-{t=k} log(w_{t}|w_{t-k}, \cdots, w_{t-1})</script><h5 id="Doc2Vec-언어-모델-Score-계산"><a href="#Doc2Vec-언어-모델-Score-계산" class="headerlink" title="Doc2Vec 언어 모델 Score 계산"></a>Doc2Vec 언어 모델 Score 계산</h5><script type="math/tex; mode=display">P(w_{t}| w_{t-k}, \cdots, w_{t-1}) = \frac{exp(y_{w_{t}})}{\sum_{i} exp(y_{i})}</script><script type="math/tex; mode=display">y = b + U \cdot h(w_{t-k}, \cdots, w_{t-1}; W)</script><ul>
 <li>위의 초기 구조에서 <code>문서 id를 추가해 이전 k개 단어들과 문서 id를 넣어서 다음 단어를 예측</code>하게 했다. <code>y를 계산할 때 D라는 문서 행렬(Paragraph matrix)에서 해당 문서 ID에 해당하는 벡터를 참조해 h 함수에 다른 단어 벡터들과 함께 입력하는 것 외에 나머지 과정은 동일</code>하다. 이런 구조를 <code>PV-DM(the Distributed Memory Model of Paragraph Vectors)</code>이라고 부른다. 학습이 종료되면 문서 수 $\times$ 임베딩 차원 수 크기를 가지는 문서 행렬 D를 각 문서의 임베딩으로 사용한다. 이렇게 만든 <code>문서 임베딩이 해당 문서의 주제 정보를 함축한다고 설명</code>한다. <code>PV-DM은 단어 등장 순서를 고려하는 방식으로 학습하기 때문에 순서 정보를 무시하는 Bag of Words 기법 대비 강점이 있다고 할 수 있을 것</code>이다.</li>
 </ul>
 <p><img src="/image/Doc2vec_model_principal.png" alt="Doc2vec 모델"></p>
@@ -353,7 +353,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/graphical_model_LDA.png" alt="graphical model로 표현한 LDA"></p>
 <ul>
-<li>예시를 들자면, 아래 Document-topic 행렬을 살펴보자. 3번째 문서에 속한 단어들은 가장 높은 확률값 0.625를 갖는 topic-2일 가능성이 높다. $w_{d,n}$은 d번째 문서 내에 n번째로 등장하는 단어를 의미하며, 동시에 우리가 유일하게 corpus에서 관찰할 수 있는 데이터이다. 이는 $\theta_{d}$와 $\z_{d,n}$에 동시에 영향을 받는다. 예를 들면, $z_{3,1}$가 topic-2이라고 가정했을 경우, $w_{3,1}$은 word-topic 행렬에서 보게되면 제일 높은 확률값 0.393을 갖는 ‘코로나 바이러스’일 가능성이 높다.</li>
+<li>예시를 들자면, 아래 Document-topic 행렬을 살펴보자. 3번째 문서에 속한 단어들은 가장 높은 확률값 0.625를 갖는 topic-2일 가능성이 높다. $w_{d,n}$은 d번째 문서 내에 n번째로 등장하는 단어를 의미하며, 동시에 우리가 유일하게 corpus에서 관찰할 수 있는 데이터이다. 이는 $\phi_{k}$와 $\z_{d,n}$에 동시에 영향을 받는다. 예를 들면, $z_{3,1}$가 topic-2이라고 가정했을 경우, $w_{3,1}$은 word-topic 행렬에서 보게되면 제일 높은 확률값 0.393을 갖는 ‘코로나 바이러스’일 가능성이 높다.</li>
 </ul>
 <h4 id="이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다"><a href="#이처럼-LDA는-topic의-word-분포-phi-와-문서의-topic-분포-theta-의-결합으로-문서-내-단어들이-생성된다고-가정한다" class="headerlink" title="이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다."></a>이처럼 LDA는 topic의 word 분포($\phi$)와 문서의 topic 분포($\theta$)의 결합으로 문서 내 단어들이 생성된다고 가정한다.</h4><h5 id="Document-topic-행렬"><a href="#Document-topic-행렬" class="headerlink" title="Document-topic 행렬"></a>Document-topic 행렬</h5><div class="table-container">
 <table>
@@ -679,10 +679,13 @@ ga('send', 'pageview');
 </table>
 </div>
 <ul>
-<li>p($ z_{1,2} $)는 A와 B의 곱으로 도출된다. A값은 파란색 영역을 의미하며, 문서 내 단어들의 topic 분포에($\theta$)에 영향을 받는다. 또한, B값은 topic의 단어 분포($\phi$)에 영향을 받는다. A와 B를 각각 직사각형의 높이와 너비로 둔다면, p($ z_{1,2} $)는 아래와 같이 직사각형의 넓이로 이해할 수 있다. 이와 같은 방식으로 모든 문서, 모든 단어에 관해 깁스 샘플링을 수행하면 모든 단어마다 topic을 할당해줄 수가 있게 된다. 즉, word-topic 행렬을 완성할 수 있다는 것이다. <code>보통 1,000회 ~ 10,000회 반복  수행하면 그 결과가 수렴한다고 하며, 이를 토대로 문서의 topic 분포, topic 단어 분포 또한 구할 수 있게 된다.</code> $\theta$의 경우 각 문서에 어떤 단어사 쓰였는지 조사해 그 단어의 topic 분포를 더해주는 방식으로 계산한다.</li>
+<li>p($ z_{1,2} $)는 A와 B의 곱으로 도출된다. A값은 파란색 영역을 의미하며, 문서 내 단어들의 topic 분포에($\theta$)에 영향을 받는다. 또한, B값은 topic의 단어 분포($\phi$)에 영향을 받는다. A와 B를 각각 직사각형의 높이와 너비로 둔다면, p($ z_{1,2} $)는 아래와 같이 직사각형의 넓이로 이해할 수 있다. 이와 같은 방식으로 모든 문서, 모든 단어에 관해 깁스 샘플링을 수행하면 모든 단어마다 topic을 할당해줄 수가 있게 된다. 즉, word-topic 행렬을 완성할 수 있다는 것이다. <code>보통 1,000회 ~ 10,000회 반복  수행하면 그 결과가 수렴한다고 하며, 이를 토대로 문서의 topic 분포, topic 단어 분포 또한 구할 수 있게 된다.</code> $\theta$의 경우 각 문서에 어떤 단어사 쓰였는지 조사해 그 단어의 topic 분포를 더해주는 방식으로 계산한다. 사용자가 지정하는 하이퍼파라메터 α 존재 덕분에 A가 아예 0으로 되는 일을 막을 수 있게 된다. 일종의 smoothing 역할을 한다. 따라서 <code>α가 클수록 토픽들의 분포가 비슷해지고, 작을 수록 특정 토픽이 크게 나타나게 된다. 이는 β가 B에서 차지하는 역할도 동일</code>하다.</li>
 </ul>
 <p><img src="/image/LDA_probability_with_gibbs_sampling.png" alt="문서 1 두 번째 단어의 topic 추론"></p>
-<h3 id="LDA-실습"><a href="#LDA-실습" class="headerlink" title="LDA 실습"></a>LDA 실습</h3><h4 id="데이터-소개"><a href="#데이터-소개" class="headerlink" title="데이터 소개|"></a>데이터 소개|</h4><ul>
+<h4 id="최적-토픽-수-찾기"><a href="#최적-토픽-수-찾기" class="headerlink" title="최적 토픽 수 찾기"></a>최적 토픽 수 찾기</h4><ul>
+<li>LDA의 토픽수 K는 여러 실험을 통해 사용자가 지정하는 미지수인 hyper parameter이다. 최적 토픽수를 구하는 데 쓰는 Perplexity 지표있다. p(w)는 클수록 좋은 inference이므로 exp(−log(p(w)))는 작을수록 좋다. 따라서 토픽 수 K를 바꿔가면서 <code>Perplexity를 구한 뒤 가장 작은 값을 내는 K를 최적의 토픽수로 삼으면 된다.</code></li>
+</ul>
+<script type="math/tex; mode=display">Perplexity(w)=exp\left[ -\frac { log\left\{ p(w) \right\}  }{ \sum _{ d=1 }^{ D }{ \sum _{ j=1 }^{ V }{ { n }^{ jd } }  }  }  \right]</script><h3 id="LDA-실습"><a href="#LDA-실습" class="headerlink" title="LDA 실습"></a>LDA 실습</h3><h4 id="데이터-소개"><a href="#데이터-소개" class="headerlink" title="데이터 소개|"></a>데이터 소개|</h4><ul>
 <li>네이버 영화 corpus를 soynlp로 띄어쓰기 교정한 결과를 LDA의 학습 데이터로 사용할 것이다.</li>
 </ul>
 <ul>
@@ -814,7 +817,7 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "NLP 문장 수준 임베딩",
+        "headline": "NLP 문장 수준 임베딩 - 01",
         "image": "https://heung-bae-lee.github.io/image/read_lines.png",
         "keywords": "",
         "genre": "NLP",
@@ -840,7 +843,7 @@ Neural Network
 Doc2Vec
 ELMo
 GPT (tran"
-        "wordCount": 6563
+        "wordCount": 6685
     }
 </script>
 
@@ -888,6 +891,16 @@ GPT (tran"
         
 <nav id="article-nav">
     
+        <a href="/2020/02/08/NLP_09/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            NLP 문장 수준 임베딩 - 01
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/2020/02/01/NLP_06/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
@@ -914,7 +927,16 @@ GPT (tran"
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/02/06/NLP_08/" class="title">NLP 문장 수준 임베딩</a></p>
+                            <p class="item-title"><a href="/2020/02/08/NLP_09/" class="title">NLP 문장 수준 임베딩 - 01</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:02:58.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/06/NLP_08/" class="title">NLP 문장 수준 임베딩 - 01</a></p>
                             <p class="item-date"><time datetime="2020-02-05T15:32:51.000Z" itemprop="datePublished">2020-02-06</time></p>
                         </div>
                     </li>
@@ -946,15 +968,6 @@ GPT (tran"
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/01/29/NLP_03/" class="title">NLP 실습 텍스트 분류 -01</a></p>
-                            <p class="item-date"><time datetime="2020-01-29T14:40:09.000Z" itemprop="datePublished">2020-01-29</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -964,7 +977,7 @@ GPT (tran"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -974,7 +987,7 @@ GPT (tran"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
