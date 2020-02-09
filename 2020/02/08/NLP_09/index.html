@@ -21,7 +21,7 @@
 <meta property="og:description" content="ELMo(Embedding from Language Models) 미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목받았다. Transf">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/ELMo_bidirectional_LSTM.png">
-<meta property="og:updated_time" content="2020-02-07T20:28:09.884Z">
+<meta property="og:updated_time" content="2020-02-09T12:22:21.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 문장 수준 임베딩 - 01">
 <meta name="twitter:description" content="ELMo(Embedding from Language Models) 미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목받았다. Transf">
@@ -65,7 +65,8 @@ ga('send', 'pageview');
     
 
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- data-ad-client="ca-pub-4604833066889492" -->
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({
@@ -167,7 +168,8 @@ ga('send', 'pageview');
 </div>
 
                         <div class="main-body-content">
-                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- data-ad-client="ca-pub-4604833066889492" -->
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({
@@ -253,9 +255,36 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
-<script type="math/tex; mode=display">ELMo_{k}^{task} = \gamma^{task} \sum^{L}_{j=0} s_{j}^{task} h_{k,j}^{LM}</script>
+<script type="math/tex; mode=display">ELMo_{k}^{task} = \gamma^{task} \sum^{L}_{j=0} s_{j}^{task} h_{k,j}^{LM}</script><h2 id="트랜스포메-네트워크"><a href="#트랜스포메-네트워크" class="headerlink" title="트랜스포메 네트워크"></a>트랜스포메 네트워크</h2><ul>
+<li>트랜스포머 네트워크는 구글 연구 팀이 NIPS에 공개한 딥러닝 아키텍처다. 뛰어난 성능으로 주목받았다. 이후 발표된 GPT, BERT 등 기법은 트랜스포머 블록을 기본 모델로 쓰고 있다. 크게 두가지 작동원리로 나눌수 있다. <code>Multi-head Attention</code>과 <code>feedforward Network</code>이다.</li>
+</ul>
+<p><img src="/image/transformer_mechanism_structure_image.png" alt="트랜스포머 구조"></p>
+<h3 id="Scaled-Dot-Product-Attention"><a href="#Scaled-Dot-Product-Attention" class="headerlink" title="Scaled Dot-Product Attention"></a>Scaled Dot-Product Attention</h3><ul>
+<li>Scaled Dot-Product Attention의 입력(x)는 기본적으로 행렬 형태를 가지며 그 크기는 입력 문장의 단어수 $\times$ 입력 임베딩의 차원 수이다. 트랜스 포어믜 Scaled Dot-Product Attention 매커니즘은 query, key, value 3가지 사이의 관계가 핵심이다. 입력행렬 X와 Query, Key, Value에 따르는 가중치 행렬($W^{q}, W^{k}, W^{v}$)을 각각 곱해 계산한다. 이후 query와 key가 얼마나 유사한지를 구하기 위해 두 벡터간 내적을 구해 코사인 유사도를 구한다. 이를 통해 <code>어떤 query와 key가 특정 task 수행에 중요한 역할을 하고 있다면 트랜스포머 블록은 이들 사이의 내적값을 키우는 방식으로 학습</code>한다. 아래 식에서 제곱근 스케일을 하는 이유는 <code>query-key 내적 행렬의 분산을 줄이게 돼 softmax 함수의 gradient가 지나치게 작아지는 것을 방지</code>할 수 있기 때문이다. softmax 노드의 gradient는 softmax 확률 벡터 y의 개별 요소 값에 아주 민감하기 때문에 softmax 확률 벡터의 일부 값이 지나치게 작다면 gradient vanishing 문제가 나타날 수 있다.  </li>
+</ul>
+<h5 id="Scaled-Dot-Product-Attention-1"><a href="#Scaled-Dot-Product-Attention-1" class="headerlink" title="Scaled Dot-Product Attention"></a>Scaled Dot-Product Attention</h5><script type="math/tex; mode=display">Attention(Q, K, V) = softmax(\frac{QK^{T}}{\sqrt(d_{k})}) \cdot V</script><h5 id="소프트맥스-노드의-gradient"><a href="#소프트맥스-노드의-gradient" class="headerlink" title="소프트맥스 노드의 gradient"></a>소프트맥스 노드의 gradient</h5><script type="math/tex; mode=display">\frac{\delta y_{i}}{\delta x_{i}} = y_{i}(1-y_{i})</script><script type="math/tex; mode=display">\frac{\delta y_{i}}{\delta x_{j}} = -y_{i}y_{j}</script><p><img src="/image/Scaled_dot_product_Attention_mechanism_weighted_matrix.png" alt="Scaled Dot-Product Attention"></p>
+<ul>
+<li>아래 그림은 Scaled Dot-Product Attention 기법으로 Query, Key, Value 사이의 관계들이 농축된 새로운 Z를 만드는 예시이다. 파란색 선으로 둘러싸인 행렬은 Query, Key 내적을 $\sqrt(d_{k})$로 나눈 뒤 softmax 함수를 취한 결과이다. 이 행렬의 <code>행은 Query 단어들에 대응</code>하며, <code>열은 Key 단어들에 대응</code>한다. 아래 그림처럼 Query와 Key값이 동일한 attention을 self-attention이라고 한다. <code>이는 같은 문장 내 모든 단어 쌍 사이의 의미적, 문법적 관계를 포착해낸다는 의미</code>이다. softmax를 취한 결과는 확률이 된다. 따라서 각 행의 합은 1이다. <code>&#39;드디어-금요일&#39;값이 가장 높아 벡터 공간상에서도 가까이 있을 가능성이 높고 두 단어사이의 관계가 task 수행(번역, 분류등)에  중요하다는 이야기</code>이다. 마지막으로는 softmax 확률을 가중치 삼아 각 값 벡터들을 가중합하는 것과 같다. <code>새롭게 만들어진 &#39;드디어&#39;에 해당하는 벡터는 해당 문장 내 단어 쌍간 관계가 모두 농축된 결과이다.</code></li>
+</ul>
+<p><img src="/image/Scaled_Dot_Product_Attention_example.png" alt="Scaled Dot-Product Attention"></p>
+<ul>
+<li>self-attention은 RNN, CNN보다 장점이 많다. CNN의 경우 사용자가 지정한 window내의 context만 살피기 때문에 문장이 길고 처음 단어와 마지막 단어 사이의 연관성 파악이 task 수행에 중요한 데이터라면 해결하기 어렵다. RNN은 sequence의 길이가 길어질수록 gradient vanishing이 일어나기 쉽기 때문에 처음 입력받았던 단어를 기억하기 쉽지 않다. 하지만 <code>self-attention은 문장 내 모든 단어쌍 사이의 관계를 늘 전체적으로 파알할 수 있다.</code></li>
+</ul>
+<h3 id="Multi-Head-Attention"><a href="#Multi-Head-Attention" class="headerlink" title="Multi-Head Attention"></a>Multi-Head Attention</h3><ul>
+<li><code>Scaled Dot-Product Attention을 여러 번 시행하는 것</code>을 가리킨다. <code>동일한 문장을 여러 명의 독자가 동시에 분석해 최선의 결과를 내려고 하는 것에 비유</code>할 수 있다. Multi-Head attention의 계산 과정은 아래의 수식과 그림과 같이 이루어진다. Query, Key, Value를 Scaled Dot-Product를 통해 얻은 Attention Value를 concatenate한다. 그 후 여기에 $W^{0}$를 내적해 <code>Multi-Head Attention 수행 결과 행렬의 크기를 Scaled Dot-Product Attention의 입력 행렬과 동일하게 맞춘다.</code></li>
+</ul>
+<h5 id="Multi-Head-Attention-수식"><a href="#Multi-Head-Attention-수식" class="headerlink" title="Multi-Head Attention 수식"></a>Multi-Head Attention 수식</h5><script type="math/tex; mode=display">MultiHead(Q, K, V) = Concat(head_{1}, \cdots, head_{h})W^{0}</script><script type="math/tex; mode=display">head_{i} = Attention(QW^{Q}_{i}, KW^{K}_{i}, VW^{V}_{i})</script><p><img src="/image/multi_head_attention_structure_NLP.png" alt="Multi-Head Attention"></p>
+<h3 id="Position-wise-Feedforward-Networks"><a href="#Position-wise-Feedforward-Networks" class="headerlink" title="Position-wise Feedforward Networks"></a>Position-wise Feedforward Networks</h3><ul>
+<li>Multi-Head Attention Layer의 입력 행렬과 출력 행렬의 크기는 입력 단어 수 $\times$ 히든 벡터 차원 수로 동일하다. Position-wise Feedforward Networks Layer에서는 Multi-Head Attention Layer의 출력 행렬을 행 벡터 단위로, 다시 말해 단어 벡터 각각에 관해 아래의 수식을 적용한다. Multi-Head Layer의 출력 행렬 가운데 하나의 단어 벡터를 x라고 하자. 이 x에 관해 두 번의 선형변환을 하는데 그 사이에 activation을 해서 적용한다.</li>
+</ul>
+<h5 id="Position-wise-Feedforward-Networks-수식"><a href="#Position-wise-Feedforward-Networks-수식" class="headerlink" title="Position-wise Feedforward Networks 수식"></a>Position-wise Feedforward Networks 수식</h5><script type="math/tex; mode=display">FFN(x) = max(0, x \cdot W_{1} + b_{1})W_{2} + b_{2}</script><h3 id="트랜스포머의-학습-전략"><a href="#트랜스포머의-학습-전략" class="headerlink" title="트랜스포머의 학습 전략"></a>트랜스포머의 학습 전략</h3><ul>
+<li>트랜스포머의 학습 전략은 warm up이다. 아래 그림과 같이 <code>사용자가 정한 step수에 이르기 까지 learning rate를 높였다가 step 수를 만족하면 조금씩 떨어끄리는 방식</code>이다. 대규모 데이터, 큰 모델 학습에 적합하다. 이 전략은 BERT 등 이후 제안된 모델에도 널리 쓰이고 있다. 이밖에 Layer Normalization 등도 transformer의 안정적인 학습에 기여하고 있는 것으로 보인다. 좀더 자세한 사항을 알고 싶다면 <a href="https://heung-bae-lee.github.io/2020/01/21/deep_learning_10/">여기</a>를 눌러 공부해보자.</li>
+</ul>
+<p><img src="/image/warm_up_step.png" alt="warm up 트랜스포머의 learning rate 조정 방식"></p>
+
         </div>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- data-ad-client="ca-pub-4604833066889492" -->
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({
@@ -338,11 +367,11 @@ ga('send', 'pageview');
         "genre": "NLP",
         "datePublished": "2020-02-08",
         "dateCreated": "2020-02-08",
-        "dateModified": "2020-02-08",
+        "dateModified": "2020-02-09",
         "url": "https://heung-bae-lee.github.io/2020/02/08/NLP_09/",
         "description": "ELMo(Embedding from Language Models)
 미국 연구기관 Allen Institute for Artificial Intelligence와 미국 워싱턴대학교 공동연구팀이 발표한 문장 임베딩 기법이다. Computer vision 분야에서 널리 쓰이고 있었던 Transfer leaning을 자연어 처리에 접목하여 주목받았다. Transf"
-        "wordCount": 493
+        "wordCount": 1132
     }
 </script>
 
@@ -520,7 +549,8 @@ ga('send', 'pageview');
             
         
     </div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- data-ad-client="ca-pub-4604833066889492" -->
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({
