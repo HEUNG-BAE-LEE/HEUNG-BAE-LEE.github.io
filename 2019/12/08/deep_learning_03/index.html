@@ -168,14 +168,16 @@ ga('send', 'pageview');
 </div>
 
                         <div class="main-body-content">
-                            <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- data-ad-client="ca-pub-4604833066889492" -->
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-4604833066889492",
-    enabel_page_level_ads: true
-});
+     (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
 			    <article id="post-deep_learning_03" class="article article-single article-type-post" itemscope itemprop="blogPost">
@@ -268,14 +270,16 @@ ga('send', 'pageview');
 <h2 id="역전파-알고리즘을-이용한-심층-신경망-학습"><a href="#역전파-알고리즘을-이용한-심층-신경망-학습" class="headerlink" title="역전파 알고리즘을 이용한 심층 신경망 학습"></a>역전파 알고리즘을 이용한 심층 신경망 학습</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 역전파 학습을 이용한 심층 신경망 학습</span></span><br><span class="line">import time</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment">## 유틸리티 함수</span></span><br><span class="line">def _t(x):</span><br><span class="line">    <span class="built_in">return</span> np.transpose(x)</span><br><span class="line"></span><br><span class="line">def _m(A, B):</span><br><span class="line">    <span class="built_in">return</span> np.matmul(A, B)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Sigmoid 구현</span></span><br><span class="line">class Sigmoid:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        <span class="comment"># 곱의 형태로 나오게 되므로 처음에 1로해서 추후에 입력될 수치에 영향을 덜 주게 해준다.</span></span><br><span class="line">        self.last_o = 1</span><br><span class="line"></span><br><span class="line">    def __call__(self, x):</span><br><span class="line">        self.last_o =  1 / (1.0 + np.exp(-x))</span><br><span class="line">        <span class="built_in">return</span> self.last_o</span><br><span class="line"></span><br><span class="line">    def grad(self):</span><br><span class="line">        <span class="comment"># sigmoid(x) * (1- sigmoid(x))</span></span><br><span class="line">        <span class="built_in">return</span> self.last_o*(1-self.last_o)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Mean Squared Error 구현</span></span><br><span class="line">class MeanSquaredError:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        <span class="comment"># chain rule을 할 때 MSE로 부터 gradient를 계속해서 가져와야하므로 저장해놓기 위해</span></span><br><span class="line">        self.dh = 1</span><br><span class="line">        self.last_diff = 1</span><br><span class="line"></span><br><span class="line">    def __call__(self, h, y): <span class="comment"># 1/2 * mean((h - y)^2)</span></span><br><span class="line">            self.last_diff = h - y</span><br><span class="line">            <span class="built_in">return</span> 1 / 2 * np.mean(np.square(h - y))</span><br><span class="line"></span><br><span class="line">    def grad(self): <span class="comment"># h - y</span></span><br><span class="line">        <span class="built_in">return</span> self.last_diff</span><br><span class="line"></span><br><span class="line"><span class="comment">## 뉴런 구현</span></span><br><span class="line">class Neuron:</span><br><span class="line">    def __init__(self, W, b, a_obj):</span><br><span class="line">        self.W = W</span><br><span class="line">        self.b = b</span><br><span class="line">        <span class="comment"># activation이 이전과 다르게 class로 작성되었으므로 instanctiation을 해주어야한다.  </span></span><br><span class="line">        self.a = a_obj()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># gradient</span></span><br><span class="line">        self.dW = np.zeros_like(self.W)</span><br><span class="line">        self.db = np.zeros_like(self.b)</span><br><span class="line">        self.dh = np.zeros_like(_t(self.W))</span><br><span class="line"></span><br><span class="line">        <span class="comment">## 아래의 grad_W를 위해 저장해놓는다.</span></span><br><span class="line">        <span class="comment">## W로 미분했을 경우 이전 입력을 갖고 있어야 바로 사용할 수 있으므로</span></span><br><span class="line">        self.last_x = np.zeros((self.W.shape[0]))</span><br><span class="line">        self.last_h = np.zeros((self.W.shape[1]))</span><br><span class="line"></span><br><span class="line">    def __call__(self, x):</span><br><span class="line">        self.last_x = x</span><br><span class="line">        self.last_h = _m(_t(self.W), x) + self.b</span><br><span class="line">        <span class="built_in">return</span> self.a(self.last_h)</span><br><span class="line"></span><br><span class="line">    def grad(self): <span class="comment"># dy/dh = W</span></span><br><span class="line">        <span class="built_in">return</span> self.W * self.a.grad()</span><br><span class="line"></span><br><span class="line">    def grad_W(self, dh):</span><br><span class="line">        grad = np.ones_like(self.W)</span><br><span class="line">        grad_a = self.a.grad()</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(grad.shape[1]): <span class="comment"># dy/dw = x</span></span><br><span class="line">            grad[:, j] = dh[j] * grad_a[j] * self.last_x</span><br><span class="line">        <span class="built_in">return</span> grad</span><br><span class="line"></span><br><span class="line">    def grad_b(self, dh): <span class="comment"># dy/db = 1</span></span><br><span class="line">        <span class="built_in">return</span> dh * self.a.grad() * 1</span><br><span class="line"></span><br><span class="line"><span class="comment">## 심층신경망 구현</span></span><br><span class="line">class DNN:</span><br><span class="line">    def __init__(self, hidden_depth, num_neuron, input, output, activation=Sigmoid):</span><br><span class="line">        def init_var(i, o):</span><br><span class="line">            <span class="built_in">return</span> np.random.normal(0.0, 0.01, (i, o)), np.zeros((o,))</span><br><span class="line"></span><br><span class="line">        self.sequence = list()</span><br><span class="line">        <span class="comment"># First hidden layer</span></span><br><span class="line">        W, b = init_var(input, num_neuron)</span><br><span class="line">        self.sequence.append(Neuron(W, b, activation))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Hidden Layers</span></span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(hidden_depth):</span><br><span class="line">            W, b = init_var(num_neuron, num_neuron)</span><br><span class="line">            self.sequence.append(Neuron(W, b, activation))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Output Layer</span></span><br><span class="line">        W, b = init_var(num_neuron, output)</span><br><span class="line">        self.sequence.append(Neuron(W, b, activation))</span><br><span class="line"></span><br><span class="line">    def __call__(self, x):</span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.sequence:</span><br><span class="line">            x = layer(x)</span><br><span class="line">        <span class="built_in">return</span> x</span><br><span class="line"></span><br><span class="line">    def calc_gradient(self, loss_obj):</span><br><span class="line">        loss_obj.dh = loss_obj.grad()</span><br><span class="line">        <span class="comment"># for문에서 한번에 처리하기 위해서 loss object를 넣어준다.</span></span><br><span class="line">        self.sequence.append(loss_obj)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># back_propagation loop</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(self.sequence) -1, 0 , -1):</span><br><span class="line">            l1 = self.sequence[i]</span><br><span class="line">            l0 = self.sequence[i - 1]</span><br><span class="line"></span><br><span class="line">            l0.dh = _m(l0.grad(), l1.dh)</span><br><span class="line">            l0.dw = l0.grad_W(l1.dh)</span><br><span class="line">            l0.db = l0.grad_b(l1.dh)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># loss object가 들어 있으면 출력을 얻지 못하고 loss 만 얻게 될 것이기 때문이다.</span></span><br><span class="line">        self.sequence.remove(loss_obj)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 경사하강 학습법</span></span><br><span class="line">def gradient_descent(network, x, y, loss_obj, alpha=0.01):</span><br><span class="line">    loss = loss_obj(network(x), y)  <span class="comment"># Forward inference</span></span><br><span class="line">    network.calc_gradient(loss_obj)  <span class="comment"># Back-propagation</span></span><br><span class="line">    <span class="keyword">for</span> layer <span class="keyword">in</span> network.sequence:</span><br><span class="line">        layer.W += -alpha * layer.dW</span><br><span class="line">        layer.b += -alpha * layer.db</span><br><span class="line">    <span class="built_in">return</span> loss</span><br><span class="line"></span><br><span class="line"><span class="comment">## 동작 테스트</span></span><br><span class="line">x = np.random.normal(0.0, 1.0, (10,))</span><br><span class="line">y = np.random.normal(0.0, 1.0, (2,))</span><br><span class="line"></span><br><span class="line">t = time.time()</span><br><span class="line">dnn = DNN(hidden_depth=5, num_neuron=32, input=10, output=2, activation=Sigmoid)</span><br><span class="line">loss_obj = MeanSquaredError()</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(100):</span><br><span class="line">    loss = gradient_descent(dnn, x, y, loss_obj, alpha=0.01)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'Epoch &#123;&#125;: Test loss &#123;&#125;'</span>.format(epoch, loss))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'&#123;&#125; seconds elapsed.'</span>.format(time.time() - t))</span><br></pre></td></tr></table></figure>
 
         </div>
-        <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- data-ad-client="ca-pub-4604833066889492" -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-4604833066889492",
-    enabel_page_level_ads: true
-});
+     (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
         <footer class="article-footer">
@@ -550,14 +554,16 @@ ga('send', 'pageview');
             
         
     </div>
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- data-ad-client="ca-pub-4604833066889492" -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-4604833066889492",
-    enabel_page_level_ads: true
-});
+     (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
 </aside>
@@ -633,5 +639,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
