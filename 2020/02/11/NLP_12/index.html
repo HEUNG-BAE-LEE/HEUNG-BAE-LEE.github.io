@@ -6,30 +6,28 @@
     
 
     
-    <title>가장 단순한 신경망을 통한 작동원리 | DataLatte&#39;s IT Blog</title>
+    <title>NLP 실습 Chat bot 만들기 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
     
-    <meta name="description" content="Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.             위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현">
+    <meta name="description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
 <meta property="og:type" content="article">
-<meta property="og:title" content="가장 단순한 신경망을 통한 작동원리">
-<meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/06/deep_learning_01/index.html">
+<meta property="og:title" content="NLP 실습 Chat bot 만들기">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/11/NLP_12/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.             위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현">
+<meta property="og:description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://heung-bae-lee.github.io/image/Neuron.png">
-<meta property="og:updated_time" content="2019-12-08T12:33:35.852Z">
+<meta property="og:updated_time" content="2020-02-11T13:21:59.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="가장 단순한 신경망을 통한 작동원리">
-<meta name="twitter:description" content="Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.             위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현">
-<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Neuron.png">
+<meta name="twitter:title" content="NLP 실습 Chat bot 만들기">
+<meta name="twitter:description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/12/06/deep_learning_01/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/11/nlp_12/">
 
     
 
@@ -163,7 +161,7 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/deep-learning/">deep learning</a>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
 
@@ -180,14 +178,14 @@ ga('send', 'pageview');
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-			    <article id="post-deep_learning_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+			    <article id="post-NLP_12" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        가장 단순한 신경망을 통한 작동원리
+        NLP 실습 Chat bot 만들기
         </h1>
     
 
@@ -197,8 +195,8 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/12/06/deep_learning_01/" class="article-date">
-            <time datetime="2019-12-05T15:00:00.000Z" itemprop="datePublished">2019-12-06</time>
+        <a href="/2020/02/11/NLP_12/" class="article-date">
+            <time datetime="2020-02-11T08:16:56.000Z" itemprop="datePublished">2020-02-11</time>
         </a>
     </div>
 
@@ -209,40 +207,34 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="/image/Neuron.png" alt="신경 세포"><br><img src="/image/Graph_of_Neuron.png" alt="Neuron의 그래프 표현"></p>
-<ul>
-<li>Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.</li>
+            <ul>
+<li>지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이다. text generation에도 많은 문제가 있지만 ‘자연어의 꽃’이라고 불리는 ‘Chat bot’을 제작해 볼 것이다.</li>
 </ul>
-<p><img src="/image/Artificial_NN.png" alt="인공신경망"></p>
-<p><img src="/image/Fully_connected_Layer.png" alt="Fully-Connected Layer(Dense Layer)"></p>
-<p><img src="/image/ShallowNN.png" alt="얕은 신경망"></p>
-<p><img src="/image/what_will_you_do_with_shallowNN.png" alt="얕은 신경망으로 무엇을 할 수 있을까?"></p>
-<p><img src="/image/regression.png" alt="회귀"></p>
-<p><img src="/image/classification.png" alt="분류"></p>
-<p><img src="/image/regression_with_shallowNN.png" alt="얕은 신경망을 이용한 회귀"></p>
-<p><img src="/image/binary_classification_with_shallowNN.png" alt="얕은 신경망을 이용한 이진분류"></p>
-<p><img src="/image/Multi_classification_with_shallowNN.png" alt="얕은 신경망을 이용한 다중 클래스 분류"></p>
-<p><img src="/image/mathmatical_expression_of_Neuron.png" alt="뉴런의 수학적 표현"></p>
-<ul>
-<li>위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 <code>편향을 통해 원점을 지나지 않는 선들도 표현할 수 있게 할 수 있다.</code> 참고로 특별히 편향이 없는 경우도 있을 순 있다.</li>
+<h1 id="Chat-bot-만들기"><a href="#Chat-bot-만들기" class="headerlink" title="Chat bot 만들기"></a>Chat bot 만들기</h1><ul>
+<li><p>일반적으로 chat bot을 제작하는 방법은 매우 다양하다. 단순하게 rule based 기반으로 제작할 수도 있고, machine learning을 섞은 hybrid 기반, 특정 시나리오에서 동작 가능해지는 시나리오 기반까지 정의하는 사람에 따라 제작 방법이 매우 다양하다. 물론, 정의하는 것은 어디까지나 가용할 데이터의 성격에 매우 의존적일 것이다.</p>
+</li>
+<li><p>필자는 우선 제작방법 중에서 딥러닝 모델을 통한 chat bot을 만들어 볼 것이다. 또한 chat bot을 만들기 위한 딥러닝 모델에도 여러 가지가 있지만 그 중에서 번역 문제에서 이미 성능이 입증 된 Seq2seq를 활용하여 제작할 것이다.</p>
+</li>
+<li><p>이번 실습의 소개는 프로젝트성으로 진행 할 것이다.</p>
+</li>
 </ul>
-<p><img src="/image/mathmatical_expression_of_Fully_connecter_layer.png" alt="전결합 계층의 수학적 표현"></p>
-<p><img src="/image/input_Layer.png" alt="입력 계층"></p>
-<p><img src="/image/hidden_Layer.png" alt="은닉계층"></p>
-<p><img src="/image/output_Layer.png" alt="출력계층"></p>
-<h2 id="회귀-문제"><a href="#회귀-문제" class="headerlink" title="회귀 문제"></a>회귀 문제</h2><p><img src="/image/regression01.png" alt="회귀"></p>
+<h3 id="프로젝트-소개"><a href="#프로젝트-소개" class="headerlink" title="프로젝트 소개"></a>프로젝트 소개</h3><h4 id="더존-ICT-챗봇-프로젝트"><a href="#더존-ICT-챗봇-프로젝트" class="headerlink" title="더존 ICT 챗봇 프로젝트"></a>더존 ICT 챗봇 프로젝트</h4><ul>
+<li><p>프로젝트를 하게 된 계기</p>
 <ul>
-<li>어떤 입력이 들어왔을 떄 출력이 연속적인 값을 가질 때 Regression을 사용한다.</li>
+<li>더존 사이트내에서 영업 문의 전화나 구매자에 대한 상담은 따로 서비스를 제공하고 있지만, 온라인 고객센터 tap부분에서만 Q&amp;A에 관한 사항을 다루는데 답변을 해주는 시간은 업무 시간내로만 제한 되어있다. 이에 따라 24시간 또는 업무 이외의 시간에는 챗봇 서비스를 시행한다면 고객들의 입장에서 보았을 때 조금 더 편리하게 더존의 서비스나 솔루션을 이용할 수 있을 것이라는 취지에 의해서 챗봇 구현에 관심을 갖게 되었다.</li>
 </ul>
-<p><img src="/image/simple_linear_regression.png" alt="단순 선형 회귀"><br><img src="/image/multi_linear_regression.png" alt="다중 선형 회귀"><br><img src="/image/aspect_of_geometry_about_multi_linear_regression.png" alt="다중 선형 회귀의 기하학적 해석"><br><img src="/image/shallowNN_and_regression_algorithm.png" alt="얕은 신경망과 회귀 알고리즘"><br><img src="/image/hidden_Layer_and_regression.png" alt="은닉 계층과 회귀"></p>
-<h2 id="이진-분류-문제"><a href="#이진-분류-문제" class="headerlink" title="이진 분류 문제"></a>이진 분류 문제</h2><p><img src="/image/classification_01.png" alt="분류"><br><img src="/image/logistic_regression.png" alt="로지스틱 회귀"><br><img src="/image/sigmoid_function.png" alt="sigmoid function"><br><img src="/image/binary_cross_entropy.png" alt="교차 엔트로피 오차"><br><img src="/image/aspect_of_geometry _about_multi_logistic_regression.png" alt="다중 로지스틱 회귀의 기하학적 해석"><br><img src="/image/shallowNN_and_classification_algorithm.png" alt="얕은 신경망과 분류 알고리즘"><br><img src="/image/hidden_Layer_and_classification.png" alt="은닉계층과 분류"></p>
-<h2 id="다중-분류-문제"><a href="#다중-분류-문제" class="headerlink" title="다중 분류 문제"></a>다중 분류 문제</h2><p><img src="/image/multi_classification.png" alt="다중 클래스 분류"></p>
-<p><img src="/image/one_hot_encoding.png" alt="one-hot Encoding"><br><img src="/image/sparse_expression_of_one_hot_encoding.png" alt="one-hot Encoding의 희소 표현"><br><img src="/image/multi_classificatio_with_shallowNN.png" alt="얕은 신경망을 이용한 다중 클래스 분류"><br><img src="/image/how_do_shallowNN_compute_output.png" alt="어떻게 출력을 계산할 것인가?"><br><img src="/image/softmax_vs_sigmoid.png" alt="Softmax vs Sigmoid"><br><img src="/image/how_do_shallowNN_compare_Truth_with_outputs.png" alt="정답과 출력을 어떻게 비교할까?"><br><img src="/image/Cross_Entropy_Error.png" alt="Cross Entropy Error"></p>
+</li>
+<li><p>데이터 이름 : qna_smart_a.csv</p>
 <ul>
-<li>Softmax의 분모에 의해서 다른 클래스에 대한 학습에도 영향을 준다는 의미이다. 분모는 다른 클래스로 예측한 확률또한 더해주기 때문이다.</li>
+<li>더존에서는 WEHAGO 플랫폼상에서 여러가지 서비스를 제공하고 있다. 그 중 더존 Smart A는 재무회계, 세무신고, 인사·급여관리, 물류관리까지 중소기업의 업무를 통합적으로 관리할 수 있는 회계프로그램로서, 이 프로그램의 질문과 답변에 의해서만 먼저 학습을 해 볼 것이다. 그 이유는 다른 프로그램들(ERP와 WEHAGO)은 사용자들의 성격에 따라 다양한 용도로 개발 되어있지만, 회계프로그램인 Smart A는 모든 기업이 공용으로 사용하기 때문에 우선적으로 학습해 볼 것이다. 또한, 가장 주요한 선택 이유는 Q&amp;A 게시판의 데이터 중 가장 많은 데이터를 포함하고 있었기 때문이다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 얕은 신셩망을 이용한 다중 분류 문제</span></span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"><span class="comment">## 함수 구현</span></span><br><span class="line"><span class="comment"># Sigmoid 함수</span></span><br><span class="line"></span><br><span class="line">def sigmoid(x):</span><br><span class="line">    <span class="built_in">return</span> 1/(1+np.exp(-x))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Softmax 함수</span></span><br><span class="line">def softmax(x):</span><br><span class="line">    <span class="built_in">return</span> np.exp(x)/np.sum(np.exp(x))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 네트워크 구조 정의</span></span><br><span class="line">class ShallowNN:</span><br><span class="line">    <span class="comment"># 아래의 W와 b에 적절한 값은 추후에 넣어주기 때문에 현재는 0으로 잡음</span></span><br><span class="line">    def __init__(self, num_input, num_hidden, num_output):</span><br><span class="line">        self.W_h = np.zeros((num_hidden, num_input), dtype=np.float32)</span><br><span class="line">        self.b_h = np.zeros((num_hidden, 1), dtype=np.float32)</span><br><span class="line"></span><br><span class="line">        self.W_o = np.zeros((num_output, num_hidden), dtype=np.float32)</span><br><span class="line">        self.b_o = np.zeros((num_output, 1), dtype=np.float32)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># NN의 연산을 call 형태로 해서 작성</span></span><br><span class="line">    def __call__(self, x):</span><br><span class="line">        h = sigmoid(np.matmul(self.W_h, x) + self.b_h)</span><br><span class="line">        <span class="built_in">return</span> softmax(np.matmul(self.W_o, h) + self.b_o)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 데이터셋 불러오기</span></span><br><span class="line">dataset = np.load(<span class="string">'ch2_dataset.npz'</span>)</span><br><span class="line">inputs = dataset[<span class="string">'inputs'</span>]</span><br><span class="line">labels = dataset[<span class="string">'labels'</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(labels.shape)</span><br><span class="line"><span class="built_in">print</span>(inputs.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ShallowNN Model 생성</span></span><br><span class="line">model=ShallowNN(num_input=inputs.shape[1], num_hidden=128, num_output=10)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 사전에 학습된 파라미터 불러오기</span></span><br><span class="line">weights = np.load(<span class="string">'ch2_parameters.npz'</span>)</span><br><span class="line">model.W_h = weights[<span class="string">'W_h'</span>]</span><br><span class="line">model.b_h = weights[<span class="string">'b_h'</span>]</span><br><span class="line">model.W_o = weights[<span class="string">'W_o'</span>]</span><br><span class="line">model.b_o = weights[<span class="string">'b_o'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 결과 프린트</span></span><br><span class="line">outputs = []</span><br><span class="line"><span class="keyword">for</span> point, label <span class="keyword">in</span> zip(inputs, labels):</span><br><span class="line">    output = model(point)</span><br><span class="line">    outputs.append(np.argmax(output))</span><br><span class="line">    <span class="built_in">print</span>(np.argmax(output), label)</span><br><span class="line"></span><br><span class="line">outputs =  np.stack(outputs, axis=0)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 정답 클래스 scatter plot</span></span><br><span class="line">plt.figure()</span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> range(10):</span><br><span class="line">    mask = labels == idx</span><br><span class="line">    plt.scatter(inputs[mask, 0], inputs[mask, 1])</span><br><span class="line">plt.title(<span class="string">'True Label'</span>)</span><br><span class="line"><span class="comment"># plt.grid()</span></span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 출력 클래스 scatter plot</span></span><br><span class="line">plt.figure()</span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> range(10):</span><br><span class="line">    mask = outputs == idx</span><br><span class="line">    plt.scatter(inputs[mask, 0], inputs[mask, 1])</span><br><span class="line">plt.title(<span class="string">'Model output'</span>)</span><br><span class="line"><span class="comment"># plt.grid()</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+</li>
+<li><p>데이터 용도 : 챗봇 서비스 학습을 위한 목적으로 사용</p>
+</li>
+<li><p>데이터 출처 : <a href="http://help.douzone.com/pboard/index.jsp?code=qna10&amp;pid=10&amp;s_category_id=all&amp;type=all&amp;page=1" target="_blank" rel="noopener">더존 온라인 고객센터 Smart A 전체 tap</a>의 전체 질문과 답변들을 크롤링 해서 사용하였다. 크롤링 방식은 Scrapy를 통해 페이지를 순회하게끔 코드를 작성하여 크롤링해서 얻었다.</p>
+</li>
+</ul>
+<h2 id><a href="#" class="headerlink" title="#"></a>#</h2>
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 하단형 -->
@@ -324,31 +316,17 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "가장 단순한 신경망을 통한 작동원리",
-        "image": "https://heung-bae-lee.github.io/image/Neuron.png",
+        "headline": "NLP 실습 Chat bot 만들기",
+        "image": "https://heung-bae-lee.github.io",
         "keywords": "",
-        "genre": "deep learning",
-        "datePublished": "2019-12-06",
-        "dateCreated": "2019-12-06",
-        "dateModified": "2019-12-08",
-        "url": "https://heung-bae-lee.github.io/2019/12/06/deep_learning_01/",
+        "genre": "NLP",
+        "datePublished": "2020-02-11",
+        "dateCreated": "2020-02-11",
+        "dateModified": "2020-02-11",
+        "url": "https://heung-bae-lee.github.io/2020/02/11/NLP_12/",
         "description": "
-
-Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 뉴런 연산이란 input에 가중치를 곱하고 합계를 낸 후에 activation function까지 통과시키는 과정을 의미한다.
-
-
-
-
-
-
-
-
-
-
-
-
-위의 식에서 편향을 잊어버리지 말자!! 예를들면, 편향이 없다면 원점을 지나는 선만 표현할 수 있지만 편향을 통해 원점을 지나지 않는 선들도 표현"
-        "wordCount": 689
+지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이"
+        "wordCount": 338
     }
 </script>
 
@@ -396,20 +374,10 @@ Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 �
         
 <nav id="article-nav">
     
-        <a href="/2019/12/08/deep_learning_02/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            쉽게 배우는 경사하강 학습법
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/12/05/deep_learning00/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/02/11/NLP_11/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">딥러닝이 무엇인가?</p>
+        <p class="article-nav-title">NLP 실습 텍스트 유사도 - 02 (XGBoost, 1D-CNN, MaLSTM)</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -580,7 +548,7 @@ Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 �
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://heung-bae-lee.github.io/2019/12/06/deep_learning_01/';
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/11/NLP_12/';
     
     (function() {
     var dsq = document.createElement('script');
