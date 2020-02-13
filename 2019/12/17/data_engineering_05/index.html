@@ -13,19 +13,19 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경우mysql&amp;gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url">
+    <meta name="description" content="Spotify API를 이용해서 DB 구축하기 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경">
 <meta property="og:type" content="article">
 <meta property="og:title" content="data engineering (DB에 table 만들기)">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경우mysql&amp;gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url">
+<meta property="og:description" content="Spotify API를 이용해서 DB 구축하기 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://heung-bae-lee.github.io/image/artist_table.png">
-<meta property="og:updated_time" content="2019-12-19T05:53:45.875Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/create_db_with_spotify_api.png">
+<meta property="og:updated_time" content="2020-02-13T14:02:00.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (DB에 table 만들기)">
-<meta name="twitter:description" content="DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경우mysql&amp;gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url">
-<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/artist_table.png">
+<meta name="twitter:description" content="Spotify API를 이용해서 DB 구축하기 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/create_db_with_spotify_api.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -65,14 +65,11 @@ ga('send', 'pageview');
     
 
 
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- data-ad-client="ca-pub-4604833066889492" -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-4604833066889492",
-    enabel_page_level_ads: true
-});
+     (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
 <link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
@@ -209,7 +206,11 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h3 id="DB-Table-생성"><a href="#DB-Table-생성" class="headerlink" title="DB Table 생성"></a>DB Table 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## artists에 관한 table</span></span><br><span class="line"><span class="comment"># 이모지까지 커버 하고 싶은 경우</span></span><br><span class="line">mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url VARCHAR(255), PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8mb4'</span> COLLATE <span class="string">'utfmb4_unicode_ci'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 이모지는 제외하고 문자만 커버하는 경우</span></span><br><span class="line">mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url VARCHAR(255), PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## artist_genres에 관한 테이블</span></span><br><span class="line">mysql&gt; create table artist_genres (artist_id VARCHAR(255), genre VARCHAR(255)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 위에서 만든 artists table에 대한 info를 보고 싶은 경우</span></span><br><span class="line">mysql&gt; show create table artists;</span><br></pre></td></tr></table></figure>
+            <h2 id="Spotify-API를-이용해서-DB-구축하기"><a href="#Spotify-API를-이용해서-DB-구축하기" class="headerlink" title="Spotify API를 이용해서 DB 구축하기"></a>Spotify API를 이용해서 DB 구축하기</h2><ul>
+<li>Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.</li>
+</ul>
+<p><img src="/image/create_db_with_spotify_api.png" alt="Spotify"></p>
+<h3 id="DB-Table-생성"><a href="#DB-Table-생성" class="headerlink" title="DB Table 생성"></a>DB Table 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## artists에 관한 table</span></span><br><span class="line"><span class="comment"># 이모지까지 커버 하고 싶은 경우</span></span><br><span class="line">mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url VARCHAR(255), PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8mb4'</span> COLLATE <span class="string">'utfmb4_unicode_ci'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 이모지는 제외하고 문자만 커버하는 경우</span></span><br><span class="line">mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url VARCHAR(255), PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## artist_genres에 관한 테이블</span></span><br><span class="line">mysql&gt; create table artist_genres (artist_id VARCHAR(255), genre VARCHAR(255)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 위에서 만든 artists table에 대한 info를 보고 싶은 경우</span></span><br><span class="line">mysql&gt; show create table artists;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>앞으로 artist_genres 테이블에 어떤 artist의 장르가 추가된다면, 데이터를 추가해주어야 하는데 지속적으로 추가해주어야하므로 자동화를 할 것이다. 추가해 주는 값이 테이블에 이미 있는 값을 갖는 데이터가 들어온다면 무의미할 것이다. <code>아무런 column에 제약을 주지 않았기에 insert를 통한 데이터 추가 방식은 무의미하다.</code></li>
 </ul>
@@ -320,15 +321,19 @@ ga('send', 'pageview');
             "name": "HeungBae Lee"
         },
         "headline": "data engineering (DB에 table 만들기)",
-        "image": "https://heung-bae-lee.github.io/image/artist_table.png",
+        "image": "https://heung-bae-lee.github.io/image/create_db_with_spotify_api.png",
         "keywords": "",
         "genre": "data engineering",
         "datePublished": "2019-12-17",
         "dateCreated": "2019-12-17",
-        "dateModified": "2019-12-19",
+        "dateModified": "2020-02-13",
         "url": "https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/",
-        "description": "DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경우mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url "
-        "wordCount": 877
+        "description": "Spotify API를 이용해서 DB 구축하기
+Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.
+
+
+DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경"
+        "wordCount": 914
     }
 </script>
 
@@ -601,22 +606,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>

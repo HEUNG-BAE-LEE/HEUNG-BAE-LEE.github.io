@@ -13,18 +13,18 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을">
+    <meta name="description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이">
 <meta property="og:type" content="article">
 <meta property="og:title" content="data engineering (AWS로 DB 만들기)">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을">
+<meta property="og:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/service.png">
-<meta property="og:updated_time" content="2019-12-30T08:20:06.924Z">
+<meta property="og:updated_time" content="2020-02-13T12:38:22.212Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (AWS로 DB 만들기)">
-<meta name="twitter:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을">
+<meta name="twitter:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/service.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -65,14 +65,11 @@ ga('send', 'pageview');
     
 
 
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- data-ad-client="ca-pub-4604833066889492" -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-4604833066889492",
-    enabel_page_level_ads: true
-});
+     (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
 <link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
@@ -213,7 +210,7 @@ ga('send', 'pageview');
 <li>Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.<br><a href="https://www.youtube.com/results?search_query=%EC%B4%88%EB%B3%B4%EC%9E%90%EB%A5%BC+%EC%9C%84%ED%95%9C+AWS+%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0" target="_blank" rel="noopener">Youtube 초보자를 위한 AWS 시작하기!</a></li>
 </ul>
 <h3 id="AWS-RDS-생성"><a href="#AWS-RDS-생성" class="headerlink" title="AWS RDS 생성"></a>AWS RDS 생성</h3><ul>
-<li><p>개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 것이다. 허나, Amazon Web Service(AWS)는 Amazon의 그런 이미지와는 다르다. <code>Cloud Service</code>를 제공해주는 것이다.</p>
+<li><p>개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 것이다. 허나, Amazon Web Service(AWS)는 Amazon의 그런 이미지와는 다르다. <code>Cloud Service</code>를 제공해주는 것이다.</p>
 </li>
 <li><p>우선 가입을 해야한다. 참고로 대학생인 분들은 <a href="https://www.google.com/search?hl=ko&amp;sxsrf=ACYBGNTcqJdihtFh_XYEH08MOfxSkRO-QQ%3A1576396697970&amp;ei=mef1XeXrOtDmwQOPgYvQDw&amp;q=aws+%ED%95%99%EC%83%9D%EA%B3%84%EC%A0%95&amp;oq=AWS&amp;gs_l=psy-ab.3.0.35i39l3j0i67j0i20i263j0i67j0j0i67j0j0i67.76947.77683..78517...3.0..0.136.371.0j3......0....1..gws-wiz.....10..35i362i39j0i131..21%3A1j22%3A0.2vj_C1Bu8zw" target="_blank" rel="noopener">AWS educate</a>로 가입하면 Credit을 받는 방법이 있는데, 뭐 꼭 현재 재학중이지 않아도 자신의 대학교 이메일로 인증이 가능하다면 AWS Educate에 Student신분으로 가입이 가능하다. 만약 대학생이 아닌 분들은 그냥 AWS(AWS와 AWS educate는 다르다.)를 가입해서 사용하면 된다. 참고로 1년 동안은 어느정도 free tier를 주어서 몇몇 서비스들은 무료로 오래 이용가능할 것이다. 필자도 작년 이용했었는데 기간이 만료되어 이번에 다시 다른 계정을 만들었는데, 새로운 계정을 만들면 또 free tier 이용이 가능한 것 같다.(개인적인 생각이지만 아마도 가입시에 적는 신용카드 번호가 다른 것이면 가능한듯 하다.) 또한, 가입시에 적는 신용카드는 결제 카드로 설정되며 free tier로 이용하는 것을 제외한 다른 이용료를 결제할 수 있다. 물론, 자동결제는 아니고 자신이 결제해줘야 하며, 결제를 해주지 않는다면 휴면 계정으로 전환시켜 서비스 이용이 불가능하다.(처음 결제되는 $1는 결제가 되는 카드인지 확인하는 확인용으로 알고있는데 나중에 결제 취소 해주므로 걱정하지 않아도 된다.)</p>
 </li>
@@ -310,8 +307,13 @@ ga('send', 'pageview');
 </div>
 <h4 id="접속"><a href="#접속" class="headerlink" title="접속!!"></a>접속!!</h4><ul>
 <li>-p 옵션까지만 치면 password를 입력하라고 할 텐데, 입력하면 접속이 된다.</li>
+<li>아래에서의 end-point는 DB 생성한 후 해당 DB페이지를 보면 나와있다.</li>
+<li>혹시라도 잘 이해가 안가시는 분들을 위해 아래 필자의 접속 커맨드를 예시로 들 것이다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -h end-point -P 3306 -u userId -p</span><br><span class="line"></span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mysql -h end-point -P 3306 -u userId -p</span></span><br><span class="line">mysql -h spotify.cgaj5rvtgf25.ap-northeast-2.rds.amazonaws.com -P 3306 -u hb0619 -p</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----- MySQL DB 접속 후 -----------</span></span><br><span class="line"><span class="comment"># 생성되어 있는 DB목록 확인</span></span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+<p>-</p>
+<p><code>
+</code></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -400,14 +402,14 @@ ga('send', 'pageview');
         "genre": "data engineering",
         "datePublished": "2019-12-15",
         "dateCreated": "2019-12-15",
-        "dateModified": "2019-12-30",
+        "dateModified": "2020-02-13",
         "url": "https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/",
         "description": "AWS RDB 만들기
 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!
 
 AWS RDS 생성
-개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이 많을 "
-        "wordCount": 658
+개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이"
+        "wordCount": 706
     }
 </script>
 
@@ -680,22 +682,5 @@ AWS RDS 생성
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
