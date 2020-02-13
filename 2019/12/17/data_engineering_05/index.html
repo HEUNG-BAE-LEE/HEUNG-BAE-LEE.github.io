@@ -13,18 +13,18 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="Spotify API를 이용해서 DB 구축하기 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경">
+    <meta name="description" content="Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   Spotify API를 이용해서 DB 구축하기 먼저, 혹시라도 필자의 토이 프로젝트의 목표가 무엇인지 모르실 분들을 위해 말하자면, Spotify data를 통">
 <meta property="og:type" content="article">
 <meta property="og:title" content="data engineering (DB에 table 만들기)">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="Spotify API를 이용해서 DB 구축하기 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경">
+<meta property="og:description" content="Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   Spotify API를 이용해서 DB 구축하기 먼저, 혹시라도 필자의 토이 프로젝트의 목표가 무엇인지 모르실 분들을 위해 말하자면, Spotify data를 통">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/create_db_with_spotify_api.png">
-<meta property="og:updated_time" content="2020-02-13T14:02:00.084Z">
+<meta property="og:updated_time" content="2020-02-13T16:46:37.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (DB에 table 만들기)">
-<meta name="twitter:description" content="Spotify API를 이용해서 DB 구축하기 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경">
+<meta name="twitter:description" content="Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.   Spotify API를 이용해서 DB 구축하기 먼저, 혹시라도 필자의 토이 프로젝트의 목표가 무엇인지 모르실 분들을 위해 말하자면, Spotify data를 통">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/create_db_with_spotify_api.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -206,10 +206,51 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="Spotify-API를-이용해서-DB-구축하기"><a href="#Spotify-API를-이용해서-DB-구축하기" class="headerlink" title="Spotify API를 이용해서 DB 구축하기"></a>Spotify API를 이용해서 DB 구축하기</h2><ul>
+            <ul>
 <li>Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.</li>
 </ul>
 <p><img src="/image/create_db_with_spotify_api.png" alt="Spotify"></p>
+<h2 id="Spotify-API를-이용해서-DB-구축하기"><a href="#Spotify-API를-이용해서-DB-구축하기" class="headerlink" title="Spotify API를 이용해서 DB 구축하기"></a>Spotify API를 이용해서 DB 구축하기</h2><ul>
+<li>먼저, 혹시라도 필자의 토이 프로젝트의 목표가 무엇인지 모르실 분들을 위해 말하자면, <code>Spotify data를 통해서 자신의 취향을 입력하면 그 취향과 비슷한 장르의 음악과 뮤지션을 추천해주는 chat bot을 Facebook API를 통해서 만들고자 한다.</code></li>
+</ul>
+<p><img src="/image/toy_project_db.png" alt="toy project DB관련 도식"></p>
+<ul>
+<li>위와 같은 서비스를 만들기 위해서는 먼저 필요한 데이터를 얻기 위해 Spotify API의 response로 얻을 수 있는 값들이 무엇이 있고, 어떤 method를 통해 어떤 데이터를 얻을 수 있는지 정리를 해 보고 간단한 ERD를 통해 도식화 할 수 있을 것이다.</li>
+</ul>
+<p><a href="https://developer.spotify.com/" target="_blank" rel="noopener">Spotify developer</a>를 클릭해서 아래 그림과 같이 DOCS 탭에서 WEB API reference를 클릭하면 여러 항목들이 나올 것이다.</p>
+<p><img src="/image/Spotify_WEB_Refer.png" alt="Spotify Web reference"></p>
+<ul>
+<li>여러 탭들 중 Artist와 관련된 사항들과 track에 따른 Audio feature들을 필요로 하기 때문에 Artists 탭과 Tracks 탭을 살펴보면 될 것이다. 확인해 본 결과 필요한 부분들을 정해 아래 그림과 같이 ERD를 도식화 할 수 있다.</li>
+</ul>
+<p><img src="/image/Spotify_ERD_pic.png" alt="Spotify ERD"></p>
+<ul>
+<li><p><code>Get an Artist</code> 탭에서 얻을 수 있는 테이블은 다음과 같다. <code>특히 genre는 가져올때는 python의 list형식으로 되어 있기 때문에 우리가 사용할 RDB에 저장할 때는 list로 저장할 수 없으므로 또 다른 테이블을 만들어 주어 하나의 id에 여러가지 genre 값을 갖을 수 있게끔 사용할 것</code>이다.</p>
+<ul>
+<li><p>artist라는 테이블은 ‘id’, ‘Name’, ‘Followers’, ‘Popularity’, ‘External_Urls’(해당 가수 페이지의 url)을 넣어 줄 것이다. 그 중 ‘id’는 <code>Not NuLL</code>과 <code>Unique</code>한 것을 동시에 만족시키는 <code>Primary Key</code>로 지정할 것이다. 왜냐하면 고유한 식별자이며, 이를 통해 다른 테이블들과의 join하는 것이나 검색에 있어서 훨씬 빠른 검색을 할 수 있게 되기 때문이다.</p>
+</li>
+<li><p>artist genres 테이블은 ‘Artist_Id’, ‘Genre’ 값을 갖게 할 것이며, 여기서는 <code>Artist_Id가 Foreign Key 역할을 할 것</code>이다.</p>
+</li>
+</ul>
+</li>
+<li><p><code>Get an Artist&#39;s Top Tracks</code>에서는 top_tracks 테이블을 얻을 수 있다. ‘id’(track id), ‘Artist ID’, ‘Name’, ‘Popularity’(spotify에서 계산한 특정 알고리즘에 의해 산출된 0~100사이의 score), ‘URL’, ‘image_url’을 넣어 줄 것이다.</p>
+</li>
+<li><p>마지막으로 유일하게 Tracks탭에서 <code>Get Audio Features for Several Tracks</code>를 통해 audio feature인 ‘track_id’, ‘Key’, ‘Mode’, ‘Acousticness’, ‘Danceability’, ‘Energy’, ‘Instrumentalness’, ‘Liveness’, ‘Loudness’, ‘Speechiness’, ‘Valence’, ‘Tempo’를 넣어 줄 것이다.</p>
+<ul>
+<li>‘Key’ : 음의 높낮이를 의미하며, 각각에 해당하는 음의 높낮이를 정수에 mapping했다. E.g. 0 = C, 1 = C♯/D♭, 2 = D등</li>
+<li>‘Mode’ : 장조(도레미파솔라시)로 이루어져있다면 1, 단조(라시도레미파솔)로 이루어져 있다면 0을 갖는다.</li>
+<li>‘Acousticness’ : Acoustic적인 트랙인지를 말해주는 지표로서, 0~1값을 갖고, 해당 트랙이 Acoustic적인 음악일수록 1값을 갖는다.</li>
+<li>‘Danceability’ : 음악적 요소인 템포, 리듬의 안정성등의 조합을 기반으로하여 춤에 적합한지를 나타내는 지표이다. 0~1사이의 값을 갖으며, 춤에 적합한 트랙일수록 1의 값을 갖는다.</li>
+<li>‘Energy’ : 활동적이고 긴장을 줄 수 있는 트랙인지에 대한 지표로서 0~1사이의 값을 갖는다.</li>
+<li>‘Instrumentalness’ : 트랙이 목소리가 주인지를 파악하는 지표로서, 여기서 말하는 목소리란, 추임새적인 부분들을 악기적인 요소로 보고 이런 악기적인 요소가 많을수록 1에 가깝운 값을 갖는다.</li>
+<li>‘Liveness’ : 해당 트랙이 live음원인지를 파악하는 요소로서, 0.8을 넘는다면 live 트랙일 확률이 높다.</li>
+<li>‘Loudness’ : 트랙 전반적인 평균 데시벨(dB)로서, 상대적으로 다른 트랙들과 비교할 수 있다. 일반적인 값은 -60에서 0 db 사이이다.</li>
+<li>‘Speechiness’ : 토크쇼, 오디오북, 시같이 구어체 단어들의 존재를 탐지하는 지표로서 0.66 값 이상은 아마도 완전히 구어체로 만들어진 트랙을 의미한다고 하며, 1에 가까울수록 구어체를 많이 가지고 있다.</li>
+<li>‘Valence’ : 트랙의 감성을 나타내는 지표로서, 0~1사이의 값을 갖는다. 1에 가까울수록 밝고 긍정적인 느낌의 트랙을 의미한다.</li>
+<li>‘Tempo’ : 전반적인 트랙의 BPM을 추정하는 지표이다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/Get_Audio_Features_for_Several_Tracks.png" alt="Get Audio Features for Several Tracks"></p>
 <h3 id="DB-Table-생성"><a href="#DB-Table-생성" class="headerlink" title="DB Table 생성"></a>DB Table 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## artists에 관한 table</span></span><br><span class="line"><span class="comment"># 이모지까지 커버 하고 싶은 경우</span></span><br><span class="line">mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url VARCHAR(255), PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8mb4'</span> COLLATE <span class="string">'utfmb4_unicode_ci'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 이모지는 제외하고 문자만 커버하는 경우</span></span><br><span class="line">mysql&gt; create table artists (id VARCHAR(255), name VARCHAR(255), followers INTEGER, popularity INTEGER, url VARCHAR(255), image_url VARCHAR(255), PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## artist_genres에 관한 테이블</span></span><br><span class="line">mysql&gt; create table artist_genres (artist_id VARCHAR(255), genre VARCHAR(255)) ENGINE=InnoDB DEFAULT CHARSET=<span class="string">'utf8'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 위에서 만든 artists table에 대한 info를 보고 싶은 경우</span></span><br><span class="line">mysql&gt; show create table artists;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>앞으로 artist_genres 테이블에 어떤 artist의 장르가 추가된다면, 데이터를 추가해주어야 하는데 지속적으로 추가해주어야하므로 자동화를 할 것이다. 추가해 주는 값이 테이블에 이미 있는 값을 갖는 데이터가 들어온다면 무의미할 것이다. <code>아무런 column에 제약을 주지 않았기에 insert를 통한 데이터 추가 방식은 무의미하다.</code></li>
@@ -326,14 +367,15 @@ ga('send', 'pageview');
         "genre": "data engineering",
         "datePublished": "2019-12-17",
         "dateCreated": "2019-12-17",
-        "dateModified": "2020-02-13",
+        "dateModified": "2020-02-14",
         "url": "https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/",
-        "description": "Spotify API를 이용해서 DB 구축하기
+        "description": "
 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.
 
 
-DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경"
-        "wordCount": 914
+Spotify API를 이용해서 DB 구축하기
+먼저, 혹시라도 필자의 토이 프로젝트의 목표가 무엇인지 모르실 분들을 위해 말하자면, Spotify data를 통"
+        "wordCount": 1376
     }
 </script>
 
@@ -606,5 +648,22 @@ DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

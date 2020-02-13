@@ -1226,11 +1226,12 @@ Machine Learning으로 할 수 있는 것들
     
 
         <p class="article-excerpt">
-            Spotify API를 이용해서 DB 구축하기
+            
 Spotify가 국내에 음원 진출을 확정지었다는 기사를 보면서 다시 한번 이 토이프로젝트에 대해 동기부여가 되었다. Spotify API를 통해 AWS에 만들어 놓은 DB에 입력해 볼 것이다.
 
 
-DB Table 생성123456789101112## artists에 관한 table# 이모지까지 커버 하고 싶은 경
+Spotify API를 이용해서 DB 구축하기
+먼저, 혹시라도 필자의 토이 프로젝트의 목표가 무엇인지 모르실 분들을 위해 말하자면, Spotify data를 통
         </p>
     </div>
 </article>
@@ -1511,5 +1512,22 @@ AWS RDS 생성
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

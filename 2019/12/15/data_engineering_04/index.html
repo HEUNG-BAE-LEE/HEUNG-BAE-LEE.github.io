@@ -21,7 +21,7 @@
 <meta property="og:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/service.png">
-<meta property="og:updated_time" content="2020-02-13T12:38:22.212Z">
+<meta property="og:updated_time" content="2020-02-13T15:00:16.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (AWS로 DB 만들기)">
 <meta name="twitter:description" content="AWS RDB 만들기 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!  AWS RDS 생성 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이">
@@ -310,10 +310,7 @@ ga('send', 'pageview');
 <li>아래에서의 end-point는 DB 생성한 후 해당 DB페이지를 보면 나와있다.</li>
 <li>혹시라도 잘 이해가 안가시는 분들을 위해 아래 필자의 접속 커맨드를 예시로 들 것이다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mysql -h end-point -P 3306 -u userId -p</span></span><br><span class="line">mysql -h spotify.cgaj5rvtgf25.ap-northeast-2.rds.amazonaws.com -P 3306 -u hb0619 -p</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----- MySQL DB 접속 후 -----------</span></span><br><span class="line"><span class="comment"># 생성되어 있는 DB목록 확인</span></span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
-<p>-</p>
-<p><code>
-</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mysql -h end-point -P 3306 -u userId -p</span></span><br><span class="line">mysql -h spotify.cgaj5rvtgf25.ap-northeast-2.rds.amazonaws.com -P 3306 -u hb0619 -p</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----- MySQL DB 접속 후 -----------</span></span><br><span class="line"><span class="comment"># 생성되어 있는 DB목록 확인</span></span><br><span class="line">SHOW TABLES;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create Table</span></span><br><span class="line">CREATE TABLE people(first_name VARCHAR(20), last_name VARCHAR(20), age INT);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 생성된 DB 사용</span></span><br><span class="line">USE people</span><br><span class="line"></span><br><span class="line"><span class="comment"># 접속시 이미 만들어져 있는 테이블로 바로 사용가능하게 끔 하는 방법</span></span><br><span class="line"><span class="comment"># 이 방법은 생성되어 있는 데이터베이스에 한해서만 작동 가능하다.</span></span><br><span class="line">mysql -h spotify.cgaj5rvtgf25.ap-northeast-2.rds.amazonaws.com -P 3306 -D people -u hb0619 -p</span><br></pre></td></tr></table></figure>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -402,14 +399,14 @@ ga('send', 'pageview');
         "genre": "data engineering",
         "datePublished": "2019-12-15",
         "dateCreated": "2019-12-15",
-        "dateModified": "2020-02-13",
+        "dateModified": "2020-02-14",
         "url": "https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/",
         "description": "AWS RDB 만들기
 Spotify data를 크롤링 하고난 후에 AWS RDB에 저장하기 위해서 먼저 DB를 만들어 줄 것이다.Youtube 초보자를 위한 AWS 시작하기!
 
 AWS RDS 생성
 개발자나 필자 처럼 데이터를 분석하는 분들을 제외한 분들은 아마 Amazon이라는 단어를 듣게 된다면, 물건을 사고파는 뭐 그런 웹사이트 페이지를 떠올리는 분들이"
-        "wordCount": 706
+        "wordCount": 770
     }
 </script>
 
@@ -682,5 +679,22 @@ AWS RDS 생성
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
