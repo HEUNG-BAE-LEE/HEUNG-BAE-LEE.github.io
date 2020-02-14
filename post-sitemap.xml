@@ -9,7 +9,15 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/</loc>
-        <lastmod>2020-02-13T16:46:37.232Z</lastmod>
+        <lastmod>2020-02-14T12:55:26.879Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/</loc>
+        <lastmod>2020-02-14T12:55:13.199Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -282,14 +290,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/12/08/deep_learning_03/</loc>
         <lastmod>2019-12-20T04:38:06.937Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/</loc>
-        <lastmod>2019-12-17T07:06:18.224Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
