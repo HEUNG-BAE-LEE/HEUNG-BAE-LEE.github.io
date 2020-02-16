@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/02/11/NLP_12/</loc>
+        <lastmod>2020-02-16T13:18:19.374Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/</loc>
+        <lastmod>2020-02-14T13:19:24.769Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2019/12/17/data_engineering_05/</loc>
         <lastmod>2020-02-14T12:55:26.879Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -16,24 +32,8 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2019/12/13/data_engineering_03/</loc>
-        <lastmod>2020-02-14T12:55:13.199Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://heung-bae-lee.github.io/2019/12/15/data_engineering_04/</loc>
         <lastmod>2020-02-13T15:00:16.022Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/02/11/NLP_12/</loc>
-        <lastmod>2020-02-12T14:00:07.870Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

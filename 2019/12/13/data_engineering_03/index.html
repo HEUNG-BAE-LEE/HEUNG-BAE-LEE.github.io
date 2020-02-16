@@ -21,7 +21,7 @@
 <meta property="og:description" content="REST API의 정의와 예제들API(Application Programming Interface) 두 개의 시스템이 서로 상호 작용하기 위한 인터페이스 데이터를 주고 받는 인터페이스 API라고 하면 보통 REST API를 지칭      웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축  API 접근 권한Authentication V">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Web_API.png">
-<meta property="og:updated_time" content="2020-02-14T12:55:13.199Z">
+<meta property="og:updated_time" content="2020-02-14T13:19:24.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (API는 무엇인가?!?)">
 <meta name="twitter:description" content="REST API의 정의와 예제들API(Application Programming Interface) 두 개의 시스템이 서로 상호 작용하기 위한 인터페이스 데이터를 주고 받는 인터페이스 API라고 하면 보통 REST API를 지칭      웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축  API 접근 권한Authentication V">
@@ -298,11 +298,10 @@ ga('send', 'pageview');
 <ul>
 <li><p>위의 ERD를 만들기에 앞서서 Spotify API를 통해 Access Token을 얻고 search할 수 있도록 script 파일을 만들어 본다면 다음과 같은 것이다.</p>
 </li>
-<li><p>지속적으로 유지를 하기 위해서 status code마다 처리하는 방식을 달리 해주어야 할 것이다.특히 그 중에<br><a href="https://developer.spotify.com/documentation/web-api/" target="_blank" rel="noopener">Spotify의 status code</a></p>
-</li>
-<li><p>status code 중 429는 너무 많은 데이터를 요청 했을 때 출력값으로 받는 status code이며, 받은 출력안에 제한시간이 같이 존재하므로 그 시간동안 python 동작으로 멈추도록 sleep을 걸어놓게끔 코드를 작성할 것이다.</p>
+<li><p>지속적으로 유지를 하기 위해서 status code마다 처리하는 방식을 달리 해주어야 할 것이다.특히 그 중에 status code 중 429는 너무 많은 데이터를 요청 했을 때 출력값으로 받는 status code이며, 받은 출력안에 제한시간이 같이 존재하므로 그 시간동안 python 동작으로 멈추도록 sleep을 걸어놓게끔 코드를 작성할 것이다.</p>
 </li>
 </ul>
+<p><a href="https://developer.spotify.com/documentation/web-api/" target="_blank" rel="noopener">Spotify의 status code</a></p>
 <p><img src="/image/Rating_limit_429_spotify.png" alt="Rating limit"></p>
 <ul>
 <li>또한, status code = 401인 경우에는 access token이 expired되었기 때문에 일어나는 경우이기 때문에 새롭게 client secret을 받아야 할 것이다.</li>
@@ -409,7 +408,7 @@ API라고 하면 보통 REST API를 지칭
 웹사이트는 HTTP(S)프로토콜을 사용하는 REST API 기반으로 구축
 
 API 접근 권한Authentication V"
-        "wordCount": 856
+        "wordCount": 857
     }
 </script>
 
