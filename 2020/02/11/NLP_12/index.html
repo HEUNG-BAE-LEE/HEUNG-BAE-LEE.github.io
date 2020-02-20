@@ -6,25 +6,25 @@
     
 
     
-    <title>NLP 실습 Chat bot 만들기 | DataLatte&#39;s IT Blog</title>
+    <title>NLP 실습 유사도를 반영한 검색 키워드 최적화 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
     
-    <meta name="description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
+    <meta name="description" content="이번 실습의 소개는 프로젝트성으로 진행 할 것이다.  프로젝트 소개더존 ICT 온라인 고객센터 키워드 검색 최적화 및 챗봇 구현 프로젝트를 하게 된 계기  먼저, 더존 온라인 고객센터 페이지 중 smart A에 관한 페이지에서 전체 탭을 클릭한 후, 살펴본 QnA 페이지를 살펴보았다.   필자는 고객들의 입장에서 생각해보았을때, 자신이 작성하는 질문(물론">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NLP 실습 Chat bot 만들기">
+<meta property="og:title" content="NLP 실습 유사도를 반영한 검색 키워드 최적화">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/11/NLP_12/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
+<meta property="og:description" content="이번 실습의 소개는 프로젝트성으로 진행 할 것이다.  프로젝트 소개더존 ICT 온라인 고객센터 키워드 검색 최적화 및 챗봇 구현 프로젝트를 하게 된 계기  먼저, 더존 온라인 고객센터 페이지 중 smart A에 관한 페이지에서 전체 탭을 클릭한 후, 살펴본 QnA 페이지를 살펴보았다.   필자는 고객들의 입장에서 생각해보았을때, 자신이 작성하는 질문(물론">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/the_zone_online_center.png">
-<meta property="og:updated_time" content="2020-02-19T20:01:08.134Z">
+<meta property="og:updated_time" content="2020-02-20T07:19:46.701Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NLP 실습 Chat bot 만들기">
-<meta name="twitter:description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
+<meta name="twitter:title" content="NLP 실습 유사도를 반영한 검색 키워드 최적화">
+<meta name="twitter:description" content="이번 실습의 소개는 프로젝트성으로 진행 할 것이다.  프로젝트 소개더존 ICT 온라인 고객센터 키워드 검색 최적화 및 챗봇 구현 프로젝트를 하게 된 계기  먼저, 더존 온라인 고객센터 페이지 중 smart A에 관한 페이지에서 전체 탭을 클릭한 후, 살펴본 QnA 페이지를 살펴보았다.   필자는 고객들의 입장에서 생각해보았을때, 자신이 작성하는 질문(물론">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/the_zone_online_center.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -184,7 +184,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        NLP 실습 Chat bot 만들기
+        NLP 실습 유사도를 반영한 검색 키워드 최적화
         </h1>
     
 
@@ -207,15 +207,7 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <ul>
-<li>지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이다. text generation에도 많은 문제가 있지만 ‘자연어의 꽃’이라고 불리는 ‘Chat bot’을 제작해 볼 것이다.</li>
-</ul>
-<h1 id="Chat-bot-만들기"><a href="#Chat-bot-만들기" class="headerlink" title="Chat bot 만들기"></a>Chat bot 만들기</h1><ul>
-<li><p>일반적으로 chat bot을 제작하는 방법은 매우 다양하다. 단순하게 rule based 기반으로 제작할 수도 있고, machine learning을 섞은 hybrid 기반, 특정 시나리오에서 동작 가능해지는 시나리오 기반까지 정의하는 사람에 따라 제작 방법이 매우 다양하다. 물론, 정의하는 것은 어디까지나 가용할 데이터의 성격에 매우 의존적일 것이다.</p>
-</li>
-<li><p>필자는 우선 제작방법 중에서 딥러닝 모델을 통한 chat bot을 만들어 볼 것이다. 또한 chat bot을 만들기 위한 딥러닝 모델에도 여러 가지가 있지만 그 중에서 번역 문제에서 이미 성능이 입증 된 Seq2seq를 활용하여 제작할 것이다.</p>
-</li>
-<li><p>이번 실습의 소개는 프로젝트성으로 진행 할 것이다.</p>
-</li>
+<li>이번 실습의 소개는 프로젝트성으로 진행 할 것이다.</li>
 </ul>
 <h3 id="프로젝트-소개"><a href="#프로젝트-소개" class="headerlink" title="프로젝트 소개"></a>프로젝트 소개</h3><h4 id="더존-ICT-온라인-고객센터-키워드-검색-최적화-및-챗봇-구현"><a href="#더존-ICT-온라인-고객센터-키워드-검색-최적화-및-챗봇-구현" class="headerlink" title="더존 ICT 온라인 고객센터 키워드 검색 최적화 및 챗봇 구현"></a>더존 ICT 온라인 고객센터 키워드 검색 최적화 및 챗봇 구현</h4><ul>
 <li><p>프로젝트를 하게 된 계기</p>
@@ -479,7 +471,7 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "NLP 실습 Chat bot 만들기",
+        "headline": "NLP 실습 유사도를 반영한 검색 키워드 최적화",
         "image": "https://heung-bae-lee.github.io/image/the_zone_online_center.png",
         "keywords": "",
         "genre": "NLP",
@@ -488,8 +480,16 @@ ga('send', 'pageview');
         "dateModified": "2020-02-20",
         "url": "https://heung-bae-lee.github.io/2020/02/11/NLP_12/",
         "description": "
-지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이"
-        "wordCount": 4526
+이번 실습의 소개는 프로젝트성으로 진행 할 것이다.
+
+프로젝트 소개더존 ICT 온라인 고객센터 키워드 검색 최적화 및 챗봇 구현
+프로젝트를 하게 된 계기
+
+먼저, 더존 온라인 고객센터 페이지 중 smart A에 관한 페이지에서 전체 탭을 클릭한 후, 살펴본 QnA 페이지를 살펴보았다.
+
+
+필자는 고객들의 입장에서 생각해보았을때, 자신이 작성하는 질문(물론"
+        "wordCount": 4384
     }
 </script>
 
@@ -537,6 +537,16 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
+        <a href="/2020/02/20/NLP_13/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            NLP 실습 Chat bot 만들기
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/2020/02/11/NLP_11/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
@@ -563,7 +573,16 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/02/11/NLP_12/" class="title">NLP 실습 Chat bot 만들기</a></p>
+                            <p class="item-title"><a href="/2020/02/20/NLP_13/" class="title">NLP 실습 Chat bot 만들기</a></p>
+                            <p class="item-date"><time datetime="2020-02-20T07:01:42.000Z" itemprop="datePublished">2020-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/11/NLP_12/" class="title">NLP 실습 유사도를 반영한 검색 키워드 최적화</a></p>
                             <p class="item-date"><time datetime="2020-02-11T08:16:56.000Z" itemprop="datePublished">2020-02-11</time></p>
                         </div>
                     </li>
@@ -595,15 +614,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/02/06/NLP_08/" class="title">NLP 문장 수준 임베딩 - 01</a></p>
-                            <p class="item-date"><time datetime="2020-02-05T15:32:51.000Z" itemprop="datePublished">2020-02-06</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -613,7 +623,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -623,7 +633,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

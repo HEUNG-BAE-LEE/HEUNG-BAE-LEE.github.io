@@ -6,29 +6,28 @@
     
 
     
-    <title>[CS231n]Lecture10-Recurrent Neural Networks | DataLatte&#39;s IT Blog</title>
+    <title>NLP 실습 Chat bot 만들기 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="CS231n">
+        <meta name="keywords" content>
     
     
-    <meta name="description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
-<meta name="keywords" content="CS231n">
+    <meta name="description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[CS231n]Lecture10-Recurrent Neural Networks">
-<meta property="og:url" content="https://heung-bae-lee.github.io/2019/07/29/cs231n_10/index.html">
+<meta property="og:title" content="NLP 실습 Chat bot 만들기">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/20/NLP_13/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta property="og:description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-31T13:40:54.829Z">
+<meta property="og:updated_time" content="2020-02-20T07:19:38.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[CS231n]Lecture10-Recurrent Neural Networks">
-<meta name="twitter:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta name="twitter:title" content="NLP 실습 Chat bot 만들기">
+<meta name="twitter:description" content="지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/2019/07/29/cs231n_10/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/20/nlp_13/">
 
     
 
@@ -159,7 +158,7 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
 
@@ -176,14 +175,14 @@ ga('send', 'pageview');
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-			    <article id="post-cs231n_10" class="article article-single article-type-post" itemscope itemprop="blogPost">
+			    <article id="post-NLP_13" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        [CS231n]Lecture10-Recurrent Neural Networks
+        NLP 실습 Chat bot 만들기
         </h1>
     
 
@@ -193,24 +192,28 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/07/29/cs231n_10/" class="article-date">
-            <time datetime="2019-07-29T07:22:55.000Z" itemprop="datePublished">2019-07-29</time>
+        <a href="/2020/02/20/NLP_13/" class="article-date">
+            <time datetime="2020-02-20T07:01:42.000Z" itemprop="datePublished">2020-02-20</time>
         </a>
     </div>
 
 		
 
                 
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/CS231n/">CS231n</a>
-    </div>
-
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            
+            <ul>
+<li>지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이다. text generation에도 많은 문제가 있지만 ‘자연어의 꽃’이라고 불리는 ‘Chat bot’을 제작해 볼 것이다.</li>
+</ul>
+<h1 id="Chat-bot-만들기"><a href="#Chat-bot-만들기" class="headerlink" title="Chat bot 만들기"></a>Chat bot 만들기</h1><ul>
+<li><p>일반적으로 chat bot을 제작하는 방법은 매우 다양하다. 단순하게 rule based 기반으로 제작할 수도 있고, machine learning을 섞은 hybrid 기반, 특정 시나리오에서 동작 가능해지는 시나리오 기반까지 정의하는 사람에 따라 제작 방법이 매우 다양하다. 물론, 정의하는 것은 어디까지나 가용할 데이터의 성격에 매우 의존적일 것이다.</p>
+</li>
+<li><p>필자는 우선 제작방법 중에서 딥러닝 모델을 통한 chat bot을 만들어 볼 것이다. 또한 chat bot을 만들기 위한 딥러닝 모델에도 여러 가지가 있지만 그 중에서 번역 문제에서 이미 성능이 입증 된 Seq2seq를 활용하여 제작할 것이다.</p>
+</li>
+</ul>
+
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 하단형 -->
@@ -292,16 +295,17 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "[CS231n]Lecture10-Recurrent Neural Networks",
+        "headline": "NLP 실습 Chat bot 만들기",
         "image": "https://heung-bae-lee.github.io",
-        "keywords": "CS231n",
-        "genre": "",
-        "datePublished": "2019-07-29",
-        "dateCreated": "2019-07-29",
-        "dateModified": "2019-07-31",
-        "url": "https://heung-bae-lee.github.io/2019/07/29/cs231n_10/",
-        "description": ""
-        "wordCount": 1
+        "keywords": "",
+        "genre": "NLP",
+        "datePublished": "2020-02-20",
+        "dateCreated": "2020-02-20",
+        "dateModified": "2020-02-20",
+        "url": "https://heung-bae-lee.github.io/2020/02/20/NLP_13/",
+        "description": "
+지금까지 두 가지 문제에 대해 실습을 진행하였다. 1) 텍스트를 분석해서 각 텍스트를 분류하는 문제를 실습했고, 2) 두 개의 텍스트가 있을 때 각 텍스트끼리의 유사도를 판단하는 문제를 실습했다. 마지막으로 이번에는 텍스트를 단순히 분석해서 분류나 유사도를 측정하는 것이 아닌 직업 문장을 생성할 수 있는 text generation 문제를 실습해 볼 것이"
+        "wordCount": 143
     }
 </script>
 
@@ -349,20 +353,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/08/01/kaggle_00/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            colab &amp; Kaggle 연동 및 기초 사용법
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/07/29/Statistics_00/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/02/11/NLP_12/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">[수리통계학] 나혼자 정리하는 통계생의 수리통계학 00</p>
+        <p class="article-nav-title">NLP 실습 유사도를 반영한 검색 키워드 최적화</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -533,7 +527,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://heung-bae-lee.github.io/2019/07/29/cs231n_10/';
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/20/NLP_13/';
     
     (function() {
     var dsq = document.createElement('script');
