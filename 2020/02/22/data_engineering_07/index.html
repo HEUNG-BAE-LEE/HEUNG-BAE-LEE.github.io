@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>데이터 웨어하우스 vs 데이터 레이크 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="데이터 웨어하우스 vs 데이터 레이크 데이터 레이크라는 개념은 비교적 최신의 개념이다. 데이터 웨어하우스라고 하는 MySQL, PostgreSQL 같은 RDBMS 프로그램들을 넘어서 데이터들이 너무나 방대해졌기 때문에 나온 시스템이라고 할 수 있다.  이전의 데이터 웨어하우스는 미리 짜여진 구조를 통해 가공해서 저장했기에 좀 더 접근하기 쉬었다. 반면에 데">
+<meta property="og:type" content="article">
+<meta property="og:title" content="데이터 웨어하우스 vs 데이터 레이크">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/22/data_engineering_07/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="데이터 웨어하우스 vs 데이터 레이크 데이터 레이크라는 개념은 비교적 최신의 개념이다. 데이터 웨어하우스라고 하는 MySQL, PostgreSQL 같은 RDBMS 프로그램들을 넘어서 데이터들이 너무나 방대해졌기 때문에 나온 시스템이라고 할 수 있다.  이전의 데이터 웨어하우스는 미리 짜여진 구조를 통해 가공해서 저장했기에 좀 더 접근하기 쉬었다. 반면에 데">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/datalake_and_datawarehouse.png">
+<meta property="og:updated_time" content="2020-02-21T20:36:25.591Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="데이터 웨어하우스 vs 데이터 레이크">
+<meta name="twitter:description" content="데이터 웨어하우스 vs 데이터 레이크 데이터 레이크라는 개념은 비교적 최신의 개념이다. 데이터 웨어하우스라고 하는 MySQL, PostgreSQL 같은 RDBMS 프로그램들을 넘어서 데이터들이 너무나 방대해졌기 때문에 나온 시스템이라고 할 수 있다.  이전의 데이터 웨어하우스는 미리 짜여진 구조를 통해 가공해서 저장했기에 좀 더 접근하기 쉬었다. 반면에 데">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/datalake_and_datawarehouse.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/22/data_engineering_07/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/data-engineering/">data engineering</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-data_engineering_07" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        데이터 웨어하우스 vs 데이터 레이크
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/02/22/data_engineering_07/" class="article-date">
+            <time datetime="2020-02-21T16:14:31.000Z" itemprop="datePublished">2020-02-22</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="데이터-웨어하우스-vs-데이터-레이크"><a href="#데이터-웨어하우스-vs-데이터-레이크" class="headerlink" title="데이터 웨어하우스 vs 데이터 레이크"></a>데이터 웨어하우스 vs 데이터 레이크</h1><ul>
+<li><p>데이터 레이크라는 개념은 비교적 최신의 개념이다. 데이터 웨어하우스라고 하는 MySQL, PostgreSQL 같은 RDBMS 프로그램들을 넘어서 데이터들이 너무나 방대해졌기 때문에 나온 시스템이라고 할 수 있다.</p>
+</li>
+<li><p>이전의 <code>데이터 웨어하우스는 미리 짜여진 구조를 통해 가공해서 저장했기에 좀 더 접근</code>하기 쉬었다. 반면에 <code>데이터 레이크는 데이터가 너무 방대하기 때문에 어떤 데이터를 어떻게 사용할지 모르므로 Raw 데이터를 저장</code>한다. 그렇기 때문에 데이터에 대한 접근성이 조금 떨어지는 면이 있었지만 <code>Hadoop이나 Spark 같은 다양한 서비스들을 통해 그런 단점을 보완하여 처리</code>할 수 있게 되었다.</p>
+</li>
+<li><p>관계형 DB를 사용할 경우에는 데이터가 기하급수적으로 늘어날 수록 비용이나 관리비용도 많이 소요될 것이다.</p>
+</li>
+</ul>
+<p><img src="/image/datalake_and_datawarehouse.png" alt="시대의 변화에 따른 데이터 저장 방시의 진화"></p>
+<ul>
+<li>ETL, 즉 Extract하고, Transform 한 후에 Load하는 과정을 일컫는 용어이며, 이전의 데이터 웨어하우스에서는 이런 순서를 거쳐 작업했지만 최근에는 ELT, 우선 Extract하고, Load한뒤에 데이터 레이크에 넣은 다음에 Transformer하자라고 많이들 이야기 하고 있다.</li>
+</ul>
+<ul>
+<li>아래 그림은 하나의 예로서, 먼저 여러 곳에 산재해 있는 정형/비정형 데이터들을 데이터 레이크에 한곳으로 모아 그 다음 Spark가 됐던 다른 빅데이터 처리 시스템을 통해 재가공을 한 후 다른 애플리케이션이나 BI TooL들에 활용할 수 있다.</li>
+</ul>
+<p><img src="/image/ETL_after_ELT.png" alt="ETL"></p>
+<h2 id="데이터-레이크-아키텍쳐"><a href="#데이터-레이크-아키텍쳐" class="headerlink" title="데이터 레이크 아키텍쳐"></a>데이터 레이크 아키텍쳐</h2><ul>
+<li>여러 어플리케이션에서 나오는 데이터나 해당 API를 통해서 얻게되는 데이터들을 모아 어떻게 재가공해야할지를 고민하는 것이 가장 큰 문제일 것이다. 또한 이런 것들 통해서 redash같은 시각화를 통해 insight를 얻어야 할 것이다.</li>
+</ul>
+<p><img src="/image/redash_and_various_tools.png" alt="다양한 협업 툴 그리고 데이터 그리고 API"></p>
+<ul>
+<li><p>또한, error가 나온다면, 그 날에 데이터만 어떻게 backfill을 통해서 확보를 할 것인지를 고민해야한다.</p>
+</li>
+<li><p>챗봇을 통해서 구축을 할 때, 아티스트가 늘어났을때, 새로운 artist가 입력을 들어왔을 때, 저장되어있던 정보에는 없던 Unknown artist이면, Trigger base의 Lambda에 의해서 Unknown artist에 대한 데이터를 확보를 하고, 데이터 레이크는 Latency(데이터를 주고받는 속도의 개념)가 느리기 때문에 다양한 DB에 RDBMS를 구축하여 상황에 맞게 저장한다. 그러나 이 모든 데이터들이 존재하는 DB를 한곳으로 묶어야 되는 부분이 데이터 레이크이다. 그 모든걸 필자는 AWS S3에 옮길 것이다. 옮기는 과정에서 스케쥴링은 어떻게 할 것인지 그리고, 어떤 이벤트가 있을때 업데이트를 할 것인지를 정해주어야 할 것이다.  </p>
+</li>
+</ul>
+<p><img src="/image/schedule_data_pipeline.png" alt="데이터 파이프라인"></p>
+<h2 id="S3-Simple-Storage-System"><a href="#S3-Simple-Storage-System" class="headerlink" title="S3(Simple Storage System)"></a>S3(Simple Storage System)</h2><ul>
+<li>데이터 레이크 역할을 할 S3 bucket을 만들 것이다. 일종의 폴더라고 생각하여도 될 것 같다. 아래와 같은 단계로 bucket을 만든다.</li>
+</ul>
+<p><img src="/image/AWS_S3.png" alt="AWS S3"></p>
+<ul>
+<li>create bucket 버튼을 클릭한다.</li>
+</ul>
+<p><img src="/image/create_bucket_s3.png" alt="S3 bucket 생성 과정 - 01"></p>
+<ul>
+<li>생성할 bucket 이름을 설정한다.</li>
+</ul>
+<p><img src="/image/bucket_name_setting.png" alt="S3 bucket 생성 과정 - 02"></p>
+<ul>
+<li>bucket에 관련된 설정 중 tag 부분을 설정할 수 있는 부분인데, 생성후에도 설정 가능하므로 다음단계로 넘어간다.</li>
+</ul>
+<p><img src="/image/logging_and_name_and_region_bucket_setting.png" alt="S3 bucket 생성 과정 - 03"></p>
+<ul>
+<li>configure option을 설정하는 단계이며, 아래와 같이 모두 public access 하게끔 default 설정값으로 선택하였다.</li>
+</ul>
+<p><img src="/image/configure_option_setting.png" alt="S3 bucket 생성 과정 - 04"></p>
+<ul>
+<li>마지막으로 앞의 과정에서 설정한 부분들을 요약해서 보여준다. 맨 아래 Create bucket 버튼을 누르면 bucket 생성이 완료된다.</li>
+</ul>
+<p><img src="/image/review_bucket.png" alt="S3 bucket 생성 과정 - 05"></p>
+<ul>
+<li>위의 단계를 다 거치면 처음과 다르게 하나의 bucket이 생성된 것을 확인할 수 있다. 물론 이전에 이미 bucket을 생성하신 분들은 여러개의 bucket 리스트가 보일 것이다.</li>
+</ul>
+<p><img src="/image/S3_bucket_create_finish.png" alt="bucket 생성 완료"></p>
+<ul>
+<li><code>AWS Glue</code>는 어떨때는 데이터가 형식이 없으니까 원래는 키값이 3개였는데, 그 후 점점 키값이 늘어날 수 도 있다. 이런 경우 다양한 Table의 스키마를 관리 할 수 있다. 데이터 레이크 경우에는 지속적으로 변할수 있는 시스템이라는 것을 인지하고 있어야하기 때문에, 위와 같은 경우들을 자동화 할 수 있는 서비스이다. 가장 큰 부분이 <code>Crwaler</code>이다. 어떠한 Table에 변형이 일어났을 때, 이 Crwaler가 감지를 해서, 그것을 반영을 해준다.</li>
+</ul>
+<p><img src="/image/aws_glue_introduction.png" alt="AWS Glue"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "데이터 웨어하우스 vs 데이터 레이크",
+        "image": "https://heung-bae-lee.github.io/image/datalake_and_datawarehouse.png",
+        "keywords": "",
+        "genre": "data engineering",
+        "datePublished": "2020-02-22",
+        "dateCreated": "2020-02-22",
+        "dateModified": "2020-02-22",
+        "url": "https://heung-bae-lee.github.io/2020/02/22/data_engineering_07/",
+        "description": "데이터 웨어하우스 vs 데이터 레이크
+데이터 레이크라는 개념은 비교적 최신의 개념이다. 데이터 웨어하우스라고 하는 MySQL, PostgreSQL 같은 RDBMS 프로그램들을 넘어서 데이터들이 너무나 방대해졌기 때문에 나온 시스템이라고 할 수 있다.
+
+이전의 데이터 웨어하우스는 미리 짜여진 구조를 통해 가공해서 저장했기에 좀 더 접근하기 쉬었다. 반면에 데"
+        "wordCount": 508
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/02/20/data_engineering_06/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">data engineering (AWS DynamoDB 사용해서 오디오 feature 활용하기)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2020/02/22/data_engineering_07/" class="title">데이터 웨어하우스 vs 데이터 레이크</a></p>
+                            <p class="item-date"><time datetime="2020-02-21T16:14:31.000Z" itemprop="datePublished">2020-02-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2020/02/20/data_engineering_06/" class="title">data engineering (AWS DynamoDB 사용해서 오디오 feature 활용하기)</a></p>
+                            <p class="item-date"><time datetime="2020-02-20T09:25:18.000Z" itemprop="datePublished">2020-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/20/NLP_13/" class="title">NLP 실습 Chat bot 만들기</a></p>
+                            <p class="item-date"><time datetime="2020-02-20T07:01:42.000Z" itemprop="datePublished">2020-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/11/NLP_12/" class="title">NLP 실습 유사도를 반영한 검색 키워드 최적화</a></p>
+                            <p class="item-date"><time datetime="2020-02-11T08:16:56.000Z" itemprop="datePublished">2020-02-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/02/11/NLP_11/" class="title">NLP 실습 텍스트 유사도 - 02 (XGBoost, 1D-CNN, MaLSTM)</a></p>
+                            <p class="item-date"><time datetime="2020-02-10T16:36:58.000Z" itemprop="datePublished">2020-02-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/22/data_engineering_07/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
