@@ -21,7 +21,7 @@
 <meta property="og:description" content="Presto란? Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/query_result_settings.png">
-<meta property="og:updated_time" content="2020-02-25T15:14:32.564Z">
+<meta property="og:updated_time" content="2020-02-27T14:37:02.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (Presto란?)">
 <meta name="twitter:description" content="Presto란? Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어">
@@ -248,6 +248,56 @@ ga('send', 'pageview');
 <li><a href="https://prestodb.io/docs/current/functions.html" target="_blank" rel="noopener">prestodb documents</a></li>
 </ul>
 <p><img src="/image/presto_subscribtion.png" alt="presto 문법을 통한 통계치"></p>
+<h2 id="Apache-Spark"><a href="#Apache-Spark" class="headerlink" title="Apache Spark"></a>Apache Spark</h2><ul>
+<li>데이터를 처리하는 하나의 시스템이다. 데이터는 항상 늘어나고 그리고 너무나 큰 방대한 양을 처리를 해야하기 <code>데이터가 늘어나면 늘어날수록 속도,시간,비용 여러면에서 효율적으로 처리</code>해야한다. 필자는 제플린을 사용할 것인데, 제플린은 Spark를 기반으로 한 Web UI이다. 그래서 Spark를 통해서 처리된 데이터를 시각화한다던지 어떤식으로 output이 나오는지를 볼 수 있다. Jupyter notebook과 비슷하다고 생각하면 된다.</li>
+</ul>
+<p><img src="/image/what_is_Spark.png" alt="Spark란?"></p>
+<h2 id="Map-Reduce"><a href="#Map-Reduce" class="headerlink" title="Map Reduce"></a>Map Reduce</h2><ul>
+<li>Map Reduce는 데이터가 방대한 양으로 늘어날때 처리하는 방식에 issue가 생길 수 있다. 이런 issue들을 보완하기 위해서 데이터가 여러군데 분산처리 되어있는 형태로 저장되어있는데, S3 bucket에 저장한 방식처럼 partition으로 구분된 데이터를 function이나 어떠한 방식에 의해서 mapping을 해서 필요한 부분만을 줄이는 Reduce 과정을 거치게 된다. 이 방식은 처음 <a href="https://ko.wikipedia.org/wiki/%EA%B5%AC%EA%B8%80_%ED%8C%8C%EC%9D%BC_%EC%8B%9C%EC%8A%A4%ED%85%9C" target="_blank" rel="noopener">Google File System</a>으로 사용되어지다가 그 뒤에 Map-Reduce방식으로 Hadoop을 사용했으며, <code>속도에 특화된 Spark를 현재는 주로 사용</code>하고 있다. 예를 들면,</li>
+</ul>
+<p><img src="/image/Map_reduce_what.png" alt="Map Reduce"></p>
+<ul>
+<li>예를들면, 구글같이 다양한 web page를 크롤링해서 각 페이지들의 노출 랭킹을 분석해야 하는 <code>Page Rank</code>라는 알고리즘을 사용할때 html안에 들어가는 tag라던지 이런 문법적인 요소들과 contents들을 한 곳에 몰아서 분석하기 보다는 아래 그림과 같이 Input을 병렬적으로 나누어 진행하고 그 다음 어떠한 Suffling process를 통해서 Reduce하여 결과를 낸다.</li>
+</ul>
+<p><img src="/image/map_reduce_example.png" alt="Map Reduce example"></p>
+<ul>
+<li><p>필자는 AWS의 <code>EMR</code>(Elastic Map Reduce)서비스를 통해 <code>Spark와 제플린을 설치 해 볼 것</code>이다. EMR은 Spark나 Hadoop 같은 시스템에 cluster를 만드는 곳이라고 생각할 수 있다. cluster는 서버들이라고 말 할 수 있다. EC2를 base로한 EMR을 cluster화해서 하나의 instance ECS server가 아니라 master 아니면 다양한 core Node들이 여러개가 생성이 되어서 방대한 양의 데이터를 처리하기 위해서 필요한 setting을 구성할 수 있는 곳이라고 생각할 수 있다.</p>
+</li>
+<li><p>서버를 사용하기 위해서는 다양한 권한이라던지 key file들이 필요하므로 security와 같은 부분을 다루어야 하는데 이런 부부은 AWS에서 IAM 서비스에서 작업할 수 있다.</p>
+</li>
+<li><p>아래 그림과 같이 먼저 AWS에서 EMR 페이지로 이동한다.</p>
+</li>
+</ul>
+<p><img src="/image/EMR_where.png" alt="EMR 서비스"></p>
+<p><img src="/image/create_cluster_EMR.png" alt="EMR 서비스 cluster 생성"></p>
+<ul>
+<li>cluster 이름을 정하고, Application은 Spark를 사용할 것이므로 아래 그림과 같이 설정해 주었다. 또한, hardware 부분은 memory optimization등 여러가지 옵션이 존재하지만 모든 것은 다 비용이므로 우선 간단하게 c4 large를 사용해 보려고 한다.</li>
+</ul>
+<p><img src="/image/create_clustre_quick_options.png" alt="EMR 서비스 quick 옵션들"></p>
+<ul>
+<li>EC2 서버 안에서 다양한 작업들을 하기 위해서 key pair 필요하다. 필자와 같이 한번도 key pair를 생성한 적이 없다면 아래 그림과 같이 Learn how to key pair 버튼을 클릭하여 EC2 페이지로 넘어가 key pair를 생성한다.</li>
+</ul>
+<p><img src="/image/key_pair_setting.png" alt="key pair"></p>
+<p><img src="/image/go_to_EC2_console.png" alt="key pair 생성하는 방법"></p>
+<p><img src="/image/EC2_key_pair_page.png" alt="EC2 key pair 페이지"></p>
+<p><img src="/image/create_key_pair.png" alt="EC2 key pair 생성"></p>
+<p><img src="/image/create_key_pair_process.png" alt="EC2 key pair 생성 방법"></p>
+<p><img src="/image/key_pair_result.png" alt="key pair 생성 결과"></p>
+<ul>
+<li>key pair가 생성되면 동시에 pem 파일이 다운로드 되어질 것이다. 그 파일을 현재 project를 진행하는 폴더로 옮겨 놓는것을 추천한다. 옮겨 놓았다면, 아래 그림과 같이 파일의 모드를 변경해 주어야 한다.</li>
+</ul>
+<p><img src="/image/chmod_key_pair.png" alt="key pair pem 파일 모드 변경"></p>
+<ul>
+<li>해당 pem 파일이 존재하는 path에서 아래와 같이 변경한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod og-rwx spotift_chatbot.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li>key pair를 생성하였으므로 다시 cluster를 생성하는 페이지로 돌아가 key pair를 설정한 뒤에 아래 생성 버튼을 클릭한다.</li>
+</ul>
+<p><img src="/image/security_access_create_cluster.png" alt="cluster 생성"></p>
+<ul>
+<li>cluster가 생성되면 아래 그림과 같이 cluster가 속성들에 대한 페이지가 보일 것이다. </li>
+</ul>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -336,11 +386,11 @@ ga('send', 'pageview');
         "genre": "data engineering",
         "datePublished": "2020-02-24",
         "dateCreated": "2020-02-24",
-        "dateModified": "2020-02-26",
+        "dateModified": "2020-02-27",
         "url": "https://heung-bae-lee.github.io/2020/02/24/data_engineering_08/",
         "description": "Presto란?
 Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어"
-        "wordCount": 465
+        "wordCount": 910
     }
 </script>
 
