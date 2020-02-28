@@ -21,7 +21,7 @@
 <meta property="og:description" content="Presto란? Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/query_result_settings.png">
-<meta property="og:updated_time" content="2020-02-27T14:37:02.447Z">
+<meta property="og:updated_time" content="2020-02-28T23:23:34.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (Presto란?)">
 <meta name="twitter:description" content="Presto란? Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어">
@@ -296,8 +296,77 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/security_access_create_cluster.png" alt="cluster 생성"></p>
 <ul>
-<li>cluster가 생성되면 아래 그림과 같이 cluster가 속성들에 대한 페이지가 보일 것이다. </li>
+<li>cluster가 생성되면 아래 그림과 같이 cluster가 속성들에 대한 페이지가 보일 것이다. 또한, Master 권한으로 접속을 하려면 SSH 방식으로 인증 후 접속해야하기 때문에 security group을 관리 해 주어야 한다. Security groups for Master의 값을 클릭하여 EC2의 security group 페이지로 이동하여 Inbound 규칙에 Master와 slave 둘다 아래 그림과 같이 ssh 규칙을 추가해 주어야 한다.</li>
 </ul>
+<p><img src="/image/EC2_security_groups_inbound_rule_add.png" alt="EC2 security group Inbound rule 추가"></p>
+<p><img src="/image/ssh_port_tcp_ip_add.png" alt="Inbound rule에 ssh 설정"></p>
+<ul>
+<li>ssh로 접속하는 방법은 아래그림과 같이 enable web connection을 클릭하면 확인 할 수 있다.</li>
+</ul>
+<p><img src="/image/enable_web_connection_ssh.png" alt="ssh로 접속하는 방식"></p>
+<ul>
+<li>pem 파일이 존재하는 path로 가서 아래 그림에서 빨간색 줄이 쳐져있는 command를 실행해 놓은 뒤, 동일한 파일 path에 아래 그림에서 처럼 생성하라는 foxyproxy-settings.xml를 회색 네모칸의 내용들을 복사하여 생성한다. 동일한 파일 path에서 하라고 추천하는 것은 이 path에서 계속 접속할 것이기 때문이다.</li>
+</ul>
+<p><img src="/image/connection_ssh_with_web.png" alt="ssh로 접속하는 방식 - 01"></p>
+<ul>
+<li>그 다음은 chrome web store에 가서 <code>foxy proxy</code>를 검색한 후  standard 버젼을 설치해준다. 그러므로 chrome 브라우저를 사용해야 할 것임은 당연히 알 것이라고 생각한다.</li>
+</ul>
+<p><img src="/image/chrome_foxy_proxy_add.png" alt="ssh로 접속하는 방식 - 02"></p>
+<ul>
+<li>foxy proxy를 chrome browser에 추가했다면, 오른쪽 상단에 여우모양의 아이콘이 생성되었을 것이다. 클릭한 후 option 버튼을 눌러준다.</li>
+</ul>
+<p><img src="/image/foxy_proxy_option.png" alt="ssh로 접속하는 방식 - 03"></p>
+<ul>
+<li>그 다음은 왼쪽 tab에서 import/export를 눌러 준 후에 이전에 만들어 준 xml파일을 눌러 replace해 주면 된다. 그런 다음 public dns로 접속해 보면 맨 아래 그림과 같이 test page를 볼 수 있을 것이다. 또한 dns위에 connection들이 활성화 된 것을 볼 수 있다.</li>
+</ul>
+<p><img src="/image/import_export_foxy_proxy.png" alt="ssh로 접속하는 방식 - 03"></p>
+<p><img src="/image/import_export_result_replace.png" alt="ssh로 접속하는 방식 - 04"></p>
+<p><img src="/image/master_public_dns.png" alt="ssh로 접속하는 방식 - 05"></p>
+<p><img src="/image/master_public_dns_success.png" alt="ssh로 접속하는 방식 - 06"></p>
+<ul>
+<li>아래 그림에서와 같이 connection들 중 제플린을 클릭하면 제플린 페이지로 이동한다.</li>
+</ul>
+<p><img src="/image/activatio_connection.png" alt="제플린 접속"></p>
+<p><img src="/image/zeppelin_page.png" alt="zeppelin page"></p>
+<p><img src="/image/zeppelin_notebooke_create.png" alt="notebook 생성"></p>
+<ul>
+<li>모든 명령문이 <code>%pyspark</code>로 시작해야 한다. 필자는 기존의 c4.large로 진행시에는 connection error가 생겨 원인을 찾다가 해결치 못하고 우선 r3.xlarge를 선택하여 다시 cluster를 만든 결과 connection error가 발생하지 않았다.</li>
+</ul>
+<ul>
+<li>2번째 cell까지는 python에서 진행하던 방식이고 3번째 cell에서 구현하는 방식이 spark의 방식인데 spark는 rdd를 기반으로 방대한 데이터를 분산시켜서 mapping한 후 apply해서 얻은 값을 통합을 해서 받는 구조이다. sc(spark context)를 통해 parallelize하게 3개의 데이터를 쪼개서 rdd로 나누어 준 결과이다.</li>
+</ul>
+<p><img src="/image/zeppelin_spark_python.png" alt="zeppelin python 방식과 spark방식의 차이"></p>
+<ul>
+<li>아래와 같이 rdd로 쪼개서 map함수를 통해 쪼개놓은 데이터에 각각 mapping 시켜주고 선택한다. 또한, sqlContext를 통해 S3에 이전에 저장해 놓았던 데이터를 dataFrame형태로 불러와 작업할 수 있다. <code>printSchema()함수를 통해 각각의 값들이 어떤 형태로 들어있는지에 주의</code>를 갖고 살펴봐야 추후에 작업에 어려움이 없다.</li>
+</ul>
+<p><img src="/image/zeppelin_spark_method.png" alt="zeppeplin spark 함수 및 rdd 개념"></p>
+<p><img src="/image/zeppelin_spark_method_show.png" alt="zeppelin spark 함수 및 dataFrame"></p>
+<p><img src="/image/zeppelin_spark_df_show.png" alt="zeppelin spark 함수 및 dataFrame - 01"></p>
+<ul>
+<li>이렇게 불러온 데이터를 내장 함수를 활용해 기본적인 통계량값들을 계산할 수 있으며, 필요에 따라 사용자 정의 함수(UDF : User Definition Function)을 사용하여 전처리를 할 수 있다. UDF를 통해 정의한 함수를 Boolean값으로 처리하여 다음과 같이 filter함수에 적용시켜 condition을 줄 수도 있다.</li>
+</ul>
+<p><img src="/image/spark_zeppelin_function_udf_01.png" alt="sql function 및 udf"></p>
+<p><img src="/image/spark_zeppelin_function_udf_02.png" alt="sql function 및 udf - 01"></p>
+<ul>
+<li>본격적으로 S3에 저장해 놓은 모든 데이터들을 join한 master table을 만들기 위해 아래와 같은 작업을 한다. 가장 먼저, artists parquet 데이터를 불러와 아래와 같이 DataFrame으로 만들 수 있다.</li>
+</ul>
+<p><img src="/image/S3_artists_table_DF.png" alt="artist table"></p>
+<ul>
+<li>허나, <code>artists 데이터는 잘 변하지 않기 때문에 zeppelin에서 python을 통해 RDS에서 바로 불러오는 것이 좋을 수도 있다.</code> 아래에서 함수 안의 argument값들은 자신의 값에 맞는 것들로 먼저 정해놓고 실행해야 한다.</li>
+</ul>
+<p><img src="/image/S3_artist_another_method.png" alt="artist table을 불러오는 다른 방법"></p>
+<ul>
+<li>최종적으로 artists, top-tracks, 그리고 audio_features 모두 join한 table을 만들 것 이다. 참고로 아래 cell을 실행하기 이전에 master node에 접속해서 먼저 sudo pip install pandas와 sudo pip install pyspark 명령어를 통해 설치해 주어야 한다. zeppelin의 장점 중 하나로 <code>바로 sql table로 지정하여 sql query문으로 작업할 수 있다.</code> 해당 값을 <code>바로 시각화할 수 있는 점도 장점 중의 하나</code>이다. <code>옵션에서 없는 그래프를 그리는 것은 python이나 다른 library를 활용하여 보완</code>할 수 있다.</li>
+</ul>
+<p><img src="/image/S3_master_table_join.png" alt="모든 데이터를 join한 master table 생성"></p>
+<p><img src="/image/query_success_zeppelin.png" alt="query문 작성"></p>
+<p><img src="/image/query_success_zeppelin_avg_count.png" alt="query문을 통한 분포 시각화"></p>
+<ul>
+<li>데이터의 audio feature의 분포를 통해 예를 들어 가수의 인기도와 트랙의 인기도의 차이가 거의 없는 해당 가수의 대표적인 트랙을 알고 싶다면 아래와 같은 EDA를 먼저 실행하여 audio feature들의 특징을 파악하는 것이 중요하다. 아래 그림에서 처럼 acousticness는 전체적으로 0쪽으로 치우쳐있어 중심을 대표하는 값으로는 median을 사용해야 될 것이라고 판단할 수 있으며, danceability는 정규분포 꼴을 띄고 있어 mean을 사용해도 무방할 것으로 판단 할 수 있다.</li>
+</ul>
+<p><img src="/image/AVG_audio_features.png" alt="audio features의 평균값들"></p>
+<p><img src="/image/acousticness_dist.png" alt="전체 acousticness의 분포"></p>
+<p><img src="/image/danceability_dist.png" alt="전체 danceability의 분포"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -386,11 +455,11 @@ ga('send', 'pageview');
         "genre": "data engineering",
         "datePublished": "2020-02-24",
         "dateCreated": "2020-02-24",
-        "dateModified": "2020-02-27",
+        "dateModified": "2020-02-29",
         "url": "https://heung-bae-lee.github.io/2020/02/24/data_engineering_08/",
         "description": "Presto란?
 Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어"
-        "wordCount": 910
+        "wordCount": 1548
     }
 </script>
 
