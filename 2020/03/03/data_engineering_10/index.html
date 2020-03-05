@@ -21,7 +21,7 @@
 <meta property="og:description" content="Spotify 데이터 유사도 모델링 모든 track을 다 유클리디안 거리를 계산해서 유사도를 측정하기에는 많은 양이기 때문에 해당 Artist의 track들의 audio feature 데이터에 대해 평균을 낸 값을 사용하여 Artist 끼리의 유사도를 계산할 것이다. 해당 유사도를 계산하기 위해 아래와 같이 먼저 RDS에 접속하여 table을 생성해 준다.">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Athena_similarity_table_create.png">
-<meta property="og:updated_time" content="2020-03-04T16:03:44.042Z">
+<meta property="og:updated_time" content="2020-03-05T14:57:56.289Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (데이터 모델링 및 챗봇 만들기)">
 <meta name="twitter:description" content="Spotify 데이터 유사도 모델링 모든 track을 다 유클리디안 거리를 계산해서 유사도를 측정하기에는 많은 양이기 때문에 해당 Artist의 track들의 audio feature 데이터에 대해 평균을 낸 값을 사용하여 Artist 끼리의 유사도를 계산할 것이다. 해당 유사도를 계산하기 위해 아래와 같이 먼저 RDS에 접속하여 table을 생성해 준다.">
@@ -233,6 +233,54 @@ ga('send', 'pageview');
 <li>JOIN을 통해 각각 이름을 볼수있게 해주면서 가장 distance가 작은 즉 유사성이 큰 데이터 순서로 보여주길 원해 아래와 같은 query를 작성하여 실행시켰다. 그 결과, audio_features로만 모델링을 했음에도 비슷한 장르의 아티스트가 묶여있음을 확인할 수 있다.</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SELECT p1.name, p2.name, p1.url, p2.url, p2.distance FROM artists p1 JOIN (SELECT t1.name, t1.url, t2.y_artist, t2.distance FROM artists t1 JOIN related_artists t2 ON t2.artist_id = t1.id) p2 ON p2.y_artist=p1.id WHERE distance != 0 ORDER BY p2.distance ASC LIMIT 20;</span><br><span class="line"></span><br><span class="line">+-------------------------------+-------------------------------+--------------------------------------------------------+--------------------------------------------------------+-----------+</span><br><span class="line">| name                          | name                          | url                                                    | url                                                    | distance  |</span><br><span class="line">+-------------------------------+-------------------------------+--------------------------------------------------------+--------------------------------------------------------+-----------+</span><br><span class="line">| Four Tops                     | Alan Jackson                  | https://open.spotify.com/artist/7fIvjotigTGWqjIz6EP1i4 | https://open.spotify.com/artist/4mxWe1mtYIYfP040G38yvS | 0.0241995 |</span><br><span class="line">| Alan Jackson                  | Four Tops                     | https://open.spotify.com/artist/4mxWe1mtYIYfP040G38yvS | https://open.spotify.com/artist/7fIvjotigTGWqjIz6EP1i4 | 0.0241995 |</span><br><span class="line">| Martha Reeves &amp; The Vandellas | Jimmy Ruffin                  | https://open.spotify.com/artist/1Pe5hlKMCTULjosqZ6KanP | https://open.spotify.com/artist/0hF0PwB04hnXfYMiZWfJzy | 0.0258624 |</span><br><span class="line">| Jimmy Ruffin                  | Martha Reeves &amp; The Vandellas | https://open.spotify.com/artist/0hF0PwB04hnXfYMiZWfJzy | https://open.spotify.com/artist/1Pe5hlKMCTULjosqZ6KanP | 0.0258624 |</span><br><span class="line">| George Harrison               | Martha Reeves &amp; The Vandellas | https://open.spotify.com/artist/7FIoB5PHdrMZVC3q2HE5MS | https://open.spotify.com/artist/1Pe5hlKMCTULjosqZ6KanP | 0.0272287 |</span><br><span class="line">| Martha Reeves &amp; The Vandellas | George Harrison               | https://open.spotify.com/artist/1Pe5hlKMCTULjosqZ6KanP | https://open.spotify.com/artist/7FIoB5PHdrMZVC3q2HE5MS | 0.0272287 |</span><br><span class="line">| Nik Kershaw                   | Elton John                    | https://open.spotify.com/artist/7kCL98rPFsNKjAHDmWrMac | https://open.spotify.com/artist/3PhoLpVuITZKcymswpck5b | 0.0272474 |</span><br><span class="line">| Elton John                    | Nik Kershaw                   | https://open.spotify.com/artist/3PhoLpVuITZKcymswpck5b | https://open.spotify.com/artist/7kCL98rPFsNKjAHDmWrMac | 0.0272474 |</span><br><span class="line">| Tammi Terrell                 | Kim Carnes                    | https://open.spotify.com/artist/75jNCko3SnEMI5gwGqrbb8 | https://open.spotify.com/artist/5PN2aHIvLEM98XIorsPMhE | 0.0279891 |</span><br><span class="line">| Kim Carnes                    | Tammi Terrell                 | https://open.spotify.com/artist/5PN2aHIvLEM98XIorsPMhE | https://open.spotify.com/artist/75jNCko3SnEMI5gwGqrbb8 | 0.0279891 |</span><br><span class="line">| Roger Daltrey                 | Arcade Fire                   | https://open.spotify.com/artist/5odf7hjI7hyvAw66tmxhGF | https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB | 0.0291541 |</span><br><span class="line">| Arcade Fire                   | Roger Daltrey                 | https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB | https://open.spotify.com/artist/5odf7hjI7hyvAw66tmxhGF | 0.0291541 |</span><br><span class="line">| Billy Fury                    | Otis Redding                  | https://open.spotify.com/artist/7rtLZcKWGV4eaZsBwSKimf | https://open.spotify.com/artist/60df5JBRRPcnSpsIMxxwQm | 0.0292248 |</span><br><span class="line">| Otis Redding                  | Billy Fury                    | https://open.spotify.com/artist/60df5JBRRPcnSpsIMxxwQm | https://open.spotify.com/artist/7rtLZcKWGV4eaZsBwSKimf | 0.0292248 |</span><br><span class="line">| Katy Perry                    | John Fogerty                  | https://open.spotify.com/artist/6jJ0s89eD6GaHleKKya26X | https://open.spotify.com/artist/5ujCegv1BRbEPTCwQqFk6t | 0.0302168 |</span><br><span class="line">| John Fogerty                  | Katy Perry                    | https://open.spotify.com/artist/5ujCegv1BRbEPTCwQqFk6t | https://open.spotify.com/artist/6jJ0s89eD6GaHleKKya26X | 0.0302168 |</span><br><span class="line">| Dierks Bentley                | The Cadillac Three            | https://open.spotify.com/artist/7x8nK0m0cP2ksQf0mjWdPS | https://open.spotify.com/artist/1nivFfWu6oXBFDNyVfFU5x | 0.0313435 |</span><br><span class="line">| The Cadillac Three            | Dierks Bentley                | https://open.spotify.com/artist/1nivFfWu6oXBFDNyVfFU5x | https://open.spotify.com/artist/7x8nK0m0cP2ksQf0mjWdPS | 0.0313435 |</span><br><span class="line">| Sheryl Crow                   | Phil Collins                  | https://open.spotify.com/artist/4TKTii6gnOnUXQHyuo9JaD | https://open.spotify.com/artist/4lxfqrEsLX6N1N4OCSkILp | 0.0317203 |</span><br><span class="line">| Phil Collins                  | Sheryl Crow                   | https://open.spotify.com/artist/4lxfqrEsLX6N1N4OCSkILp | https://open.spotify.com/artist/4TKTii6gnOnUXQHyuo9JaD | 0.0317203 |</span><br><span class="line">+-------------------------------+-------------------------------+--------------------------------------------------------+--------------------------------------------------------+-----------+</span><br><span class="line">20 rows <span class="keyword">in</span> <span class="built_in">set</span> (1.18 sec)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이제 Facebook messenger API를 통해 챗봇을 서비스를 만들어 볼 것이다. 아래 그림과 같이 구글에서 Facebook messenger API를 검색하여 페이지로 접속한다.</li>
+</ul>
+<p><img src="/image/search_Facebook_messenger_API.png" alt="Facebook messenger API 검색"></p>
+<ul>
+<li>Facebook messenger API 웹페이지를 접속하면 아래 그림처럼 보이며, 그에 대한 작동원리에 대한 설명은 Introduction의 learn more를 클릭하면 두번째 그림과 같이 작동원리를 보여준다. 간단히 말하자면, User가 Facebook messenger API를 통해 질의하면 그 정보를 Business Server에 보내서 해당 질문에 따른 답변을 가져와 보여주는 형식이다.</li>
+</ul>
+<p><img src="/image/introduction_click_facebook_messenger_api.png" alt="Facebook messenger API 웹페이지"></p>
+<p><img src="/image/Facebook_messenger_plattform_principal.png" alt="Facebook messenger API 작동방식"></p>
+<ul>
+<li>Facebook messenger API를 통해서는 다양한 방식의 답변을 제공할 수 있다. 이미 만들어져있는 UI/UX 템플릿들이 존재하기 때문에 원하는 형식에 맞춰 다양하게 서비스를 제공할 수 있다.</li>
+</ul>
+<p><img src="/image/Quick_answer_Facebook_messenger_api.png" alt="FaceBook messenger API의 Quick Answer"></p>
+<p><img src="/image/Facebook_API_Messenge_template.png" alt="Facebook messenger의 message 템플릿"></p>
+<ul>
+<li><code>Facebook messenger API를 사용하기 위해서는 가장 먼저 페이지가 만들어져 있어야 한다.</code> 아래와 같이 새로운 페이지를 만들거나 이미 만들어져 있는 자신의 페이지를 먼저 등록시킨다.</li>
+</ul>
+<p><img src="/image/create_page_facebook_messenger_api_01.png" alt="페이지 생성 - 01"></p>
+<p><img src="/image/create_page_facebook_messenger_api_02.png" alt="페이지 생성 - 02"></p>
+<p><img src="/image/create_page_facebook_messenger_api_03.png" alt="페이지 생성 - 03"></p>
+<p><img src="/image/create_page_facebook_messenger_api_04.png" alt="페이지 생성 - 04"></p>
+<p><img src="/image/create_page_facebook_messenger_api_05.png" alt="페이지 생성 - 05"></p>
+<ul>
+<li>Lambda를 통해서 AWS와 Facebook messenger API를 연결해 볼 것이다. Lambda를 사용하는 이유는 지난번에 언급했던 것과 같이 EC2와 같이 서버를 항상 띄어놓고 정해진 resource를 통해 서비스를 관리하면 늘어나거나 줄어드는 User에 대해서 유연하게 처리하기 힘들기 때문이다. Lambda는 예를 들어 기하급수적으로 User가 늘더라도 그에따라 병렬적으로 작업하기 때문에 Traffic의 크기에 크게 영향을 받지 않는다. 반대로 EC2의 경우에는 해당 Traffic이 증가함에 따라 여러가지 장치를 구현해 놓아야한다. AWS에 로그인한 후 Lambda를 들어가서, 아래 그림과 같이 새로운 Lambda Function을 생성해 준다.</li>
+</ul>
+<p><img src="/image/new_create_lambda_function_aws_01.png" alt="Facebook messenger API를 사용하기 위한 Lambda Function 생성 - 01"></p>
+<p><img src="/image/new_create_lambda_function_aws_02.png" alt="Facebook messenger API를 사용하기 위한 Lambda Function 생성 - 02"></p>
+<p><img src="/image/new_create_lambda_function_aws_03.png" alt="Facebook messenger API를 사용하기 위한 Lambda Function 생성 - 03"></p>
+<p><img src="/image/new_create_lambda_function_aws_04.png" alt="Facebook messenger API를 사용하기 위한 Lambda Function 생성 - 04"></p>
+<ul>
+<li>이제 위에서 만든 Lambda Function과 Facebook messenger API를 연결하기 위해서 AWS에서 API 관리 및 설정을 담당하는 API Gateway 페이지로 이동해서 새롭게 API Gate를 만들 것이다.</li>
+</ul>
+<p><img src="/image/AWS_api_gate_service.png" alt="AWS API Gateway service"></p>
+<p><img src="/image/Amazon_API_Gateway.png" alt="AWS API Gateway 생성 - 01"></p>
+<ul>
+<li>필자는 REST API 방식으로 생성할 것이기 때문에 아래와 같이 설정하였으며, API이름도 설정해 주었다.</li>
+</ul>
+<p><img src="/image/Amazon_API_Gateway_creation_01.png" alt="AWS API Gateway 생성 - 02"></p>
+<ul>
+<li>그 다음은 Crawling할 때 한번씩 접해봤을 법한 GET, POST Method를 만들어 주는 과정을 거친다. 먼저 GET은 Integration type을 Lambda Function으로 설정해 주고, Lambda Function은 방금 만들어놓은 것을 사용할 것이다. 이렇게 설정한 뒤에 Integration Request 탭으로 이동하여 Mapping Templates의 Request body passthrough 아래와같이 설정하며, <code>mapping Templates에 application/json을 추가</code>해준다. Generate template을 Method Request passthrough로 설정한 후 최종적으로 save를 하여 GET method의 설정을 마친다. 필자가 사용할 서비스에서는 POST method는 Facebook API에 데이터를 주는 역할 밖에 없기 때문에 크게 설정할 것이 없다.</li>
+</ul>
+<p><img src="/image/Amazon_API_Gateway_creation_02.png" alt="AWS API Gateway 생성 - 03"></p>
+<p><img src="/image/Amazon_API_Gateway_creation_03.png" alt="AWS API Gateway 생성 - 04"></p>
+<p><img src="/image/Amazon_API_Gateway_creation_04.png" alt="AWS API Gateway 생성 - 05"></p>
+<p><img src="/image/Amazon_API_Gateway_creation_05.png" alt="AWS API Gateway 생성 - 06"></p>
+<p><img src="/image/Amazon_API_Gateway_creation_06.png" alt="AWS API Gateway 생성 - 07"></p>
+<p><img src="/image/Amazon_API_Gateway_creation_07.png" alt="AWS API Gateway 생성 - 08"></p>
+<p><img src="/image/Amazon_API_Gateway_creation_08.png" alt="AWS API Gateway 생성 - 09"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -325,7 +373,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/03/03/data_engineering_10/",
         "description": "Spotify 데이터 유사도 모델링
 모든 track을 다 유클리디안 거리를 계산해서 유사도를 측정하기에는 많은 양이기 때문에 해당 Artist의 track들의 audio feature 데이터에 대해 평균을 낸 값을 사용하여 Artist 끼리의 유사도를 계산할 것이다. 해당 유사도를 계산하기 위해 아래와 같이 먼저 RDS에 접속하여 table을 생성해 준다."
-        "wordCount": 3314
+        "wordCount": 3768
     }
 </script>
 
@@ -588,5 +636,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
