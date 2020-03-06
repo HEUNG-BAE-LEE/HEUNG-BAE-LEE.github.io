@@ -21,7 +21,7 @@
 <meta property="og:description" content="Spotify 데이터 유사도 모델링 모든 track을 다 유클리디안 거리를 계산해서 유사도를 측정하기에는 많은 양이기 때문에 해당 Artist의 track들의 audio feature 데이터에 대해 평균을 낸 값을 사용하여 Artist 끼리의 유사도를 계산할 것이다. 해당 유사도를 계산하기 위해 아래와 같이 먼저 RDS에 접속하여 table을 생성해 준다.">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Athena_similarity_table_create.png">
-<meta property="og:updated_time" content="2020-03-05T14:57:56.289Z">
+<meta property="og:updated_time" content="2020-03-06T09:13:53.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="data engineering (데이터 모델링 및 챗봇 만들기)">
 <meta name="twitter:description" content="Spotify 데이터 유사도 모델링 모든 track을 다 유클리디안 거리를 계산해서 유사도를 측정하기에는 많은 양이기 때문에 해당 Artist의 track들의 audio feature 데이터에 대해 평균을 낸 값을 사용하여 Artist 끼리의 유사도를 계산할 것이다. 해당 유사도를 계산하기 위해 아래와 같이 먼저 RDS에 접속하여 table을 생성해 준다.">
@@ -281,6 +281,32 @@ ga('send', 'pageview');
 <p><img src="/image/Amazon_API_Gateway_creation_06.png" alt="AWS API Gateway 생성 - 07"></p>
 <p><img src="/image/Amazon_API_Gateway_creation_07.png" alt="AWS API Gateway 생성 - 08"></p>
 <p><img src="/image/Amazon_API_Gateway_creation_08.png" alt="AWS API Gateway 생성 - 09"></p>
+<ul>
+<li>GET, POST method를 다 설정했다면, 사용하기 위해서는 배포를 해야 할 것이다. 아래 그림과 같이 action버튼을 눌러 deploy api를 선택하여 stage를 새롭게 만들어주며, 이름을 설정한다.</li>
+</ul>
+<p><img src="/image/Action_deploy_API_AWS.png" alt="API Gateway 배포 - 01"></p>
+<p><img src="/image/deplot_api_stage_name_AWS.png" alt="API Gateway 배포 - 02"></p>
+<ul>
+<li>deploy를 다 완료하게 되면, 아래 그림과 같은 화면이 나타날 것이다. 그 중 아래 빨간색 상자 안에 있는 invoke URL은 우리가 Facebook에 연결해 줄 endpoint 역할을 한다. 추후에 invoke URL 주소를 복사한 후에 아래 그림에서와 같이 Facebook에서 만들어 놓은 app의 콜백 url 추가를 눌러 추가해 줄 것이다.</li>
+</ul>
+<p><img src="/iamge/callback_ural_adding.png" alt="Facebook messenger API webhook url 추가"></p>
+<ul>
+<li>위의 그림 처럼 webhook url을 추가 해주려면 Lambda Function을 만들어 주어야 하는데 먼저 아래 그림에서와 토큰을 생성해서 복사한 후 Lambda Function을 아래 그림과 같이 작성해 준뒤에 webhook url을 추가해 줄 수 있다. 참고로 페이지 토큰은 Facebook app에서 page token을 생성하여 해당 값을 적어주고, verify token은 임으로 지정해주면 된다.</li>
+</ul>
+<p><img src="/image/page_token_access_create.png" alt="페이지 토큰 생성 - 01"></p>
+<p><img src="/image/page_token_creation.png" alt="페이지 토큰 생성 - 02"></p>
+<ul>
+<li>아래와 같이 Lambda Function을 수정하는 이유는 <a href="https://developers.facebook.com/docs/messenger-platform/webhook#setup" target="_blank" rel="noopener">Facebook의 Webhook 사용법</a>을 살펴보면 알 수 있다.</li>
+</ul>
+<p><img src="/image/modify_lambda_Function_for_webhook_url.png" alt="webhook url 추가를 위한 Lambda Function 수정"></p>
+<ul>
+<li>위에서 지정한 verify token과 아래 그림에서 처럼 API Gateway를 클릭하여 이전에 invoke URL의 주소를 복사하여 아래 그림과 같이 webhook url을 추가해준다. 이렇게 하면 connection은 완료한 상태이다.</li>
+</ul>
+<p><img src="/image/API_Gateway_invoke_url.png" alt="invoke URL"></p>
+<p><img src="/image/callback_url_adding_api.png" alt="callback URL 추가"></p>
+<ul>
+<li>이제 본격적으로 챗봇을 구현하기 위해 Lambda Function의 else 밑의 부분을 수정해 볼 것이다.</li>
+</ul>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -369,11 +395,11 @@ ga('send', 'pageview');
         "genre": "data engineering",
         "datePublished": "2020-03-03",
         "dateCreated": "2020-03-03",
-        "dateModified": "2020-03-05",
+        "dateModified": "2020-03-06",
         "url": "https://heung-bae-lee.github.io/2020/03/03/data_engineering_10/",
         "description": "Spotify 데이터 유사도 모델링
 모든 track을 다 유클리디안 거리를 계산해서 유사도를 측정하기에는 많은 양이기 때문에 해당 Artist의 track들의 audio feature 데이터에 대해 평균을 낸 값을 사용하여 Artist 끼리의 유사도를 계산할 것이다. 해당 유사도를 계산하기 위해 아래와 같이 먼저 RDS에 접속하여 table을 생성해 준다."
-        "wordCount": 3768
+        "wordCount": 3981
     }
 </script>
 
