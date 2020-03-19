@@ -8,8 +8,24 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/03/19/data_structure_01/</loc>
+        <lastmod>2020-03-19T12:53:16.920Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2019/07/24/data_structure_00/</loc>
+        <lastmod>2020-03-19T11:07:46.234Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/03/03/data_engineering_10/</loc>
-        <lastmod>2020-03-09T14:03:54.154Z</lastmod>
+        <lastmod>2020-03-09T14:06:21.058Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -378,14 +394,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2019/07/19/cs231n_05/</loc>
         <lastmod>2019-12-13T03:43:27.468Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2019/07/24/data_structure_00/</loc>
-        <lastmod>2019-12-11T16:25:06.686Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
