@@ -6,7 +6,7 @@
     
 
     
-    <title>내가 정리하는 자료구조 00 | DataLatte&#39;s IT Blog</title>
+    <title>내가 정리하는 자료구조 00 (Node, List, Queue) | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -15,15 +15,17 @@
     
     <meta name="description" content="목표 기본 자료 구조/알고리즘 익히기 알고리즘 풀이를 위해, 기본적으로 알고 있어야 하는 자료구조와 알고리즘 정리    자료구조란? 용어: 자료구조 = 데이터 구조 = data structure 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야">
 <meta property="og:type" content="article">
-<meta property="og:title" content="내가 정리하는 자료구조 00">
+<meta property="og:title" content="내가 정리하는 자료구조 00 (Node, List, Queue)">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/03/19/data_structure_01/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="목표 기본 자료 구조/알고리즘 익히기 알고리즘 풀이를 위해, 기본적으로 알고 있어야 하는 자료구조와 알고리즘 정리    자료구조란? 용어: 자료구조 = 데이터 구조 = data structure 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-19T12:53:16.920Z">
+<meta property="og:image" content="https://www.fun-coding.org/00_Images/queue.png">
+<meta property="og:updated_time" content="2020-03-20T08:39:46.045Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="내가 정리하는 자료구조 00">
+<meta name="twitter:title" content="내가 정리하는 자료구조 00 (Node, List, Queue)">
 <meta name="twitter:description" content="목표 기본 자료 구조/알고리즘 익히기 알고리즘 풀이를 위해, 기본적으로 알고 있어야 하는 자료구조와 알고리즘 정리    자료구조란? 용어: 자료구조 = 데이터 구조 = data structure 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야">
+<meta name="twitter:image" content="https://www.fun-coding.org/00_Images/queue.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -182,7 +184,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        내가 정리하는 자료구조 00
+        내가 정리하는 자료구조 00 (Node, List, Queue)
         </h1>
     
 
@@ -285,7 +287,54 @@ ga('send', 'pageview');
 <h3 id="3-프로그래밍-연습"><a href="#3-프로그래밍-연습" class="headerlink" title="3. 프로그래밍 연습"></a>3. 프로그래밍 연습</h3><h4 id="연습1-위의-2차원-배열에서-9-8-7-을-순서대로-출력해보기"><a href="#연습1-위의-2차원-배열에서-9-8-7-을-순서대로-출력해보기" class="headerlink" title="연습1: 위의 2차원 배열에서 9, 8, 7 을 순서대로 출력해보기"></a>연습1: 위의 2차원 배열에서 9, 8, 7 을 순서대로 출력해보기</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data_list[2][2], data_list[2][1], data_list[2][0])</span><br></pre></td></tr></table></figure>
 <h4 id="연습2-아래의-dataset-리스트에서-전체-이름-안에-M-은-몇-번-나왔는지-빈도수-출력하기"><a href="#연습2-아래의-dataset-리스트에서-전체-이름-안에-M-은-몇-번-나왔는지-빈도수-출력하기" class="headerlink" title="연습2: 아래의 dataset 리스트에서 전체 이름 안에 M 은 몇 번 나왔는지 빈도수 출력하기"></a>연습2: 아래의 dataset 리스트에서 전체 이름 안에 M 은 몇 번 나왔는지 빈도수 출력하기</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">dataset = [<span class="string">'Braund, Mr. Owen Harris'</span>,</span><br><span class="line"><span class="string">'Cumings, Mrs. John Bradley (Florence Briggs Thayer)'</span>,</span><br><span class="line"><span class="string">'Heikkinen, Miss. Laina'</span>,</span><br><span class="line"><span class="string">'Futrelle, Mrs. Jacques Heath (Lily May Peel)'</span>,</span><br><span class="line"><span class="string">'Allen, Mr. William Henry'</span>,</span><br><span class="line"><span class="string">'Moran, Mr. James'</span>,</span><br><span class="line"><span class="string">'McCarthy, Mr. Timothy J'</span>,</span><br><span class="line"><span class="string">'Palsson, Master. Gosta Leonard'</span>,</span><br><span class="line"><span class="string">'Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)'</span>,</span><br><span class="line"><span class="string">'Nasser, Mrs. Nicholas (Adele Achem)'</span>,</span><br><span class="line"><span class="string">'Sandstrom, Miss. Marguerite Rut'</span>,</span><br><span class="line"><span class="string">'Bonnell, Miss. Elizabeth'</span>,</span><br><span class="line"><span class="string">'Saundercock, Mr. William Henry'</span>,</span><br><span class="line"><span class="string">'Andersson, Mr. Anders Johan'</span>,</span><br><span class="line"><span class="string">'Vestrom, Miss. Hulda Amanda Adolfina'</span>,</span><br><span class="line"><span class="string">'Hewlett, Mrs. (Mary D Kingcome) '</span>,</span><br><span class="line"><span class="string">'Rice, Master. Eugene'</span>,</span><br><span class="line"><span class="string">'Williams, Mr. Charles Eugene'</span>,</span><br><span class="line"><span class="string">'Vander Planke, Mrs. Julius (Emelia Maria Vandemoortele)'</span>,</span><br><span class="line"><span class="string">'Masselmani, Mrs. Fatima'</span>,</span><br><span class="line"><span class="string">'Fynney, Mr. Joseph J'</span>,</span><br><span class="line"><span class="string">'Beesley, Mr. Lawrence'</span>,</span><br><span class="line"><span class="string">'McGowan, Miss. Anna "Annie"'</span>,</span><br><span class="line"><span class="string">'Sloper, Mr. William Thompson'</span>,</span><br><span class="line"><span class="string">'Palsson, Miss. Torborg Danira'</span>,</span><br><span class="line"><span class="string">'Asplund, Mrs. Carl Oscar (Selma Augusta Emilia Johansson)'</span>,</span><br><span class="line"><span class="string">'Emir, Mr. Farred Chehab'</span>,</span><br><span class="line"><span class="string">'Fortune, Mr. Charles Alexander'</span>,</span><br><span class="line"><span class="string">'Dwyer, Miss. Ellen "Nellie"'</span>,</span><br><span class="line"><span class="string">'Todoroff, Mr. Lalio'</span>]</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">m_count = 0</span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> dataset:</span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(len(data)):</span><br><span class="line">        <span class="keyword">if</span> data[index] == <span class="string">'M'</span>:</span><br><span class="line">            m_count += 1</span><br><span class="line"><span class="built_in">print</span> (m_count)</span><br></pre></td></tr></table></figure>
-
+<h2 id="Queue-큐"><a href="#Queue-큐" class="headerlink" title="Queue(큐)"></a>Queue(큐)</h2><ul>
+<li>array와 함께 가장 쉬운 자료구조 중 하나<ul>
+<li>컴퓨터에서 가장 핵심적인 OS(운영체제)에서도 많이 사용되며, 인터넷에서도 네트워크 기능에서도 많이 사용된다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-큐-구조"><a href="#1-큐-구조" class="headerlink" title="1. 큐 구조"></a>1. 큐 구조</h3><ul>
+<li><code>줄을 서는 행위와 유사</code></li>
+<li>가장 먼저 넣은 데이터를 가장 먼저 꺼낼 수 있는 구조<ul>
+<li>음식점에서 가장 먼저 줄을 선 사람이 제일 먼저 음식점에 입장하는 것과 동일</li>
+<li><code>FIFO(First-In, First-Out)</code> 또는 <code>LILO(Last-In, Last-Out)</code> 방식으로 스택과 꺼내는 순서가 반대</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://www.fun-coding.org/00_Images/queue.png"></p>
+<ul>
+<li>출처: <a href="http://www.stoimen.com/blog/2012/06/05/computer-algorithms-stack-and-queue-data-structure/" target="_blank" rel="noopener">http://www.stoimen.com/blog/2012/06/05/computer-algorithms-stack-and-queue-data-structure/</a></li>
+</ul>
+<h3 id="2-알아둘-용어"><a href="#2-알아둘-용어" class="headerlink" title="2. 알아둘 용어"></a>2. 알아둘 용어</h3><ul>
+<li>Enqueue: 큐에 데이터를 넣는 기능</li>
+<li>Dequeue: 큐에서 데이터를 꺼내는 기능</li>
+<li><font color="#BF360C">Visualgo 사이트에서 시연해보며 이해하기 (enqueue/dequeue 만 클릭해보며): <a href="https://visualgo.net/en/list" target="_blank" rel="noopener">https://visualgo.net/en/list</a></font></li>
+</ul>
+<h3 id="3-파이썬-queue-라이브러리-활용해서-큐-자료-구조-사용하기"><a href="#3-파이썬-queue-라이브러리-활용해서-큐-자료-구조-사용하기" class="headerlink" title="3. 파이썬 queue 라이브러리 활용해서 큐 자료 구조 사용하기"></a>3. 파이썬 queue 라이브러리 활용해서 큐 자료 구조 사용하기</h3><ul>
+<li><strong>queue 라이브러리에는 다양한 큐 구조로 Queue(), LifoQueue(), PriorityQueue() 제공</strong></li>
+<li><font color="#BF360C">프로그램을 작성할 때 프로그램에 따라 적합한 자료 구조를 사용</font><ul>
+<li>Queue(): 가장 일반적인 큐 자료 구조</li>
+<li>LifoQueue(): 나중에 입력된 데이터가 먼저 출력되는 구조 (스택 구조라고 보면 됨)</li>
+<li>PriorityQueue(): 데이터마다 우선순위를 넣어서, 우선순위가 높은 순으로 데이터 출력</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>일반적인 큐 외에 다양한 정책이 적용된 큐들이 있음</p>
+</blockquote>
+<h4 id="3-1-Queue-로-큐-만들기-가장-일반적인-큐-FIFO-First-In-First-Out"><a href="#3-1-Queue-로-큐-만들기-가장-일반적인-큐-FIFO-First-In-First-Out" class="headerlink" title="3.1. Queue()로 큐 만들기 (가장 일반적인 큐, FIFO(First-In, First-Out))"></a>3.1. Queue()로 큐 만들기 (가장 일반적인 큐, FIFO(First-In, First-Out))</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import queue</span><br><span class="line"></span><br><span class="line">data_queue = queue.Queue()</span><br><span class="line">data_queue.put(<span class="string">"funcoding"</span>)</span><br><span class="line">data_queue.put(1)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.qsize()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.get()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'funcoding'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.qsize()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.get()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'funcoding'</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.qsize()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-LifoQueue-로-큐-만들기-LIFO-Last-In-First-Out"><a href="#3-2-LifoQueue-로-큐-만들기-LIFO-Last-In-First-Out" class="headerlink" title="3.2. LifoQueue()로 큐 만들기 (LIFO(Last-In, First-Out))"></a>3.2. LifoQueue()로 큐 만들기 (LIFO(Last-In, First-Out))</h4>
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 하단형 -->
@@ -367,13 +416,13 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "내가 정리하는 자료구조 00",
-        "image": "https://heung-bae-lee.github.io",
+        "headline": "내가 정리하는 자료구조 00 (Node, List, Queue)",
+        "image": "https://heung-bae-lee.github.iohttps://www.fun-coding.org/00_Images/queue.png",
         "keywords": "",
         "genre": "C/C++/자료구조",
         "datePublished": "2020-03-19",
         "dateCreated": "2020-03-19",
-        "dateModified": "2020-03-19",
+        "dateModified": "2020-03-20",
         "url": "https://heung-bae-lee.github.io/2020/03/19/data_structure_01/",
         "description": "목표
 기본 자료 구조/알고리즘 익히기
@@ -385,7 +434,7 @@ ga('send', 'pageview');
 용어: 자료구조 = 데이터 구조 = data structure
 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미
 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야 "
-        "wordCount": 846
+        "wordCount": 1149
     }
 </script>
 
@@ -459,7 +508,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
-                            <p class="item-title"><a href="/2020/03/19/data_structure_01/" class="title">내가 정리하는 자료구조 00</a></p>
+                            <p class="item-title"><a href="/2020/03/19/data_structure_01/" class="title">내가 정리하는 자료구조 00 (Node, List, Queue)</a></p>
                             <p class="item-date"><time datetime="2020-03-19T09:46:30.000Z" itemprop="datePublished">2020-03-19</time></p>
                         </div>
                     </li>
