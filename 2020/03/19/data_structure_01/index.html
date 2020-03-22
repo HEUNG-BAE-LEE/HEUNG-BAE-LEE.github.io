@@ -21,7 +21,7 @@
 <meta property="og:description" content="목표 기본 자료 구조/알고리즘 익히기 알고리즘 풀이를 위해, 기본적으로 알고 있어야 하는 자료구조와 알고리즘 정리    자료구조란? 용어: 자료구조 = 데이터 구조 = data structure 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Node.png">
-<meta property="og:updated_time" content="2020-03-21T12:17:37.533Z">
+<meta property="og:updated_time" content="2020-03-22T12:33:42.892Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="내가 정리하는 자료구조 00 (Node, List, Queue)">
 <meta name="twitter:description" content="목표 기본 자료 구조/알고리즘 익히기 알고리즘 풀이를 위해, 기본적으로 알고 있어야 하는 자료구조와 알고리즘 정리    자료구조란? 용어: 자료구조 = 데이터 구조 = data structure 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야">
@@ -326,7 +326,7 @@ ga('send', 'pageview');
 </ul>
 <h4 id="현업에서-사용하는-linked-list라-함은-dummy-duable-linked-list를-의미하고-single-linked-list에서-single이-의미하는-것은-참조가-하나-즉-한개의-방향만을-참조하고-duable은-양방향을-참조한다"><a href="#현업에서-사용하는-linked-list라-함은-dummy-duable-linked-list를-의미하고-single-linked-list에서-single이-의미하는-것은-참조가-하나-즉-한개의-방향만을-참조하고-duable은-양방향을-참조한다" class="headerlink" title="현업에서 사용하는 linked list라 함은 dummy duable linked list를 의미하고, single linked list에서 single이 의미하는 것은 참조가 하나 즉 한개의 방향만을 참조하고 duable은 양방향을 참조한다."></a>현업에서 사용하는 linked list라 함은 dummy duable linked list를 의미하고, single linked list에서 single이 의미하는 것은 참조가 하나 즉 한개의 방향만을 참조하고 duable은 양방향을 참조한다.</h4><h4 id="Singel-Linked-list"><a href="#Singel-Linked-list" class="headerlink" title="Singel Linked list"></a>Singel Linked list</h4><h5 id="Instance-Member"><a href="#Instance-Member" class="headerlink" title="Instance Member"></a>Instance Member</h5><ol>
 <li>head<ul>
-<li>리스트의 첫번째 노드를 가리킨다</li>
+<li>리스트의 첫번째 노드를 가리킨다.</li>
 </ul>
 </li>
 <li>d_size<ul>
@@ -334,7 +334,43 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"><span class="comment">## Queue(큐)</span></span><br><span class="line"></span><br><span class="line">- array와 함께 가장 쉬운 자료구조 중 하나</span><br><span class="line">    - 컴퓨터에서 가장 핵심적인 OS(운영체제)에서도 많이 사용되며, 인터넷에서도 네트워크 기능에서도 많이 사용된다.</span><br><span class="line"></span><br><span class="line"><span class="comment">### 1. 큐 구조</span></span><br><span class="line">* `줄을 서는 행위와 유사`</span><br><span class="line">* 가장 먼저 넣은 데이터를 가장 먼저 꺼낼 수 있는 구조</span><br><span class="line">  - 음식점에서 가장 먼저 줄을 선 사람이 제일 먼저 음식점에 입장하는 것과 동일</span><br><span class="line">  - `FIFO(First-In, First-Out)` 또는 `LILO(Last-In, Last-Out)` 방식으로 스택과 꺼내는 순서가 반대</span><br><span class="line"></span><br><span class="line">&lt;img src=<span class="string">"https://www.fun-coding.org/00_Images/queue.png"</span> /&gt;</span><br><span class="line">* 출처: http://www.stoimen.com/blog/2012/06/05/computer-algorithms-stack-and-queue-data-structure/</span><br><span class="line"></span><br><span class="line"><span class="comment">### 2. 알아둘 용어</span></span><br><span class="line">* Enqueue: 큐에 데이터를 넣는 기능</span><br><span class="line">* Dequeue: 큐에서 데이터를 꺼내는 기능</span><br><span class="line">* &lt;font color=<span class="string">'#BF360C'</span>&gt;Visualgo 사이트에서 시연해보며 이해하기 (enqueue/dequeue 만 클릭해보며): https://visualgo.net/en/list</span><br><span class="line"></span><br><span class="line"><span class="comment">### 3. 파이썬 queue 라이브러리 활용해서 큐 자료 구조 사용하기</span></span><br><span class="line">* **queue 라이브러리에는 다양한 큐 구조로 Queue(), LifoQueue(), PriorityQueue() 제공**</span><br><span class="line">* &lt;font color=<span class="string">'#BF360C'</span>&gt;프로그램을 작성할 때 프로그램에 따라 적합한 자료 구조를 사용&lt;/font&gt;</span><br><span class="line">  - Queue(): 가장 일반적인 큐 자료 구조</span><br><span class="line">  - LifoQueue(): 나중에 입력된 데이터가 먼저 출력되는 구조 (스택 구조라고 보면 됨)</span><br><span class="line">  - PriorityQueue(): 데이터마다 우선순위를 넣어서, 우선순위가 높은 순으로 데이터 출력</span><br><span class="line"></span><br><span class="line">&gt; 일반적인 큐 외에 다양한 정책이 적용된 큐들이 있음</span><br><span class="line"></span><br><span class="line"><span class="comment">#### 3.1. Queue()로 큐 만들기 (가장 일반적인 큐, FIFO(First-In, First-Out))</span></span><br><span class="line"></span><br><span class="line">``` bash</span><br><span class="line">import queue</span><br><span class="line"></span><br><span class="line">data_queue = queue.Queue()</span><br><span class="line">data_queue.put(<span class="string">"funcoding"</span>)</span><br><span class="line">data_queue.put(1)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Queue-큐"><a href="#Queue-큐" class="headerlink" title="Queue(큐)"></a>Queue(큐)</h2><ul>
+<li>array와 함께 가장 쉬운 자료구조 중 하나<ul>
+<li>컴퓨터에서 가장 핵심적인 OS(운영체제)에서도 많이 사용되며, 인터넷에서도 네트워크 기능에서도 많이 사용된다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-큐-구조"><a href="#1-큐-구조" class="headerlink" title="1. 큐 구조"></a>1. 큐 구조</h3><ul>
+<li><code>줄을 서는 행위와 유사</code></li>
+<li>가장 먼저 넣은 데이터를 가장 먼저 꺼낼 수 있는 구조<ul>
+<li>음식점에서 가장 먼저 줄을 선 사람이 제일 먼저 음식점에 입장하는 것과 동일</li>
+<li><code>FIFO(First-In, First-Out)</code> 또는 <code>LILO(Last-In, Last-Out)</code> 방식으로 스택과 꺼내는 순서가 반대</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://www.fun-coding.org/00_Images/queue.png"></p>
+<ul>
+<li>출처: <a href="http://www.stoimen.com/blog/2012/06/05/computer-algorithms-stack-and-queue-data-structure/" target="_blank" rel="noopener">http://www.stoimen.com/blog/2012/06/05/computer-algorithms-stack-and-queue-data-structure/</a></li>
+</ul>
+<h3 id="2-알아둘-용어"><a href="#2-알아둘-용어" class="headerlink" title="2. 알아둘 용어"></a>2. 알아둘 용어</h3><ul>
+<li>Enqueue: 큐에 데이터를 넣는 기능</li>
+<li>Dequeue: 큐에서 데이터를 꺼내는 기능</li>
+<li><font color="#BF360C">Visualgo 사이트에서 시연해보며 이해하기 (enqueue/dequeue 만 클릭해보며): <a href="https://visualgo.net/en/list" target="_blank" rel="noopener">https://visualgo.net/en/list</a></font></li>
+</ul>
+<h3 id="3-파이썬-queue-라이브러리-활용해서-큐-자료-구조-사용하기"><a href="#3-파이썬-queue-라이브러리-활용해서-큐-자료-구조-사용하기" class="headerlink" title="3. 파이썬 queue 라이브러리 활용해서 큐 자료 구조 사용하기"></a>3. 파이썬 queue 라이브러리 활용해서 큐 자료 구조 사용하기</h3><ul>
+<li><strong>queue 라이브러리에는 다양한 큐 구조로 Queue(), LifoQueue(), PriorityQueue() 제공</strong></li>
+<li><font color="#BF360C">프로그램을 작성할 때 프로그램에 따라 적합한 자료 구조를 사용</font><ul>
+<li>Queue(): 가장 일반적인 큐 자료 구조</li>
+<li>LifoQueue(): 나중에 입력된 데이터가 먼저 출력되는 구조 (스택 구조라고 보면 됨)</li>
+<li>PriorityQueue(): 데이터마다 우선순위를 넣어서, 우선순위가 높은 순으로 데이터 출력</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>일반적인 큐 외에 다양한 정책이 적용된 큐들이 있음</p>
+</blockquote>
+<h4 id="3-1-Queue-로-큐-만들기-가장-일반적인-큐-FIFO-First-In-First-Out"><a href="#3-1-Queue-로-큐-만들기-가장-일반적인-큐-FIFO-First-In-First-Out" class="headerlink" title="3.1. Queue()로 큐 만들기 (가장 일반적인 큐, FIFO(First-In, First-Out))"></a>3.1. Queue()로 큐 만들기 (가장 일반적인 큐, FIFO(First-In, First-Out))</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import queue</span><br><span class="line"></span><br><span class="line">data_queue = queue.Queue()</span><br><span class="line">data_queue.put(<span class="string">"funcoding"</span>)</span><br><span class="line">data_queue.put(1)</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.qsize()</span><br></pre></td></tr></table></figure>
 <h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.get()</span><br></pre></td></tr></table></figure>
@@ -346,7 +382,10 @@ ga('send', 'pageview');
 <h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_queue.qsize()</span><br></pre></td></tr></table></figure>
 <h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
-<h4 id="3-2-LifoQueue-로-큐-만들기-LIFO-Last-In-First-Out"><a href="#3-2-LifoQueue-로-큐-만들기-LIFO-Last-In-First-Out" class="headerlink" title="3.2. LifoQueue()로 큐 만들기 (LIFO(Last-In, First-Out))"></a>3.2. LifoQueue()로 큐 만들기 (LIFO(Last-In, First-Out))</h4>
+<h4 id="3-2-LifoQueue-로-큐-만들기-LIFO-Last-In-First-Out"><a href="#3-2-LifoQueue-로-큐-만들기-LIFO-Last-In-First-Out" class="headerlink" title="3.2. LifoQueue()로 큐 만들기 (LIFO(Last-In, First-Out))"></a>3.2. LifoQueue()로 큐 만들기 (LIFO(Last-In, First-Out))</h4><ul>
+<li>LifeQueue는 Last-In</li>
+</ul>
+
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 하단형 -->
@@ -434,7 +473,7 @@ ga('send', 'pageview');
         "genre": "C/C++/자료구조",
         "datePublished": "2020-03-19",
         "dateCreated": "2020-03-19",
-        "dateModified": "2020-03-21",
+        "dateModified": "2020-03-22",
         "url": "https://heung-bae-lee.github.io/2020/03/19/data_structure_01/",
         "description": "목표
 기본 자료 구조/알고리즘 익히기
@@ -446,7 +485,7 @@ ga('send', 'pageview');
 용어: 자료구조 = 데이터 구조 = data structure
 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미
 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야 "
-        "wordCount": 1862
+        "wordCount": 1806
     }
 </script>
 
