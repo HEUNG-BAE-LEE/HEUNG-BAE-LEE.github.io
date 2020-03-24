@@ -21,7 +21,7 @@
 <meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
-<meta property="og:updated_time" content="2020-01-16T08:10:22.954Z">
+<meta property="og:updated_time" content="2020-03-24T18:34:09.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(03) - 회귀진단">
 <meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
@@ -210,7 +210,7 @@ ga('send', 'pageview');
 <li>성별, 결혼여부, 혹은 소속 정치단체 등과 같은 <code>질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때</code>가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 <code>지시변수(Indicator variable) 또는 가변수(dummy variable)</code>의 형식으로 표현해야한다. 가변수는 다양한 용도를 가지고 있으며, 회귀관계에 영향을 주는 질적 요인을 고려할 때마다 항상 사용할 수 있다.</li>
 </ul>
 <p><img src="/image/interaction_term.png" alt="교호작용"></p>
-<p>-<code>여러 범주를 표현하기 위하여 가변수를 사용할 경우 필요한 가변수의 개수는 일반적으로 가능한 범주의 수보다 하나 작게 잡으면 된다.</code>왜냐하면, 가변수를 종합하면 교육수준에 관한 3개의 범주를 나타낼 수 있기 때문이다. 게다가, 범주를 모두 다 지시변수로 사용하면 범주화된 변수들끼리 완벽한 선형관계가 성립되어 극단적인 다중공선성을 보일수 있다. 선형대수 측면에서도 각 Column vector들끼리 서로 linearly independent 해야 해를 갖을 수 있으므로 위의 방법으로 만드는 것이 옳은 방법이다. 여기서 지시변수 또는 가변수에 의하여 표현되지 않는 범주는 <code>기저범주(base category) 또는 대조 그룹(control group)이라고 불리는데, 지시변수의 회귀계수가 대조 그룹에 대한 상대적인 값으로 해석되기 때문이다.</code> 아래 표에서 만일, 최종학력이 대학원인 사람과 대학교인 사람의 평균적인 차이가 궁금할 경우는 $B_{2}-B-{1}=2,000$로 구할 수 있다. 또한 아래 <code>해석은 다른 변수들을 고정시켰을 경우에 해당</code>한다.</p>
+<p>-<code>여러 범주를 표현하기 위하여 가변수를 사용할 경우 필요한 가변수의 개수는 일반적으로 가능한 범주의 수보다 하나 작게 잡으면 된다.</code>왜냐하면, 가변수를 종합하면 교육수준에 관한 3개의 범주를 나타낼 수 있기 때문이다. 게다가, <code>범주를 모두 다 지시변수로 사용하면 범주화된 변수들끼리 완벽한 선형관계가 성립되어 극단적인 다중공선성을 보일수 있다.</code> 선형대수 측면에서도 각 Column vector들끼리 서로 linearly independent 해야 해를 갖을 수 있으므로 위의 방법으로 만드는 것이 옳은 방법이다. 여기서 지시변수 또는 가변수에 의하여 표현되지 않는 범주는 <code>기저범주(base category) 또는 대조 그룹(control group)이라고 불리는데, 지시변수의 회귀계수가 대조 그룹에 대한 상대적인 값으로 해석되기 때문이다.</code> 아래 표에서 만일, 최종학력이 대학원인 사람과 대학교인 사람의 평균적인 차이가 궁금할 경우는 $B_{2}-B-{1}=2,000$로 구할 수 있다. 또한 아래 <code>해석은 다른 변수들을 고정시켰을 경우에 해당</code>한다.</p>
 <script type="math/tex; mode=display">수입 = ( \beta_{0} + 대학교 + 대학원 )</script><p><img src="/image/interaction_term_translation.png" alt="교호작용 해석"></p>
 <h2 id="변수-선택법"><a href="#변수-선택법" class="headerlink" title="변수 선택법"></a>변수 선택법</h2><p><img src="/image/variable_selection.png" alt="변수 선택법"></p>
 <p><img src="/image/FeedForward_selection.png" alt="점진적 선택법"></p>
@@ -232,28 +232,28 @@ ga('send', 'pageview');
 </li>
 <li><p>3) 독립(설명)변수들에 대한 가정(<code>1,2는 실제로 평가 불가하므로 3이 중요!!</code>) :</p>
 <ul>
-<li>1) 독립(설명)변수들은 확률변수가 아니다. 만약 실험 설계에 의해서 얻어진 데이터 값들에 의한 것이 아닌 비실험 또는 관측의 상황에서는 이것이 만족되지 않을 거이라는 것은 명확하며, 이에 대한 해석도 수정되어야한다. <code>독립(설명)변수들이 확률변수이면 모든 추론은 관측된 데이터에 의존하여 조건부적</code>이다.</li>
+<li>1) 독립(설명)변수들은 확률변수가 아니다. 만약 실험 설계에 의해서 얻어진 데이터 값들에 의한 것이 아닌 비실험 또는 관측의 상황에서는 이것이 만족되지 않을 것이라는 것은 명확하며, 이에 대한 해석도 수정되어야한다. <code>독립(설명)변수들이 확률변수이면 모든 추론은 관측된 데이터에 의존하여 조건부적</code>이다.</li>
 <li>2) 값 $x_{1j}, x_{2j}, \cdots ,x_{nj}$는 오차 없이 측정된 것으로 가정된다. 허나 <code>이 가정은 만족되기 쉽지 않다</code>. 측정에서의 오차는 잔차의 분산, 다중상관계수, 회귀계수의 개별 추정치들에 영향을 줄 것이다. <code>추정된 회귀계수로부터 측정오차의 영향을 제거하는 것은 거의 기대하기 힘들다.</code>그러므로 변수들이 오차를 가지고 있어서 회귀계수의 추정에 문제가 있더라도 회귀방정식이 예측을 위해 여전히 사용될 수 있다. 그러나 독립(설명)변수에 존재하는 오차는 예측의 정확도를 감소 시킬 것이다.</li>
 <li>3) 독립(설명)변수는 선형종속이 아닌 것으로 가정된다. 즉, 위해서 언급했었던 <code>linearly independent</code>해야 한다는 의미이며 이 가정으로 인해 정규방정식의 해의 유일성을 보장받을 수 있다. 이 가정이 위반 되는 것이 <code>공선성(collinearity)</code>의 문제이다.</li>
 </ul>
 </li>
 <li><p>4) 관측개체에 대한 가정 : 모든 관측개체들은 동일하게 신뢰할 만하며, 회귀의 결과를 결정하고 결론을 도출함에 있어서 거의 동등한 역할을 한다.</p>
 </li>
-<li><p><code>최소제곱버의 특징 중 하나는 기본 가정에 대한 사소한 또는 작은 위반이 분석으로부터 도출된 추론이나 결론을 무효화할 만큼 큰 영향을 주지는 않는다는 것</code>이다. 그러나 모형의 가정에 대한 큰 위반은 결론을 심각하게 왜곡 시키므로 <code>결론적으로, 그래프를 통해서 잔차의 구조와 데이터의 패턴을 조사하는 것은 매우 중요</code>하다.</p>
+<li><p><code>최소제곱법의 특징 중 하나는 기본 가정에 대한 사소한 또는 작은 위반이 분석으로부터 도출된 추론이나 결론을 무효화할 만큼 큰 영향을 주지는 않는다는 것</code>이다. 그러나 모형의 가정에 대한 큰 위반은 결론을 심각하게 왜곡 시키므로 <code>결론적으로, 그래프를 통해서 잔차의 구조와 데이터의 패턴을 조사하는 것은 매우 중요</code>하다.</p>
 </li>
 </ul>
 <p><img src="/image/diagonosis_of_linear_regression.png" alt="회귀분석의 진단"></p>
 <h3 id="다양한-유형의-잔차들"><a href="#다양한-유형의-잔차들" class="headerlink" title="다양한 유형의 잔차들"></a>다양한 유형의 잔차들</h3><ul>
 <li>회귀분석에 있어서 모형이 가지는 가능한 결함을 찾아내는 데 가장 간단하고 효과적인 방법은 잔차플롯을 살펴보는 것이다. <code>더욱이, 분석이 요약통계량에만 근거할 경우 간과할지도 모를 데이터의 중요한 구조와 정보들을 잔차분석을 통해 발견할 수도 있다.</code></li>
 </ul>
-<script type="math/tex; mode=display">\hat{Y} = X\hat{\beta} = PY</script><script type="math/tex; mode=display">P = X(X^{T}X)X{T}</script><ul>
+<script type="math/tex; mode=display">\hat{Y} = X\hat{\beta} = PY</script><script type="math/tex; mode=display">P = X(X^{T}X)X^{T}</script><ul>
 <li>즉, Y를 $\hat{Y}$로 만들기 위한 linear transform matrix를 모자(hat) 또는 사영(Projection) matrix P라고 한다. 여기서 $i=j일 때, p_{ii}=p_{ij}=p_{ji}=p_{jj}$는 사영행렬(P)의 i번째 대각원소이다. <code>이것은 i번째 관측개체에 대한 지레값(Leverage value)으로 불린다.</code> 아래의 식에서 볼 수 있듯이 $\hat{y}_{i}$은 Y의 모든 관측값들의 가중합이며, $p_{ii}$는 i번째 적합값 $\hat{y}_{i}$을 결정함에 있어서 $y_{i}$에 부여되는 가중치(지레)이기 때문이다.</li>
 </ul>
 <script type="math/tex; mode=display">\hat{y}_{i} = p_{i1}y_{1} + p_{i2}y_{2} + \cdots + p_{in}y_{n}, i=1,2,...,n</script><ul>
-<li>또한, 잔차($e_{i}$)의 분산은 그의 표준편차로 나누어 표준화하여 다음과 같이 평균 0과 표준편차 1을 가지는  <code>표준화 잔차(standardized residual)</code>을 얻을 수 있다. 자세하게는 $\sigma$를 어떤 것을 사용하냐에 따라 내적 표준화잔차와 외적 표준화잔차로 나뉘어지지만, 결국 <code>표본크기가 충분히 클때(30이상) 이 잔차들은 근사적으로 표준정규분포를 따른다. 또한 잔차들을 엄밀하게는 서로 독립이 아니지만, 표본크기가 크면 독립성의 문제는 무시 될 수 있다.</code> 따라서, <code>잔차플롯을 작성함에 있어서 두가지 형태의 잔차 중 어느 것을 사용하는가는 별로 문제가 되지 않는다.</code></li>
+<li>또한, 잔차($e_{i}$)의 분산은 그의 표준편차로 나누어 표준화하여 다음과 같이 평균 0과 표준편차 1을 가지는  <code>표준화 잔차(standardized residual)</code>을 얻을 수 있다. 자세하게는 $\sigma$를 어떤 것을 사용하냐에 따라 내적 표준화잔차와 외적 표준화잔차로 나뉘어지지만, 결국 <code>표본크기가 충분히 클때(30이상) 이 잔차들은 근사적으로 표준정규분포를 따른다. 또한 잔차들은 엄밀하게는 서로 독립이 아니지만, 표본크기가 크면 독립성의 문제는 무시 될 수 있다.</code> 따라서, <code>잔차플롯을 작성함에 있어서 두가지 형태의 잔차 중 어느 것을 사용하는가는 별로 문제가 되지 않는다.</code></li>
 </ul>
 <script type="math/tex; mode=display">z_{i} = \frac{e_{i}}{\sigma \sqrt{1-p_{ii}}}</script><h2 id="그래프적-방법들"><a href="#그래프적-방법들" class="headerlink" title="그래프적 방법들"></a>그래프적 방법들</h2><ul>
-<li>그래프적 방법들은 데이터 분석에서 중요한 역할을 하며, 특히 데이터에 선형모형을 적합할 때 더욱 중요하다. <code>분석이 수치적 결과에만 의존한다면 잘못된 결론에 도달할 수 있음을 볼 수 있다.</code>그 대표적인 예로는 Anscombe의 데이터를 들 수 있다.</li>
+<li>그래프적 방법들은 데이터 분석에서 중요한 역할을 하며, 특히 데이터에 선형모형을 적합할 때 더욱 중요하다. <code>분석이 수치적 결과에만 의존한다면 잘못된 결론에 도달할 수 있음을 볼 수 있다.</code>그 대표적인 예로는 Anscombe의 데이터를 들 수 있다. 아래의 데이터들은 동일한 상관계수를 가지도록 되어있다. 그러나 산점도는 완전히 다른 패턴을 보여준다. 아래의 그래프에서 상단의 두 그래프 중 왼쪽은 선형모형이 적절함을 보여준다. 오른쪽 그래프는 아마도 선형화가 가능한 비선형 모형을 나타낸다. 하단의 두 그래프중 왼쪽 그래프는 직선으로 부터 멀리 떨어져 있는 하나의 점을 제외하면 데이터가 거의 선형모형을 따르고 있음을 보여준다. <code>이 점은 특이값일 수 있으므로, 데이터로부터 어떤 결론을 도출하기 전에 조사되어야만 한다.</code> 마지막 오른쪽 그래프는 비효율적인 실험 또는 나쁜 표본임을 나타낸다. X=19인 점에 대하여, 대응되는 Y의 값이 아무리 크거나 작더라도 이 점에서의 잔차가 항상 0(분산 0을 가지는)이다. 이 점을 제외하고 나머지 데이터로부터 구한 최소제곱 추정치는 더 이상 유일하지 않다는 것을 보일 수 있다. 회귀 결과에 과도하게 큰 영향을 주는 관측개체를 영향력 있는 관측개체(influential observation)라고 하는데, <code>X=19에 있는 점은 이것이 적합선의 절편과 기울기를 완전히 결정하기 때문에 극단적으로 영향력이 있다.</code></li>
 </ul>
 <p><img src="/image/Anscombe_data.png" alt="Anscombe data"></p>
 <ul>
@@ -267,11 +267,15 @@ ga('send', 'pageview');
 <li>ex) histogram, stem-and-leaf display, dot plot, box plot</li>
 </ul>
 </li>
-<li><p>2) 이차원 그래프 : 변수의 수가 많은 경우 해당 차원과 같은 차원에서 변수들을 볼 수 없으므로, <code>각 변수들의 쌍에 대한 관계를 탐색하고 일반적인 패턴을 파악하기 위해</code> 산점도를 통해 살펴볼 수 있다. <code>산점도행렬</code>을 살펴볼때 주의할 점은 상관계수는 오직 선형관계만을 측정하며 robust하지 않으므로 <code>쌍별 상관계수는 대응되는 산점도와 연관하여 해석</code>해야 한다는 점이다. 단순회귀에서는 Y대 X의 산점도가 선형의 형태를 보일 것으로 기대되나, <code>다중회귀에서는 Y대 각 독립(설명)변수의 산점도가 선형의 형태를 보일 수도 있고 그렇지 않을 수도 있다. 즉, 선형의 형태가 보이지 않는다고 해서 주어진 선형모형이 옳지 않다는 것을 의미하지 않늗다.</code> 또한, <code>각각의 독립(설명)변수들끼리 선형패턴을 보이지 않아야 한다. 산점도에 선형관계가 보이지 않는다는 것이 전체 독립(설명)변수들의 집합이 선형적으로 독립이라는 것을 의미하지는 않기 때문에 주의가 필요하다. 선형 관계는 두개 이상의 변수들을 포함하고 있을 수 있다. scatter plot을 통해서는 그런 다변량 관계를 검출하는 것이 쉽지 않다.</code> 그러한 다중공선성 문제는 앞서 다룬 방법과 같이 해결하려고 해보아야 한다.</p>
+<li><p>2) 이차원 그래프 : 변수의 수가 많은 경우 해당 차원과 같은 차원에서 변수들을 볼 수 없으므로, <code>각 변수들의 쌍에 대한 관계를 탐색하고 일반적인 패턴을 파악하기 위해</code> 산점도를 통해 살펴볼 수 있다. <code>산점도행렬</code>을 살펴볼때 주의할 점은 상관계수는 오직 선형관계만을 측정하며 robust하지 않으므로 <code>쌍별 상관계수는 대응되는 산점도와 연관하여 해석</code>해야 한다는 점이다. 단순회귀에서는 Y대 X의 산점도가 선형의 형태를 보일 것으로 기대되나, <code>다중회귀에서는 Y대 각 독립(설명)변수의 산점도가 선형의 형태를 보일 수도 있고 그렇지 않을 수도 있다. 즉, 선형의 형태가 보이지 않는다고 해서 주어진 선형모형이 옳지 않다는 것을 의미하지 않늗다.</code> 또한, <code>독립(설명)변수들이 선형적으로 독립임을 가정하고 있기 때문에, 각각의 독립(설명)변수들끼리 선형패턴을 보이지 않아야 한다. 다만, 두 독립(설명)변수의 산점도에 선형관계가 보이지 않는다는 것이 전체 독립(설명)변수들의 집합이 선형적으로 독립이라는 것을 의미하지는 않기 때문에 주의가 필요하다. 선형 관계는 두개 이상의 변수들을 포함하고 있을 수 있다. scatter plot을 통해서는 그런 다변량 관계를 검출하는 것이 쉽지 않다.</code> 그러한 다중공선성 문제는 앞서 다룬 방법과 같이 해결하려고 해보아야 한다.</p>
 </li>
 <li><p>3) 회전도표</p>
 </li>
-<li>4) 동적그래프</li>
+<li><p>4) 동적그래프</p>
+<ul>
+<li>다변량 데이터의 구조와 관계를 탐색하는 데 유용한 도구이다.</li>
+</ul>
+</li>
 </ul>
 <h3 id="2-모형을-적합한-이후의-그래프"><a href="#2-모형을-적합한-이후의-그래프" class="headerlink" title="2) 모형을 적합한 이후의 그래프"></a>2) 모형을 적합한 이후의 그래프</h3><ul>
 <li>앞에서 소개된 그래프들은 데이터 검토와 모형설정 단계에서 유용하다. 데이터에 모형을 적합한 이후의 그래프들은 <code>가정들을 검토하고 주어진 모형의 적합도를 평가하는 데 도움을 준다.</code></li>
@@ -284,11 +288,11 @@ ga('send', 'pageview');
 <p><img src="/image/Q_Q_plot_tail.png" alt="Q-Q plot의 tail"></p>
 <p><img src="/image/Q_Q_plot_tail_01.png" alt="Q-Q plot의 나올수 있는 tail의 형태"></p>
 <h5 id="Standardized-Residual-vs-Predictor-독립변수-산점도"><a href="#Standardized-Residual-vs-Predictor-독립변수-산점도" class="headerlink" title="(Standardized) Residual vs Predictor(독립변수) 산점도"></a>(Standardized) Residual vs Predictor(독립변수) 산점도</h5><ul>
-<li>표준적인 가정 하에서 표준화잔차는 각 독립(설명)변수들과 상관되어 있지 않다. 이 가정이 만족된다면 이 플롯은 <code>랜덤하게 흩어진 점들이 나타나야 한다.</code> 이 plot에서 특정한 패턴이 발견된다면 어떤 가정들이 위반되었음을 의미한다. 아래 그림에서 <code>(a)는 선형성 가정이 만족되지 않았을 때 나타나느 플롯 중 하나이며, 이 경우에는 Y 또는 특정 예측 변수에 대한 변환이 선형석을 위하여 필요</code>할 수 있다. 그림 <code>(b)는 이분산성을 의미하며 분산의 안정화를 위하여 데이터 변환이 필요할 것</code>이다.</li>
+<li>표준적인 가정 하에서 표준화잔차는 각 독립(설명)변수들과 상관되어 있지 않다. 이 가정이 만족된다면 이 플롯은 <code>랜덤하게 흩어진 점들이 나타나야 한다.</code> 이 plot에서 특정한 패턴이 발견된다면 어떤 가정들이 위반되었음을 의미한다. 아래 그림에서 <code>(a)는 선형성 가정이 만족되지 않았을 때 나타나는 플롯 중 하나이며, 이 경우에는 Y 또는 특정 예측 변수에 대한 변환이 선형성을 위하여 필요</code>할 수 있다. 그림 <code>(b)는 이분산성을 의미하며 분산의 안정화를 위하여 데이터 변환이 필요할 것</code>이다.</li>
 </ul>
 <p><img src="/image/standadized_Residual_vs_predictor.png" alt="표준화잔차 vs 설명변수"></p>
 <h5 id="Standardized-Residual-vs-fitted-value-plot"><a href="#Standardized-Residual-vs-fitted-value-plot" class="headerlink" title="(Standardized) Residual vs fitted-value plot"></a>(Standardized) Residual vs fitted-value plot</h5><ul>
-<li>표준적인 가정 하에서 표준화잔차는 적합값과도 상관되어 있지 않다. 따라서 이 가정이 만족된다면 이 plot은 <code>랜덤하게 흩어진 점들을 나타내야 한다.</code></li>
+<li>표준적인 가정 하에서 표준화잔차는 적합값과도 상관되어 있지 않다. 따라서 이 가정이 만족된다면 이 plot은 <code>랜덤하게 흩어진 점들을 나타내야 한다.</code> 단순회귀에서는 (Standardized) Residual vs Predictor(독립변수) 산점도와 동일한 패턴을 가진다.</li>
 </ul>
 <p><img src="/image/Residual_vs_fitted_value.png" alt="표준화잔차와 적합값 plot"></p>
 <h5 id="표준화잔차의-인덱스-plot"><a href="#표준화잔차의-인덱스-plot" class="headerlink" title="표준화잔차의 인덱스 plot"></a>표준화잔차의 인덱스 plot</h5><ul>
@@ -302,7 +306,9 @@ ga('send', 'pageview');
 <ul>
 <li><p><code>반응(종속) 변수에 대한 특이값</code> : 잔차 plot을 통해 파악될 수 있으며, 잔차 plot은 존재하는 총체적인 모형위반들을 나타낼 것이며, 잔차 plot의 탐색은 분석에서 주요 도구 중 하나이다.</p>
 </li>
-<li><p><code>독립(설명) 변수에 대한 특이값</code> : 앞에서 설명한 지레값($p_{ii}$)는 X-공간에서 특이성을 측정하는 데 이용될 수 있다. <code>큰 지레값을 가지는 관측개체는 X-공간에서 특이값이기 때문</code>이다. 반응변수에 대한 특이값(큰 표준화잔차를 가진 점)과 구별하기 위하여 <code>높은 지레점(high leverage point)</code>라고 한다. 위의 반응 변수에 대한 특이값은 잔차 plot을 통해 충분히 살펴 볼 수 있지만, <code>독립(설명)변수에 대한 특이값은 잔차 plot으로는 찾아보기 힘들다.</code> 그 이유는 아래 잔차와 지레값의 관계에 대한 식을 살펴보면 <code>높은 지레값을 갖는 점들은 잔차가 낮기 때문</code>이다. 그러므로, <code>잔차 plot을 살펴보는 것만으로는 충분하지 않으므로 종속변수와 독립변수의 산점도에 회귀식을 그려보거나 지레값의 index plot을 그려 살펴 봐야 한다.</code> 통상적으로 사용되는 $p_{ii}$에 대한 임계값은 $2(p+1)/n=0.2$이다.</p>
+<li><p><code>독립(설명) 변수에 대한 특이값</code> : 앞에서 설명한 지레값($p_{ii}$)는 X-공간에서 특이성을 측정하는 데 이용될 수 있다. <code>큰 지레값을 가지는 관측개체는 X-공간에서 특이값이기 때문</code>이다. 반응변수에 대한 특이값(큰 표준화잔차를 가진 점)과 구별하기 위하여 <code>높은 지레점(high leverage point)</code>라고 한다. 위의 반응 변수에 대한 특이값은 잔차 plot을 통해 충분히 살펴 볼 수 있지만, <code>독립(설명)변수에 대한 특이값은 잔차 plot으로는 찾아보기 힘들다.</code> 그 이유는 아래 잔차와 지레값의 관계에 대한 식을 살펴보면 <code>높은 지레값을 갖는 점들은 잔차가 낮기 때문</code>이다. 그러므로, <code>잔차 plot을 살펴보는 것만으로는 충분하지 않으므로 종속변수와 독립변수의 산점도에 회귀식을 그려보거나 지레값의 index plot을 그려 살펴 봐야 한다.</code> 통상적으로 사용되는 $p_{ii}$에 대한 임계값은 $2(p(\sum p_{ii})+1)/n$이다. 즉, 임계값들의 평균의 2배를 넘으면 높은 지레값을 갖는 점으로 판단한다.</p>
+</li>
+<li><p>데이터가 특이값을 가지고 있으나 그것을 검출하지 못하는 것을 <code>가면문제(masking problem)</code>이라고 한다. 이것은 어떤 특이값들이 다른 특이값들에 의해 숨겨져 있을때 발생할 수 있다. 특이값이 아닌 점을 특이값으로 간주하는 것을 <code>수렁문제(swamping problem)</code>라고 한다. 이것은 <code>특이값이 회귀선을 자기쪽으로 끌어당겨서 다른 점들을 적합선으로부터 멀게 함으로써 발생할 수 있다.</code></p>
 </li>
 </ul>
 </li>
@@ -310,7 +316,7 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">p_{ii} + \frac{e^2_{i}}{SSE} \leq 1</script><h5 id="영향력의-측도"><a href="#영향력의-측도" class="headerlink" title="영향력의 측도"></a>영향력의 측도</h5><ul>
 <li><code>Cook&#39;s distance</code> : <code>전체 데이터로부터 얻은 회귀계수들과 i번째 개체를 제거하고 얻은 회귀계수(또는 적합값)들의 차이를 측정</code>한다. <code>C값에 대한 index plot을 그려 C값들이 비슷한 값을 가지지 않다면 돋보이는 C값들을 갖는 데이터들을 제외하고 모형을 적합에 보는 등의 방법을 검토해 봐야할 것이다</code></li>
 </ul>
-<script type="math/tex; mode=display">C_{i} = \frac{sum^{n}_{j=1} (\hat{y_{j}} - \hat{y_{j}}_{i})^2}{\hat{\sigma^}^{2} (p+1)} , i=1,2, \cdots ,n</script><ul>
+<script type="math/tex; mode=display">C_{i} = \frac{sum^{n}_{j=1} (\hat{y_{j}} - \hat{y_{j}}_{i})^2}{\hat{\sigma^}^{2} (p+1)}</script><script type="math/tex; mode=display">i=1,2, \cdots ,n</script><ul>
 <li><p>이외의 Welsch &amp; Kuh의 측도(DFITS)와 Hadi의 영향력 측도가 있으나, Cook’s distance를 통해 충분히 검사가능하므로 생략하도록 한다. 다만, Welsh &amp; Kuh와 Cook’s distance는 잔차와 지레값에 대한 승법적(곱하는)함수인 반면에 Haid의 측도는 가법적(종속변수와 독립변수 각각에 대한 영향력의 수치를 더하는)함수이다.</p>
 </li>
 <li><p><code>특이값은 언제나 조심스럽게 조사되어야 되며 실무에서 분석시 함부로 제거해서는 안된다. 그 데이터 자체도 의미가 있을 수 있기 때문(예를 들면, 데이터가 모집단으로 부터 추출되지 않았다든가 또는 모형이 선형이 아니라는 것을 의미할 수 있기 때문)</code>이다. <code>지레대 효과는 높으나 영향력이 작은 경우는 큰 문제를 일으키지는 않는다. 그러나 높은 지레값을 가지며 영향력이 큰 점들은 예측변수들의 공간에서 보통의 것들에 비해 멀리 떨어져 있으며 적합에 유의적인 영향을 끼치기 때문에 잘 검토할 필요가 있다.</code></p>
@@ -328,20 +334,20 @@ ga('send', 'pageview');
 <li><code>회귀방정식의 어떤 변수를 보유해야 할 것인지 아니면 제거해야 할 것이지를 각각의 t-검정에 대한 보조도구로 사용</code>될 수 있다.</li>
 </ul>
 <h5 id="첨가변수-plot-또는-편회귀-plot-added-variable-plot-또는-partial-regression-plot"><a href="#첨가변수-plot-또는-편회귀-plot-added-variable-plot-또는-partial-regression-plot" class="headerlink" title="첨가변수 plot 또는 편회귀 plot(added-variable plot 또는 partial regression plot)"></a>첨가변수 plot 또는 편회귀 plot(added-variable plot 또는 partial regression plot)</h5><ul>
-<li><p>회귀 모형에 대한 특정 독립(설명)변수를 포함시킬 것인지의 여부를 검토할 때, 그 대상이 되는 예측 변수에 대한 회귀계수의 크기를 그래프를 통하여 표현한다. plot에 나타나는 점들의 <code>기울기는 곧 해당 독립(설명)변수에 대한 회귀계수</code>를 나타낸다. <code>따라서 이 plot에 나타난 점들이 뚜렷한 기울기를 보이지 않는다면 이는 그 변수가 모형에서 별로 유용하지 않음을 의미</code>한다. <code>X축이 해당 예측변수 그 자체가 아니므로 비선형성의 여부를 나타내주지는 않는 점을 주의해야 한다.</code> 또한 이 plot은 <code>그 계수의 크기를 결정하는 데 중요한 역할을 하는 데이터 점을 제시해 주기도 한다.</code> 첨가변수 plot은 Y-잔차$(X_{j}를 제외한 나머지 변수들로 설명되지 않은 Y의 부분) vs X_{j}-잔차(X_{j}를 종속변수로하여 나머지 변수들로 설명되지 않은 X_{j}의 부분)$을 그리는 plot이다. <code>이 두개의 잔차들을 최소 제곱벙으로 적합시켰을 때, 적합된 회귀직선의 기울기는 Xj를 포함한 모든 독립(설명)변수 얻은 회귀계수</code>($\hat{\beta}_{j}$)와 같다.</p>
+<li><p>회귀 모형에 대한 특정 독립(설명)변수를 포함시킬 것인지의 여부를 검토할 때, 그 대상이 되는 예측 변수에 대한 회귀계수의 크기를 그래프를 통하여 표현한다. plot에 나타나는 점들의 <code>기울기는 곧 해당 독립(설명)변수에 대한 회귀계수</code>를 나타낸다. <code>따라서 이 plot에 나타난 점들이 뚜렷한 기울기를 보이지 않는다면 이는 그 변수가 모형에서 별로 유용하지 않음을 의미</code>한다. <code>X축이 해당 예측변수 그 자체가 아니므로 비선형성의 여부를 나타내주지는 않는 점을 주의해야 한다.</code> 또한 이 plot은 <code>그 계수의 크기를 결정하는 데 중요한 역할을 하는 데이터 점을 제시해 주기도 한다.</code> 첨가변수 plot은 Y-잔차 $(X_{j}$를 제외한 나머지 변수들로 설명되지 않은 Y의 부분) vs $X_{j}$-잔차$(X_{j}$를 종속변수로하여 나머지 변수들로 설명되지 않은 $X_{j}$의 부분)을 그리는 plot이다. <code>이 두개의 잔차들을 최소 제곱법으로 적합시켰을 때, 적합된 회귀직선의 기울기는 Xj를 포함한 모든 독립(설명)변수 얻은 회귀계수</code>($\hat{\beta}_{j}$)와 같다.</p>
 </li>
 <li><p>개별로 그리는 것은 index로 식별을 할 수 있지만 아래에 여러가지를 한 꺼번에 그리는 방법은 인덱스를 볼 수 없으므로 처음에는 여러개를 다 같이 그린 후에 자세히 살펴봐야할 변수에 대해서만 개별로 그리는 방법을 사용하는 것이 좋을 것이다.</p>
 </li>
 </ul>
 <p><img src="/image/partial_regression_plot.png" alt="partial regression plot을 그리는 방법"></p>
-<p><img src="many_partial_regression_plot.png" alt="partial regression plot을 모형의 모든 변수에 관해 그리는 법"></p>
+<p><img src="/image/many_partial_regression_plot.png" alt="partial regression plot을 모형의 모든 변수에 관해 그리는 법"></p>
 <h5 id="성분잔차-plot-component-plus-residual-plot"><a href="#성분잔차-plot-component-plus-residual-plot" class="headerlink" title="성분잔차 plot(component plus residual plot)"></a>성분잔차 plot(component plus residual plot)</h5><ul>
 <li><p>회귀 분석에서 가장 오래된 그래프적 기법 중의 하나이다. $(e + \hat{\beta}_{j} X_{j} VS X_{j})$에 대한 산점도이다. $\hat{\beta}_{j} X_{j}$은 j번째 독립(설명)변수가 적합값에 기여하는 공헌도(성분)임을 주목하자. 이 plot에서 <code>기울기는 해당 독립변수에 대한 추정 회귀계수를 의미</code>하며, <code>해당 예측변수의 기울기를 보여 줄 뿐 아니라 종속변수와 해당 독립변수사이의 비선형성의 존재도 알려줌으로써 필요할 경우 독립변수에 관한 구체적인 선형변환의 내용까지도 제시</code>한다는 것이다.</p>
 </li>
 <li><p>이 또한, added-variable plot처럼 여러개를 그려본 뒤 필요한 변수에 대해서만 살펴보는 것을 추천.</p>
 </li>
 </ul>
-<p><img src="/image/ccpr_plot" alt="CCPR plot을 그리는 방법"></p>
+<p><img src="/image/ccpr_plot.png" alt="CCPR plot을 그리는 방법"></p>
 <p><img src="/image/ccpr_grid.png" alt="CCPR plot을 모형의 모든 변수에 관해 그리는 법"></p>
 <h5 id="component-plus-residual-plot-vs-added-variable-plot"><a href="#component-plus-residual-plot-vs-added-variable-plot" class="headerlink" title="component plus residual plot vs added-variable plot"></a>component plus residual plot vs added-variable plot</h5><ul>
 <li>두 그래프 모두 회귀계수에 대한 추정치를 기울기로 보여주지만, added-variable plot은 어떤 데이터가 회귀계수를 추정하는데 많은 영향을 주었는지를 알 수 있게 도와준다. 반면에, component plus residual plot은 added-variable plot보다 특정 독립변수를 회귀모형에 도입해야 하느냐 하는 문제에 대한 답이나 그 독립변수가 가지는 비선형성의 여부를 탐색하는 데 더 민감한 것으로 알려져 있다.</li>
@@ -448,11 +454,11 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-01-15",
         "dateCreated": "2020-01-15",
-        "dateModified": "2020-01-16",
+        "dateModified": "2020-03-25",
         "url": "https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/",
         "description": "교호작용
 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia"
-        "wordCount": 2442
+        "wordCount": 2649
     }
 </script>
 
@@ -725,5 +731,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
