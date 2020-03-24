@@ -9,7 +9,15 @@
 
     <url>
         <loc>https://heung-bae-lee.github.io/2020/03/19/data_structure_01/</loc>
-        <lastmod>2020-03-23T10:25:21.850Z</lastmod>
+        <lastmod>2020-03-24T10:49:19.957Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/</loc>
+        <lastmod>2020-03-24T09:01:44.489Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -314,14 +322,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/01/08/machine_learning_02/</loc>
         <lastmod>2020-01-15T13:27:04.785Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/</loc>
-        <lastmod>2020-01-15T13:15:06.113Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -21,7 +21,7 @@
 <meta property="og:description" content="목표 기본 자료 구조/알고리즘 익히기 알고리즘 풀이를 위해, 기본적으로 알고 있어야 하는 자료구조와 알고리즘 정리    자료구조란? 용어: 자료구조 = 데이터 구조 = data structure 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Node.png">
-<meta property="og:updated_time" content="2020-03-23T10:25:21.850Z">
+<meta property="og:updated_time" content="2020-03-24T10:49:19.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="내가 정리하는 자료구조 00 (Node, List, Queue)">
 <meta name="twitter:description" content="목표 기본 자료 구조/알고리즘 익히기 알고리즘 풀이를 위해, 기본적으로 알고 있어야 하는 자료구조와 알고리즘 정리    자료구조란? 용어: 자료구조 = 데이터 구조 = data structure 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야">
@@ -353,7 +353,7 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
-<h3 id="1-큐-구조"><a href="#1-큐-구조" class="headerlink" title="1. 큐 구조"></a>1. 큐 구조</h3><ul>
+<h3 id="1-Queue-구조"><a href="#1-Queue-구조" class="headerlink" title="1. Queue 구조"></a>1. Queue 구조</h3><ul>
 <li><code>줄을 서는 행위와 유사</code></li>
 <li>가장 먼저 넣은 데이터를 가장 먼저 꺼낼 수 있는 구조<ul>
 <li>음식점에서 가장 먼저 줄을 선 사람이 제일 먼저 음식점에 입장하는 것과 동일</li>
@@ -435,17 +435,52 @@ ga('send', 'pageview');
 <li><p>Python list 자료형의 pop 메서드를 통해 dequeue를 구현할 것이다.</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Queue:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.container=list()</span><br><span class="line"></span><br><span class="line">    def empty(self):</span><br><span class="line"><span class="comment">#         if self.container is None:</span></span><br><span class="line">        <span class="keyword">if</span> not self.container:</span><br><span class="line">            <span class="built_in">return</span> True</span><br><span class="line">        <span class="built_in">return</span> False</span><br><span class="line"></span><br><span class="line">    def enqueue(self, data):</span><br><span class="line">        self.container.append(data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    def dequeue(self):</span><br><span class="line">        <span class="built_in">return</span> self.container.pop(0)</span><br><span class="line"></span><br><span class="line">    def peek(self):</span><br><span class="line">        <span class="built_in">return</span> self.container[0]</span><br></pre></td></tr></table></figure>
+<p><img src="/image/queue_basic_structure.png" alt="Queue 구조"></p>
+<p><img src="/image/enqueue_basic_list.png" alt="Enqueue"></p>
+<p><img src="/image/dequeue_basic_list.png" alt="Dequeue"></p>
+<h5 id="Enqueue"><a href="#Enqueue" class="headerlink" title="Enqueue"></a>Enqueue</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Queue:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.container=list()</span><br><span class="line"></span><br><span class="line">    def empty(self):</span><br><span class="line"><span class="comment">#         if self.container is None:</span></span><br><span class="line">        <span class="keyword">if</span> not self.container:</span><br><span class="line">            <span class="built_in">return</span> True</span><br><span class="line">        <span class="built_in">return</span> False</span><br><span class="line"></span><br><span class="line">    def enqueue(self, data):</span><br><span class="line">        self.container.append(data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    def dequeue(self):</span><br><span class="line">        <span class="built_in">return</span> self.container.pop(0)</span><br><span class="line"></span><br><span class="line">    def peek(self):</span><br><span class="line">        <span class="built_in">return</span> self.container[0]</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">q=Queue()</span><br><span class="line">q.enqueue(1)</span><br><span class="line">q.enqueue(2)</span><br><span class="line">q.enqueue(3)</span><br><span class="line">q.enqueue(4)</span><br><span class="line">q.enqueue(5)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> not q.empty():</span><br><span class="line">    <span class="built_in">print</span>(q.dequeue(), end=<span class="string">'  '</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="결과-12"><a href="#결과-12" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 4 5</span><br></pre></td></tr></table></figure>
+<h3 id="single-linked-list를-이용해-Queue를-구현"><a href="#single-linked-list를-이용해-Queue를-구현" class="headerlink" title="single linked list를 이용해 Queue를 구현"></a>single linked list를 이용해 Queue를 구현</h3><h4 id="ADT"><a href="#ADT" class="headerlink" title="ADT"></a>ADT</h4><ul>
+<li><p>Queue.empty() -&gt; Boolean</p>
+<ul>
+<li>Queue가 비어있으면 True, 아니면 False</li>
+</ul>
+</li>
+<li><p>Queue.enqueue(data) -&gt; None</p>
+<ul>
+<li>Queue의 맨 뒤에 데이터를 쌓는다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/enqueue_Node_01.png" alt="Enqueue - 01"></p>
+<blockquote>
+<p>맨 처음 enqueue 한 데이터는 front에 위치하고 최근에 추가로 삽입해준 데이터는 rear로 위치시킨다. 각각의 Node는 next로 연결을 시켜준다.</p>
+</blockquote>
+<p><img src="/image/enqueue_Node_02.png" alt="Enqueue - 02"></p>
+<blockquote>
+<p>먼저 새로운 Node를 추가해주기 위해서는 현재 self.rear.next를 new_node를 가리키도록하고, self.rear를 new_node로 설정해주면 된다.</p>
+</blockquote>
+<ul>
+<li>Queue.dequeue() -&gt; data<ul>
+<li>Queue 맨 앞의 데이터를 삭제하면서 반환</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/dequeue_Node_01.png" alt="Dequeue - 01"></p>
+<p><img src="/image/dequeue_Node_02.png" alt="Dequeue - 02"></p>
+<blockquote>
+<p>우선 Dequeue를 하면 제일 먼저 추가해놓았던 데이터의 값을 출력해주면 해당 Node를 제거해 주어야하므로, self.front의 데이터를 cur라는 변수에 따로 저자해 주는데, Node가 하나일때를 생각해 보면 self.front와 self.rear가 동일하므로 먼저 self.rear를 None으로 만들어준다. 그리고 나서 cur에 self.front를 할당해주고, self.front는 self.front.next를 할당해주며, cur.data를 출력해주면 된다.</p>
+</blockquote>
+<ul>
+<li>Queue.peek() -&gt; data<ul>
+<li>Queue 맨 앞 데이터를 반환</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">class Node:</span><br><span class="line">    def __init__(self, data):</span><br><span class="line">        self.__data = data</span><br><span class="line">        self.__next = None</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def data(self):</span><br><span class="line">        return self.__data</span><br><span class="line"></span><br><span class="line">    @data.setter</span><br><span class="line">    def data(self, data):</span><br><span class="line">        self.__data=data</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def next(self):</span><br><span class="line">        return self.__next</span><br><span class="line"></span><br><span class="line">    @next.setter</span><br><span class="line">    def next(self, n):</span><br><span class="line">        self.__next=n</span><br><span class="line"></span><br><span class="line">class LQueue:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.front=None</span><br><span class="line">        self.rear=None</span><br><span class="line"></span><br><span class="line">    def empty(self):</span><br><span class="line">        if self.front is None:</span><br><span class="line">            return True</span><br><span class="line">        return False</span><br><span class="line"></span><br><span class="line">    def enqueue(self, data):</span><br><span class="line">        new_node=Node(data)</span><br><span class="line">        if self.empty():</span><br><span class="line">            self.front=new_node</span><br><span class="line">            self.rear=new_node</span><br><span class="line">        self.rear.next = new_node</span><br><span class="line">        self.rear = new_node</span><br><span class="line"></span><br><span class="line">    def dequeue(self):</span><br><span class="line">        if self.empty():</span><br><span class="line">            return None</span><br><span class="line"></span><br><span class="line">        if self.front is self.rear:</span><br><span class="line">            self.rear = None</span><br><span class="line">        cur = self.front</span><br><span class="line">        self.front = self.front.next</span><br><span class="line">        return cur.data</span><br><span class="line"></span><br><span class="line">    def peek(self):</span><br><span class="line">        return self.front.data</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">q = LQueue()</span><br><span class="line">q.enqueue(1)</span><br><span class="line">q.enqueue(2)</span><br><span class="line">q.enqueue(3)</span><br><span class="line">q.enqueue(4)</span><br><span class="line">q.enqueue(5)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> not q.empty():</span><br><span class="line">    <span class="built_in">print</span>(q.dequeue(), end=<span class="string">'  '</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-13"><a href="#결과-13" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 4 5</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
         </div>
@@ -535,7 +570,7 @@ ga('send', 'pageview');
         "genre": "C/C++/자료구조",
         "datePublished": "2020-03-19",
         "dateCreated": "2020-03-19",
-        "dateModified": "2020-03-23",
+        "dateModified": "2020-03-24",
         "url": "https://heung-bae-lee.github.io/2020/03/19/data_structure_01/",
         "description": "목표
 기본 자료 구조/알고리즘 익히기
@@ -547,7 +582,7 @@ ga('send', 'pageview');
 용어: 자료구조 = 데이터 구조 = data structure
 대량의 데이터를 효율적으로 관리할 수 있는 데이터의 구조를 의미
 코드상에서 효율적으로 데이터를 처리하기 위해, 데이터 특성에 따라, 체계적으로 데이터를 구조화해야 "
-        "wordCount": 2959
+        "wordCount": 3518
     }
 </script>
 
@@ -820,22 +855,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>

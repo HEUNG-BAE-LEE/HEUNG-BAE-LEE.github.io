@@ -21,7 +21,7 @@
 <meta property="og:description" content="회귀분석이란?  지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.    회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_regression.png">
-<meta property="og:updated_time" content="2020-01-15T13:15:06.113Z">
+<meta property="og:updated_time" content="2020-03-24T09:01:44.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(01) - 회귀의 종류 및 회귀계수">
 <meta name="twitter:description" content="회귀분석이란?  지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.    회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회">
@@ -218,9 +218,10 @@ ga('send', 'pageview');
 </li>
 <li><p>회귀에서 가장 중요한 것은 바로 회귀 계수이다. 이 회귀 계수가 선형이나 아니냐에 따라 <code>선형회귀</code>와 <code>비선형 회귀</code>로 나눌수 있으며, 독립변수의 개수가 한개 인지 여러개인지에 따라 <code>단일 회귀</code>, <code>다중 회귀</code>로 나뉜다.</p>
 </li>
-</ul>
-<h4 id="선형-비선형-이라는-용어는-Y와-X-1-X-2-…-X-p-의-관계를-묘사하는-것이-아니라는-것에-주목하여라-회귀계수가-방정식에-선형적-비선형적-으로-삽입되어-있다는-것과-관련이-있다"><a href="#선형-비선형-이라는-용어는-Y와-X-1-X-2-…-X-p-의-관계를-묘사하는-것이-아니라는-것에-주목하여라-회귀계수가-방정식에-선형적-비선형적-으로-삽입되어-있다는-것과-관련이-있다" class="headerlink" title="선형(비선형)이라는 용어는 Y와 $X_{1},X_{2},…,X_{p}의 관계를 묘사하는 것이 아니라는 것에 주목하여라! 회귀계수가 방정식에 선형적(비선형적)으로 삽입되어 있다는 것과 관련이 있다."></a>선형(비선형)이라는 용어는 Y와 $X_{1},X_{2},…,X_{p}의 관계를 묘사하는 것이 아니라는 것에 주목하여라! 회귀계수가 방정식에 선형적(비선형적)으로 삽입되어 있다는 것과 관련이 있다.</h4><ul>
-<li>선형 함수의 예</li>
+<li><p>선형(비선형)이라는 용어는 Y와 $X_{1},X_{2},…,X_{p}의 관계를 묘사하는 것이 아니라는 것에 주목하여라! 회귀계수가 방정식에 선형적(비선형적)으로 삽입되어 있다는 것과 관련이 있다.</p>
+</li>
+<li><p>선형 함수의 예</p>
+</li>
 </ul>
 <script type="math/tex; mode=display">Y = \beta_{0} + \beta_{1}X_{1} + \epsilon</script><pre><code>- `Y와 X 사이의 관계는 비선형이지만, 모수들이 선형적으로 삽입되어 있기 때문에 선형 함수`
 </code></pre><script type="math/tex; mode=display">Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}{X_{2}}^{2}  + \epsilon</script><script type="math/tex; mode=display">Y = \beta_{0} + \beta_{1}\log X_{1} + \epsilon</script><ul>
@@ -403,7 +404,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-01-04",
         "dateCreated": "2020-01-04",
-        "dateModified": "2020-01-15",
+        "dateModified": "2020-03-24",
         "url": "https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/",
         "description": "회귀분석이란?
 
@@ -412,7 +413,7 @@ ga('send', 'pageview');
 
 
 회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회"
-        "wordCount": 759
+        "wordCount": 738
     }
 </script>
 
@@ -685,22 +686,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
