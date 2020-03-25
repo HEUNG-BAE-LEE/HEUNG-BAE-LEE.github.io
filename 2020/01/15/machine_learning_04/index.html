@@ -21,7 +21,7 @@
 <meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
-<meta property="og:updated_time" content="2020-03-25T14:27:37.884Z">
+<meta property="og:updated_time" content="2020-03-25T14:42:16.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(03) - 회귀진단">
 <meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
@@ -234,8 +234,12 @@ ga('send', 'pageview');
 <li>두 인종집단에서 업무 수행능력과 고용전 검사점수의 회귀관계가 서로 다르다는 가설을 검증한다고 가정해보자. 모형 1은 인종 간의 차이가 없다고 생각하고 통합된 데이터에 대해 하나의 회귀직선을 고려한다. 이에 대해 모형 2는 두 인종집단에 대해 각각 따로따로 회귀관계를 고려한다. 이때 각 인종집단에 대한 잔차의 분산은 동일하다고 가정한다.  </li>
 </ul>
 <script type="math/tex; mode=display">모형 1 (통합모형) y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) y_{i1} = \beta_{01} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 3 (백인) y_{i2} = \beta_{02} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
-<li>분석에 앞서서, 얻어진 결과를 해석하고 이를 응용할 때 범할지도 모를 가능한 오류 몇 가지를 생각해 보자. </li>
+<li>분석에 앞서서, 얻어진 결과를 해석하고 이를 응용할 때 범할지도 모를 가능한 오류 몇 가지를 생각해 보자. 아래 그래프에서 $Y_{0}$를 고용에서 요구되는 최소한의 업무수행능력이라고 하자. 이때 모형 1을 사용하는 경우에는 고용전 검사점수가 적어도 X_{p}보다 높아야 선발될 것이다. 그러나 만일 모형 2가 옳다면 요구되는 고용전 검사점수는 백인의 경우 X_{w}, 그리고 소수민족에게는 X_{m}이상이면 될 것이다.</li>
 </ul>
+<blockquote>
+<p>$X_{m}$이나 $X_{w}$ 대신에 일괄적으로 $X_{p}$를 사용한다는 것은 백인에게는 고용전 검사점수에 혜택을 주는 반면에 소수민족에게는 불이익이 가게 됨을 의미한다. 따라서 만일 틀린 모형을 사용하여 지원자를 평가한다면 이는 곧 인종차별의 문제를 일으킬 소지가 있다고 할 수 있다.</p>
+</blockquote>
+<p><img src="/image/score_before_hiring.png" alt="고용전 검사에 기초한 고용자격 조건"></p>
 <h3 id="모형들이-동일한-절편항을-가지지만-기울기는-다른-경우"><a href="#모형들이-동일한-절편항을-가지지만-기울기는-다른-경우" class="headerlink" title="모형들이 동일한 절편항을 가지지만 기울기는 다른 경우"></a>모형들이 동일한 절편항을 가지지만 기울기는 다른 경우</h3><h3 id="모형들이-동일한-기울기를-가지지만-절편항은-다른-경우"><a href="#모형들이-동일한-기울기를-가지지만-절편항은-다른-경우" class="headerlink" title="모형들이 동일한 기울기를 가지지만 절편항은 다른 경우"></a>모형들이 동일한 기울기를 가지지만 절편항은 다른 경우</h3><h2 id="변수-선택법"><a href="#변수-선택법" class="headerlink" title="변수 선택법"></a>변수 선택법</h2><p><img src="/image/variable_selection.png" alt="변수 선택법"></p>
 <p><img src="/image/FeedForward_selection.png" alt="점진적 선택법"></p>
 <p><img src="/image/Backward_Elimination.png" alt="후진적 제거법"></p>
@@ -488,7 +492,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/",
         "description": "교호작용
 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia"
-        "wordCount": 3318
+        "wordCount": 3393
     }
 </script>
 
@@ -761,5 +765,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
