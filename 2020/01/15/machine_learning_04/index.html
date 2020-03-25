@@ -21,7 +21,7 @@
 <meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
-<meta property="og:updated_time" content="2020-03-25T07:43:13.542Z">
+<meta property="og:updated_time" content="2020-03-25T07:45:43.965Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(03) - 회귀진단">
 <meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
@@ -316,7 +316,7 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">p_{ii} + \frac{e^2_{i}}{SSE} \leq 1</script><h5 id="영향력의-측도"><a href="#영향력의-측도" class="headerlink" title="영향력의 측도"></a>영향력의 측도</h5><ul>
 <li><code>Cook&#39;s distance</code> : <code>전체 데이터로부터 얻은 회귀계수들과 i번째 개체를 제거하고 얻은 회귀계수(또는 적합값)들의 차이를 측정</code>한다. <code>C값에 대한 index plot을 그려 C값들이 비슷한 값을 가지지 않다면 돋보이는 C값들을 갖는 데이터들을 제외하고 모형을 적합에 보는 등의 방법을 검토해 봐야할 것이다</code></li>
 </ul>
-<script type="math/tex; mode=display">C_{i} = \frac{sum^{n}_{j=1} (\hat{y_{j}} - \hat{y_{j}}_{i})^2}{\hat{\sigma}^{2} (p+1)}</script><script type="math/tex; mode=display">i=1,2, \cdots ,n</script><ul>
+<script type="math/tex; mode=display">C_{i} = \frac{sum^{n}_{j=1} (\hat{y_{j}} - \hat{y_{j}}_{i})^2}{\hat{\sigma}^{2} (p+1)} , i=1,2, \cdots ,n</script><ul>
 <li><p>이외의 Welsch &amp; Kuh의 측도(DFITS)와 Hadi의 영향력 측도가 있으나, Cook’s distance를 통해 충분히 검사가능하므로 생략하도록 한다. 다만, Welsh &amp; Kuh와 Cook’s distance는 잔차와 지레값에 대한 승법적(곱하는)함수인 반면에 Haid의 측도는 가법적(종속변수와 독립변수 각각에 대한 영향력의 수치를 더하는)함수이다.</p>
 </li>
 <li><p><code>특이값은 언제나 조심스럽게 조사되어야 되며 실무에서 분석시 함부로 제거해서는 안된다. 그 데이터 자체도 의미가 있을 수 있기 때문(예를 들면, 데이터가 모집단으로 부터 추출되지 않았다든가 또는 모형이 선형이 아니라는 것을 의미할 수 있기 때문)</code>이다. <code>지레대 효과는 높으나 영향력이 작은 경우는 큰 문제를 일으키지는 않는다. 그러나 높은 지레값을 가지며 영향력이 큰 점들은 예측변수들의 공간에서 보통의 것들에 비해 멀리 떨어져 있으며 적합에 유의적인 영향을 끼치기 때문에 잘 검토할 필요가 있다.</code></p>
