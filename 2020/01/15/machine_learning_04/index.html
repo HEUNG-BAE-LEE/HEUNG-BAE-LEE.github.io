@@ -21,7 +21,7 @@
 <meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
-<meta property="og:updated_time" content="2020-03-25T11:54:35.166Z">
+<meta property="og:updated_time" content="2020-03-25T14:27:37.884Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(03) - 회귀진단">
 <meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
@@ -227,7 +227,16 @@ ga('send', 'pageview');
 <li>해당 특이값을 제외한 후 표준화 잔차와 각 독립(설명)변수들의 플롯을 그려보니 아래와 같이 랜덤하게 분포되어있다면, 이전의 모형보다 설명을 더 잘하는 회귀모형식을 찾았다고 할 수 있다. 그러나, 해당 모형의 질적변수의 회귀계수에 대한 해석을 함에 있어서는 각 범주별로 회귀계수를 더해주면 된다. <code>물론 상수항을 포함하여 계산하여야 할 것</code>이다. 위의 방법과 다르게 처음부터 6개의 범주를 만들어 가변수를 취해 동일한 모형을 적합하는 방법도 있는데, 위의 방법이 가지는 장점은 <code>3가지 예측변수 (교육수준, 관리직의 여부, 교육수준-관리직의여부)가 가지는 효과를 명백하게 구분할 수 있다는 점</code>이다.</li>
 </ul>
 <p><img src="/image/standardized_residual_vs_work_years_add_variables_01.png" alt="확장된 모형의 표준화잔차 플롯"></p>
-<h2 id="변수-선택법"><a href="#변수-선택법" class="headerlink" title="변수 선택법"></a>변수 선택법</h2><p><img src="/image/variable_selection.png" alt="변수 선택법"></p>
+<h2 id="가변수-dummy-variable-가-사용되는-또-다른-회귀식"><a href="#가변수-dummy-variable-가-사용되는-또-다른-회귀식" class="headerlink" title="가변수(dummy variable)가 사용되는 또 다른 회귀식"></a>가변수(dummy variable)가 사용되는 또 다른 회귀식</h2><ul>
+<li>하나의 데이터가 각각 다른 회귀식을 필요로 하는 두 개 또는 그 이상의 부분집단으로 구성되어 있을 수도 있다. 이런 경우에 <code>모든 부분집단들이 합쳐진 전체 데이터에 대하여 단 하나의 회귀관계만 사용된다면 심각한 편향의 문제가 발생할 수 있다.</code> 데이터의 부분집합들에 대해 별도의 회귀분석을 수행하는 기법은 횡단면(cross-sectional) 데이터나 시계열(time series) 데이터 등에 응용될 수 있다.</li>
+</ul>
+<h3 id="각-집단이-분리된-회귀모형을-가지는-경우-다른-기울기와-다른-절편항을-가지는-모형"><a href="#각-집단이-분리된-회귀모형을-가지는-경우-다른-기울기와-다른-절편항을-가지는-모형" class="headerlink" title="각 집단이 분리된 회귀모형을 가지는 경우(다른 기울기와 다른 절편항을 가지는 모형)"></a>각 집단이 분리된 회귀모형을 가지는 경우(다른 기울기와 다른 절편항을 가지는 모형)</h3><ul>
+<li>두 인종집단에서 업무 수행능력과 고용전 검사점수의 회귀관계가 서로 다르다는 가설을 검증한다고 가정해보자. 모형 1은 인종 간의 차이가 없다고 생각하고 통합된 데이터에 대해 하나의 회귀직선을 고려한다. 이에 대해 모형 2는 두 인종집단에 대해 각각 따로따로 회귀관계를 고려한다. 이때 각 인종집단에 대한 잔차의 분산은 동일하다고 가정한다.  </li>
+</ul>
+<script type="math/tex; mode=display">모형 1 (통합모형) y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) y_{i1} = \beta_{01} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 3 (백인) y_{i2} = \beta_{02} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
+<li>분석에 앞서서, 얻어진 결과를 해석하고 이를 응용할 때 범할지도 모를 가능한 오류 몇 가지를 생각해 보자. </li>
+</ul>
+<h3 id="모형들이-동일한-절편항을-가지지만-기울기는-다른-경우"><a href="#모형들이-동일한-절편항을-가지지만-기울기는-다른-경우" class="headerlink" title="모형들이 동일한 절편항을 가지지만 기울기는 다른 경우"></a>모형들이 동일한 절편항을 가지지만 기울기는 다른 경우</h3><h3 id="모형들이-동일한-기울기를-가지지만-절편항은-다른-경우"><a href="#모형들이-동일한-기울기를-가지지만-절편항은-다른-경우" class="headerlink" title="모형들이 동일한 기울기를 가지지만 절편항은 다른 경우"></a>모형들이 동일한 기울기를 가지지만 절편항은 다른 경우</h3><h2 id="변수-선택법"><a href="#변수-선택법" class="headerlink" title="변수 선택법"></a>변수 선택법</h2><p><img src="/image/variable_selection.png" alt="변수 선택법"></p>
 <p><img src="/image/FeedForward_selection.png" alt="점진적 선택법"></p>
 <p><img src="/image/Backward_Elimination.png" alt="후진적 제거법"></p>
 <p><img src="/image/stepwise_selection.png" alt="stepwise 방법"></p>
@@ -479,7 +488,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/",
         "description": "교호작용
 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia"
-        "wordCount": 3099
+        "wordCount": 3318
     }
 </script>
 
