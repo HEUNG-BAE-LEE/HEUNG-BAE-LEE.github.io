@@ -21,7 +21,7 @@
 <meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
-<meta property="og:updated_time" content="2020-03-25T14:42:16.048Z">
+<meta property="og:updated_time" content="2020-03-27T06:32:19.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(03) - 회귀진단">
 <meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
@@ -233,14 +233,50 @@ ga('send', 'pageview');
 <h3 id="각-집단이-분리된-회귀모형을-가지는-경우-다른-기울기와-다른-절편항을-가지는-모형"><a href="#각-집단이-분리된-회귀모형을-가지는-경우-다른-기울기와-다른-절편항을-가지는-모형" class="headerlink" title="각 집단이 분리된 회귀모형을 가지는 경우(다른 기울기와 다른 절편항을 가지는 모형)"></a>각 집단이 분리된 회귀모형을 가지는 경우(다른 기울기와 다른 절편항을 가지는 모형)</h3><ul>
 <li>두 인종집단에서 업무 수행능력과 고용전 검사점수의 회귀관계가 서로 다르다는 가설을 검증한다고 가정해보자. 모형 1은 인종 간의 차이가 없다고 생각하고 통합된 데이터에 대해 하나의 회귀직선을 고려한다. 이에 대해 모형 2는 두 인종집단에 대해 각각 따로따로 회귀관계를 고려한다. 이때 각 인종집단에 대한 잔차의 분산은 동일하다고 가정한다.  </li>
 </ul>
-<script type="math/tex; mode=display">모형 1 (통합모형) y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) y_{i1} = \beta_{01} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 3 (백인) y_{i2} = \beta_{02} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
-<li>분석에 앞서서, 얻어진 결과를 해석하고 이를 응용할 때 범할지도 모를 가능한 오류 몇 가지를 생각해 보자. 아래 그래프에서 $Y_{0}$를 고용에서 요구되는 최소한의 업무수행능력이라고 하자. 이때 모형 1을 사용하는 경우에는 고용전 검사점수가 적어도 X_{p}보다 높아야 선발될 것이다. 그러나 만일 모형 2가 옳다면 요구되는 고용전 검사점수는 백인의 경우 X_{w}, 그리고 소수민족에게는 X_{m}이상이면 될 것이다.</li>
+<script type="math/tex; mode=display">모형 1 (통합모형) \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) -  y_{i1} = \beta_{01} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 2 (백인) - y_{i2} = \beta_{02} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
+<li>분석에 앞서서, 얻어진 결과를 해석하고 이를 응용할 때 범할지도 모를 가능한 오류 몇 가지를 생각해 보자. 아래 그래프에서 $Y_{0}$를 고용에서 요구되는 최소한의 업무수행능력이라고 하자. 이때 모형 1을 사용하는 경우에는 고용전 검사점수가 적어도 $X_{p}$보다 높아야 선발될 것이다. 그러나 만일 모형 2가 옳다면 요구되는 고용전 검사점수는 백인의 경우 $X_{w}$, 그리고 소수민족에게는 $X_{m}$이상이면 될 것이다.</li>
 </ul>
 <blockquote>
 <p>$X_{m}$이나 $X_{w}$ 대신에 일괄적으로 $X_{p}$를 사용한다는 것은 백인에게는 고용전 검사점수에 혜택을 주는 반면에 소수민족에게는 불이익이 가게 됨을 의미한다. 따라서 만일 틀린 모형을 사용하여 지원자를 평가한다면 이는 곧 인종차별의 문제를 일으킬 소지가 있다고 할 수 있다.</p>
 </blockquote>
 <p><img src="/image/score_before_hiring.png" alt="고용전 검사에 기초한 고용자격 조건"></p>
-<h3 id="모형들이-동일한-절편항을-가지지만-기울기는-다른-경우"><a href="#모형들이-동일한-절편항을-가지지만-기울기는-다른-경우" class="headerlink" title="모형들이 동일한 절편항을 가지지만 기울기는 다른 경우"></a>모형들이 동일한 절편항을 가지지만 기울기는 다른 경우</h3><h3 id="모형들이-동일한-기울기를-가지지만-절편항은-다른-경우"><a href="#모형들이-동일한-기울기를-가지지만-절편항은-다른-경우" class="headerlink" title="모형들이 동일한 기울기를 가지지만 절편항은 다른 경우"></a>모형들이 동일한 기울기를 가지지만 절편항은 다른 경우</h3><h2 id="변수-선택법"><a href="#변수-선택법" class="headerlink" title="변수 선택법"></a>변수 선택법</h2><p><img src="/image/variable_selection.png" alt="변수 선택법"></p>
+<ul>
+<li>위의 모형2 는 아래 모형 3으로부터 만들어짐을 알 수 있다. 즉, 소수민족 모형은 $x_{ij}=x_{i1}$, $z_{ij} = 1$을 아래 모형 3에 대입하면 계산되며, 백인 모형 또한 $x_{ij}=x_{i2}$, $z_{ij} = 0$을 대입하면 동일하게 나온다. 그러므로 <code>모형 1과 2를 비교하는 것은 모형 1과 3을 비교하는 것과 동일하다.</code> 모형 3에 $\gamma = \delta = 0$을 대입하면 모형 1을 얻을 수 있으므로, <code>모형 3을 완전모형(FM)으로 모형 1을 축소모형(RM)으로 간주할 수 있다.</code></li>
+</ul>
+<script type="math/tex; mode=display">모형 3 \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1}x_{ij} + \gamma z_{ij} + \delta(z_{ij} \cdot x_{ij}) + \varepsilon_{ij}</script><ul>
+<li>그러므로 $H_{0} : \gamma = \delta = 0$으로 아래와 같이 F 검정을 통해 검정할 수 있다. (k=2, p=3) F-통계량 값인 3.4는 통계적으로 유의한 결과이며, $H_{0}$를 기각하여 $H_{1}$를 채택한다고 할 수 있다. 그러므로 두 집단의 회귀 관계가 서로 다르다고 결론지을 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">F = \frac{[SSE(RM) - SSE(FM)]/p+1-k}{SSE(FM)/n-p-1}</script><script type="math/tex; mode=display">= \frac{(45.51 - 31.81)/2}{31.81/16} = 3.4</script><h3 id="모형들이-동일한-절편항을-가지지만-기울기는-다른-경우"><a href="#모형들이-동일한-절편항을-가지지만-기울기는-다른-경우" class="headerlink" title="모형들이 동일한 절편항을 가지지만 기울기는 다른 경우"></a>모형들이 동일한 절편항을 가지지만 기울기는 다른 경우</h3><ul>
+<li>두 집단이 동일한 기울기 $\beta_{1}$을 가진다는 것을 믿을 만한 이유가 있다고 가정하고, 두 집단이 동일한 절편항을 가진다는 가설 $H_{0}: \beta_{01} = \beta_{02}$을 검정하는 경우를 다루어 볼 것이다.</li>
+</ul>
+<script type="math/tex; mode=display">모형 1 (통합모형) \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) -  y_{i1} = \beta_{01} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 2 (백인) - y_{i2} = \beta_{02} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
+<li>두 모형이 동일한 기울기 $\beta_{1}$을 가지고 있으나 서로 다른 절편항 $\beta_{01}$과 $\beta_{02}$를 가지고 있음을 주목하자. 또한 위의 모형2는 아래와 같이 모형 3으로 바꿔 쓸 수 있다.<blockquote>
+<p>모형 3에서 상호작용 변수 $(z_{ij} \cdot x_{ij})$가 없음을 주목하자. 만약 상호작용항이 있다면, 두 집단은 다른 기울기와 다른 절편항을 갖는 두 모형을 가지게 된다.</p>
+</blockquote>
+</li>
+</ul>
+<script type="math/tex; mode=display">모형 3 : \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1}x_{ij} + \gamma z_{ij} + \varepsilon_{ij}</script><ul>
+<li>따라서 모형2(또는 모형 3)는 절편항 $\beta_{0} + \gamma$와  $\beta_{0}$를 가진 두 개의 평행인 직선을 나타낸다. 그러므로 귀무가설은 $H_{0}: \gamma = 0$이 된다. 이 가설을 검정하는 것도 동일하게 귀무가설에 해당하는 모형을 축소모형으로 간주하고 F 검정을 실시하면 된다.</li>
+</ul>
+<h3 id="모형들이-동일한-기울기를-가지지만-절편항은-다른-경우"><a href="#모형들이-동일한-기울기를-가지지만-절편항은-다른-경우" class="headerlink" title="모형들이 동일한 기울기를 가지지만 절편항은 다른 경우"></a>모형들이 동일한 기울기를 가지지만 절편항은 다른 경우</h3><ul>
+<li>두 집단이 동일한 절편항 $\beta$를 가지고 있으며, 두 집단이 기울기도 동일하다는 가설$(H_{0}:\beta_{11} = \beta_{12})$을 검정하는 경우를 다루어 볼 것이다.</li>
+</ul>
+<blockquote>
+<p>두 모형이 동일한 절편항 $\beta_{0}$을 가지고 있으나 서로 다른 기울기 \beta_{11}과 \beta_{12}를 가지고 있음을 주목하자.</p>
+</blockquote>
+<script type="math/tex; mode=display">모형 1 (통합모형) \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) -  y_{i1} = \beta_{0} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 2 (백인) - y_{i2} = \beta_{0} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
+<li>위의 모형 2는 아래와 같이 모형 3으로 대체 될 수 있다. 이 모형에서 상호작용 변수 $(x_{ij} \cdot z_{ij})$가 있지만 변수 Z의 개별 공헌은 없음을 주목하자. 각각에 대입해 보면, 위에서와 같이 모형 3에서 $H_{0} : \delta = 0$을 F-검정하면된다.</li>
+</ul>
+<script type="math/tex; mode=display">모형 3 : \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1}x_{ij} + \delta(x_{ij} \cdot z_{ij}) + \varepsilon_{ij}</script><h2 id="가변수-지시변수-에-대한-다른-응용들"><a href="#가변수-지시변수-에-대한-다른-응용들" class="headerlink" title="가변수(지시변수)에 대한 다른 응용들"></a>가변수(지시변수)에 대한 다른 응용들</h2><ul>
+<li>앞에서 묘사된 가변수(지시변수)의 응용들은 다양한 문제를 해결하기 위해 확장될 수 있다. 예를 들면 K개의 모집단 평균을 비교하는 경우 분산분석(ANOVA)도 표현할 수 있다. 크기 $n_{j}$의 표본이 j번째 모집단으로 부터 추출되었다고 하자.(j=1, \cdots, k) 종속(반응)변수에 대하여 총 $n=n_{1}+ \cdots + n_{k}$개의 관측개체가 주어진다. $y_{ij}$를 j번째 표본에서 i번째 반응값이라고 하자. 그러면 y_{ij}에 대한 모형은 다음과 같이 표현될 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">y_{ij} = \mu_{0} + \mu_{1}x_{i1} + \cdots + \mu_{p}x_{ip} + \varepsilon_{ij}</script><ul>
+<li>위의 모형에서는 $p = k-1$개의 지시 설명변수들 $x_{i1}, \cdots, x_{ip}$이 있다. 각 변수 $x_{ij}$는 대응 되는 반응값이 j번째 모집단으로부터 나왔을 때 1을 가지며, 그렇지 않으면 0을 가진다. 생략된 모집단은 대조(control)집단으로 알려져 있다. 대조집단에 대한 모든 지시변수들은 0이다. 따라서, 아래와 같은 모형식이 된다. $\varepsilon_{ij}$는 평균 0, 분산 $\sigma^{2}$을 가지고 독립인 정규분포에 따르는 것으로 가정되는 랜덤오차이다. 상수항 $\mu_{0}$는 대조집단의 평균을 나타내며, 회귀계수 $\mu_{j}$는 대조집단과 j번째 집단의 평균차이로 해석될 수 있다. 만약 모든 집단이 동일한 평균을 가진다는 귀무가설 $H_{0} : \mu_{1}= \cdots =\mu_{p}=0$을 검정하는 것은 아래 모형식과 위의 모형식을 각각 축소모형과 완전모형으로 간주하여 F-검정을 하는 것과 동일하다. <code>그러므로 지시변수의 사용은 회귀분석의 특별한 경우로서 ANOVA 기법을 표현할 수 있도록 한다.</code></li>
+</ul>
+<script type="math/tex; mode=display">y_{ij} = \mu_{0} + \varepsilon_{ij}</script><ul>
+<li>이외의 예들로는 가변수가 종속변수로 사용되는 로지스틱회귀모형과 시계열 데이터에 대하여 계절성과 시간의 경과에 따른 모수의 안정성의 문제를 다룰 수 있다. 계절성은 예를 들어 분기별로 되어있는 데이터를 가변수로 만들어주어 분기별로 주어지는 매출액에 영향을 주는 계절성의 존재를 검정하는 것을 말할 수 있을 것이다. 시간의 경과에 따른 모수의 안정성은 시간에 따른 가변수를 통해 이들의 계수가 0임을 검정하면 해당 기간동안의 회귀관계가 불변한다는 것을 보일 수도 있다.</li>
+</ul>
+<h2 id="변수-선택법"><a href="#변수-선택법" class="headerlink" title="변수 선택법"></a>변수 선택법</h2><p><img src="/image/variable_selection.png" alt="변수 선택법"></p>
 <p><img src="/image/FeedForward_selection.png" alt="점진적 선택법"></p>
 <p><img src="/image/Backward_Elimination.png" alt="후진적 제거법"></p>
 <p><img src="/image/stepwise_selection.png" alt="stepwise 방법"></p>
@@ -400,6 +436,78 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+<h2 id="변수변환"><a href="#변수변환" class="headerlink" title="변수변환"></a>변수변환</h2><ul>
+<li><p>아래 그림에서와 같이 잔차에 관련된 플롯들을 그려본 후 가정이 위배되었다면, 여러 방법들을 통해 문제를 해결해보아야 할 것이다. 선형성 또는 정규성의 확보, 분산의 안정화와 같은 어떤 목적을 달성하기 위하여 변환이 적용된다. <code>어떤 경우에는 원래의 변수들보다는 변환된 변수들에 선형회귀모형을 적합할 필요도 있는데, 실제 문제에서 이런 경우는 매우 흔하다. 다중회귀에서의 변환에는 더 많은 노력(여러 변환을 통해 맞는 변수를 찾아야하므로) 주의(반응(종속)변수와 설명(독립)변수의 산점도를 그려서 변환의 힌트를 얻을 수 없으며, 각각의 산점도를 그려서 변환을 진행하였어도 전체적인 설명변수들의 공간상에서는 맞지 않는 경우도 있기 때문)가 필요하다.</code></p>
+</li>
+<li><p>가장 흔하게 위반되는 가정은 고려하는 모형의 선형성과 오차분산들의 동일성이다. 다시 한번 말하지만, 회귀분석에서의 선형이라함은 변수들 간의 선형관계라기 보다는 가정 된 회귀모형이 회귀모수에 대해 선형모수에 대해 선형적임을 의미하는 것이다. 아래 모형들은 모두 선형이다.</p>
+</li>
+</ul>
+<blockquote>
+<p>아래의 모형들은 모두 회귀모수 $\beta_{0}, \beta_{1}, \beta_{2}$에 대해 선형이기 때문에 선형성을 갖는다.</p>
+</blockquote>
+<script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1}X + \varepsilon</script><script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1}X + \beta_{2} X^{2} + \varepsilon</script><script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1} log X + \varepsilon</script><script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1} \sqrt{X} + \varepsilon</script><ul>
+<li>반면에 아래 모형은 모수 $\beta_{1}$에 대해 선형꼴이 아니기 때문에 비선형모형이 된다.</li>
+</ul>
+<script type="math/tex; mode=display">Y =  \beta_{0} + e^{\beta_{1}X} + \varepsilon</script><ul>
+<li>변수 변환이 필요하게 되는 몇 가지 이유들을 다시 요약해 보면 다음과 같다.</li>
+</ul>
+<h4 id="1-이론적인-측면에서-규정되는-모형이-비선형이나-적절한-변수변환에-의해-이를-선형모형으로-바꿀-수-있는-경우"><a href="#1-이론적인-측면에서-규정되는-모형이-비선형이나-적절한-변수변환에-의해-이를-선형모형으로-바꿀-수-있는-경우" class="headerlink" title="1) 이론적인 측면에서 규정되는 모형이 비선형이나 적절한 변수변환에 의해 이를 선형모형으로 바꿀 수 있는 경우"></a>1) 이론적인 측면에서 규정되는 모형이 비선형이나 적절한 변수변환에 의해 이를 선형모형으로 바꿀 수 있는 경우</h4><ul>
+<li>ex) 학습이론(실험심리) 분야의 한 예로서 어떤 Task를 반복적으로 수행할 때 i번째 수행에서 걸리는 시간 $T_{i}$는 이론적으로 아래와 같은 관계를 가진다고 하자. 이 경우 $T_{i}$와 $i$의 관계는 모수 $\alpha$, $\beta$에 관해 비선형이 되므로 선형회귀분석에서의 기법을 직접 적용할 수 없다.</li>
+</ul>
+<script type="math/tex; mode=display">T_{i} = \alpha \beta^{i}, \alpha > 0, 0 < \beta < 1</script><ul>
+<li>반면에 위 모형의 양변에 로그를 취하면 아래와 같은 식을 얻게 되는데, $Y_{i} = log T^{i}$, $\beta_{0} = log \alpha, \beta_{1} = log \beta$, $X_{i} = i$로 변환시키면 $Y_{i} = \beta_{0} + \beta_{1}X_{1}$가 되어 모수 $\beta_{0}$, $\beta_{1}$에 관해 선형꼴이므로, 이제 여기에 표준적인 회귀방법들을 사용할 수 있게 된다. 즉, <code>원래 변수들의 관계는 비선형이지만 변화된 변수들 사이의 관계는 선형</code>이다.</li>
+</ul>
+<h4 id="2-반응-종속-변수-Y에-대한-분산이-평균에-의존하는-확률분포를-가지는-경우가-있다-통상-반응-종속-변수-Y의-평균이-설명-독립-변수-X와-관계를-가지게-되므로-만일-Y의-분산이-Y의-평균에-의존한다면-더-이상-상수가-아니고-X에-따라-변하게-될-것이다-이런-경우-Y는-정규분포를-따르지-않는다-그런데-회귀분석에서-대부분의-기본적인-유의성-검정은-Y-혹은-오차항-의-정규성-가정-하에서-성립하므로-이와-같은-비정규성은-문제가-될-수-있다-표본이-큰-경우에는-주문제가-아닐-수-있지만-회귀모형의-기본가정-중-하나인-등분산성을-위반하는-경우이므로-회귀모수에-대한-추정량들은-그의-불편성-unbiasedness-은-유지되지만-정확성-precision-의-관점에서는-더-이상-최적-추정량이-아니다-이-때-변수변환-기법을-이용하여-데이터가-등분산성과-정규성을-동시에-가지도록-할-수-있다-실제로-오차항이-등분산성을-가지도록-하는-분산안정화-변환-variance-stabilizing-transformation-은-많은-경우에-정규성도-어느-정도-만족시키게-한다는-사실이-알려져-있다"><a href="#2-반응-종속-변수-Y에-대한-분산이-평균에-의존하는-확률분포를-가지는-경우가-있다-통상-반응-종속-변수-Y의-평균이-설명-독립-변수-X와-관계를-가지게-되므로-만일-Y의-분산이-Y의-평균에-의존한다면-더-이상-상수가-아니고-X에-따라-변하게-될-것이다-이런-경우-Y는-정규분포를-따르지-않는다-그런데-회귀분석에서-대부분의-기본적인-유의성-검정은-Y-혹은-오차항-의-정규성-가정-하에서-성립하므로-이와-같은-비정규성은-문제가-될-수-있다-표본이-큰-경우에는-주문제가-아닐-수-있지만-회귀모형의-기본가정-중-하나인-등분산성을-위반하는-경우이므로-회귀모수에-대한-추정량들은-그의-불편성-unbiasedness-은-유지되지만-정확성-precision-의-관점에서는-더-이상-최적-추정량이-아니다-이-때-변수변환-기법을-이용하여-데이터가-등분산성과-정규성을-동시에-가지도록-할-수-있다-실제로-오차항이-등분산성을-가지도록-하는-분산안정화-변환-variance-stabilizing-transformation-은-많은-경우에-정규성도-어느-정도-만족시키게-한다는-사실이-알려져-있다" class="headerlink" title="2) 반응(종속)변수 Y에 대한 분산이 평균에 의존하는 확률분포를 가지는 경우가 있다. 통상 반응(종속)변수 Y의 평균이 설명(독립)변수 X와 관계를 가지게 되므로, 만일 Y의 분산이 Y의 평균에 의존한다면 더 이상 상수가 아니고 X에 따라 변하게 될 것이다. 이런 경우 Y는 정규분포를 따르지 않는다. 그런데 회귀분석에서 대부분의 기본적인 유의성 검정은 Y(혹은 오차항)의 정규성 가정 하에서 성립하므로 이와 같은 비정규성은 문제가 될 수 있다(표본이 큰 경우에는 주문제가 아닐 수 있지만). 회귀모형의 기본가정 중 하나인 등분산성을 위반하는 경우이므로, 회귀모수에 대한 추정량들은 그의 불편성(unbiasedness)은 유지되지만 정확성(precision)의 관점에서는 더 이상 최적 추정량이 아니다. 이 때 변수변환 기법을 이용하여 데이터가 등분산성과 정규성을 동시에 가지도록 할 수 있다. 실제로 오차항이 등분산성을 가지도록 하는 분산안정화 변환(variance-stabilizing transformation)은 많은 경우에 정규성도 어느 정도 만족시키게 한다는 사실이 알려져 있다."></a>2) <code>반응(종속)변수 Y에 대한 분산이 평균에 의존하는 확률분포를 가지는 경우가 있다.</code> 통상 반응(종속)변수 Y의 평균이 설명(독립)변수 X와 관계를 가지게 되므로, 만일 Y의 분산이 Y의 평균에 의존한다면 더 이상 상수가 아니고 X에 따라 변하게 될 것이다. 이런 경우 Y는 정규분포를 따르지 않는다. 그런데 <code>회귀분석에서 대부분의 기본적인 유의성 검정은 Y(혹은 오차항)의 정규성 가정 하에서 성립하므로 이와 같은 비정규성은 문제가 될 수 있다(표본이 큰 경우에는 주문제가 아닐 수 있지만).</code> 회귀모형의 기본가정 중 하나인 등분산성을 위반하는 경우이므로, 회귀모수에 대한 추정량들은 그의 불편성(unbiasedness)은 유지되지만 정확성(precision)의 관점에서는 더 이상 최적 추정량이 아니다. 이 때 변수변환 기법을 이용하여 데이터가 등분산성과 정규성을 동시에 가지도록 할 수 있다. 실제로 오차항이 등분산성을 가지도록 하는 분산안정화 변환(variance-stabilizing transformation)은 많은 경우에 정규성도 어느 정도 만족시키게 한다는 사실이 알려져 있다.</h4><h4 id="3-실제-변환의-필요성과-방법은-주로-모형적합의-과정에서-구한-잔차를-검토함으로써-알-수-있다"><a href="#3-실제-변환의-필요성과-방법은-주로-모형적합의-과정에서-구한-잔차를-검토함으로써-알-수-있다" class="headerlink" title="3) 실제 변환의 필요성과 방법은 주로 모형적합의 과정에서 구한 잔차를 검토함으로써 알 수 있다."></a>3) 실제 변환의 필요성과 방법은 주로 모형적합의 과정에서 구한 잔차를 검토함으로써 알 수 있다.</h4><ul>
+<li>예를 들면, 아래 첫번째 Y(종속변수)에 log를 취하거나 root를 씌우는 것은 종속변수와 반응 변수의 산점도를 살펴보며 그에 맞는 패턴이 그려지면 사용해야 될 것이다. 물론 그 외에도 Y(종속변수)의 단위를 줄이는 경우나 범위를 제한하는 경우에도 사용할 수 있을 것이다.</li>
+</ul>
+<p><img src="/image/linear_regression_of_transform_variables.png" alt="회귀분석 진단"></p>
+<h3 id="선형성을-위한-변환들"><a href="#선형성을-위한-변환들" class="headerlink" title="선형성을 위한 변환들"></a>선형성을 위한 변환들</h3><ul>
+<li>선형회귀분석에 수반된 기본가정들 중의 하나는 데이터를 묘사하는 회귀모형의 형태가 변수들 간의 선형적 관계를 가져야 하며, 동시에 회귀모수에 관해 선형적이어야 한다는 것이다. <code>이론적인 근거로부터 또는 Y와 설명(독립)변수 X의 산점도를 검토함으로써 두 변수의 관계가 비선형적임을 알게 될 경우</code>가 있다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>함수</th>
+<th>변환</th>
+<th>선형 형태</th>
+<th>그림</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$Y = \alpha X^{\beta}$</td>
+<td>$Y’ = log Y, X’ = log X$</td>
+<td>$Y’ = log \alpha + \beta X’$</td>
+<td>그림 1-1</td>
+</tr>
+<tr>
+<td>$Y = \alpha e^{\beta X}$</td>
+<td>$Y’ = ln Y$</td>
+<td>$Y’ = ln \alpha + \beta X$</td>
+<td>그림 1-2</td>
+</tr>
+<tr>
+<td>$Y = \alpha + \beta log X$</td>
+<td>$X’ = log X$</td>
+<td>$Y = \alpha + \beta X’$</td>
+<td>그림 1-3</td>
+</tr>
+<tr>
+<td>$Y = \frac{X}{\alpha X + \beta}$</td>
+<td>$Y’ = \frac{1}{Y}, X’ = \frac{1}{X}$</td>
+<td>$Y’ = \alpha - \beta X’$</td>
+<td>그림 1-4(a)</td>
+</tr>
+<tr>
+<td>$Y = \frac{e^{\alpha + \beta X}}{1 + e^{\alpha + \beta X}}$</td>
+<td>$Y’ = ln \frac{Y}{1-Y}$</td>
+<td>$Y’ = \alpha + \beta X$</td>
+<td>그림 1-4(b)</td>
+</tr>
+</tbody>
+</table>
+</div>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -488,11 +596,11 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-01-15",
         "dateCreated": "2020-01-15",
-        "dateModified": "2020-03-25",
+        "dateModified": "2020-03-27",
         "url": "https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/",
         "description": "교호작용
 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia"
-        "wordCount": 3393
+        "wordCount": 4838
     }
 </script>
 
@@ -765,22 +873,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
