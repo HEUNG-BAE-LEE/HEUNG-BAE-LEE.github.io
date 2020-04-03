@@ -21,7 +21,7 @@
 <meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
-<meta property="og:updated_time" content="2020-04-02T11:13:44.199Z">
+<meta property="og:updated_time" content="2020-04-03T04:51:29.913Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(03) - 회귀진단">
 <meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
@@ -570,9 +570,28 @@ ga('send', 'pageview');
 </li>
 </ul>
 <h3 id="상관된-오차항의-문제"><a href="#상관된-오차항의-문제" class="headerlink" title="상관된 오차항의 문제"></a>상관된 오차항의 문제</h3><ul>
-<li><p>선형회귀모형의 기본 가정들 중 하나는 i번째 j번째 관측개체에 대한 오차항인 $\varepsilon_{i}$와 $\varepsilon_{j}$가 서로 상관되어 있지 않은 독립적인 확률변수라는 것이다. <code>회귀모형에서 오차항이 가지는 의미에 비추어 볼 때 이들 사이의 상관관계의 존재는 곧 모형에 반영되지 않은 추가적 예측변수의 존재 가능성을 의미할 수도 있다.</code></p>
+<li><p>선형회귀모형의 기본 가정들 중 하나는 i번째 j번째 관측개체에 대한 오차항인 $\varepsilon_{i}$와 $\varepsilon_{j}$가 서로 상관되어 있지 않은 독립적인 확률변수라는 것이다. <code>회귀모형에서 오차항이 가지는 의미에 비추어 볼 때 이들 사이의 상관관계의 존재는 곧 모형에 반영되지 않은 추가적 예측변수의 존재 가능성을 의미할 수도 있다.</code> 빠뜨린 예측변수에 대한 연속된 값들이 서로 상관관계를 가지면, 이런 상관의 효과는 오차항에 반영되고 이에 따라 모형의 오차항은 상관관계를 보이게 될 것이다.</p>
 </li>
-<li><p><code>관측값들이 얻어지는 자연스러운 순서에 따라 그들이 서로 연관되어 있을 경우 오차항(혹은 반응변수의 관측값)들이 자기상관(autocorrelation)을 가지고 있다고 한다.</code> 자기상관성의 문제는 여러 가지 이유로 일어날 수 있다. 시간적 또는 공간적으로 인접되어 있는 관측개체들에 대한 오차항들은 유사한 경향을 가지기 쉽다. 시계열 데이터에서는 연속된 관측개체에 대한 오차항은 양의 상관관계를 가지는 경향이 있다. 또한 공간적으로 인접한 실험구역에서 얻은 관측값들은 공유하는 외적 환경의 영향으로 말미암아 상관된 잔차를 가지는 경향이 있다.</p>
+<li><p><code>관측값들이 얻어지는 자연스러운 순서에 따라 그들이 서로 연관되어 있을 경우 오차항(혹은 반응변수의 관측값)들이 자기상관(autocorrelation)을 가지고 있다고 한다.</code> 자기상관성의 문제는 여러 가지 이유로 일어날 수 있다. 시간적 또는 공간적으로 인접되어 있는 관측개체들에 대한 오차항들은 유사한 경향을 가지기 쉽다. 시계열 데이터에서는 연속된 관측개체에 대한 오차항은 양의 상관관계를 가지는 경향이 있다. 또한 공간적으로 인접한 실험구역에서 얻은 관측값들은 공유하는 외적 환경의 영향으로 인해 상관된 잔차를 가지는 경향이 있다.</p>
+</li>
+<li><p>오차항의 자기상관성 문제는 회귀분석에 여러 가지 영향을 미치게 되는데, 그 내용을 요약하면 다음과 같다.</p>
+<ul>
+<li>1.최소제곱추정량이 그의 불편성은 유지하지만 더 이상 최소분산을 가지지 않는다는 점에서 추정향의 효율성이 없어진다.</li>
+<li><ol>
+<li>$\sigma^{2}$이나 모회귀계수의 표준오차의 추정량은 실제보다 심각하게 과소추정될 수 있으며, 이에 따라 추정된 회귀계수는 그의 정확도가 높은 것으로 잘못 판단될 수 있다.</li>
+</ol>
+</li>
+<li><ol>
+<li>통상적으로 사용되는 신뢰구간이나 유의성 검정 등이 엄격한 의미에서 더 이상 타당하지 않다.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><code>위와 같은 이유로 오차항들 간의 자기상관은 심각한 문제이며 간단히 무시되어서는 안 될 것이다.</code>자기상관성의 문제는 일반적으로 다음 두 가지 유형으로 구분할 수 있다. 첫 번째는 회귀모형에 포함되어야 할 독립(설명)변수가 빠짐으로써 생기는 경우이므로 이때는 해당 독립(설명)변수만 찾아내면 문제는 곧 해결된다. <code>허나, 실제로 데이터 분석을 함에 있어서 해당 변수를 찾는 것은 그리 쉬운 문제가 아니다.</code> 두번째 유형은 순수자기상관이라고 불리는 것으로 데이터 변환 등을 통해 해결될 수 있다.</p>
+</li>
+<li><p><code>시계열 데이터의 분석에서 가장 유용한 그래프는 잔차를 시간에 대해 플롯한 인덱스 플롯(index plot)이다.</code> 이 플롯에서 계속된 몇 개의 양의 잔차들이 있고, 그 다음 여러 개의 음의 잔차가 따라오는 식의 같은 부호를 가진 잔차들이 군집화하는 상황을 볼 수 있다면, 아니면 그 반대의 모습들이 보인다면 해당 데이터는 오차항이 서로 상관되어 있는 경우이다. <code>이러한 형태의 모형들은 오차항들간에 강력한 상관관계가 있다는 증거로서 추가적인 분석이 필요하다는 것을 의미</code>한다.</p>
+</li>
+<li><p>그래프 분석에 추가하여 </p>
 </li>
 </ul>
 
@@ -663,11 +682,11 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-01-15",
         "dateCreated": "2020-01-15",
-        "dateModified": "2020-04-02",
+        "dateModified": "2020-04-03",
         "url": "https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/",
         "description": "교호작용
 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia"
-        "wordCount": 5427
+        "wordCount": 5632
     }
 </script>
 
@@ -750,6 +769,15 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/04/03/machine_learning_05/" class="title">로지스틱 회귀분석</a></p>
+                            <p class="item-date"><time datetime="2020-04-03T04:58:10.000Z" itemprop="datePublished">2020-04-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
                             <p class="item-title"><a href="/2020/03/20/Python_00/" class="title">Python - 00 (Python의 장점 및 자료형)</a></p>
                             <p class="item-date"><time datetime="2020-03-20T12:02:48.000Z" itemprop="datePublished">2020-03-20</time></p>
@@ -783,15 +811,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
-                            <p class="item-title"><a href="/2020/02/24/data_engineering_08/" class="title">data engineering (Presto란?)</a></p>
-                            <p class="item-date"><time datetime="2020-02-24T13:11:09.000Z" itemprop="datePublished">2020-02-24</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -801,7 +820,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">6</span></li></ul>
         </div>
     </div>
 
@@ -811,7 +830,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
