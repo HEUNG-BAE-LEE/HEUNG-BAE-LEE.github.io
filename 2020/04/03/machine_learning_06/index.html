@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>PCA를 이해하기 위한 기본적 선형대수 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PCA를 이해하기 위한 기본적 선형대수">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png">
+<meta property="og:updated_time" content="2020-04-08T08:40:28.395Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PCA를 이해하기 위한 기본적 선형대수">
+<meta name="twitter:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/machine-learning/">machine learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-machine_learning_06" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        PCA를 이해하기 위한 기본적 선형대수
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/04/03/machine_learning_06/" class="article-date">
+            <time datetime="2020-04-03T06:40:52.000Z" itemprop="datePublished">2020-04-03</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="차원의-저주"><a href="#차원의-저주" class="headerlink" title="차원의 저주"></a>차원의 저주</h1><ul>
+<li>먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. <code>차원의 저주</code>는<code>차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것</code>을 의미한다.</li>
+</ul>
+<p><img src="/image/curse_of_dimensionality_01.png" alt="차원의 저주 - 01"></p>
+<ul>
+<li>다른 관점에서 한번 살펴보면, 관측치의 수가 한정되어 있다고 할 경우에 먼저, 1차원 상의 공간(변수가 1개인 경우)에서는 10개의 데이터만 있어도 해당 차원의 절반을 설명할 수 있기에 공간을 설명함에 있어서 부족함이 없다고 판단할 수 있다. 허나 2차원상의 공간으로 살펴보았을 경우 1차원의 경우보다 관측치 간의 간격이 멀게 있어 사이에 빈 공간이 많이 나타남을 알 수 있다. 이렇게 빈 공간이 나타남은 사실상 우리가 모델을 통해 예측은 가능하지만 모형에 따라 변동이 심해지는 어디까지나 예측하는 값을 의미한다. 3차원 상에서는 2차원 공간상에서 보다 훨씬 더 관측치가 떨어져있음을 확인할 수 있다. 그러므로 모델의 변동성 즉, 모델의 분산이 더 커지게 되는 것이다. 간단히 말하자면, 점과 점 사이의 공간이 차원이 늘어날수록 멀어지는데, 빈 공간에 위치한 예측값을 채워넣기 위해서는 임의로 채워넣기 때문에 모델이 어려워진다는 것이다.  </li>
+</ul>
+<p><img src="/image/curse_of_dimensionality_02.png" alt="차원의 저주 - 02"></p>
+<ul>
+<li><p>예를 들어, 아래와 같이 KNN 알고리즘(가장 가까이 있는 변수가 예측값으로 결과를 갖는 알고리즘)을 통한 비지도학습을 진행한다고 가정해보자. x1 변수의 공간만을 생각하여 1차원적으로 생각하면, 아래 그림에서 검정색 점과 가장 가까운 점은 노란색 테두리안에 있는 2개의 점들 중 하나일 것이다. 허나 x2 변수의 공간도 같이 고려하여 2차원적으로 살펴보면, 파란색 원 안에 놓여있는 1개의 점이 가장 가까운 점이 될 것이다. 여기서 주목해야 할 점은 <code>동일한 데이터를 통해서 2차원으로 살펴보면 최단거리의 길이가 늘어났다는 점</code>이다. <code>KNN 알고리즘의 결과로 1차원으로 살펴본 것 보다 2차원으로 살펴보는 것이 최단거리의 길이가 더 길기 때문에 값이 좀 더 이질적이라고 볼 수 있으며, 결과적으로 과연 2차원적으로 예측한 값을 KNN알고리즘의 결과값으로 사용해도 문제가 없을지에 의문점이 생기게 된다.</code> x2가 Y와 관련된 변수라면 크게 문제가 없겠지만, x2가 전혀 관련없는 변수라면 굉장히 모델이 낭비가되며, 좋지 않은 모델이 될 것이기 때문이다.</p>
+</li>
+<li><p>위에서 언급했던 것처럼 차원이 증가하게 되면 좋지 않은 측면이 있고, 이것을 차원의 저주라고 부르며 <code>차원을 될 수 있는 한 축소하는 것이 필요</code>하다.</p>
+</li>
+</ul>
+<p>![차원축소의 필요성][/image/necessity_for_reduction_of_dimensionality.png]</p>
+<ul>
+<li>기본적으로 차원을 축소하는 방법으로 아래와 같은 것들을 예로 들 수 있다. 먼저, 상관계수가 높은 변수들이라면 동일한 움직임의 방향을 갖기 때문에 그들 중 하나의 변수만을 선택해도 큰 문제가 없다고 보는 측면이다. 이 방법에서의 문제점은 예를 들어 두 변수의 상관계수가 0.8이라면, 나머지 0.2에 해당하는 정보는 버려지게 되는 점이다. 이런 부분을 보완한 것이 PCA이다. <code>PCA는 차원을 줄이면서도 정보의 손실을 최소화</code>하는 것이다.</li>
+</ul>
+<p><img src="/image/kinds_of_reduction_of_dimensonality.png" alt="차원축소법의 종류"></p>
+<h1 id="공분산-행렬의-이해"><a href="#공분산-행렬의-이해" class="headerlink" title="공분산 행렬의 이해"></a>공분산 행렬의 이해</h1><ul>
+<li>공분산 행렬은 쉽게 말해 행렬의 내적이라고 할 수 있다. 아래 그림에서 처럼 계산할 수 있다. 대각 요소를 제외한 나머지 비대각요소들은 두 변수간의 움직임의 방향을 알 수 있다. 그러므로 상관관계를 미리 알고 있다면 두 변수간의 공분산의 부호도 알 수 있다.</li>
+</ul>
+<p><img src="/image/covariance_matrix_concept_01.png" alt="공분산 행렬의 이해 - 01"></p>
+<ul>
+<li>공분산 행렬의 활용은 위에서 언급했던 것 처럼 두 변수간의 상관계수의 부호를 알 수 있는 것 말고도 존재한다. 아래 그림과 같이 특정 점들과의 내적연산을 시행하면, 점의 위치를 이동시키는데 이 때 이동된 점들의 분포가 공분산 구조와 비슷한 형태를 가지게 된다. <code>즉 공분산 행렬과 점(벡터 또는 행렬)들의 연산은 공분산 구조로 점들을 분포시키는 기능</code>을 한다.</li>
+</ul>
+<p><img src="/image/covariance_matrix_concept_02.png" alt="공분산 행렬의 이해 - 02"></p>
+<ul>
+<li>공분산 행렬이 대칭행렬이지만, positive definite가 아닌 행렬인 경우를 다음 그림에서 보여주고 있다. 아래 수식이 성립한다면 행렬 A느 positive definite하다고 한다.</li>
+</ul>
+<script type="math/tex; mode=display">x^{T} A  x > 0</script><p><a href="https://datascienceschool.net/view-notebook/d6205659aff0413797c22552947aec83/" target="_blank" rel="noopener">참고 - 행렬의 성질</a></p>
+<p><img src="/image/covariance_matrix_concept_03.png" alt="공분산 행렬의 이해 - 03"></p>
+<ul>
+<li>아래의 공분산 행렬은 행렬식(determinant)가 0인 경우이다. 이렇게 행렬식이 0인 공분산행렬과의 내적은 오른쪽 그림과 같이 원점을 기준으로 일직선의 형태를 이루게 된다.</li>
+</ul>
+<p><img src="/image/covariance_matrix_concept_04.png" alt="공분산 행렬의 이해 - 04"></p>
+<h1 id="Principal-Components의-이해"><a href="#Principal-Components의-이해" class="headerlink" title="Principal Components의 이해"></a>Principal Components의 이해</h1><ul>
+<li><p>아래 그림을 살펴보면 x1과 x2는 음의 강한 상관관계를 갖는다는 것을 확인 할 수 있다. x1이 증가하면 x2가 감소하는 움직을 갖는다. 결론적으로는 정보가 중복되어있다. 이렇게 중복되어있는 정보를 요약해서 갖고있을수 있을 순 없을까에 대한 방법을 고안한 것이 바로 PCA이다. 아래 그림과 같이 두 변수간의 가장 큰 분산을 나타내는 벡터에 대해 각 데이터를 projection을 취한다면 해당 projection 된 데이터들의 벡터만을 가지고도 기존의 데이터에 대한 분산을 표현할 수 있게 된다.</p>
+</li>
+<li><p><code>차원을 줄이면서 정보의 손실을 최소화하는 방법은 자료의 변동을 가장 잘 설명하는 어떤 축을 찾는 것</code>이다.</p>
+</li>
+</ul>
+<p><img src="/image/PCA_conception_01.png" alt="Principal Components의 개념 - 01"></p>
+<ul>
+<li>Principal Components를 찾아내는 방법을 간단히 말하자면 자료의 분산을 가장 많이 설명하는 축인 장축과 자료의 분산을 가장 적게 설명하는 단축을 찾아내는 것이다.  </li>
+</ul>
+<p><img src="/image/PCA_conception_03.png" alt="Principal Components의 개념 - 02"></p>
+<p><img src="/image/PCA_conception_02.png" alt="Principal Components의 개념 - 03"></p>
+<h1 id="PCA-수학적-개념이해-행렬연산-행렬식-특성방정식"><a href="#PCA-수학적-개념이해-행렬연산-행렬식-특성방정식" class="headerlink" title="PCA 수학적 개념이해 - 행렬연산, 행렬식, 특성방정식"></a>PCA 수학적 개념이해 - 행렬연산, 행렬식, 특성방정식</h1><p><img src="/image/find_determinant.png" alt="행렬식 구하는 방법"></p>
+<ul>
+<li><p><code>행렬식</code>(determinant)은 쉽게 말해 해당 <code>행렬이 갖는 Volume(2차원인 경우는 면적)</code>을 의미한다. 아래 그림과 같이 2차원 공간상에서 면적이 1을 갖는 좌표들(파란색)을 D라는 행렬로 명명했을 경우, A행렬로 선형변환시켜주면 아래 그림의 빨간색 직사각형으로 변환되며, 부피는 각 행렬식의 곱 형태로 계산 되어 5를 갖는다.</p>
+</li>
+<li><p><code>만약 행렬식이 0을 갖는다면</code> 행렬의 곱은 1직선을 이룰 것이고, 선분의 형태로 표현될 것이다.</p>
+</li>
+</ul>
+<p><img src="/image/deteminant_of_algebra_aspection.png" alt="행렬식의 기하하적인 요소"></p>
+<p><img src="/image/determinant_applications_and_relations.png" alt="행렬식의 활용"></p>
+<h1 id="고유값과-고유벡터"><a href="#고유값과-고유벡터" class="headerlink" title="고유값과 고유벡터"></a>고유값과 고유벡터</h1><ul>
+<li><code>임의의 정방행렬 A로 선형변환하더라도 방향은 유지되면 해당 벡터를 고유벡터라고 하며, 크기(늘어난 정도)를 고유값</code>이라고 한다.</li>
+</ul>
+<p><img src="/image/eigen_value_and_eigen_vector_01.png" alt="고유값과 고유벡터 - 01"></p>
+<ul>
+<li>기하학적으로 설명해보자면, 아래 그림과 같이 고유벡터는 빨간색 선을 제외한 나머지 선형변환을 해도 벡터의 방향이 바뀌지 않는 파란색, 분홍색 벡터들이 고유벡터를 의미한다. 그리고 고유값은 스케일(크기)를 의미한다.</li>
+</ul>
+<p><img src="/image/eigen_value_and_eigen_vector_02.png" alt="고유값과 고유벡터 - 02"></p>
+<ul>
+<li><p>아래 그림과 같은 식으로 고유값과 고유벡터를 구할 수 있다. 먼저 고유값을 구하는 방법은 $det(A - \lambda I)=0$을 만족하는 고유값을 찾으면 되는데, 이유는 우리가 구하고 싶은 고유값과 고유벡터는 0벡터를 제외한 다른 벡터를 구하고 싶기 때문에 행렬식이 0이아닌 다른 값을 갖는다면 역행렬이 존재하게 되어 0벡터가 해당 선형시스템의 유일한 해가 되지 않도록하려면 non-trivial solution(해가 무수히 많아야)을 갖어야 한다. 그러므로 해당 행렬식이 0의 값을 갖게되어 역행렬이 존재하지 않도록 해야하기 때문에 아래와 같은 수식을 통해 고유값을 구할 수 있다.</p>
+</li>
+<li><p>고유값은 크기를 기준으로 내림차순으로(큰 것부터 작은 것 순으로)적어주면, 그에따른 고유벡터도 동일한 인덱스를 매칭해준다. 여기서 주의할 점은 <code>고유벡터는 해당 고유벡터를 normalization을 통해 크기가 1인 벡터를 기준으로 스칼라배를 해도 동일한 고유벡터라고 여긴다는 점</code>이다.</p>
+</li>
+</ul>
+<p><img src="/image/eigen_value_and_eigen_vector_03.png" alt="고유값과 고유벡터 - 03"></p>
+<h1 id="PCA-수학적-개념이해-Singular-Value-Decomposition-SVD"><a href="#PCA-수학적-개념이해-Singular-Value-Decomposition-SVD" class="headerlink" title="PCA 수학적 개념이해 - Singular Value Decomposition(SVD)"></a>PCA 수학적 개념이해 - Singular Value Decomposition(SVD)</h1><ul>
+<li><p>PCA는 다르게 행렬식을 계산하기 때문에 정방행렬인 경우에만 계산이 가능하다는 단점이 있다. 이러한 점을 보완하기 위한 Decomposition 방법이 바로 SVD(Singular Value Decomposition)이다.</p>
+</li>
+<li><p>SVD는 임의의 행렬 X에 관해 3개의 행렬로 분해가 가능하며, 각각의 행렬의 크기는 아래와 같고, V와 U는 column들이 Orthogonal(직교)한 행렬(서로 직교하는 성분들끼리의 내적은 0)이므로 동일행렬의 내적은 Identity matrix를 갖는다. V와 D가 각각 임의의행렬 X에 공분산행렬에 해당하는 고유벡터 행렬과 고유값 행렬을 의미한다.</p>
+</li>
+</ul>
+<p><img src="/image/Singular_value_decomposition_01.png" alt="SVD 개념"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "PCA를 이해하기 위한 기본적 선형대수",
+        "image": "https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png",
+        "keywords": "",
+        "genre": "machine learning",
+        "datePublished": "2020-04-03",
+        "dateCreated": "2020-04-03",
+        "dateModified": "2020-04-08",
+        "url": "https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/",
+        "description": "차원의 저주
+먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.
+
+
+
+다른 관점에서"
+        "wordCount": 996
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/04/03/machine_learning_05/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">로지스틱 회귀분석</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/04/03/machine_learning_06/" class="title">PCA를 이해하기 위한 기본적 선형대수</a></p>
+                            <p class="item-date"><time datetime="2020-04-03T06:40:52.000Z" itemprop="datePublished">2020-04-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/04/03/machine_learning_05/" class="title">로지스틱 회귀분석</a></p>
+                            <p class="item-date"><time datetime="2020-04-03T04:58:10.000Z" itemprop="datePublished">2020-04-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2020/03/20/Python_00/" class="title">Python - 00 (Python의 장점 및 자료형)</a></p>
+                            <p class="item-date"><time datetime="2020-03-20T12:02:48.000Z" itemprop="datePublished">2020-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/03/19/data_structure_01/" class="title">내가 정리하는 자료구조 00 (Node, List, Queue)</a></p>
+                            <p class="item-date"><time datetime="2020-03-19T09:46:30.000Z" itemprop="datePublished">2020-03-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/data-engineering/">data engineering</a></p>
+                            <p class="item-title"><a href="/2020/03/03/data_engineering_10/" class="title">data engineering (데이터 모델링 및 챗봇 만들기)</a></p>
+                            <p class="item-date"><time datetime="2020-03-03T14:29:20.000Z" itemprop="datePublished">2020-03-03</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
