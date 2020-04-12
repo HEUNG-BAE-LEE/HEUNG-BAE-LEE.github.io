@@ -21,7 +21,7 @@
 <meta property="og:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png">
-<meta property="og:updated_time" content="2020-04-08T08:40:28.395Z">
+<meta property="og:updated_time" content="2020-04-12T14:46:49.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA를 이해하기 위한 기본적 선형대수">
 <meta name="twitter:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
@@ -215,12 +215,12 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/curse_of_dimensionality_02.png" alt="차원의 저주 - 02"></p>
 <ul>
-<li><p>예를 들어, 아래와 같이 KNN 알고리즘(가장 가까이 있는 변수가 예측값으로 결과를 갖는 알고리즘)을 통한 비지도학습을 진행한다고 가정해보자. x1 변수의 공간만을 생각하여 1차원적으로 생각하면, 아래 그림에서 검정색 점과 가장 가까운 점은 노란색 테두리안에 있는 2개의 점들 중 하나일 것이다. 허나 x2 변수의 공간도 같이 고려하여 2차원적으로 살펴보면, 파란색 원 안에 놓여있는 1개의 점이 가장 가까운 점이 될 것이다. 여기서 주목해야 할 점은 <code>동일한 데이터를 통해서 2차원으로 살펴보면 최단거리의 길이가 늘어났다는 점</code>이다. <code>KNN 알고리즘의 결과로 1차원으로 살펴본 것 보다 2차원으로 살펴보는 것이 최단거리의 길이가 더 길기 때문에 값이 좀 더 이질적이라고 볼 수 있으며, 결과적으로 과연 2차원적으로 예측한 값을 KNN알고리즘의 결과값으로 사용해도 문제가 없을지에 의문점이 생기게 된다.</code> x2가 Y와 관련된 변수라면 크게 문제가 없겠지만, x2가 전혀 관련없는 변수라면 굉장히 모델이 낭비가되며, 좋지 않은 모델이 될 것이기 때문이다.</p>
-</li>
-<li><p>위에서 언급했던 것처럼 차원이 증가하게 되면 좋지 않은 측면이 있고, 이것을 차원의 저주라고 부르며 <code>차원을 될 수 있는 한 축소하는 것이 필요</code>하다.</p>
-</li>
+<li>예를 들어, 아래와 같이 KNN 알고리즘(가장 가까이 있는 변수가 예측값으로 결과를 갖는 알고리즘)을 통한 비지도학습을 진행한다고 가정해보자. x1 변수의 공간만을 생각하여 1차원적으로 생각하면, 아래 그림에서 검정색 점과 가장 가까운 점은 노란색 테두리안에 있는 2개의 점들 중 하나일 것이다. 허나 x2 변수의 공간도 같이 고려하여 2차원적으로 살펴보면, 파란색 원 안에 놓여있는 1개의 점이 가장 가까운 점이 될 것이다. 여기서 주목해야 할 점은 <code>동일한 데이터를 통해서 2차원으로 살펴보면 최단거리의 길이가 늘어났다는 점</code>이다. <code>KNN 알고리즘의 결과로 1차원으로 살펴본 것 보다 2차원으로 살펴보는 것이 최단거리의 길이가 더 길기 때문에 값이 좀 더 이질적이라고 볼 수 있으며, 결과적으로 과연 2차원적으로 예측한 값을 KNN알고리즘의 결과값으로 사용해도 문제가 없을지에 의문점이 생기게 된다.</code> x2가 Y와 관련된 변수라면 크게 문제가 없겠지만, x2가 전혀 관련없는 변수라면 굉장히 모델이 낭비가되며, 좋지 않은 모델이 될 것이기 때문이다.</li>
 </ul>
-<p>![차원축소의 필요성][/image/necessity_for_reduction_of_dimensionality.png]</p>
+<ul>
+<li>위에서 언급했던 것처럼 차원이 증가하게 되면 좋지 않은 측면이 있고, 이것을 차원의 저주라고 부르며 <code>차원을 될 수 있는 한 축소하는 것이 필요</code>하다.</li>
+</ul>
+<p><img src="/image/necessity_for_reduction_of_dimensionality.png" alt="차원축소의 필요성"></p>
 <ul>
 <li>기본적으로 차원을 축소하는 방법으로 아래와 같은 것들을 예로 들 수 있다. 먼저, 상관계수가 높은 변수들이라면 동일한 움직임의 방향을 갖기 때문에 그들 중 하나의 변수만을 선택해도 큰 문제가 없다고 보는 측면이다. 이 방법에서의 문제점은 예를 들어 두 변수의 상관계수가 0.8이라면, 나머지 0.2에 해당하는 정보는 버려지게 되는 점이다. 이런 부분을 보완한 것이 PCA이다. <code>PCA는 차원을 줄이면서도 정보의 손실을 최소화</code>하는 것이다.</li>
 </ul>
@@ -243,10 +243,10 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/covariance_matrix_concept_04.png" alt="공분산 행렬의 이해 - 04"></p>
 <h1 id="Principal-Components의-이해"><a href="#Principal-Components의-이해" class="headerlink" title="Principal Components의 이해"></a>Principal Components의 이해</h1><ul>
-<li><p>아래 그림을 살펴보면 x1과 x2는 음의 강한 상관관계를 갖는다는 것을 확인 할 수 있다. x1이 증가하면 x2가 감소하는 움직을 갖는다. 결론적으로는 정보가 중복되어있다. 이렇게 중복되어있는 정보를 요약해서 갖고있을수 있을 순 없을까에 대한 방법을 고안한 것이 바로 PCA이다. 아래 그림과 같이 두 변수간의 가장 큰 분산을 나타내는 벡터에 대해 각 데이터를 projection을 취한다면 해당 projection 된 데이터들의 벡터만을 가지고도 기존의 데이터에 대한 분산을 표현할 수 있게 된다.</p>
-</li>
-<li><p><code>차원을 줄이면서 정보의 손실을 최소화하는 방법은 자료의 변동을 가장 잘 설명하는 어떤 축을 찾는 것</code>이다.</p>
-</li>
+<li>아래 그림을 살펴보면 x1과 x2는 음의 강한 상관관계를 갖는다는 것을 확인 할 수 있다. x1이 증가하면 x2가 감소하는 움직을 갖는다. 결론적으로는 정보가 중복되어있다. 이렇게 중복되어있는 정보를 요약해서 갖고있을수 있을 순 없을까에 대한 방법을 고안한 것이 바로 PCA이다. 아래 그림과 같이 두 변수간의 가장 큰 분산을 나타내는 벡터에 대해 각 데이터를 projection을 취한다면 해당 projection 된 데이터들의 벡터만을 가지고도 기존의 데이터에 대한 분산을 표현할 수 있게 된다.</li>
+</ul>
+<ul>
+<li><code>차원을 줄이면서 정보의 손실을 최소화하는 방법은 자료의 변동을 가장 잘 설명하는 어떤 축을 찾는 것</code>이다.</li>
 </ul>
 <p><img src="/image/PCA_conception_01.png" alt="Principal Components의 개념 - 01"></p>
 <ul>
@@ -256,10 +256,10 @@ ga('send', 'pageview');
 <p><img src="/image/PCA_conception_02.png" alt="Principal Components의 개념 - 03"></p>
 <h1 id="PCA-수학적-개념이해-행렬연산-행렬식-특성방정식"><a href="#PCA-수학적-개념이해-행렬연산-행렬식-특성방정식" class="headerlink" title="PCA 수학적 개념이해 - 행렬연산, 행렬식, 특성방정식"></a>PCA 수학적 개념이해 - 행렬연산, 행렬식, 특성방정식</h1><p><img src="/image/find_determinant.png" alt="행렬식 구하는 방법"></p>
 <ul>
-<li><p><code>행렬식</code>(determinant)은 쉽게 말해 해당 <code>행렬이 갖는 Volume(2차원인 경우는 면적)</code>을 의미한다. 아래 그림과 같이 2차원 공간상에서 면적이 1을 갖는 좌표들(파란색)을 D라는 행렬로 명명했을 경우, A행렬로 선형변환시켜주면 아래 그림의 빨간색 직사각형으로 변환되며, 부피는 각 행렬식의 곱 형태로 계산 되어 5를 갖는다.</p>
-</li>
-<li><p><code>만약 행렬식이 0을 갖는다면</code> 행렬의 곱은 1직선을 이룰 것이고, 선분의 형태로 표현될 것이다.</p>
-</li>
+<li><code>행렬식</code>(determinant)은 쉽게 말해 해당 <code>행렬이 갖는 Volume(2차원인 경우는 면적)</code>을 의미한다. 아래 그림과 같이 2차원 공간상에서 면적이 1을 갖는 좌표들(파란색)을 D라는 행렬로 명명했을 경우, A행렬로 선형변환시켜주면 아래 그림의 빨간색 직사각형으로 변환되며, 부피는 각 행렬식의 곱 형태로 계산 되어 5를 갖는다.</li>
+</ul>
+<ul>
+<li><code>만약 행렬식이 0을 갖는다면</code> 행렬의 곱은 1직선을 이룰 것이고, 선분의 형태로 표현될 것이다.</li>
 </ul>
 <p><img src="/image/deteminant_of_algebra_aspection.png" alt="행렬식의 기하하적인 요소"></p>
 <p><img src="/image/determinant_applications_and_relations.png" alt="행렬식의 활용"></p>
@@ -272,19 +272,47 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/eigen_value_and_eigen_vector_02.png" alt="고유값과 고유벡터 - 02"></p>
 <ul>
-<li><p>아래 그림과 같은 식으로 고유값과 고유벡터를 구할 수 있다. 먼저 고유값을 구하는 방법은 $det(A - \lambda I)=0$을 만족하는 고유값을 찾으면 되는데, 이유는 우리가 구하고 싶은 고유값과 고유벡터는 0벡터를 제외한 다른 벡터를 구하고 싶기 때문에 행렬식이 0이아닌 다른 값을 갖는다면 역행렬이 존재하게 되어 0벡터가 해당 선형시스템의 유일한 해가 되지 않도록하려면 non-trivial solution(해가 무수히 많아야)을 갖어야 한다. 그러므로 해당 행렬식이 0의 값을 갖게되어 역행렬이 존재하지 않도록 해야하기 때문에 아래와 같은 수식을 통해 고유값을 구할 수 있다.</p>
-</li>
-<li><p>고유값은 크기를 기준으로 내림차순으로(큰 것부터 작은 것 순으로)적어주면, 그에따른 고유벡터도 동일한 인덱스를 매칭해준다. 여기서 주의할 점은 <code>고유벡터는 해당 고유벡터를 normalization을 통해 크기가 1인 벡터를 기준으로 스칼라배를 해도 동일한 고유벡터라고 여긴다는 점</code>이다.</p>
-</li>
+<li>아래 그림과 같은 식으로 고유값과 고유벡터를 구할 수 있다. 먼저 고유값을 구하는 방법은 $det(A - \lambda I)=0$을 만족하는 고유값을 찾으면 되는데, 이유는 우리가 구하고 싶은 고유값과 고유벡터는 0벡터를 제외한 다른 벡터를 구하고 싶기 때문에 행렬식이 0이아닌 다른 값을 갖는다면 역행렬이 존재하게 되어 0벡터가 해당 선형시스템의 유일한 해가 되지 않도록하려면 non-trivial solution(해가 무수히 많아야)을 갖어야 한다. 그러므로 해당 행렬식이 0의 값을 갖게되어 역행렬이 존재하지 않도록 해야하기 때문에 아래와 같은 수식을 통해 고유값을 구할 수 있다.</li>
+</ul>
+<ul>
+<li>고유값은 크기를 기준으로 내림차순으로(큰 것부터 작은 것 순으로)적어주면, 그에따른 고유벡터도 동일한 인덱스를 매칭해준다. 여기서 주의할 점은 <code>고유벡터는 해당 고유벡터를 normalization을 통해 크기가 1인 벡터를 기준으로 스칼라배를 해도 동일한 고유벡터라고 여긴다는 점</code>이다.</li>
 </ul>
 <p><img src="/image/eigen_value_and_eigen_vector_03.png" alt="고유값과 고유벡터 - 03"></p>
 <h1 id="PCA-수학적-개념이해-Singular-Value-Decomposition-SVD"><a href="#PCA-수학적-개념이해-Singular-Value-Decomposition-SVD" class="headerlink" title="PCA 수학적 개념이해 - Singular Value Decomposition(SVD)"></a>PCA 수학적 개념이해 - Singular Value Decomposition(SVD)</h1><ul>
-<li><p>PCA는 다르게 행렬식을 계산하기 때문에 정방행렬인 경우에만 계산이 가능하다는 단점이 있다. 이러한 점을 보완하기 위한 Decomposition 방법이 바로 SVD(Singular Value Decomposition)이다.</p>
-</li>
-<li><p>SVD는 임의의 행렬 X에 관해 3개의 행렬로 분해가 가능하며, 각각의 행렬의 크기는 아래와 같고, V와 U는 column들이 Orthogonal(직교)한 행렬(서로 직교하는 성분들끼리의 내적은 0)이므로 동일행렬의 내적은 Identity matrix를 갖는다. V와 D가 각각 임의의행렬 X에 공분산행렬에 해당하는 고유벡터 행렬과 고유값 행렬을 의미한다.</p>
-</li>
+<li>PCA는 다르게 행렬식을 계산하기 때문에 정방행렬인 경우에만 계산이 가능하다는 단점이 있다. 이러한 점을 보완하기 위한 Decomposition 방법이 바로 SVD(Singular Value Decomposition)이다.</li>
+</ul>
+<ul>
+<li>SVD는 임의의 행렬 X에 관해 3개의 행렬로 분해가 가능하며, 각각의 행렬의 크기는 아래와 같고, V와 U는 column들이 Orthogonal(직교)한 행렬(서로 직교하는 성분들끼리의 내적은 0)이므로 동일행렬의 내적은 Identity matrix를 갖는다. V와 D가 각각 임의의행렬 X에 공분산행렬에 해당하는 고유벡터 행렬과 고유값 행렬을 의미한다.</li>
 </ul>
 <p><img src="/image/Singular_value_decomposition_01.png" alt="SVD 개념"></p>
+<ul>
+<li>공분산 행렬인 $X^{T}X$를 SVD 한 후, 아래 그림과 같이 eigen vector들의 행렬로 곱해주면 eigen vector들의 행렬과 eigen value들의 내적 값을 구할 수 있다.</li>
+</ul>
+<p><img src="/image/Singular_value_decomposition_02.png" alt="SVD와 eigen vector, eigen value와의 연과성"></p>
+<h1 id="PCA-수행과정-및-수학적-개념-적용"><a href="#PCA-수행과정-및-수학적-개념-적용" class="headerlink" title="PCA 수행과정 및 수학적 개념 적용"></a>PCA 수행과정 및 수학적 개념 적용</h1><ul>
+<li>제일 먼저, 각 데이터에 대해 standardization을 통해 표준정규분포를 따르도록 scaling을 해준다. 이런 normalization은 각 feature에 대한 공간의 범위가 다르다면 비교하는데 어려움이 있기 때문이다. 또한, 이 과정에서 feature 벡터의 크기를 1로 갖게끔 Unit vector로 만들어 주는 것이 추후에 SVD를 계산하는 과정에서 Orthogonal한 eigen vector가 Orthonormal vector가 되어 계산함에 있어서 편리하게 된다.</li>
+</ul>
+<p><img src="/image/PCA_simulation_action_01.png" alt="PCA 수행과정 - 01"></p>
+<ul>
+<li>그 후 SVD는 우선 우리는 프로그램을 사용하여 바로 구할 수 있다는 가정을 해보자. 여기서 <code>eigen vector같은 경우에는 공분산 구조나 공분산 행렬이나 동일한 값을 갖지만, eigen value는 다음 그림에서와 같이 관측치의 개수에서 하나를 빼주어야 한다.</code></li>
+</ul>
+<p><img src="/image/PCA_simulation_action_02.png" alt="PCA 수행과정 - 02"></p>
+<ul>
+<li>PC Score는 위에서와 같이 큰 순서대로 정렬된 eigen value 행렬 D와 앞에 U행렬값의 내적이 곧 행렬 X와 V의 내적을 하여 상수인 $\lambda V$를 만드는 과정과 동일하다.</li>
+</ul>
+<p><img src="/image/PCA_simulation_action_03.png" alt="PCA 수행과정 - 03"></p>
+<ul>
+<li>아래 그림과 같이 PC Score를 구해 중요도를 따져 상위 q개만을 통해 회귀분석을 진행할 수 있다.</li>
+</ul>
+<p><img src="/image/PCA_simulation_action_04.png" alt="PCA 수행과정 - 04"></p>
+<h1 id="PCA의-심화적-이해"><a href="#PCA의-심화적-이해" class="headerlink" title="PCA의 심화적 이해"></a>PCA의 심화적 이해</h1><ul>
+<li><code>한 마디로 PCA는 데이터의 변동을 가장 잘 설명하는 한 축을 찾아서 그 축에 대해 각 관측치들을 projection한 성분을 의미한다. 그 다음에는 이러한 해당 변동축에 직각이 되는 축에 관측치들을 projection하는 과정을 반복하여 진행하게 되는데 직각이 되는 축을 찾는 이유는 이전의 축과 동일한 정보를 갖지않는 새로운 피처를 뽑기 위함이라고 필자는 생각</code>한다.</li>
+</ul>
+<p><img src="/image/what_is_inner_product_of_PC_SCORE.png" alt="PC Score의 본질적인 의미"></p>
+<ul>
+<li>PCA의 <code>단점</code> 중 하나로는 <code>해당 성분이 의미하는 바를 직관적으로 설명할 수 없다</code>는 점이다.</li>
+</ul>
+<p><img src="/image/bad_aspection_of_PCA.png" alt="PCA의 단점"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -373,7 +401,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-03",
         "dateCreated": "2020-04-03",
-        "dateModified": "2020-04-08",
+        "dateModified": "2020-04-12",
         "url": "https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/",
         "description": "차원의 저주
 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.
@@ -381,7 +409,7 @@ ga('send', 'pageview');
 
 
 다른 관점에서"
-        "wordCount": 996
+        "wordCount": 1258
     }
 </script>
 
