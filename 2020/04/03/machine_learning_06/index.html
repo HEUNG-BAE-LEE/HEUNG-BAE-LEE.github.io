@@ -21,7 +21,7 @@
 <meta property="og:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png">
-<meta property="og:updated_time" content="2020-04-12T14:46:49.571Z">
+<meta property="og:updated_time" content="2020-04-13T08:38:36.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA를 이해하기 위한 기본적 선형대수">
 <meta name="twitter:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
@@ -234,7 +234,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/covariance_matrix_concept_02.png" alt="공분산 행렬의 이해 - 02"></p>
 <ul>
-<li>공분산 행렬이 대칭행렬이지만, positive definite가 아닌 행렬인 경우를 다음 그림에서 보여주고 있다. 아래 수식이 성립한다면 행렬 A느 positive definite하다고 한다.</li>
+<li>공분산 행렬이 대칭행렬이지만, positive definite가 아닌 행렬인 경우를 다음 그림에서 보여주고 있다. 아래 수식이 성립한다면 행렬 A가 positive definite하다고 한다.</li>
 </ul>
 <script type="math/tex; mode=display">x^{T} A  x > 0</script><p><a href="https://datascienceschool.net/view-notebook/d6205659aff0413797c22552947aec83/" target="_blank" rel="noopener">참고 - 행렬의 성질</a></p>
 <p><img src="/image/covariance_matrix_concept_03.png" alt="공분산 행렬의 이해 - 03"></p>
@@ -310,9 +310,33 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/what_is_inner_product_of_PC_SCORE.png" alt="PC Score의 본질적인 의미"></p>
 <ul>
-<li>PCA의 <code>단점</code> 중 하나로는 <code>해당 성분이 의미하는 바를 직관적으로 설명할 수 없다</code>는 점이다.</li>
+<li>PCA의 <code>단점</code> 중 하나로는 <code>해당 성분이 의미하는 바를 직관적으로 설명할 수 없다</code>는 점이다. 또한 선형회귀에 사용되는 것과 같이 <code>해당 변수들이 비선형관계를 갖는다면 잡아낼 수 없다.</code></li>
 </ul>
 <p><img src="/image/bad_aspection_of_PCA.png" alt="PCA의 단점"></p>
+<ul>
+<li>위에서 언급한 첫번째 단점(직관적으로 PC성분을 통한 피처를 설명하기 어렵다.)을 조금이나마 보완할 수 있는 방법은 grid를 통해 해당하는 곳의 범위들의 데이터를 직접 뽑아 각 성분의 의미를 설명할 수 있다. 아래와 같이 이미지 데이터인 경우는 좀 더 구별하기 쉬울 것이다.</li>
+</ul>
+<p><img src="/image/Complement_the_shortcomings_of_PCA.png" alt="PCA의 단점을 보완하는 방법"></p>
+<h1 id="Kernel-PCA"><a href="#Kernel-PCA" class="headerlink" title="Kernel PCA"></a>Kernel PCA</h1><ul>
+<li>위에서 언급했던 두 번째 단점인 비선형관계를 갖는다면 잡아내기 힘들다는 점을 보완하기 위한 방법으로서, 다음 그림과 같은 상황에서 Kernel PCA를 사용할 것이다. 아래 관측치들의 집합인 행렬 X의 공분산 구조는 0에 가까운 값을 갖을 것이다. 즉, 서로 선형관계가 아닌 상황이다.</li>
+</ul>
+<p><img src="/image/when_we_use_kernel_PCA.png" alt="Kernel PCA를 하는 경우"></p>
+<ul>
+<li>기존의 PCA는 feature들 사이의 패턴이 존재하는 것으로 간주하여 비교(각 feature들간의 움직이는 방향을 나타내는 공분산 구조를 통해 값을 구했기 때문)를 했지만, 이번에는 관측치와 관측치 사이의 패턴을 수치화하여 PC를 구하는 방법이다. 아래 그림에서 K(Kernel matrix)의 예시를 보듯이 여러가지 방법이 존재한다.</li>
+</ul>
+<p><img src="/image/what_is_kernel_PCA.png" alt="Kernel PCA를 계산하는 방법"></p>
+<ul>
+<li>아래 그림과 같이 Kernel PCA를 계산할 수 있다.</li>
+</ul>
+<p><img src="/image/How_to_calculate_Kernel_matrix.png" alt="Kernel matrix를 계산하는 방법"></p>
+<ul>
+<li>아래 그림과 같이 원형의 띠로 구분지어져 있는 형상인데도 불구하구 Kernel PCA를 사용하면 잘 구분되는지에 대한 이유는 다음과 같다. 먼저 각 관측치에대해 pair-wise하게 Kernel matrix를 구해 비슷한 값들을 갖는 관측치들로 정렬하여 보면 비슷한 값을 갖는 관측치들 끼리 모여 block matrix를 형성하는 모습을 볼 수 있다.</li>
+</ul>
+<p><img src="/image/Kernel_matrix_shape_how.png" alt="Kernel matrix의 형태"></p>
+<ul>
+<li>Kernel matrix를 구한 값으로 eigen vector의 역할을 하는 행렬 U와 각 eigen value의 $d_{i}$의 곱인 PC Score를 통해 얻은 결과를 그래프로 그려보면 아래와 같은 결과를 얻을 수 있다. 아래의 경우에서는 첫번째 성분을 선택하여 사용하면 3가지 군집을 잘 판별할 수 있을 것이다.</li>
+</ul>
+<p><img src="/image/result_of_kernel_PCA.png" alt="Kernel matrix의 결과"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -401,7 +425,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-03",
         "dateCreated": "2020-04-03",
-        "dateModified": "2020-04-12",
+        "dateModified": "2020-04-13",
         "url": "https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/",
         "description": "차원의 저주
 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.
@@ -409,7 +433,7 @@ ga('send', 'pageview');
 
 
 다른 관점에서"
-        "wordCount": 1258
+        "wordCount": 1505
     }
 </script>
 
@@ -672,22 +696,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
