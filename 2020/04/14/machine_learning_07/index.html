@@ -21,7 +21,7 @@
 <meta property="og:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/classification_problem.png">
-<meta property="og:updated_time" content="2020-04-14T18:08:40.640Z">
+<meta property="og:updated_time" content="2020-04-14T18:30:57.337Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="나이브 베이즈 분류모형">
 <meta name="twitter:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
@@ -258,7 +258,7 @@ ga('send', 'pageview');
 <h1 id="나이브-베이즈-분류-모형"><a href="#나이브-베이즈-분류-모형" class="headerlink" title="나이브 베이즈 분류 모형"></a>나이브 베이즈 분류 모형</h1><ul>
 <li>아래 그림과 같은 질문에 대한 확률을 계산하려면, 아래 결합확률을 계산해야 할 것이다. 독립변수가 2개 즉, Feature의 차원이 2개인 지금은 크게 어렵진 않겠지만, 현실에서는 Feature의 개수가 훨씬 더 많을 것이다. 차원이 커진다면 이에따라 해당 조건부 함수의 가능도함수를 추정하는데 어려움을 겪을 것이다.</li>
 </ul>
-<script type="math/tex; mode=display">P( X = weather state, Humidity | Y = playing Tennis) = \frac{P( X_{1} = weather state, Humidity \cap Y = playing Tennis)}{P(Y = playing Tennis)}</script><p><img src="/image/naive_bayesian_model_assumption.png" alt="나이브 베이지안 모형의 가정"></p>
+<script type="math/tex; mode=display">\begin{align} P( X = weather state, Humidity | Y = playing Tennis) \\ = \frac{P( X_{1} = weather state, Humidity \cap Y = playing Tennis)}{P(Y = playing Tennis)} \end{align}</script><p><img src="/image/naive_bayesian_model_assumption.png" alt="나이브 베이지안 모형의 가정"></p>
 <ul>
 <li>위의 수식에서 분자부분의 확률인 결합확률(Joint probability)을 구하는 것은 쉬운 문제가 아니다. 결합되어있는 상황을 나누어서 확률을 계산할 순 없을까라는 가정에서 나이브 베이지안 모형은 출발한다. 그렇다면, 어떻게 나눌수 있을까? 통계를 조금이라도 아시는 분들은 독립이라는 개념을 알고계실 것이다. 예를 들어 A: 코로나가 집단 발병한다, B: 2주간 재택근무를 시행한다. 이 두가지 사건은 서로 발현될 확률에 영향을 미치기 때문에 두 사건은 종속(dependent) 관계라고 할 수 있다. 허나, A: 비가온다, B: 대출심사에서 승인을 받는다 라는 두 사건은 서로 둘 중 어떤 사건에도 발현될 확률에 영향을 주지 않는다. 이러한, 경우에 우리는 두 사건이 확률적으로 독립이라고 정의한다. 두 사건 A,B가 독립일 필요충분조건은 아래와 같다.</li>
 </ul>
@@ -271,10 +271,10 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">A \text{⫫} B \;\vert\; \emptyset</script><ul>
 <li>A, B가 C에 대해 조건부 독립이면 다음도 만족한다.</li>
 </ul>
-<script type="math/tex; mode=display">P(A \;\vert\; B, C) = P(A \vert C)</script><script type="math/tex; mode=display">P(B \;\vert\; A, C) = P(B \vert C)</script><script type="math/tex; mode=display">P(A|B,C) &= \frac{P(A,B,C)}{P(B,C)} \\ &= \frac{P(A,B|C)P(C)}{P(B|C)P(C)} \\ &= \frac{P(A|C)P(B|C)}{P(B|C)} \\ &= P(A|C)</script><ul>
+<script type="math/tex; mode=display">P(A \;\vert\; B, C) = P(A \vert C)</script><script type="math/tex; mode=display">P(B \;\vert\; A, C) = P(B \vert C)</script><script type="math/tex; mode=display">\begin{align} P(A|B,C) &= \frac{P(A,B,C)}{P(B,C)} \\ &= \frac{P(A,B|C)P(C)}{P(B|C)P(C)} \\ &= \frac{P(A|C)P(B|C)}{P(B|C)} \\ &= P(A|C) \end{align}</script><ul>
 <li><code>주의할 점은 조건부 독립과 무조건부 독립은 관계가 없다는 점</code>이다. 즉, 두 확률변수가 독립이라고 항상 조건부 독립이 되는 것도 아니고 조건부 독립이라고 꼭 독립이 되는 것도 아니다.</li>
 </ul>
-<script type="math/tex; mode=display">P(A,B) = P(A)P(B) \;\; \bcancel{\implies} \;\; P(A,B|C) = P(A|C)P(B|C)</script><script type="math/tex; mode=display">P(A,B|C) = P(A|C)P(B|C) \;\; \bcancel{\implies} \;\; P(A,B) = P(A)P(B)</script><h4 id="베이즈-정리-Bayes’-rule"><a href="#베이즈-정리-Bayes’-rule" class="headerlink" title="베이즈 정리(Bayes’ rule)"></a>베이즈 정리(Bayes’ rule)</h4><ul>
+<script type="math/tex; mode=display">P(A,B) = P(A)P(B) \;\; \nRightarrow \;\; P(A,B|C) = P(A|C)P(B|C)</script><script type="math/tex; mode=display">P(A,B|C) = P(A|C)P(B|C) \;\; \nRightarrow \;\; P(A,B) = P(A)P(B)</script><h4 id="베이즈-정리-Bayes’-rule"><a href="#베이즈-정리-Bayes’-rule" class="headerlink" title="베이즈 정리(Bayes’ rule)"></a>베이즈 정리(Bayes’ rule)</h4><ul>
 <li>베이즈 정리는 사건 B가 발생함으로써 사건 A의 확률이 어떻게 변화하는지를 표현한 정리이다. 따라서 <code>베이즈 정리는 새로운 정보가 기존의 추론에 어떻게 영향을 미치는지를 나타낸다.</code></li>
 </ul>
 <script type="math/tex; mode=display">P(A|B) = \frac{P(B|A) P(A)}{P(B)}</script><ul>
@@ -289,7 +289,7 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">\begin{align} P(y = k \mid x) &= \dfrac{ P(x_1, \ldots, x_D \mid y = k) P(y = k) }{P(x)} \\ &= \dfrac{ \left( \prod_{d=1}^D P(x_{d} \mid y = k) \right) P(y = k) }{P(x)} \end{align}</script><ul>
 <li>제일 처음 예시로 들었던 날씨의 상태와 습도를 독립변수로 하고, 종속변수를 테니스를 치는지에 대한 여부에 대한 문제를 푼다고 가정해보자. 먼저 테니스를 치는 경우에 대한 확률을 계산할 경우 테니스를 치는 사건에 대한 확률을 높게 해주는 두가지 경우의 수를 아래와 같이 생각해 볼 수 있다. 아래 두 그림을 수식으로 정리해보면 다음과 같다는 사실을 쉽게 생각해 볼 수 있다. <code>수식의 마지막에서 분자부분에서 likelihood와 Prior 확률값을 살펴보면 그림에서 언급한 두 가지 경우의 사건들의 확률 값의 곱으로 되어있음</code>을 볼 수 있다. 즉, <code>사전확률에 새롭게 추가되는 likelihood가 추론의 어떤 영향을 미치는지를 나타내는 베이즈 정리의 의미를 생각해 볼 수 있다</code>.</li>
 </ul>
-<script type="math/tex; mode=display">P(weather state, Humidity | playing Tennis) &= \frac{P(weather state)}{P(playing Tennis)} \frac{P(Humidity)}{P(playing Tennis)} \\ &= \frac{P(playing Tennis|weather state)P(weather state)}{P(playing Tennis)} \frac{P(playing Tennis|Humidity)P(Humidity)}{P(playing Tennis)}</script><p><img src="/image/naive_bayesian_model_example_01.png" alt="나이브 베이지안 모델의 모수 추정 - 01"></p>
+<script type="math/tex; mode=display">\begin{align} P(weather state, Humidity | playing Tennis) &= \frac{P(weather state)}{P(playing Tennis)} \frac{P(Humidity)}{P(playing Tennis)} \\ &= \frac{P(playing Tennis|weather state)P(weather state)}{P(playing Tennis)} \frac{P(playing Tennis|Humidity)P(Humidity)}{P(playing Tennis)} \end{align}</script><p><img src="/image/naive_bayesian_model_example_01.png" alt="나이브 베이지안 모델의 모수 추정 - 01"></p>
 <p><img src="/image/naive_bayesian_model_example_02.png" alt="나이브 베이지안 모델의 모수 추정 - 02"></p>
 <ul>
 <li>아래 그림과 같이 데이터가 주어졌을 때의 베이즈 정리를 이용해 계산하면 다음과 같다.</li>
@@ -298,6 +298,7 @@ ga('send', 'pageview');
 <ul>
 <li>예시로 계산해 본 것과 같이 아래의 그림처럼 독립변수들이 조건부 독립이라는 조건을 통해 곱으로 표현 될 수 있다. 예측값은 마지막 수식에서 보는 것과 같이 해당 가능도함수의 확률값을 최대로 해주는 class를 선택하여 예측값으로 출력해준다.</li>
 </ul>
+<p><a href="https://datascienceschool.net/view-notebook/864a2cc43df44531be32e3fa48769501/" target="_blank" rel="noopener">참조 : MLE 개념</a></p>
 <p><img src="/image/Naive_bayesian_model_estimaion_01.png" alt="나이브 베이지안 모형 모수 추정식"></p>
 <ul>
 <li>이제 하나씩 앞에서 언급했던 순서대로 계산하여 최종적으로 출력을 내는 단계까지 그림을 통해 살펴볼 것이다.</li>
@@ -417,7 +418,7 @@ ga('send', 'pageview');
 
 나이브 베이지안
 "
-        "wordCount": 755
+        "wordCount": 768
     }
 </script>
 
