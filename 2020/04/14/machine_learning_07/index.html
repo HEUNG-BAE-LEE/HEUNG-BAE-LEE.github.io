@@ -21,7 +21,7 @@
 <meta property="og:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/classification_problem.png">
-<meta property="og:updated_time" content="2020-04-14T17:01:48.978Z">
+<meta property="og:updated_time" content="2020-04-14T18:08:40.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="나이브 베이즈 분류모형">
 <meta name="twitter:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
@@ -291,6 +291,22 @@ ga('send', 'pageview');
 </ul>
 <script type="math/tex; mode=display">P(weather state, Humidity | playing Tennis) &= \frac{P(weather state)}{P(playing Tennis)} \frac{P(Humidity)}{P(playing Tennis)} \\ &= \frac{P(playing Tennis|weather state)P(weather state)}{P(playing Tennis)} \frac{P(playing Tennis|Humidity)P(Humidity)}{P(playing Tennis)}</script><p><img src="/image/naive_bayesian_model_example_01.png" alt="나이브 베이지안 모델의 모수 추정 - 01"></p>
 <p><img src="/image/naive_bayesian_model_example_02.png" alt="나이브 베이지안 모델의 모수 추정 - 02"></p>
+<ul>
+<li>아래 그림과 같이 데이터가 주어졌을 때의 베이즈 정리를 이용해 계산하면 다음과 같다.</li>
+</ul>
+<p><img src="/image/Naive_bayesian_probability.png" alt="베이즈 정리 확률 예시"></p>
+<ul>
+<li>예시로 계산해 본 것과 같이 아래의 그림처럼 독립변수들이 조건부 독립이라는 조건을 통해 곱으로 표현 될 수 있다. 예측값은 마지막 수식에서 보는 것과 같이 해당 가능도함수의 확률값을 최대로 해주는 class를 선택하여 예측값으로 출력해준다.</li>
+</ul>
+<p><img src="/image/Naive_bayesian_model_estimaion_01.png" alt="나이브 베이지안 모형 모수 추정식"></p>
+<ul>
+<li>이제 하나씩 앞에서 언급했던 순서대로 계산하여 최종적으로 출력을 내는 단계까지 그림을 통해 살펴볼 것이다.</li>
+</ul>
+<p><img src="/image/Naive_bayesian_model_estimaion_02.png" alt="나이브 베이지안 모형 계산 - 01"></p>
+<p><img src="/image/Naive_bayesian_model_estimaion_03.png" alt="나이브 베이지안 모형 계산 - 02"></p>
+<p><img src="/image/Naive_bayesian_model_estimaion_04.png" alt="나이브 베이지안 모형 계산 - 03"></p>
+<p><img src="/image/Naive_bayesian_model_estimaion_05.png" alt="나이브 베이지안 모형 계산 - 04"></p>
+<p><img src="/image/Naive_bayesian_model_estimaion_06.png" alt="나이브 베이지안 모형 계산 - 05"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -401,7 +417,7 @@ ga('send', 'pageview');
 
 나이브 베이지안
 "
-        "wordCount": 654
+        "wordCount": 755
     }
 </script>
 
