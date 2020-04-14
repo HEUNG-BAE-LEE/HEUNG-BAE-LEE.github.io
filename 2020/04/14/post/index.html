@@ -6,25 +6,30 @@
     
 
     
-    <title>Category: Bayes | DataLatte&#39;s IT Blog</title>
+    <title>나이브 베이즈 분류모형 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
+        <meta name="keywords" content>
     
-    <meta name="description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DataLatte&#39;s IT Blog">
-<meta property="og:url" content="https://heung-bae-lee.github.io/categories/Bayes/index.html">
+    
+    <meta name="description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
+<meta property="og:type" content="article">
+<meta property="og:title" content="나이브 베이즈 분류모형">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/04/14/post/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta property="og:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/classification_problem.png">
+<meta property="og:updated_time" content="2020-04-14T14:10:13.920Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DataLatte&#39;s IT Blog">
-<meta name="twitter:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta name="twitter:title" content="나이브 베이즈 분류모형">
+<meta name="twitter:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/classification_problem.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
-    <link rel="canonical" href="https://heung-bae-lee.github.io/categories/bayes/">
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/04/14/post/">
 
     
 
@@ -155,7 +160,7 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-folder-open"></i>Category: <em class="page-title-link">Bayes</em>
+    <a class="page-title-link" href="/categories/machine-learning/">machine learning</a>
     </h1>
 </div>
 
@@ -172,53 +177,228 @@ ga('send', 'pageview');
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-			    
-
-    
-    
+			    <article id="post-post" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Bayes/">Bayes</a>
-            </div>
-            <div class="date"><time datetime="2019-03-08T14:52:20.000Z" itemprop="datePublished">2019-03-08</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/08/Bayes/">프로그래머를 위한 베이지안 with 파이썬(1)</a>
+        나이브 베이즈 분류모형
         </h1>
     
 
-        <p class="article-excerpt">
-            베이지안 심리 상태
-베이지안 추론은 불확실성을 유지한다는 점에서 기존의 전통적인 통계적 추론과 다르다. 위의 말을 읽었을때 개인적으로 통게학을 전공한 나로써는 이해가 잘 가지 않았다. 왜냐하면 통계라는 학문 자체가 불확실성을 기반으로 하는 것이 아닌가라는 의문이 들었기 때문이다. random한 것에서 확률적으로 높은 것을 찾아내는 것인데 말이다.
-
-우선 확
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/04/14/post/" class="article-date">
+            <time datetime="2020-04-14T05:59:44.000Z" itemprop="datePublished">2020-04-14</time>
+        </a>
     </div>
-</article>
-    
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="분류모형"><a href="#분류모형" class="headerlink" title="분류모형"></a>분류모형</h1><p><img src="/image/classification_problem.png" alt="분류 문제란?"></p>
+<ul>
+<li>현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.</li>
+</ul>
+<p><img src="/image/what_kinds_of_clssification_model.png" alt="분류모형의 종류"></p>
+<ul>
+<li>흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>모형</th>
+<th>방법론</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>나이브 베이지안</td>
+<td>확률적 생성모형</td>
+</tr>
+<tr>
+<td>LDA/QDA</td>
+<td>확률적 생성모형</td>
+</tr>
+<tr>
+<td>로지스틱회귀</td>
+<td>확률적 판별모형</td>
+</tr>
+<tr>
+<td>의사결정나무</td>
+<td>확률적 판별모형</td>
+</tr>
+<tr>
+<td>퍼셉트론</td>
+<td>판별함수 모형</td>
+</tr>
+<tr>
+<td>서포트벡터머신</td>
+<td>판별함수 모형</td>
+</tr>
+<tr>
+<td>인공신경망</td>
+<td>판별함수 모형</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="/image/classification_graph.png" alt="분류모형의 종류 도식화"></p>
+<h1 id="나이브-베이즈-분류-모형"><a href="#나이브-베이즈-분류-모형" class="headerlink" title="나이브 베이즈 분류 모형"></a>나이브 베이즈 분류 모형</h1><ul>
+<li>아래 그림과 같은 질문에 대한 확률을 계산하려면, 아래 결합확률을 계산해야 할 것이다. 독립변수가 2개 즉, Feature의 차원이 2개인 지금은 크게 어렵진 않겠지만, 현실에서는 Feature의 개수가 훨씬 더 많을 것이다. 차원이 커진다면 이에따라 해당 조건부 함수의 가능도함수를 추정하는데 어려움을 겪을 것이다.</li>
+</ul>
+<script type="math/tex; mode=display">P( X = weather state, Humidity | Y = playing Tennis) = \frac{P( X_{1} = weather state, Humidity \cap Y = playing Tennis)}{P(Y = playing Tennis)}</script><p><img src="/image/naive_bayesian_model_assumption.png" alt="나이브 베이지안 모형의 가정"></p>
+<ul>
+<li>위의 수식에서 분자부분의 확률인 결합확률(Joint probability)을 구하는 것은 쉬운 문제가 아니다. 결합되어있는 상황을 나누어서 확률을 계산할 순 없을까라는 가정에서 나이브 베이지안 모형은 출발한다. 그렇다면, 어떻게 나눌수 있을까? 통계를 조금이라도 아시는 분들은 독립이라는 개념을 알고계실 것이다. 예를 들어 A: 코로나가 집단 발병한다, B: 2주간 재택근무를 시행한다. 이 두가지 사건은 서로 발현될 확률에 영향을 미치기 때문에 두 사건은 종속(dependent) 관계라고 할 수 있다. 허나, A: 비가온다, B: 대출심사에서 승인을 받는다 라는 두 사건은 서로 둘 중 어떤 사건에도 발현될 확률에 영향을 주지 않는다. 이러한, 경우에 우리는 두 사건이 확률적으로 독립이라고 정의한다. 두 사건 A,B가 독립일 필요충분조건은 아래와 같다.</li>
+</ul>
+<script type="math/tex; mode=display">P(A \cap B) = P(A)P(B)</script><ul>
+<li>이렇게 두 사건이 독립이라면 좀 더 추정하기 쉬울 것이다. 허나, 여기선 </li>
+</ul>
+<h4 id="베이즈-정리-Bayes’-rule"><a href="#베이즈-정리-Bayes’-rule" class="headerlink" title="베이즈 정리(Bayes’ rule)"></a>베이즈 정리(Bayes’ rule)</h4><ul>
+<li>베이즈 정리는 사건 B가 발생함으로써 사건 A의 확률이 어떻게 변화하는지를 표현한 정리이다. 따라서 <code>베이즈 정리는 새로운 정보가 기존의 추론에 어떻게 영향을 미치는지를 나타낸다.</code></li>
+</ul>
+<script type="math/tex; mode=display">P(A|B) = \frac{P(B|A) P(A)}{P(B)}</script><ul>
+<li>$P(A|B)$ : 사후확률(Posterior). 사건 B가 발생한 후 갱신된 사건 A의 확률</li>
+<li>$P(A)$ : 사전확률(Prior). 사건 B가 발생하기 전에 가지고 있던 사건 A의 확률</li>
+<li>$P(B|A)$ : 가능도(likelihood). 사건 A가 발생한 경우 사건 B의 확률</li>
+<li>$P(B)$ : 정규화 상수(normalizing constant) 또는 증거(evidence). 확률의 크기 조정역할을 함.</li>
+</ul>
+
         </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "나이브 베이즈 분류모형",
+        "image": "https://heung-bae-lee.github.io/image/classification_problem.png",
+        "keywords": "",
+        "genre": "machine learning",
+        "datePublished": "2020-04-14",
+        "dateCreated": "2020-04-14",
+        "dateModified": "2020-04-14",
+        "url": "https://heung-bae-lee.github.io/2020/04/14/post/",
+        "description": "분류모형
+
+현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.
+
+
+
+흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.
+
+
+
+
+
+모형
+방법론
+
+
+
+
+나이브 베이지안
+"
+        "wordCount": 329
+    }
+</script>
+
+</article>
+
+    <section id="comments">
     
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
 
-
-    </div></section>
-
+    
+    </section>
 
 
 
@@ -248,6 +428,19 @@ ga('send', 'pageview');
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/04/03/machine_learning_06/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">PCA를 이해하기 위한 기본적 선형대수</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -413,11 +606,13 @@ ga('send', 'pageview');
     var disqus_shortname = 'hexo-theme-hueman';
     
     
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/04/14/post/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
