@@ -21,7 +21,7 @@
 <meta property="og:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/classification_problem.png">
-<meta property="og:updated_time" content="2020-04-14T18:30:57.337Z">
+<meta property="og:updated_time" content="2020-04-14T18:46:02.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="나이브 베이즈 분류모형">
 <meta name="twitter:description" content="분류모형  현실적인 문제로 바꾸어 말하면 어떤 표본에 대한 데이터가 주어졌을 때 그 표본이 어떤 카테고리 혹은 클래스에 속하는지를 알아내는 문제이기도 하다.    흔히들 많이 사용하는 모형들의 분류모형 종류를 아래의 표로 기재해 놓았다. 이전에 기재했던 로지스틱 회귀 분석도 실질적으론 분류문제에 많이 사용된다.      모형 방법론     나이브 베이지안">
@@ -289,7 +289,7 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">\begin{align} P(y = k \mid x) &= \dfrac{ P(x_1, \ldots, x_D \mid y = k) P(y = k) }{P(x)} \\ &= \dfrac{ \left( \prod_{d=1}^D P(x_{d} \mid y = k) \right) P(y = k) }{P(x)} \end{align}</script><ul>
 <li>제일 처음 예시로 들었던 날씨의 상태와 습도를 독립변수로 하고, 종속변수를 테니스를 치는지에 대한 여부에 대한 문제를 푼다고 가정해보자. 먼저 테니스를 치는 경우에 대한 확률을 계산할 경우 테니스를 치는 사건에 대한 확률을 높게 해주는 두가지 경우의 수를 아래와 같이 생각해 볼 수 있다. 아래 두 그림을 수식으로 정리해보면 다음과 같다는 사실을 쉽게 생각해 볼 수 있다. <code>수식의 마지막에서 분자부분에서 likelihood와 Prior 확률값을 살펴보면 그림에서 언급한 두 가지 경우의 사건들의 확률 값의 곱으로 되어있음</code>을 볼 수 있다. 즉, <code>사전확률에 새롭게 추가되는 likelihood가 추론의 어떤 영향을 미치는지를 나타내는 베이즈 정리의 의미를 생각해 볼 수 있다</code>.</li>
 </ul>
-<script type="math/tex; mode=display">\begin{align} P(weather state, Humidity | playing Tennis) &= \frac{P(weather state)}{P(playing Tennis)} \frac{P(Humidity)}{P(playing Tennis)} \\ &= \frac{P(playing Tennis|weather state)P(weather state)}{P(playing Tennis)} \frac{P(playing Tennis|Humidity)P(Humidity)}{P(playing Tennis)} \end{align}</script><p><img src="/image/naive_bayesian_model_example_01.png" alt="나이브 베이지안 모델의 모수 추정 - 01"></p>
+<script type="math/tex; mode=display">\begin{align} P(weather state, Humidity | playing Tennis) \\ &= \frac{P(weather state)}{P(playing Tennis)} \frac{P(Humidity)}{P(playing Tennis)} \\ &= \frac{P(playing Tennis|weather state)P(weather state)}{P(playing Tennis)} \frac{P(playing Tennis|Humidity)P(Humidity)}{P(playing Tennis)} \end{align}</script><p><img src="/image/naive_bayesian_model_example_01.png" alt="나이브 베이지안 모델의 모수 추정 - 01"></p>
 <p><img src="/image/naive_bayesian_model_example_02.png" alt="나이브 베이지안 모델의 모수 추정 - 02"></p>
 <ul>
 <li>아래 그림과 같이 데이터가 주어졌을 때의 베이즈 정리를 이용해 계산하면 다음과 같다.</li>
@@ -418,7 +418,7 @@ ga('send', 'pageview');
 
 나이브 베이지안
 "
-        "wordCount": 768
+        "wordCount": 769
     }
 </script>
 
