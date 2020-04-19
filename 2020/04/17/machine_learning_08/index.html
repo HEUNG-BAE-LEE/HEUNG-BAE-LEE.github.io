@@ -21,7 +21,7 @@
 <meta property="og:description" content="K-Nearest Neighbors(KNN) k의 개수만큼 주변에 있는 sample들의 정보를 이용해서 새로운 관측치의 종속변수를 예측하는 방법이다. 아래 그림에서 기존의 파란색 네모와 빨간색 세모라는 2가지 클래스를 갖는 데이터 집합이 있다고 할 때, 여기서 새로운 관측치인 녹색에 대해 어떻게 예측할지를 생각해 보자.  k=3인 경우(실선): 빨간색 세모">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/KNN_algorithm_concept.png">
-<meta property="og:updated_time" content="2020-04-17T21:12:25.696Z">
+<meta property="og:updated_time" content="2020-04-19T12:40:50.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="K-Nearest Neighbors(KNN)">
 <meta name="twitter:description" content="K-Nearest Neighbors(KNN) k의 개수만큼 주변에 있는 sample들의 정보를 이용해서 새로운 관측치의 종속변수를 예측하는 방법이다. 아래 그림에서 기존의 파란색 네모와 빨간색 세모라는 2가지 클래스를 갖는 데이터 집합이 있다고 할 때, 여기서 새로운 관측치인 녹색에 대해 어떻게 예측할지를 생각해 보자.  k=3인 경우(실선): 빨간색 세모">
@@ -270,6 +270,45 @@ ga('send', 'pageview');
 <li>지난 번에 언급했던 차원의 저주와 KNN 알고리즘도 밀접한 관련이 있다. 차원의 저주는 차원이 늘어남에 따라 우리가 설명하고 싶은 공간 대비 설명할 수 있는 공간이 줄어드는 문제인데, 아래 그림에서와 같이 가로축 변수만을 사용한다면 충분히 두 클래스를 나눌 수 있는 기준을 설정할 수 있지만, 오히려 세로축에 의해서는 클래스를 구분하는데 아무런 영향을 주지 않는데 세로축 변수도 고려하게 되면서 다른 예측을 하게 된다.</li>
 </ul>
 <p><img src="/image/demasion_of_curse_on_knn.png" alt="차원의 저주"></p>
+<h2 id="k-Nearest-Neighborhood-Algorithm-실습"><a href="#k-Nearest-Neighborhood-Algorithm-실습" class="headerlink" title="k-Nearest Neighborhood Algorithm 실습"></a>k-Nearest Neighborhood Algorithm 실습</h2><h3 id="1-데이터-모듈-불러오기-및-kNN-피팅-방법"><a href="#1-데이터-모듈-불러오기-및-kNN-피팅-방법" class="headerlink" title="1. 데이터, 모듈 불러오기 및 kNN 피팅 방법"></a>1. 데이터, 모듈 불러오기 및 kNN 피팅 방법</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import modin.pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from matplotlib.colors import ListedColormap</span><br><span class="line">from sklearn import neighbors, datasets</span><br><span class="line">from sklearn.metrics import confusion_matrix</span><br></pre></td></tr></table></figure>
+<ul>
+<li>iris 데이터를 사용할 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iris = datasets.load_iris()</span><br><span class="line"></span><br><span class="line">X = iris.data[:, :2]</span><br><span class="line">y = iris.target</span><br></pre></td></tr></table></figure>
+<ul>
+<li>모델 구축<ul>
+<li>neighbors를 5로 설정</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clf = neighbors.KNeighborsClassifier(n_neighbors=5)</span><br><span class="line">clf.fit(X,y)</span><br><span class="line">y_pred=clf.predict(X)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">confusion_matrix(y,y_pred)</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[49,  1,  0],</span><br><span class="line">       [ 0, 38, 12],</span><br><span class="line">       [ 0, 12, 38]])</span><br></pre></td></tr></table></figure>
+<h3 id="2-Cross-validation을-활용한-최적의-k찾기"><a href="#2-Cross-validation을-활용한-최적의-k찾기" class="headerlink" title="2.Cross-validation을 활용한 최적의 k찾기"></a>2.Cross-validation을 활용한 최적의 k찾기</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line"></span><br><span class="line">k_range = np.arange(1,100)</span><br><span class="line">k_scores = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> k_range:</span><br><span class="line">    knn=neighbors.KNeighborsClassifier(k)</span><br><span class="line">    scores= cross_val_score(knn, X, y, cv=10, scoring=<span class="string">"accuracy"</span>)</span><br><span class="line">    k_scores.append(scores.mean())</span><br><span class="line"></span><br><span class="line">plt.plot(k_range, k_scores)</span><br><span class="line">plt.xlabel(<span class="string">'Value of K for KNN'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Cross-validated accuracy'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이렇게 적절한 모수를 찾는 방법은 위에서와 같이 직접 grid search를 하는 방법을 주로 사용한다.</li>
+</ul>
+<p><img src="/image/decision_parameter_through_cross_validation.png" alt="모수 K의 결정"></p>
+<h3 id="2-Weight를-준-kNN"><a href="#2-Weight를-준-kNN" class="headerlink" title="2.Weight를 준 kNN"></a>2.Weight를 준 kNN</h3><ul>
+<li>거리를 가중치로 사용한 경우가 좀 더 decision boundary가 매끄럽게 연결되어 있다. 좀 더 보편적인 모델인 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">n_neighbors = 40</span><br><span class="line"></span><br><span class="line">h = .02  <span class="comment"># step size in the mesh</span></span><br><span class="line"></span><br><span class="line">cmap_light = ListedColormap([<span class="string">'#FFAAAA'</span>, <span class="string">'#AAFFAA'</span>, <span class="string">'#AAAAFF'</span>])</span><br><span class="line">cmap_bold = ListedColormap([<span class="string">'#FF0000'</span>, <span class="string">'#00FF00'</span>, <span class="string">'#0000FF'</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> weights <span class="keyword">in</span> [<span class="string">'uniform'</span>, <span class="string">'distance'</span>]:</span><br><span class="line">    clf = neighbors.KNeighborsClassifier(n_neighbors, weights=weights)</span><br><span class="line">    clf.fit(X, y)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Plot the decision boundary. For that, we will assign a color to each</span></span><br><span class="line">    <span class="comment"># point in the mesh [x_min, x_max]x[y_min, y_max].</span></span><br><span class="line">    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1</span><br><span class="line">    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1</span><br><span class="line">    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),</span><br><span class="line">                         np.arange(y_min, y_max, h))</span><br><span class="line">    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Put the result into a color plot</span></span><br><span class="line">    Z = Z.reshape(xx.shape)</span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.pcolormesh(xx, yy, Z, cmap=cmap_light)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Plot also the training points</span></span><br><span class="line">    plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold,</span><br><span class="line">                edgecolor=<span class="string">'k'</span>, s=20)</span><br><span class="line">    plt.xlim(xx.min(), xx.max())</span><br><span class="line">    plt.ylim(yy.min(), yy.max())</span><br><span class="line">    plt.title(<span class="string">"3-Class classification (k = %i, weights = '%s')"</span></span><br><span class="line">              % (n_neighbors, weights))</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/mesh_color_groud_plot_with_KNN.png" alt="거리를 가중치로 사용한 경우와 비교"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(0)</span><br><span class="line">X = np.sort(5 * np.random.rand(40, 1), axis=0)</span><br><span class="line">T = np.linspace(0, 5, 500)[:, np.newaxis]</span><br><span class="line">y = np.sin(X).ravel()</span><br><span class="line">y[::5] += 1 * (0.5 - np.random.rand(8))</span><br><span class="line"></span><br><span class="line">knn = neighbors.KNeighborsRegressor(n_neighbors)</span><br><span class="line">y_ = knn.fit(X, y).predict(T)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이웃을 하나만 사용할 때는 훈련 세트의 각 데이터 포인트가 예측에 주는 영향이 커서 예측값이 훈련 데이터 포인트를 모두 지나간다. 이는 매우 불안정한 예측을 만들어 낸다. 이웃을 많이 사용하면 훈련 데이터에는 잘 안 맞을 수 있지만 더 안정된 예측을 얻게 된다. 또한 Uniform하게 모두 동일한 가중치를 사용해서 계산하는 것보다 때론 거리를 통해 가중치를 주는 편이 아래 그림에서와 같이 좀 더 예측하는 데 효과가 있을수도 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">n_neighbors = 5</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, weights <span class="keyword">in</span> enumerate([<span class="string">'uniform'</span>, <span class="string">'distance'</span>]):</span><br><span class="line">    knn = neighbors.KNeighborsRegressor(n_neighbors, weights=weights)</span><br><span class="line">    y_ = knn.fit(X, y).predict(T)</span><br><span class="line"></span><br><span class="line">    plt.subplot(2, 1, i + 1)</span><br><span class="line">    plt.scatter(X, y, c=<span class="string">'k'</span>, label=<span class="string">'data'</span>)</span><br><span class="line">    plt.plot(T, y_, c=<span class="string">'g'</span>, label=<span class="string">'prediction'</span>)</span><br><span class="line">    plt.axis(<span class="string">'tight'</span>)</span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.title(<span class="string">"KNeighborsRegressor (k = %i, weights = '%s')"</span> % (n_neighbors,</span><br><span class="line">                                                                weights))</span><br><span class="line"></span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/regression_of_KNN.png" alt="KNN알고리즘을 통한 회귀"></p>
+<h3 id="장단점과-매개변수"><a href="#장단점과-매개변수" class="headerlink" title="장단점과 매개변수"></a>장단점과 매개변수</h3><ul>
+<li>일반적으로 KNeighbors 분류기에 중요한 매개변수는 두 가지이다. 데이터 포인트 사이의 거리를 재는 방법과 이웃의 수이다. 실제로 <code>이웃의 수는 3개나 5개 정도로 적을 때 잘 작동</code>하지만, 이 매개변수는 잘 조정해야 합니다.</li>
+</ul>
+<ul>
+<li>k-NN의 장점은 이해하기 매우 쉬운 모델이라는 점이다. 그리고 많이 조정하지 않아도 자주 좋은 성능을 발휘한다. 더 복잡한 알고리즘을 적용해보기 전에 시도해볼 수 있는 좋은 시작점이다. 보통 최근접 이웃 모델은 매우 빠르게 만들 수 있지만, 훈련 세트가 매우 크면 (특성의 수나 샘플의 수가 클 경우) 예측이 느려진다. k-NN 알고리즘을 사용할 땐 <code>데이터를 전처리하는 과정이 중요</code>하다. 그리고 <code>(수백 개 이상의) 많은 특성을 가진 데이터셋에는 잘 동작하지 않으며, 특성 값 대부분이 0인 (즉 희소한) 데이터셋과는 특히 잘 작동하지 않는다.</code></li>
+</ul>
+<ul>
+<li>k-최근접 이웃 알고리즘이 <code>이해하긴 쉽지만, 예측이 느리고 많은 특성을 처리하는 능력이 부족해 현업에서는 잘 쓰지 않는다.</code></li>
+</ul>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -358,13 +397,13 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-17",
         "dateCreated": "2020-04-17",
-        "dateModified": "2020-04-18",
+        "dateModified": "2020-04-19",
         "url": "https://heung-bae-lee.github.io/2020/04/17/machine_learning_08/",
         "description": "K-Nearest Neighbors(KNN)
 k의 개수만큼 주변에 있는 sample들의 정보를 이용해서 새로운 관측치의 종속변수를 예측하는 방법이다. 아래 그림에서 기존의 파란색 네모와 빨간색 세모라는 2가지 클래스를 갖는 데이터 집합이 있다고 할 때, 여기서 새로운 관측치인 녹색에 대해 어떻게 예측할지를 생각해 보자.
 
 k=3인 경우(실선): 빨간색 세모"
-        "wordCount": 665
+        "wordCount": 1665
     }
 </script>
 
@@ -627,22 +666,5 @@ k=3인 경우(실선): 빨간색 세모"
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
