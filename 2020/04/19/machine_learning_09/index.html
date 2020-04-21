@@ -21,7 +21,7 @@
 <meta property="og:description" content="LDA(선형판별분석법), QDA(이차판별분석법) 선형판별 분석법(Linear discriminant analysis, LDA)과 이차판별 분석법(quadratic discriminant analysis, QDA)는 대표적인 확률론적 생성모형이다. 가능도 y의 클래스값에 따른 x의 분포에 대한 정보를 먼저 알아낸 후, 베이즈 정리를 사용하여 주어진 x에 대한">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Linear_discriminant_analysis_method_how_to_cal.png">
-<meta property="og:updated_time" content="2020-04-21T08:07:18.018Z">
+<meta property="og:updated_time" content="2020-04-21T10:54:12.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LDA, QDA">
 <meta name="twitter:description" content="LDA(선형판별분석법), QDA(이차판별분석법) 선형판별 분석법(Linear discriminant analysis, LDA)과 이차판별 분석법(quadratic discriminant analysis, QDA)는 대표적인 확률론적 생성모형이다. 가능도 y의 클래스값에 따른 x의 분포에 대한 정보를 먼저 알아낸 후, 베이즈 정리를 사용하여 주어진 x에 대한">
@@ -338,7 +338,77 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/eigen_vector_eigen_value_related_with_LDA.png" alt="LDA의 decision boundary를 찾기 위한 projection - 03"></p>
 <p><img src="/image/eigen_vector_eigen_value_related_with_LDA_01.png" alt="LDA의 decision boundary에서 eigen vector의 역할"></p>
+<ul>
+<li>이전에 decision boundary를 찾는 공식에서 살펴보면, 찾아낸 축이 기울기 역할을 하고 클래스 집단의 평균을 지나는 초평면이 decision boundary라는 사실을 확인할 수 있다.</li>
+</ul>
 <p><img src="/image/eigen_vector_eigen_value_related_with_LDA_02.png" alt="LDA의 수학적 개념 총 정리"></p>
+<h2 id="QDA-Quadratic-Discriminant-Analysis"><a href="#QDA-Quadratic-Discriminant-Analysis" class="headerlink" title="QDA(Quadratic Discriminant Analysis)"></a>QDA(Quadratic Discriminant Analysis)</h2><ul>
+<li>나이브 베이즈 모형은 조건부독립이라는 가정이 있었기 때문에 사실상 각 설명변수들간의 공분산 구조를 반영하진 않는다. 그에 반해, LDA는 설명변수간 비슷한 수준의 공분산 구조를 갖는다는 가정하에 모형을 실행하는데, <code>공분산 구조의 차이가 심하게</code> 난다면, LDA 가정을 실행할 수 없다. 이런 경우에 사용하는 것이 바로 QDA이다. <code>LDA는 가장 작은 그룹의 샘플 수가 독립(설명)변수의 개수보다 많아야 하는데 나이브 베이즈 모형은 조건부 독립을 가정하기에 훨씬 더 적은 샘플이더라도 추정이 가능</code>하다.</li>
+</ul>
+<p><img src="/image/limitation_of_LDA.png" alt="LDA 가정 총 정리"></p>
+<ul>
+<li>이차판별분석법(QDA)에서는 <code>독립변수 x가 실수이고 확률분포가 다변량 정규분포라고 가정한다. 단 x분포의 위치와 형태는 클래스에 따라 달라질 수 있다.</code>즉, <code>클래스별로 다른 공분산 구조를 갖는다는 의미</code>이다. 공분산 구조가 동일하지 않아 이차형식(Quadratic form)이 남게 된다.</li>
+</ul>
+<p><img src="/image/QDA_conception.png" alt="QDA의 개념"></p>
+<script type="math/tex; mode=display">p(x \mid y = k) = \dfrac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp \left( -\dfrac{1}{2} (x-\mu_k)^T \Sigma_k^{-1} (x-\mu_k) \right)</script><ul>
+<li>이 분포들을 알고 있으면 독립변수 $x$에 대한 $y$ 클래스의 조건부확률분포는 다음과 같이 베이즈 정리와 전체 확률의 법칙으로 구할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">P(y=k \mid x) = \dfrac{p(x \mid y = k)P(y=k)}{p(x)} = \dfrac{p(x \mid y = k)P(y=k)}{\sum_l p(x \mid y = l)P(y=l) }</script><ul>
+<li>LDA는 Decision boundary가 선형으로 되기 때문에 아래 그림에서 보는 것과 같은 데이터 분포이면 구분하는데 어렵다. 허나 변수의 제곱을한 추가적인 변수들을 통해 이를 보완할 수 있다. 그렇지 않고 현재 존재하는 변수들만 사용해 문제를 풀기 위해선 QDA를 사용하는 것이 좋다. 중간에 있는 그림은 클래스 별 같은 공분산 구조를 가진다고 가정을 하고 변수를 추가해 주어 계산되는 반면에 오른쪽 그림은 처음 데이터 변수들만 사용하게 된다. 허나, QDA는 클래스별 서로 다른 공분산 구조를 가진다는 가정이 있기 때문에 모수를 추정하는 횟수가 그 만큼 더 많이 늘어나는 문제도 있다.</li>
+</ul>
+<p><img src="/image/what_is_difference_with_LDA_and_QDA_plot.png" alt="LDA와 QDA의 비교 - 01"></p>
+<p><img src="/image/what_is_diiference_with_LDA_and_QDA_on_feature.png" alt="LDA와 QDA의 비교 - 02"></p>
+<ul>
+<li>예를 들어 $y$가 1,2,3 이라는 3개의 클래스를 가지고 각 클래스에서의 $x$의 확률분포가 다음과 같은 기대값 및 공분산 행렬을 가진다고 가정하자.</li>
+</ul>
+<script type="math/tex; mode=display">\mu_1 = \begin{bmatrix}  0 \\ 0 \end{bmatrix}, \;\; \mu_2 = \begin{bmatrix}  1 \\ 1 \end{bmatrix}, \;\; \mu_3 = \begin{bmatrix}-1  \\ 1 \end{bmatrix}</script><script type="math/tex; mode=display">\Sigma_1 = \begin{bmatrix} 0.7 &   0 \\ 0   & 0.7 \end{bmatrix}, \;\; \Sigma_2 = \begin{bmatrix} 0.8 & 0.2 \\ 0.2 & 0.8 \end{bmatrix}, \;\; \Sigma_3 = \begin{bmatrix} 0.8 & 0.2 \\ 0.2 & 0.8 \end{bmatrix}</script><ul>
+<li>$y$의 사전 확률은 다음과 같이 동일하다.</li>
+</ul>
+<script type="math/tex; mode=display">P(Y=1) = P(Y=2) = P(Y=3) = \dfrac{1}{3}</script><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">N = 100</span><br><span class="line">rv1 = sp.stats.multivariate_normal([ 0, 0], [[0.7, 0.0], [0.0, 0.7]])</span><br><span class="line">rv2 = sp.stats.multivariate_normal([ 1, 1], [[0.8, 0.2], [0.2, 0.8]])</span><br><span class="line">rv3 = sp.stats.multivariate_normal([-1, 1], [[0.8, 0.2], [0.2, 0.8]])</span><br><span class="line">np.random.seed(0)</span><br><span class="line">X1 = rv1.rvs(N)</span><br><span class="line">X2 = rv2.rvs(N)</span><br><span class="line">X3 = rv3.rvs(N)</span><br><span class="line">y1 = np.zeros(N)</span><br><span class="line">y2 = np.ones(N)</span><br><span class="line">y3 = 2 * np.ones(N)</span><br><span class="line">X = np.vstack([X1, X2, X3])</span><br><span class="line">y = np.hstack([y1, y2, y3])</span><br><span class="line"></span><br><span class="line">plt.scatter(X1[:, 0], X1[:, 1], alpha=0.8, s=50, marker=<span class="string">"o"</span>, color=<span class="string">'r'</span>, label=<span class="string">"class 1"</span>)</span><br><span class="line">plt.scatter(X2[:, 0], X2[:, 1], alpha=0.8, s=50, marker=<span class="string">"s"</span>, color=<span class="string">'g'</span>, label=<span class="string">"class 2"</span>)</span><br><span class="line">plt.scatter(X3[:, 0], X3[:, 1], alpha=0.8, s=50, marker=<span class="string">"x"</span>, color=<span class="string">'b'</span>, label=<span class="string">"class 3"</span>)</span><br><span class="line">plt.xlim(-5, 5)</span><br><span class="line">plt.ylim(-4, 5)</span><br><span class="line">plt.xlabel(<span class="string">"<span class="variable">$x_1</span>$"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"<span class="variable">$x_2</span>$"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/each_parameter_having_normal_dist.png" alt="클래스별 서로 다른 모수를 갖는 정규분포"></p>
+<ul>
+<li>Scikit-Learn은 이차판별 분석법을 위한 <code>QuadraticDiscriminantAnalysis</code>클래스를 제공한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis</span><br><span class="line"></span><br><span class="line">qda = QuadraticDiscriminantAnalysis(store_covariance=True).fit(X, y)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>학습용 데이터에서 가능도를 추정한 후에는 다음과 같은 속성을 가지게 된다.<ul>
+<li><code>priors_</code> : 각 클래스 $k$의 사전확률</li>
+<li><code>means_</code> : 각 클래스 $k$에서 $x$의 기대값 벡터 $\mu_{k}$의 추정치 벡터</li>
+<li><code>covariance_</code> : 각 클래스 $k$에서 $x$의 공분산 행렬 $\sum_{k}$의 추정치 행렬.(생성자 인수 store_covariance=True인 경우에만 제공)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qda.priors_</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array([0.33333333, 0.33333333, 0.33333333])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qda.means_</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[-8.01254084e-04,  1.19457204e-01],</span><br><span class="line">       [ 1.16303727e+00,  1.03930605e+00],</span><br><span class="line">       [-8.64060404e-01,  1.02295794e+00]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qda.covariance_[0]</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[ 0.73846319, -0.01762041],</span><br><span class="line">       [-0.01762041,  0.72961278]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qda.covariance_[1]</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[0.66534246, 0.21132313],</span><br><span class="line">       [0.21132313, 0.78806006]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qda.covariance_[2]</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[0.9351386 , 0.22880955],</span><br><span class="line">       [0.22880955, 0.79142383]])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이 확률분포를 사용하여 분류를 한 결과는 다음과 같다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">x1min, x1max = -5, 5</span><br><span class="line">x2min, x2max = -4, 5</span><br><span class="line">XX1, XX2 = np.meshgrid(np.arange(x1min, x1max, (x1max-x1min)/1000),</span><br><span class="line">                       np.arange(x2min, x2max, (x2max-x2min)/1000))</span><br><span class="line">YY = np.reshape(qda.predict(np.array([XX1.ravel(), XX2.ravel()]).T), XX1.shape)</span><br><span class="line">cmap = mpl.colors.ListedColormap(sns.color_palette([<span class="string">"r"</span>, <span class="string">"g"</span>, <span class="string">"b"</span>]).as_hex())</span><br><span class="line">plt.contourf(XX1, XX2, YY, cmap=cmap, alpha=0.5)</span><br><span class="line">plt.scatter(X1[:, 0], X1[:, 1], alpha=0.8, s=50, marker=<span class="string">"o"</span>, color=<span class="string">'r'</span>, label=<span class="string">"클래스 1"</span>)</span><br><span class="line">plt.scatter(X2[:, 0], X2[:, 1], alpha=0.8, s=50, marker=<span class="string">"s"</span>, color=<span class="string">'g'</span>, label=<span class="string">"클래스 2"</span>)</span><br><span class="line">plt.scatter(X3[:, 0], X3[:, 1], alpha=0.8, s=50, marker=<span class="string">"x"</span>, color=<span class="string">'b'</span>, label=<span class="string">"클래스 3"</span>)</span><br><span class="line">plt.xlim(x1min, x1max)</span><br><span class="line">plt.ylim(x2min, x2max)</span><br><span class="line">plt.xlabel(<span class="string">"<span class="variable">$x_1</span>$"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"<span class="variable">$x_2</span>$"</span>)</span><br><span class="line">plt.title(<span class="string">"이차판별분석법 결과"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/QDA_anlaysis_result.png" alt="QDA의 결과"></p>
+<ul>
+<li>QDA를 사용하여 iris classification문제를 풀고 성능을 confusion_matrix와 classification_report를 출력하라. 그리고 각 클래스에 대한 ROC 커브를 그려라.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">from sklearn.metrics import confusion_matrix, classification_report</span><br></pre></td></tr></table></figure>
+<ul>
+<li>각 클래스를 동일하게(stratify) 학습시키기 위해서 train과 test를 나눌때 설정해주었다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iris = load_iris()</span><br><span class="line">X = iris.data</span><br><span class="line">y = iris.target</span><br><span class="line">train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.3, random_state=1234, stratify=y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QDA = QuadraticDiscriminantAnalysis()</span><br><span class="line">QDA.fit(train_X, train_y)</span><br><span class="line">pred_QDA = QDA.predict(test_X)</span><br><span class="line">confusion_matrix(pred_QDA, test_y)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[15,  0,  0],</span><br><span class="line">       [ 0, 14,  0],</span><br><span class="line">       [ 0,  1, 15]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(pred_QDA, test_y))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">           0       1.00      1.00      1.00        15</span><br><span class="line">           1       0.93      1.00      0.97        14</span><br><span class="line">           2       1.00      0.94      0.97        16</span><br><span class="line"></span><br><span class="line">    accuracy                           0.98        45</span><br><span class="line">   macro avg       0.98      0.98      0.98        45</span><br><span class="line">weighted avg       0.98      0.98      0.98        45</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roc_auc_score(label_binarize(test_y, classes=[0,1,2]), QDA.decision_function(test_X))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roc_auc_score(label_binarize(test_y, classes=[0,1,2]), QDA.predict_proba(test_X))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">label_test_y = label_binarize(test_y, [0, 1, 2])</span><br><span class="line"></span><br><span class="line">fpr = [None] * 3</span><br><span class="line">tpr = [None] * 3</span><br><span class="line">thr = [None] * 3</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(3):</span><br><span class="line">    fpr[i], tpr[i], thr[i] = roc_curve(label_test_y[:, i], QDA.predict_proba(test_X)[:, i])</span><br><span class="line">    plt.plot(fpr[i], tpr[i])</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'위양성률(Fall-Out)'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'재현률(Recall)'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/roc_curve_with_QDA_iris_data.png" alt="test data에 대한 ROC curve"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -431,7 +501,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/04/19/machine_learning_09/",
         "description": "LDA(선형판별분석법), QDA(이차판별분석법)
 선형판별 분석법(Linear discriminant analysis, LDA)과 이차판별 분석법(quadratic discriminant analysis, QDA)는 대표적인 확률론적 생성모형이다. 가능도 y의 클래스값에 따른 x의 분포에 대한 정보를 먼저 알아낸 후, 베이즈 정리를 사용하여 주어진 x에 대한"
-        "wordCount": 1399
+        "wordCount": 2754
     }
 </script>
 
@@ -694,22 +764,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
