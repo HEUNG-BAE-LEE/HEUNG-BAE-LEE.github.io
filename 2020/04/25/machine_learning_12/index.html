@@ -21,7 +21,7 @@
 <meta property="og:description" content="커널 서포트 벡터 머신 - SVM의 심화적 이해 12345678910111213np.random.seed(0)X_xor = np.random.randn(200, 2)y_xor = np.logical_xor(X_xor[:, 0] &amp;gt; 0, X_xor[:, 1] &amp;gt; 0)y_xor = np.where(y_xor, 1, 0)plt.scatter(X_xor">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/svm_deep_mind.png">
-<meta property="og:updated_time" content="2020-04-25T14:48:08.905Z">
+<meta property="og:updated_time" content="2020-04-25T17:24:47.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Support Vector Machine(SVM) - 02">
 <meta name="twitter:description" content="커널 서포트 벡터 머신 - SVM의 심화적 이해 12345678910111213np.random.seed(0)X_xor = np.random.randn(200, 2)y_xor = np.logical_xor(X_xor[:, 0] &amp;gt; 0, X_xor[:, 1] &amp;gt; 0)y_xor = np.where(y_xor, 1, 0)plt.scatter(X_xor">
@@ -237,7 +237,8 @@ ga('send', 'pageview');
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.pipeline import Pipeline</span><br><span class="line"></span><br><span class="line">basismodel = Pipeline([(<span class="string">"basis"</span>, FunctionTransformer(basis)),</span><br><span class="line">                       (<span class="string">"svc"</span>, SVC(kernel=<span class="string">"linear"</span>))]).fit(X_xor, y_xor)</span><br><span class="line">plot_xor(X_xor, y_xor, basismodel, <span class="string">"변환함수 SVC 모형을 사용한 XOR 분류 결과"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/image/SVC_model_using_transformation_function_xor_problem_result.png" alt="변환함수 SVC 모형을 사용한 XOR 분류 결과"></p>
-<h3 id="커널-트릭"><a href="#커널-트릭" class="headerlink" title="커널 트릭"></a>커널 트릭</h3><ul>
+<h3 id="커널-트릭"><a href="#커널-트릭" class="headerlink" title="커널 트릭"></a>커널 트릭</h3><p><img src="/image/svm_deep_mind_01.png" alt="커널 도입"></p>
+<ul>
 <li>서포트 벡터 머신의 경우 목적 함수(비용 함수)와 예측 모형은 다음과 같이 dual form으로 표현할 수 있다.</li>
 </ul>
 <script type="math/tex; mode=display">L =  \sum_{n=1}^N a_n - \dfrac{1}{2}\sum_{n=1}^N\sum_{m=1}^N a_n a_m y_n y_m x_n^T x_m</script><script type="math/tex; mode=display">y = w^T x - w_0 = \sum_{n=1}^N a_n y_n x_n^T x - w_0</script><ul>
@@ -320,7 +321,8 @@ ga('send', 'pageview');
 </ol>
 </li>
 </ul>
-<script type="math/tex; mode=display">k(x_1, x_2) = k_1(x_1, x_1)k_2(x_2, x_2)</script><h3 id="많이-사용되는-커널"><a href="#많이-사용되는-커널" class="headerlink" title="많이 사용되는 커널"></a>많이 사용되는 커널</h3><ul>
+<script type="math/tex; mode=display">k(x_1, x_2) = k_1(x_1, x_1)k_2(x_2, x_2)</script><h3 id="많이-사용되는-커널"><a href="#많이-사용되는-커널" class="headerlink" title="많이 사용되는 커널"></a>많이 사용되는 커널</h3><p><img src="/image/svm_deep_mind_02.png" alt="커널의 종류"></p>
+<ul>
 <li>다음과 같은 커널들이 많이 사용되는 커널들이다. 이 커널들은 대부분 변환함수로 변환하였을 때 무한대의 차원을 가지는 변환함수가 된다. 따라서 대부분의 비선형성을 처리할 수 있다. 비교를 위해 선형 서포트 벡터 머신의 경우도 추가하였다.</li>
 </ul>
 <blockquote>
@@ -392,6 +394,41 @@ ga('send', 'pageview');
 <p><img src="/image/iris_problem_result_of_using_linear_SVC.png" alt="선형 SVC를 사용한 분류 결과"></p>
 <p><img src="/image/iris_problem_result_of_using_polynomial_kernel.png" alt="다항커널 SVC를 사용한 분류 결과"></p>
 <p><img src="/image/iris_problem_result_of_using_RBF_kernel.png" alt="RBF커널 SVC를 사용한 분류 결과"></p>
+<p><img src="/image/svm_deep_mind_03.png" alt="커널 사용시 유의할 점"></p>
+<p><img src="/image/svm_deep_mind_04.png" alt="SVM과 LDA 비교"></p>
+<h3 id="One-Class-Support-Vector-Machine"><a href="#One-Class-Support-Vector-Machine" class="headerlink" title="One Class Support Vector Machine"></a>One Class Support Vector Machine</h3><ul>
+<li>종속변수가 없다는 의미이다. 고로 다 같은 범주이므로 classifying 정보가 없다는 것과 동일한 의미를 갖는다. <code>One Class SVM은 우리가 가진 자료들을 요약하는데 사용</code>한다. 마치 Unsupervised learning의 clustering 처럼 활용하는 방법이다. 기본적으로 원을 활용한 모델을 사용한다. 간단히 말해서 원안에는 자료가 있고, 원 바깥은 자료가 없다는 식으로 활용한다는 의미이다.  </li>
+</ul>
+<p><img src="/image/one_class_svm_concept.png" alt="one class svm 개념 - 01"></p>
+<ul>
+<li>SVM에서 서포트 벡터를 통해 $\beta$를 구해 hyperplane을 구했듯이 해당 원에 가장 가까운 $x_{k}$ 서포트 벡터를 통해 $R^{2}$ (반지를)을 계산한다.</li>
+</ul>
+<p><img src="/image/one_class_svm_concept_01.png" alt="one class svm 개념 - 02"></p>
+<ul>
+<li>아래의 그림처럼 바나나모양으로 데이터가 있는 경우에 임의의 반지름을 갖는 원안에 데이터를 모두 넣고 싶은데, 최소한의 반지름 값을 갖는 원을 찾는 문제가 된다.</li>
+</ul>
+<p><img src="/image/one_class_svm_concept_02.png" alt="one class svm 개념 - 03"></p>
+<ul>
+<li>내적을 kernel로 바꾼 후 polynomial kernel을 사용한 경우 차원이 높아 질수록 자유도도 높아짐(원보다는 데이터 하나하나에 영향을 더 많이 받음)을 확인할 수 있다.</li>
+</ul>
+<p><img src="/image/one_class_svm_concept_03.png" alt="one class svm 개념 - 04"></p>
+<ul>
+<li>또한, RBF 커널에서도 마찬가지로 C값이 높아질수록 허용하는 error가 낮아져 support vector안에 데이터들이 존재하게되며, 감마를 낮출수록($\sigma$를 높일수록) 두 벡터 $x_{i}$와 $x_{j}$간의 차이의 정도에 덜 민감해 지기 때문에 모양이 단순해 지게 된다.</li>
+</ul>
+<p><img src="/image/one_class_svm_concept_04.png" alt="one class svm 개념 - 05"></p>
+<h3 id="SVR"><a href="#SVR" class="headerlink" title="SVR"></a>SVR</h3><ul>
+<li>종속변수가 범주형이 아닌 연속형인 경우에는 SVR을 사용해야 한다. 아래 수식과 같이 margin과 hyperplane을 정의하는 것은 동일하다. 이번에는 <code>margin 밖에 존재하는 데이터들과 decision boundary와의 차이(error)를 최소화 하도록하는 방식</code>으로 동작한다. 그러므로 margin 안에 많은 데이터를 포함하고 있을 수록 error가 최소화 될 것이다. 결과적으론 아래와 같은 목적함수를 최소화하는데 마지막 수식과 같이 직관적으로 margin과의 차이만을 error로 보는 함수를 사용할 수 있다.</li>
+</ul>
+<p><img src="/image/svr_conception.png" alt="SVR의 정의"></p>
+<ul>
+<li>허나, 이전 그림에서의 error를 정의하는데 수학적인 계산에 용이성을 더하기 위해 아래와 같은 수식으로 error를 계산한다. 앞에서와 같이 미분불가능한 점이 없고 계산하기 편하기 때문에 아래와 같은 수식으로 사용한다.</li>
+</ul>
+<p><img src="/image/svr_conception_01.png" alt="SVR의 정의"></p>
+<p><img src="/image/svr_conception_02.png" alt="SVR의 정의"></p>
+<ul>
+<li>SVM과 마찬가지로 SVR도 커널을 사용하여 다음과 같은 곡선의 형태로 fitting할 수 있다. 기본적으로 linear model을 사용했을 때는 전반적인 패턴을 잡아주고 다른 커널들에 대해서는 각 커널의 특성에 맞게 적합시켜 준다.</li>
+</ul>
+<p><img src="/image/svr_conception_03.png" alt="SVR의 정의"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -480,11 +517,11 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-25",
         "dateCreated": "2020-04-25",
-        "dateModified": "2020-04-25",
+        "dateModified": "2020-04-26",
         "url": "https://heung-bae-lee.github.io/2020/04/25/machine_learning_12/",
         "description": "커널 서포트 벡터 머신 - SVM의 심화적 이해
 12345678910111213np.random.seed(0)X_xor = np.random.randn(200, 2)y_xor = np.logical_xor(X_xor[:, 0] &gt; 0, X_xor[:, 1] &gt; 0)y_xor = np.where(y_xor, 1, 0)plt.scatter(X_xor"
-        "wordCount": 2417
+        "wordCount": 2741
     }
 </script>
 
