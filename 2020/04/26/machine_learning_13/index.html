@@ -21,7 +21,7 @@
 <meta property="og:description" content="Decision tree 배경 의사결정나무의 장점은 해석력이 좋다. 우리가 모델을 만들때 성능이 좋은 것도 중요하지만, 어떻게 사람들한테 메세지를 줄 수 있는가처럼 어떻게 활용할 수 있는가가 더 중요한 경우도 있다. 예측력이 조금 떨어지더라도 이야기로 풀어서 어떠한 근거로 인해 Y는 이렇게 된다는 식으로 풀어서 설명할 수 있다는 의미이다.   결정트리는 매">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/decision_tree_concept.png">
-<meta property="og:updated_time" content="2020-04-27T12:38:28.005Z">
+<meta property="og:updated_time" content="2020-04-30T12:57:20.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="의사결정나무">
 <meta name="twitter:description" content="Decision tree 배경 의사결정나무의 장점은 해석력이 좋다. 우리가 모델을 만들때 성능이 좋은 것도 중요하지만, 어떻게 사람들한테 메세지를 줄 수 있는가처럼 어떻게 활용할 수 있는가가 더 중요한 경우도 있다. 예측력이 조금 떨어지더라도 이야기로 풀어서 어떠한 근거로 인해 Y는 이렇게 된다는 식으로 풀어서 설명할 수 있다는 의미이다.   결정트리는 매">
@@ -473,11 +473,150 @@ ga('send', 'pageview');
 <p><img src="/image/Decision_tree_using_information_gain.png" alt="Inforamtion gain을 이용한 Decision Tree 분류"></p>
 <p><img src="/image/how_to_split_node_next_step_using_information_gain.png" alt="Decision Tree의 분할과정"></p>
 <p><img src="/image/decision_tree_process_cal.png" alt="Decision Tree의 분할"></p>
+<h3 id="Information-Gain-예시"><a href="#Information-Gain-예시" class="headerlink" title="Information Gain 예시"></a>Information Gain 예시</h3><p><img src="/image/conditional_entropy_calculate_example.png" alt="정보획득량 예시"></p>
+<ul>
+<li>예를 들어 A,B 두 가지의 다른 분류 규칙을 적용했더니 위에서 처럼 서로 다르게 데이터가 나뉘어 졌다고 가정하자.</li>
+</ul>
+<ul>
+<li>A방법과 B방법 모두 노드 분리전에는 Y=0인 데이터의 수와 Y=1인 데이터의 수가 모두 40개였다.</li>
+</ul>
+<ul>
+<li>A방법으로 노드를 분리하면 다음과 같은 두 개의 자식 노드가 생긴다.<ul>
+<li>자식 노드 A1은 Y=0인 데이터가 30개, Y=1인 데이터가 10개</li>
+<li>자식 노드 A2은 Y=0인 데이터가 10개, Y=1인 데이터가 30개</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>B방법으로 노드를 분리하면 다음과 같은 두 개의 자식 노드가 생긴다.<ul>
+<li>자식 노드 B1은 Y=0인 데이터가 20개, Y=1인 데이터가 40개</li>
+<li>자식 노드 B2은 Y=0인 데이터가 20개, Y=1인 데이터가 30개</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>우선 부모 노드의 엔트로피를 계산하면 다음과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">H[Y] = -\dfrac{1}{2}\log_2\left(\dfrac{1}{2}\right) -\dfrac{1}{2}\log_2\left(\dfrac{1}{2}\right) = \dfrac{1}{2} + \dfrac{1}{2}  = 1</script><ul>
+<li>A 방법에 대해 IG를 계산하면 다음과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">H[Y|X=X_1] = -\dfrac{3}{4}\log_2\left(\dfrac{3}{4}\right) -\dfrac{1}{4}\log_2\left(\dfrac{1}{4}\right) = 0.81</script><script type="math/tex; mode=display">H[Y|X=X_2] = -\dfrac{1}{4}\log_2\left(\dfrac{1}{4}\right)  -\dfrac{3}{4}\log_2\left(\dfrac{3}{4}\right) = 0.81</script><script type="math/tex; mode=display">H[Y|X] = \dfrac{1}{2} H[Y|X=X_1] + \dfrac{1}{2} H[Y|X=X_2] = 0.81</script><script type="math/tex; mode=display">IG = H[Y] - H[Y|X] = 0.19</script><ul>
+<li>B 방법에 대해 IG를 계산하면 다음과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">H[Y|X=X_1] = -\dfrac{1}{3}\log_2\left(\dfrac{1}{3}\right) - \dfrac{2}{3}\log_2\left(\dfrac{2}{3}\right) = 0.92</script><script type="math/tex; mode=display">H[Y|X=X_2] = 0</script><script type="math/tex; mode=display">H[Y|X] = \dfrac{3}{4} H[Y|X=X_1] + \dfrac{1}{4} H[Y|X=X_2] = 0.69</script><script type="math/tex; mode=display">IG = H[D] - H[Y|X] = 0.31</script><ul>
+<li><code>따라서 B 방법이 더 나은 방법임을 알 수 있다.</code></li>
+</ul>
+<ul>
+<li>위와 같이 model을 fitting하였으면, 이제 어떻게 해당 영역에 예측할 데이터가 포함된다면 어떻게 클래스를 정하는지에 대해서 알아볼 것이다. 간단히 말하자면 해당 영역에 포함된 클래스의 개수가 많은 것으로 예측한다.</li>
+</ul>
+<p><img src="/image/how_to_precidct_data_class_01.png" alt="Decision tree의 predict - 01"></p>
+<p><img src="/image/how_to_precidct_data_class_02.png" alt="Decision tree의 predict - 01"></p>
+<p><img src="/image/how_to_precidct_data_class_03.png" alt="Decision tree의 predict - 01"></p>
 <h3 id="Decision-Tree의-특징"><a href="#Decision-Tree의-특징" class="headerlink" title="Decision Tree의 특징"></a>Decision Tree의 특징</h3><ul>
 <li>결정 트리의 가장 큰 장점은 정보의 균일도라는 률을 기반으로 하고 있어서 <code>알고리즘이 쉽고 직관적</code>이라는 점이다. 결정 트리가 룰이 매우 명확하고, 이에 기반해 어떻게 규칙 노드와 리프 노드가 만들어지는지 알 수 있고, 시각화로 표현까지 할 수 있다. <code>또한 정보의 균일도만 신경쓰면 되므로 특별한 경우를 제외하고는 각 feature의 스케일링과 normalization과 같은 작업이 크게 영향을 미치지 않는다.</code> 반면에 결정 트리 모델의 가장 큰 단점은 <code>과적합(overfitting)으로 정확도가 떨어진다는 점</code>이다. 복잡한 학습 모델은 결국에는 실제 상황(테스트 데이터)에 유연하게 대처할 수 없어서 예측 성능이 떨어질 수 밖에 없다. <code>트리의 크기를 사전에 제한하는 것이 오히려 성능 튜닝에 더 도움이 될 것</code>이다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-16"><a href="#결과-16" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Scikit-Learn의-의사결정나무-클래스"><a href="#Scikit-Learn의-의사결정나무-클래스" class="headerlink" title="Scikit-Learn의 의사결정나무 클래스"></a>Scikit-Learn의 의사결정나무 클래스</h3><h2 id="Scikit-Learn에서-의사결정나무는-DecisionTreeClassifier클래스로-구현되어있다-여기에서는-붓꽃-분류-문제를-예를-들어-의사결정나무를-설명한다-이-예제에서는-독립변수-공간을-공간상에-표시하기-위해-꽃의-길이와-폭만을-독립변수로-사용하였다"><a href="#Scikit-Learn에서-의사결정나무는-DecisionTreeClassifier클래스로-구현되어있다-여기에서는-붓꽃-분류-문제를-예를-들어-의사결정나무를-설명한다-이-예제에서는-독립변수-공간을-공간상에-표시하기-위해-꽃의-길이와-폭만을-독립변수로-사용하였다" class="headerlink" title="- Scikit-Learn에서 의사결정나무는 DecisionTreeClassifier클래스로 구현되어있다. 여기에서는 붓꽃 분류 문제를 예를 들어 의사결정나무를 설명한다. 이 예제에서는 독립변수 공간을 공간상에 표시하기 위해 꽃의 길이와 폭만을 독립변수로 사용하였다."></a>- Scikit-Learn에서 의사결정나무는 <code>DecisionTreeClassifier</code>클래스로 구현되어있다. 여기에서는 붓꽃 분류 문제를 예를 들어 의사결정나무를 설명한다. 이 예제에서는 독립변수 공간을 공간상에 표시하기 위해 꽃의 길이와 폭만을 독립변수로 사용하였다.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line">data = load_iris()</span><br><span class="line">y = data.target</span><br><span class="line">X = data.data[:, 2:]</span><br><span class="line">feature_names = data.feature_names[2:]</span><br><span class="line"></span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line"></span><br><span class="line">tree1 = DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>, max_depth=1, random_state=0).fit(X, y)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>다음은 의사결정나무를 시각화하기 위한 코드이다. <code>draw_decision_tree</code>함수는 의사결정나무의 의사 결정 과정의 세부적인 내역을 다이어그램으로 보여주고 <code>plot_decision_regions</code>함수는 이러한 의사 결정에 의해 데이터의 영역이 어떻게 나뉘어졌는지를 시각화하여 보여준다.</li>
+</ul>
+<ul>
+<li>아래 방법으로 draw_decision_tree함수를 동일하게 출력할 수 있다.<ul>
+<li><code>filled</code>: 그래프에 각 클래스별로 색상을 입힘.</li>
+<li><code>rounded</code>: 반올림 시켜주는 역할</li>
+<li><code>special_characters</code>: 특수문자가 있을 경우 제외시켜줌.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dot_data=tree.export_graphviz(out_file=None, decision_tree=tree1,feature_names=iris.feature_names,</span><br><span class="line">                             class_names=iris.target_names,</span><br><span class="line">                             filled=True, rounded=True, special_characters=True)</span><br><span class="line">graphviz.Source(dot_data)</span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">import io</span><br><span class="line">import pydot</span><br><span class="line">from IPython.core.display import Image</span><br><span class="line">from sklearn.tree import export_graphviz</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def draw_decision_tree(model):</span><br><span class="line">    dot_buf = io.StringIO()</span><br><span class="line">    export_graphviz(model, out_file=dot_buf, feature_names=feature_names)</span><br><span class="line">    graph = pydot.graph_from_dot_data(dot_buf.getvalue())[0]</span><br><span class="line">    image = graph.create_png()</span><br><span class="line">    <span class="built_in">return</span> Image(image)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def plot_decision_regions(X, y, model, title):</span><br><span class="line">    resolution = 0.01</span><br><span class="line">    markers = (<span class="string">'s'</span>, <span class="string">'^'</span>, <span class="string">'o'</span>)</span><br><span class="line">    colors = (<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'lightgreen'</span>)</span><br><span class="line">    cmap = mpl.colors.ListedColormap(colors)</span><br><span class="line"></span><br><span class="line">    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1</span><br><span class="line">    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1</span><br><span class="line">    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution),</span><br><span class="line">                           np.arange(x2_min, x2_max, resolution))</span><br><span class="line">    Z = model.predict(</span><br><span class="line">        np.array([xx1.ravel(), xx2.ravel()]).T).reshape(xx1.shape)</span><br><span class="line"></span><br><span class="line">    plt.contour(xx1, xx2, Z, cmap=mpl.colors.ListedColormap([<span class="string">'k'</span>]))</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=0.4, cmap=cmap)</span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> idx, cl <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == cl, 0], y=X[y == cl, 1], alpha=0.8,</span><br><span class="line">                    c=[cmap(idx)], marker=markers[idx], s=80, label=cl)</span><br><span class="line"></span><br><span class="line">    plt.xlabel(data.feature_names[2])</span><br><span class="line">    plt.ylabel(data.feature_names[3])</span><br><span class="line">    plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">    plt.title(title)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> Z</span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">draw_decision_tree(tree1)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id><a href="#" class="headerlink" title></a><img src="/image/iris_data_first_divide_on_plot_01.png" alt="max_depth=1인 경우의 decision tree의 분할 - 01"></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plot_decision_regions(X, y, tree1, <span class="string">"Depth 1"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="-1"><a href="#-1" class="headerlink" title></a><img src="/image/iris_data_first_divide_on_plot_02.png" alt="max_depth=1인 경우의 decision tree의 분할 - 02"></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import confusion_matrix</span><br><span class="line"></span><br><span class="line">confusion_matrix(y, tree1.predict(X))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-16"><a href="#결과-16" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[50,  0,  0],</span><br><span class="line">       [ 0, 50,  0],</span><br><span class="line">       [ 0, 50,  0]])</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="depth-2로-변경한-후의-결과"><a href="#depth-2로-변경한-후의-결과" class="headerlink" title="- depth=2로 변경한 후의 결과"></a>- depth=2로 변경한 후의 결과</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tree2 = DecisionTreeClassifier(</span><br><span class="line">    criterion=<span class="string">'entropy'</span>, max_depth=2, random_state=0).fit(X, y)</span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">draw_decision_tree(tree2)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/iris_data_first_divide_on_plot_03.png" alt="max_depth=2로 한 후의 분할 - 01"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plot_decision_regions(X, y, tree2, <span class="string">"Depth 2"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/iris_data_first_divide_on_plot_04.png" alt="max_depth=2로 한 후의 분할 - 02"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">confusion_matrix(y, tree2.predict(X))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-17"><a href="#결과-17" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[50,  0,  0],</span><br><span class="line">       [ 0, 49,  1],</span><br><span class="line">       [ 0,  5, 45]])</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>max_depth=3으로 변경한 후의 결과</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tree3 = DecisionTreeClassifier(</span><br><span class="line">    criterion=<span class="string">'entropy'</span>, max_depth=3, random_state=0).fit(X, y)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">draw_decision_tree(tree3)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/iris_data_first_divide_on_plot_05.png" alt="max_depth=3로 한 후의 분할 - 01"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plot_decision_regions(X, y, tree3, <span class="string">"Depth 3"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/iris_data_first_divide_on_plot_06.png" alt="max_depth=3로 한 후의 분할 - 01"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">confusion_matrix(y, tree3.predict(X))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-18"><a href="#결과-18" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[50,  0,  0],</span><br><span class="line">       [ 0, 47,  3],</span><br><span class="line">       [ 0,  1, 49]])</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>max_depth=5로 변경한 후 결과</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tree5 = DecisionTreeClassifier(</span><br><span class="line">    criterion=<span class="string">'entropy'</span>, max_depth=5, random_state=0).fit(X, y)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">draw_decision_tree(tree5)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/iris_data_first_divide_on_plot_07.png" alt="max_depth=5로 한 후의 분할 - 01"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plot_decision_regions(X, y, tree5, <span class="string">"Depth 5"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/iris_data_first_divide_on_plot_08.png" alt="max_depth=5로 한 후의 분할 - 02"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">confusion_matrix(y, tree5.predict(X))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-19"><a href="#결과-19" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[50,  0,  0],</span><br><span class="line">       [ 0, 49,  1],</span><br><span class="line">       [ 0,  0, 50]])</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import classification_report</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(classification_report(y, tree5.predict(X)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-20"><a href="#결과-20" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">           0       1.00      1.00      1.00        50</span><br><span class="line">           1       1.00      0.98      0.99        50</span><br><span class="line">           2       0.98      1.00      0.99        50</span><br><span class="line"></span><br><span class="line">    accuracy                           0.99       150</span><br><span class="line">   macro avg       0.99      0.99      0.99       150</span><br><span class="line">weighted avg       0.99      0.99      0.99       150</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>교차검증을 통해 최종모형의 성능을 살펴보면 아래와 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import KFold, cross_val_score</span><br><span class="line"></span><br><span class="line">cv = KFold(5, shuffle=True, random_state=0)</span><br><span class="line">model = DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>, max_depth=5,</span><br><span class="line">                               random_state=0)</span><br><span class="line">cross_val_score(model, X, y, scoring=<span class="string">"accuracy"</span>, cv=cv).mean()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-21"><a href="#결과-21" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.9466666666666667</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Regression-tree"><a href="#Regression-tree" class="headerlink" title="Regression tree"></a>Regression tree</h3><ul>
+<li>regression tree는 종속변수가 연속형인 것만 제외했을땐 아래에서 보는 것과 같이 동일한 개념을 가진다.</li>
+</ul>
+<p><img src="/image/Regression_Tree_concept_01.png" alt="Regression Tree의 개념"></p>
+<ul>
+<li>Regression Tree는 <code>예측시에 각각의 영역에 대해 특정 실수값을 주는 방식</code>이다. 아래 수식에서 $c_{m}$은 오른쪽 그림에서와 같이 해당 영역의 높이라고 할 수 있다.</li>
+</ul>
+<p><img src="/image/Regression_Tree_concept_02.png" alt="Regression Tree 시각적으로 이해하기"></p>
+<ul>
+<li>classification의 경우에는 entropy로 정했지만, Regression의 경우에는 아래 2번째 수식에서 볼 수 있듯이 기본적인 회귀의 성능지표를 사용하여 변수를 선택하게 된다.</li>
+</ul>
+<p><img src="/image/Regression_Tree_concept_03.png" alt="Regression Tree 변수 선택방법"></p>
+<ul>
+<li>이렇게 결정된 영역에 속하는 예측값은 해당 영역의 평균값을 출력해주며, 영역별로(층별로) 존재한다.</li>
+</ul>
+<p><img src="/image/Regression_Tree_concept_04.png" alt="Regression Tree 예측"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.tree import DecisionTreeRegressor</span><br><span class="line"></span><br><span class="line">rng = np.random.RandomState(1)</span><br><span class="line">X = np.sort(5 * rng.rand(80, 1), axis=0)</span><br><span class="line">y = np.sin(X).ravel()</span><br><span class="line">y[::5] += 3 * (0.5 - rng.rand(16))</span><br><span class="line"></span><br><span class="line">regtree = DecisionTreeRegressor(max_depth=3)</span><br><span class="line">regtree.fit(X, y)</span><br><span class="line"></span><br><span class="line">X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]</span><br><span class="line">y_hat = regtree.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the results</span></span><br><span class="line">plt.figure()</span><br><span class="line">plt.scatter(X, y, s=20, edgecolor=<span class="string">"black"</span>, c=<span class="string">"darkorange"</span>, label=<span class="string">"데이터"</span>)</span><br><span class="line">plt.plot(X_test, y_hat, color=<span class="string">"cornflowerblue"</span>, linewidth=2, label=<span class="string">"예측"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"x"</span>)</span><br><span class="line">plt.ylabel(r<span class="string">"<span class="variable">$y</span>$ &amp; $\hat&#123;y&#125;$"</span>)</span><br><span class="line">plt.title(<span class="string">"회귀 나무"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/Regression_tree_plot.png" alt="회귀나무"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -566,14 +705,14 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-26",
         "dateCreated": "2020-04-26",
-        "dateModified": "2020-04-27",
+        "dateModified": "2020-04-30",
         "url": "https://heung-bae-lee.github.io/2020/04/26/machine_learning_13/",
         "description": "Decision tree 배경
 의사결정나무의 장점은 해석력이 좋다. 우리가 모델을 만들때 성능이 좋은 것도 중요하지만, 어떻게 사람들한테 메세지를 줄 수 있는가처럼 어떻게 활용할 수 있는가가 더 중요한 경우도 있다. 예측력이 조금 떨어지더라도 이야기로 풀어서 어떠한 근거로 인해 Y는 이렇게 된다는 식으로 풀어서 설명할 수 있다는 의미이다.
 
 
 결정트리는 매"
-        "wordCount": 3198
+        "wordCount": 4928
     }
 </script>
 
@@ -657,6 +796,15 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/04/30/data_structure_04/" class="title">내가 정리하는 자료구조 03 - 시간복잡도</a></p>
+                            <p class="item-date"><time datetime="2020-04-30T09:12:50.000Z" itemprop="datePublished">2020-04-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
                             <p class="item-title"><a href="/2020/04/28/data_structure_03/" class="title">내가 정리하는 자료구조 02 Linked List</a></p>
                             <p class="item-date"><time datetime="2020-04-27T19:41:46.000Z" itemprop="datePublished">2020-04-28</time></p>
                         </div>
@@ -689,15 +837,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/04/22/machine_learning_11/" class="title">Support Vector Machine(SVM) - 01</a></p>
-                            <p class="item-date"><time datetime="2020-04-22T09:04:12.000Z" itemprop="datePublished">2020-04-22</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -707,7 +846,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">14</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">14</span></li></ul>
         </div>
     </div>
 
@@ -717,7 +856,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
