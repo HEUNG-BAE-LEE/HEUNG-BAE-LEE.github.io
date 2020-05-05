@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Ensemble Learning - 01 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Ensemble Learning이란? Ensemble Learning은 캐글이나 다른 대회에서 높은 성능을 자랑하며 여러 차례 우승을 차지한 알고리즘으로 그만큼 강력하지만, 현업에서는 Ensemble Learning을 사용하지 않을 가능성이 매우 높다. 왜냐하면 굉장히 강력하지만 다른 모델들과의 성능차이가 엄청나게 차이나는 것이 아니며, 실제 Domain에">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ensemble Learning - 01">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/05/02/machine_learning_14/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Ensemble Learning이란? Ensemble Learning은 캐글이나 다른 대회에서 높은 성능을 자랑하며 여러 차례 우승을 차지한 알고리즘으로 그만큼 강력하지만, 현업에서는 Ensemble Learning을 사용하지 않을 가능성이 매우 높다. 왜냐하면 굉장히 강력하지만 다른 모델들과의 성능차이가 엄청나게 차이나는 것이 아니며, 실제 Domain에">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png">
+<meta property="og:updated_time" content="2020-05-05T14:25:48.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ensemble Learning - 01">
+<meta name="twitter:description" content="Ensemble Learning이란? Ensemble Learning은 캐글이나 다른 대회에서 높은 성능을 자랑하며 여러 차례 우승을 차지한 알고리즘으로 그만큼 강력하지만, 현업에서는 Ensemble Learning을 사용하지 않을 가능성이 매우 높다. 왜냐하면 굉장히 강력하지만 다른 모델들과의 성능차이가 엄청나게 차이나는 것이 아니며, 실제 Domain에">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/05/02/machine_learning_14/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/machine-learning/">machine learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-machine_learning_14" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Ensemble Learning - 01
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/05/02/machine_learning_14/" class="article-date">
+            <time datetime="2020-05-02T12:00:10.000Z" itemprop="datePublished">2020-05-02</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Ensemble-Learning이란"><a href="#Ensemble-Learning이란" class="headerlink" title="Ensemble Learning이란?"></a>Ensemble Learning이란?</h1><ul>
+<li><p>Ensemble Learning은 캐글이나 다른 대회에서 높은 성능을 자랑하며 여러 차례 우승을 차지한 알고리즘으로 그만큼 강력하지만, 현업에서는 Ensemble Learning을 사용하지 않을 가능성이 매우 높다. 왜냐하면 굉장히 강력하지만 다른 모델들과의 성능차이가 엄청나게 차이나는 것이 아니며, 실제 Domain에서 중요한 변수가 무엇인지와 같은 원인을 찾는 feature selection 부분이 더 중요할 수 있기 때문이다. 물론, 성능측면이 중요한 Domain분야에서는 Ensemble Learning이 중요할 것이다.</p>
+</li>
+<li><p>Ensemble이라는 의미의 사전적 정의는 ‘합창단’, ‘조화’라는 의미를 지닌다. 즉, 머신러닝에서의 개념은 여러개의 모델을 조합을 시킨다라는 의미로 받아들일 수 있다.</p>
+</li>
+</ul>
+<p><img src="/image/Ensemble_dictionary_mean.png" alt="Ensemble의 의미"></p>
+<ul>
+<li>통계학에서의 대수의 법칙이라는 개념이 있는데, 큰 모집단에서 무작위로 뽑은 표본의 수가 많아 질수록(보통은 30개이상의 관측이) 모집단의 평균에 가까울 확률이 높아진다는 개념이다. <code>많은 시행의 결과가 수학적으로 합리적인 결과를 보여준다</code>는 것을 의미하는데, Ensemble learning에 적용하여 생각해보면 다수의 모델이 더 합리적인 성능을 가져올 수 있다는 것으로 해석할 수도 있다.</li>
+</ul>
+<p><img src="/image/the_law_of_large_number.png" alt="대수의 법칙과 Ensemble"></p>
+<ul>
+<li>하지만 아래에서 <code>합치는 모델의 성능 자체가 떨어지는 모델을 가지고 Ensemble learning을 진행한다고 해도 성능을 올릴 수는 없다.</code></li>
+</ul>
+<p><img src="/image/Ensemble_learning_conception_01.png" alt="Ensemble learning의 개념 - 01"></p>
+<p><img src="/image/Ensemble_learning_conception_02.png" alt="Ensemble learning의 개념 - 02"></p>
+<ul>
+<li>아래에서는 이진분류에 대해서만 언급했지만, 대부분의 classification 문제에서는 One VS Rest 방식으로 문제를 풀기에 이진 분류 뿐만아니라, class가 여러개인 multi class 문제에서도 적용되는 내용이다.</li>
+</ul>
+<p><img src="/image/why_performence_prob_higher_than_half.png" alt="Ensemble learning에서 base model의 성능의 전제조건"></p>
+<ul>
+<li>아래에서와 같이 각각의 성능이 0.5인 분류기들을 voting을 통해 결과를 내게 되는데, 각각의 weak한 분류기들의 조합을 통해 최종적으로는 0.625라는 성능을 내게 된다.</li>
+</ul>
+<p><img src="/image/how_to_decision_predicted_value_on_ensemble.png" alt="Ensemble을 통한 결과 도출"></p>
+<ul>
+<li>각각의 분류기(모델)를 통해 최종적으로는 해당 데이터들의 decision boundary의 평균을 사용하는 것과 동일한 결과를 얻을 수 있다.</li>
+</ul>
+<p><img src="/image/Ensemble_learning_classifier_decision_boundary_visualization.png" alt="Ensemble을 통한 예측의 decision boundary"></p>
+<ul>
+<li>아래에서와 같이 <code>Test data에 대해 일정부분 bias되는 부분을 줄이기 위해 overfitting이 잘 되는 트리기반의 모형을 주로 베이스 모델로 사용</code>한다.</li>
+</ul>
+<p><img src="/image/base_line_model_why_is_based_on_tree.png" alt="Ensemble 모델에서 트리기반을 주로 사용하는 이유"></p>
+<ul>
+<li>Ensemble Learning의 종류는 아래 그림과 같이 나눌 수 있다. 쉽게 말하면 <code>Bagging</code>은 여러 개의 모델을 만들기 위해서는 Tree기반이나 선형회귀 분석 같은 경우는 동일한 feature와 동일한 data를 사용했을 경우 동일한 결과를 내주기 때문에, <code>모델을 여러 개 만들기 위해서 데이터를 나누어서 각 모델에 fitting시키는 것을 의미</code>한다. <code>Random Forest</code>는 데이터 뿐만 아니라 feature들의 선택도 각 모델별로 달리하여 fitting하는 것이며, <code>Boosting</code>은 분류기가 틀리게 예측한 데이터들에 대해 그 다음 학습기는 좀 더 학습을 잘 할 수 있도록 가중치를 주는 개념이다. 마지막으로 <code>Stacking</code>은 성능순으로 점수를 매기는 캐글에서는 0.1%라도 올리는 것이 중요하기 때문에 사용되어 지는데, 다른 Ensemble 기법들 보다 많은 성능을 높이지는 못하여 잘 사용되지는 않는다. 굉장히 많은 학습 연산량을 필요로 하기 때문에 실제 Domain에서 사용되어지기에는 쉽지 않다.</li>
+</ul>
+<p><img src="/image/Ensmble_learning_types.png" alt="Ensemble learning의 종류"></p>
+<ul>
+<li>Bagging은 Bootstrap Aggregating의 약자로 Sampling을 하는 방식이 Bootstrap방식을 사용하기 때문이다. 아래 그림에서 볼 수 있듯이 복원추출의 방식이라고 생각하면된다. 하나의 모델에 대하여 데이터를 추출할 경우 해당 모델에 들어가있는 데이터는 중복된 데이터가 있을 수 있다.(오른쪽 첫번째 데이터세트에서와 같이)</li>
+</ul>
+<p><img src="/image/What_is_bagging_01.png" alt="Bagging의 개념 - 01"></p>
+<ul>
+<li>이렇게 추출하는 데이터는 전체 데이터 중 약 63%정도만 추출을 하게 된다. 아래 첫 번째 그림에서는 밑줄이 그러진 원의 데이터는 추출되지 않는 데이터들이다. Bootstrap size는 N이지만, 전체 데이터의 set는 기존의 데이터의 수와 동일하게 뽑는다. 즉, 기존의 데이터가 12개였다면, Bootstrap size가 5라면 5개씩 12개의 데이터 set를 복원추출을 통하여 뽑는 것이다. 두번째 그림의 k가 의미하는 것이 여기서는 12를 의미할 것이다.</li>
+</ul>
+<p><img src="/image/What_is_bagging_02.png" alt="Bagging의 개념 - 02"></p>
+<p><img src="/image/What_is_bagging_03.png" alt="Bagging의 개념 - 03"></p>
+<ul>
+<li>위에서 언급했듯이 추출되지 않은 데이터 set이 있는 것은 학습에 활용되지 않았으므로 그대로 두면 데이터를 낭비하는 것과 동일하다. 물론 Test set을 미리 나누어 놓고 해당 Test set을 prediction한 결과를 voting하여 성능을 측정하지만, 사용되지 않은 데이터(Out-of_Bag data)에 대해서도 모델별 성능을 계산하여 참고한다.</li>
+</ul>
+<p><img src="/image/What_is_bagging_04.png" alt="Bagging의 개념 - 04"></p>
+<ul>
+<li>트리(Tree)와 배깅(Bagging)을 비교하자면 깊이 성장한 트리는 overfitting이 굉장히 심해지기 때문에 분산이 증가하기 때문에 편향은 줄어들 것이다. 그러나 배깅은 이러한 트리들을 결합시키므로 <code>편향이 유지되며, 분사은 감소하는 모델</code>이 될 것이다. <code>학습데이터의 noise에 robust</code>하다. 그러나 모형해석이 어려워지는 단점이 있다. 이러한 단점이 실제 Domain에서 사용되지 못하는 이유가 될 수 있다.</li>
+</ul>
+<p><img src="/image/What_is_bagging_04.png" alt="Bagging의 개념 - 04"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Ensemble Learning - 01",
+        "image": "https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png",
+        "keywords": "",
+        "genre": "machine learning",
+        "datePublished": "2020-05-02",
+        "dateCreated": "2020-05-02",
+        "dateModified": "2020-05-05",
+        "url": "https://heung-bae-lee.github.io/2020/05/02/machine_learning_14/",
+        "description": "Ensemble Learning이란?
+Ensemble Learning은 캐글이나 다른 대회에서 높은 성능을 자랑하며 여러 차례 우승을 차지한 알고리즘으로 그만큼 강력하지만, 현업에서는 Ensemble Learning을 사용하지 않을 가능성이 매우 높다. 왜냐하면 굉장히 강력하지만 다른 모델들과의 성능차이가 엄청나게 차이나는 것이 아니며, 실제 Domain에"
+        "wordCount": 575
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/05/02/data_structure_06/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">내가 정리하는 자료구조 05 - 트리(Tree)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/02/machine_learning_14/" class="title">Ensemble Learning - 01</a></p>
+                            <p class="item-date"><time datetime="2020-05-02T12:00:10.000Z" itemprop="datePublished">2020-05-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/02/data_structure_06/" class="title">내가 정리하는 자료구조 05 - 트리(Tree)</a></p>
+                            <p class="item-date"><time datetime="2020-05-02T10:27:21.000Z" itemprop="datePublished">2020-05-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/04/30/data_structure_05/" class="title">내가 정리하는 자료구조 04 - 해쉬 테이블</a></p>
+                            <p class="item-date"><time datetime="2020-04-30T14:32:54.000Z" itemprop="datePublished">2020-04-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/04/30/data_structure_04/" class="title">내가 정리하는 자료구조 03 - 시간복잡도</a></p>
+                            <p class="item-date"><time datetime="2020-04-30T09:12:50.000Z" itemprop="datePublished">2020-04-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/04/28/data_structure_03/" class="title">내가 정리하는 자료구조 02 Linked List</a></p>
+                            <p class="item-date"><time datetime="2020-04-27T19:41:46.000Z" itemprop="datePublished">2020-04-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">15</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/05/02/machine_learning_14/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
