@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>선형대수 요소(Elements in linear algebra) | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  Linearity(선형성) 행렬로 표현할 수 있는 것들은 기본적으로 다 선형성이라는 것을 만족해야 한다. 선형성은 아래 두 가지 조건을 만족할 때 선형성을 갖는다고 할 수 있다.  1)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="선형대수 요소(Elements in linear algebra)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/05/12/linear_algebra_01/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  Linearity(선형성) 행렬로 표현할 수 있는 것들은 기본적으로 다 선형성이라는 것을 만족해야 한다. 선형성은 아래 두 가지 조건을 만족할 때 선형성을 갖는다고 할 수 있다.  1)">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/linear_algebra_elements.png">
+<meta property="og:updated_time" content="2020-05-13T07:51:30.883Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="선형대수 요소(Elements in linear algebra)">
+<meta name="twitter:description" content="아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  Linearity(선형성) 행렬로 표현할 수 있는 것들은 기본적으로 다 선형성이라는 것을 만족해야 한다. 선형성은 아래 두 가지 조건을 만족할 때 선형성을 갖는다고 할 수 있다.  1)">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/linear_algebra_elements.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/05/12/linear_algebra_01/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/linear-algebra/">linear algebra</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-linear_algebra_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        선형대수 요소(Elements in linear algebra)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/05/12/linear_algebra_01/" class="article-date">
+            <time datetime="2020-05-12T13:41:59.000Z" itemprop="datePublished">2020-05-12</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <ul>
+<li>아래 내용은 <a href="https://datascienceschool.net/view-notebook/04358acdcf3347fc989c4cfc0ef6121c/" target="_blank" rel="noopener">김도형 박사님의 선형대수 강의안</a> <a href="https://www.edwith.org/linearalgebra4ai/joinLectures/14072" target="_blank" rel="noopener">edwith의 인공지능을 위한 선형대수</a> 강의와 <a href="http://www.kocw.net/home/search/kemView.do?kemId=977757" target="_blank" rel="noopener">KOCW의 한양대학교 이상화 교수님의 선형대수학</a> 강의를 보고 정리한 내용이다.</li>
+</ul>
+<h2 id="Linearity-선형성"><a href="#Linearity-선형성" class="headerlink" title="Linearity(선형성)"></a>Linearity(선형성)</h2><ul>
+<li><p>행렬로 표현할 수 있는 것들은 기본적으로 다 선형성이라는 것을 만족해야 한다. 선형성은 아래 두 가지 조건을 만족할 때 선형성을 갖는다고 할 수 있다.</p>
+</li>
+<li><p>1) Superposition(중첩의 원리)</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">f(x_{1} + x_{2}) = f(x_{1}) + f(x_{2})</script><ul>
+<li>2) Homogeniety</li>
+</ul>
+<script type="math/tex; mode=display">f(ax) = af(x), a는 constant(상수)</script><blockquote>
+<p>예시 1)$y=mx=f(x)$; 원점을 지나는 직선 -&gt; Linearity를 결정하는 중요한 조건으로 원점을 지나는지를 확인해야 한다. 직선이라고 해서 다 Linearity를 만족하는 것은 아니다.</p>
+</blockquote>
+<script type="math/tex; mode=display">m(a_{1}x_{1} + a_{2}x_{2}) = a_{1}mx_{1} + a_{2}mx_{2} = a_{1}f(x_{1}) +  a_{2}f(x_{2})</script><blockquote>
+<p>예시 2) $y = mx+n = f(x), n \neq 0$</p>
+</blockquote>
+<script type="math/tex; mode=display">m(a_{1}x_{1} + a_{2}x_{2}) + n \neq a_{1}(m x_{1} + n) + a_{2}(m x_{2} + n)</script><ul>
+<li>위와 같으므로 선형성을 갖지 않는다는 것을 알 수 있다.</li>
+</ul>
+<h1 id="Elements-of-Linear-Algebra"><a href="#Elements-of-Linear-Algebra" class="headerlink" title="Elements of Linear Algebra"></a>Elements of Linear Algebra</h1><p><img src="/image/linear_algebra_elements.png" alt="선형대수의 요소"></p>
+<ul>
+<li>선형대수에서 다루는 데이터는 개수나 형태에 따라 크게 스칼라(scalar), 벡터(vector), 행렬(matrix), 텐서(tensor) 유형으로 나뉜다. 스칼라는 숫자 하나로 이루어진 데이터이고, 벡터는 여러 숫자로 이루어진 데이터 레코드(data record)이며, 행렬은 이러한 벡터, 즉 데이터 레코드가 여럿인 데이터 집합이라고 볼 수 있다. 텐서는 같은 크기의 행렬이 여러 개 있는 것이라고 생각하면 된다.</li>
+</ul>
+<h3 id="스칼라-Scalar"><a href="#스칼라-Scalar" class="headerlink" title="스칼라(Scalar)"></a>스칼라(Scalar)</h3><ul>
+<li>스칼라는 하나의 숫자만으로 이루어진 데이터를 말한다. 스칼라는 보통 $x$와 같이 알파벳 소문자로 표기하며 실수(real number)인 숫자 중의 하나이므로 실수 집합  $𝐑$의 원소라는 의미에서 다음처럼 표기한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x \in \mathbf{R} \end{align}</script><h3 id="벡터-Vector"><a href="#벡터-Vector" class="headerlink" title="벡터(Vector)"></a>벡터(Vector)</h3><ul>
+<li><p>벡터는 여러 개의 숫자가 특정한 순서대로 모여 있는 것을 말한다. 사실 대부분의 데이터 레코드는 여러 개의 숫자로 이루어진 경우가 많다. 하나의 묶음(tuple)으로 묶어놓는 것이 좋다. 이때 숫자의 순서가 바뀌면 어떤 숫자가 어떤 피처에 매핑되는 값인지알 수 없으므로 <code>숫자의 순서를 유지하는 것이 중요</code>하다. 이런 데이터 묶음을 선형대수에서는 벡터라고 부른다.</p>
+</li>
+<li><p>이때 벡터는 복수의 가로줄, 즉 행(row)을 가지고 하나의 세로줄, 즉 열(column)을 가지는 형태로 위에서 아래로 내려써서 표기해야 한다. 하나의 벡터를 이루는 데이터의 개수가  $𝑛$개이면 이 벡터를 $n$-차원 벡터($n$-dimensional vector)라고 하며 다음처럼 표기한다.</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x = \begin{bmatrix} x_{1} \\ x_{2} \\ \vdots \\ x_{N} \\ \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} x \in \mathbf{R}^N \end{align}</script><ul>
+<li>순서는 차원을 의미한다. 즉, 위에서 벡터 $x$는 1차원에 $x_1$ 2차원에 $x_2$, N차원에 $x_N$이라는 값을 갖는다는 의미이다. 참고로 순서가 정해져 있지 않은 배열(array)는 집합(set)이다. 또한 벡터라고 하는 것은 한방향으로만 있는 1-dimensional로 존재하는 배열 또는 하나의 숫자가 된다.</li>
+</ul>
+<h3 id="행렬-Matrix"><a href="#행렬-Matrix" class="headerlink" title="행렬(Matrix)"></a>행렬(Matrix)</h3><ul>
+<li>행렬(Matrix)는 기본적으로 2-Dimensional 배열(array)를 의미한다. 행렬은 복수의 차원을 가지는 데이터 레코드가 다시 여러 개 있는 경우의 데이터를 합쳐서 표기한 것이다. 행렬은 보통  $𝑋$와 같이 알파벳 대문자로 표기한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} X = \begin{bmatrix} \boxed{\begin{matrix} x_{1, 1} & x_{1, 2} & x_{1, 3} & x_{1, 4}\end{matrix}}  \\ \begin{matrix} x_{2, 1} & x_{2, 2} & x_{2, 3} & x_{2, 4}\end{matrix} \\ \begin{matrix} x_{3, 1} & x_{3, 2} & x_{3, 3} & x_{3, 4}\end{matrix} \\ \begin{matrix} x_{4, 1} & x_{4, 2} & x_{4, 3} & x_{4, 4}\end{matrix} \\ \begin{matrix} x_{5, 1} & x_{5, 2} & x_{5, 3} & x_{5, 4}\end{matrix} \\ \begin{matrix} x_{6, 1} & x_{6, 2} & x_{6, 3} & x_{6, 4}\end{matrix} \\ \end{bmatrix} \end{align}</script><ul>
+<li>스칼라와 벡터도 수학적으로는 행렬에 속한다. 스칼라는 열과 행의 수가 각각 1인 행렬이고 벡터는 열의 수가 1인 행렬이다. 그래서 스칼라는 $ \begin{align} a \in \mathbf{R}^{1\times 1} \end{align}$ 벡터는 $\begin{align} x \in \mathbf{R}^{n\times 1} \end{align}$</li>
+</ul>
+<h3 id="텐서-Tensor"><a href="#텐서-Tensor" class="headerlink" title="텐서(Tensor)"></a>텐서(Tensor)</h3><ul>
+<li>텐서는 같은 크기의 행렬이 여러 개 같이 묶여 있는 것을 말한다. 엄격한 수학적 정의로는 텐서는 다차원 배열로 표현되는 사상(mapping)으로 다차원 배열 자체를 뜻하지 않는다. 하지만 데이터 사이언스 분야에서는 흔히 다차원 배열을 텐서라고 부르므로 여기에서는 이러한 정의를 따르도록 한다.</li>
+</ul>
+<ul>
+<li>예를 들어 다음 컬러 이미지는 2차원의 행렬처럼 보이지만 사실 빨강, 초록, 파랑의 밝기를 나타내는 3가지의 이미지가 겹친 것이다. 컬러 이미지에서는 각각의 색을 나타내는 행렬을 채널(channel)이라고 한다. 예제 이미지는 크기가 768 x 1024이고 3개의 채널이 있으므로 768 x 1024 x 3 크기의 3차원 텐서다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from scipy import misc  <span class="comment"># 패키지 임포트</span></span><br><span class="line"></span><br><span class="line">img_rgb = misc.face()  <span class="comment"># 컬러 이미지 로드</span></span><br><span class="line">img_rgb.shape  <span class="comment"># 데이터의 모양</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(768, 1024, 3)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">plt.subplot(221)</span><br><span class="line">plt.imshow(img_rgb, cmap=plt.cm.gray)  <span class="comment"># 컬러 이미지 출력</span></span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">plt.title(<span class="string">"RGB 컬러 이미지"</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(222)</span><br><span class="line">plt.imshow(img_rgb[:, :, 0], cmap=plt.cm.gray)  <span class="comment"># red 채널 출력</span></span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">plt.title(<span class="string">"Red 채널"</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(223)</span><br><span class="line">plt.imshow(img_rgb[:, :, 1], cmap=plt.cm.gray)  <span class="comment"># green 채널 출력</span></span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">plt.title(<span class="string">"Green 채널"</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(224)</span><br><span class="line">plt.imshow(img_rgb[:, :, 2], cmap=plt.cm.gray)  <span class="comment"># blue 채널 출력</span></span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">plt.title(<span class="string">"Blue 채널"</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/image_tensor_using.png" alt="tensor로 살펴보는 이미지 파일"></p>
+<h3 id="전치"><a href="#전치" class="headerlink" title="전치"></a>전치</h3><ul>
+<li>전치(transpose)연산은 행렬에서 가장 기본이 되는 연산으로 행렬의 <code>행과 열을 바꾸는 연산</code>을 의미한다.</li>
+</ul>
+<p><img src="/image/vector_expression_01.png" alt="벡터의 표현"></p>
+<ul>
+<li>아래 그림과 같이 <code>기본적으로 벡터는 열벡터(column vector)</code>를 사용하며, 행 벡터(row vector)를 표기할때는 열벡터의 전치행렬로 표기해준다. 전치 연산과 행 벡터, 열 벡터를 이용하면 다음처럼 행렬을 복수의 열 벡터 $c_{i}$, 또는 복수의 행 벡터 $r^{T}_{j}$을 합친(concatenated)형태로 표기할 수도 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} X = \begin{bmatrix} c_1 & c_2 & \cdots & c_M \end{bmatrix} = \begin{bmatrix} r_1^T  \\ r_2^T  \\  \vdots \\ r_N^T  \\  \end{bmatrix} \end{align}</script><ul>
+<li>위 식에서 행렬과 벡터의 크기는 다음과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} X \in \mathbf{R}^{N\times M} \end{align}</script><script type="math/tex; mode=display">\begin{align} c_i \in \mathbf{R}^{N \times 1} \; (i=1,\cdots,M) \end{align}</script><script type="math/tex; mode=display">\begin{align} r_j^T \in \mathbf{R}^{1 \times M} \; (j=1,\cdots,N) \end{align}</script><ul>
+<li>벡터의 모양을 직사각형으로 표시하면 다음과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} X = \begin{bmatrix} \boxed{\begin{matrix} \phantom{\LARGE\mathstrut} \\ c_1 \\ \phantom{\LARGE\mathstrut} \end{matrix}} & \boxed{\begin{matrix} \phantom{\LARGE\mathstrut} \\ c_2 \\ \phantom{\LARGE\mathstrut} \end{matrix}} &  \cdots & \boxed{\begin{matrix} \phantom{\LARGE\mathstrut} \\ c_M \\ \phantom{\LARGE\mathstrut} \end{matrix}} \end{bmatrix} = \begin{bmatrix} \boxed{\begin{matrix} \phantom{} & \phantom{} & r_1^T & \phantom{} & \phantom{} \end{matrix}} \\ \boxed{\begin{matrix} \phantom{} & \phantom{} & r_2^T & \phantom{} & \phantom{} \end{matrix}} \\ \vdots \\ \boxed{\begin{matrix} \phantom{} & \phantom{} & r_N^T & \phantom{} & \phantom{} \end{matrix}} \\ \end{bmatrix} \end{align}</script><h2 id="특수한-벡터와-행렬"><a href="#특수한-벡터와-행렬" class="headerlink" title="특수한 벡터와 행렬"></a>특수한 벡터와 행렬</h2><ul>
+<li>몇 가지 특수한 벡터와 행렬은 별도의 기호나 이름이 붙는다.</li>
+</ul>
+<p><img src="/image/various_type_of_matrix.png" alt="행렬의 종류"></p>
+<h3 id="영벡터"><a href="#영벡터" class="headerlink" title="영벡터"></a>영벡터</h3><ul>
+<li>모든 원소가 0인 $N$차원 벡터는 영벡터(zeros-vector)라고 하며 다음처럼 표기한다. 문맥으로 벡터의 크기를 알 수 있을 때는 크기를 나타내는 아래 첨자 $N$을 생략할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \mathbf{0}_N = \mathbf{0} = 0 = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} 0 \in \mathbf{R}^{N \times 1} \end{align}</script><h3 id="일벡터"><a href="#일벡터" class="headerlink" title="일벡터"></a>일벡터</h3><ul>
+<li>모든 원소가 1인  $N$차원 벡터는 일벡터(ones-vector)라고 하며 다음처럼 표기한다. 마찬가지로 문맥으로 벡터의 크기를 알 수 있을 때는 크기를 나타내는 아래 첨자  $N$을 생략할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \mathbf{1}_N = \mathbf{1}  = 1 = \begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \\ \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} 1 \in \mathbf{R}^{N \times 1} \end{align}</script><h3 id="정방행렬"><a href="#정방행렬" class="headerlink" title="정방행렬"></a>정방행렬</h3><ul>
+<li>행의 개수와 열의 개수가 같은 행렬을 정방행렬(square matrix)라고 한다.</li>
+</ul>
+<h3 id="대각행렬"><a href="#대각행렬" class="headerlink" title="대각행렬"></a>대각행렬</h3><ul>
+<li>행렬에서 행과 열이 같은 위치를 주 대각(main diagonal) 또는 간단히 대각(diagonal)이라고 한다. 대각 위치에 있지 않은 것들은 비대각(off-diagonal)이라고 한다. 모든 비대각 요소가 0인 행렬을 대각행렬(diagonal matrix)이라고 한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} D = \begin{bmatrix} d_{1} & 0 & \cdots & 0 \\ 0 & d_{2} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & d_{N} \\ \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} D \in \mathbf{R}^{N \times N} \end{align}</script><ul>
+<li><code>대각행렬이 되려면 비대각 성분이 0이기만 하면 되고 대각성분은 0이든 아니든 상관없다. 또한 반드시 정방행렬일 필요도 없다.</code> 예를 들어 다음 행렬도 대각행렬이라고 할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} D = \begin{bmatrix} d_{1} & 0 & \cdots & 0 \\ 0 & d_{2} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & d_{M} \\ 0 & 0 & \cdots & 0 \\ 0 & 0 & \cdots & 0 \\ 0 & 0 & \cdots & 0 \\ \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} D \in \mathbf{R}^{N \times M} \end{align}</script><h3 id="항등행렬"><a href="#항등행렬" class="headerlink" title="항등행렬"></a>항등행렬</h3><ul>
+<li>대각행렬 중에서도 모든 대각성분의 값이 1인 대각행렬을 항등행렬(identity matrix)이라고 한다. 항등행렬은 보통 알파벳 대문자 $I$로 표기한다. (E로 표기하는 방식도 있다.)</li>
+</ul>
+<ul>
+<li>임의의 행렬 A에 대해 행렬곱을 해도 임의의 행렬 A가 나오도록 하는 항등원 개념과 동일하다.</li>
+</ul>
+<script type="math/tex; mode=display">A I = I A = A</script><script type="math/tex; mode=display">\begin{align} I = \begin{bmatrix} 1 & 0 & \cdots & 0 \\ 0 & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & 1 \\ \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} I \in \mathbf{R}^{N \times N} \end{align}</script><ul>
+<li>참고로 추후에 말하겠지만, 항등원의 개념이 있다면 역원의 개념에 대해 생각해 볼 수 있을 것이다. 역원의 정의에 맞게 임의의 행렬에 대한 곱셈에대한 역원을 찾는다면 아래와 같이 구할 수 있다. 즉 행렬에서 임의의 행렬 A에 곱셈에 대한 역원은 역행렬을 의미한다.</li>
+</ul>
+<script type="math/tex; mode=display">A A^{-1} = A^{-1} A = I</script><h3 id="대칭행렬"><a href="#대칭행렬" class="headerlink" title="대칭행렬"></a>대칭행렬</h3><ul>
+<li>만약 전치연산을 통해서 얻은 전치행렬과 원래의 행렬이 같으면 대칭행렬(symmetric matrix)라고 한다. 정방행렬만이 대칭행렬이 될 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} S^{T} = S \end{align}</script><script type="math/tex; mode=display">\begin{align} S \in \mathbf{R}^{N \times N} \end{align}</script><h2 id="벡터의-행렬과-연산"><a href="#벡터의-행렬과-연산" class="headerlink" title="벡터의 행렬과 연산"></a>벡터의 행렬과 연산</h2><ul>
+<li>벡터와 행렬도 숫자처럼 덧셈, 뺄셈, 곱셈 등의 연산을 할 수 있다. <code>데이터 사이언스에 있어서 선형대수를 알고있어야 하는 이유는 여러가지가 있지만 그 중 한가지로 벡터와 행렬의 연산을 이용하면 대량의 데이터에 대한 계산을 간단한 수식으로 나타낼 수 있기 때문</code>이다. 물론 벡터와 행렬에 대한 연산은 숫자의 사칙 연산과는 몇 가지 다른 점이 있으므로 이러한 차이를 잘 알아야 한다.</li>
+</ul>
+<h3 id="벡터-행렬의-덧셈과-뺄셈"><a href="#벡터-행렬의-덧셈과-뺄셈" class="headerlink" title="벡터/행렬의 덧셈과 뺄셈"></a>벡터/행렬의 덧셈과 뺄셈</h3><p><img src="/image/matrix_operation_01.png" alt="행렬의 덧셈과 곱셈"></p>
+<ul>
+<li>같은 크기를 가진 두 개의 벡터나 행렬은 덧셈과 뺄셈을 할 수 있다. 두 벡터와 행렬에서 같은 위치에 있는 원소끼리 덧셈과 뺄셈을 하면 된다. 이러한 연산을 요소별(element-wise)연산이라고 한다.</li>
+</ul>
+<ul>
+<li>예를 들어 벡터 $x$와 $y$가 다음과 같으면,</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x= \begin{bmatrix} 10 \\ 11 \\ 12 \\ \end{bmatrix} ,\;\; y= \begin{bmatrix} 0 \\ 1 \\ 2 \\ \end{bmatrix} \end{align}</script><ul>
+<li>벡터  $𝑥$ 와  $𝑦$ 의 덧셈  $𝑥+𝑦$와 뺄셈  $𝑥−𝑦$는 다음처럼 계산한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x + y = \begin{bmatrix} 10 \\ 11 \\ 12 \\ \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \\ 2 \\ \end{bmatrix} = \begin{bmatrix} 10 + 0 \\ 11 + 1 \\ 12 + 2 \\ \end{bmatrix} = \begin{bmatrix} 10 \\ 12 \\ 14 \\ \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} x - y = \begin{bmatrix} 10 \\ 11 \\ 12 \\ \end{bmatrix} - \begin{bmatrix} 0 \\ 1 \\ 2 \\ \end{bmatrix} = \begin{bmatrix} 10 - 0 \\ 11 - 1 \\ 12 - 2 \\ \end{bmatrix} = \begin{bmatrix} 10 \\ 10 \\ 10 \\ \end{bmatrix} \end{align}</script><ul>
+<li>행렬도 같은 방법으로 덧셈과 뺄셈을 할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} + \begin{bmatrix} 10 & 20 \\ 30 & 40 \\ \end{bmatrix} -\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 14 & 24 \\ 34 & 44 \end{bmatrix} \end{align}</script><h3 id="스칼라와-벡터-행렬의-곱셈"><a href="#스칼라와-벡터-행렬의-곱셈" class="headerlink" title="스칼라와 벡터/행렬의 곱셈"></a>스칼라와 벡터/행렬의 곱셈</h3><ul>
+<li>벡터 $x$또는 행렬 $A$에 스칼라값 $c$를 곱하는 것은 벡터 $x$ 또는 행렬 $A$의 모든 원소에 스칼라값 $c$를 곱하는 것과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} c \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} cx_1 \\ cx_2 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} c \begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix} = \begin{bmatrix} ca_{11} & ca_{12} \\ ca_{21} & ca_{22} \end{bmatrix} \end{align}</script><h3 id="브로드캐스팅"><a href="#브로드캐스팅" class="headerlink" title="브로드캐스팅"></a>브로드캐스팅</h3><ul>
+<li>원래 덧셈과 뺄셈은 크기(차원)가 같은 두 벡터에 대해서만 할 수 있다. 하지만 Numpy에서 벡터와 스칼라의 경우에는 관례적으로 다음처럼 1-벡터를 사용하여 스칼라를 벡터로 연산을 허용한다. 이를 브로드캐스팅(broadcasting)이라고 한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 10 \\ 11 \\ 12 \\ \end{bmatrix} - 10 = \begin{bmatrix} 10 \\ 11 \\ 12 \\ \end{bmatrix} - 10\cdot \mathbf{1} = \begin{bmatrix} 10 \\ 11 \\ 12 \\ \end{bmatrix} - \begin{bmatrix} 10 \\ 10 \\ 10 \\ \end{bmatrix} \end{align}</script><ul>
+<li>데이터 분석에서는 원래의 데이터 벡터 $x$가 아니라 그 데이터 벡터의 각 원소의 평균값을 뺀 평균제거(mean removed) 벡터 혹은 0-평균(zero-mean)벡터를 사용하는 경우가 많다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{bmatrix} \;\; \rightarrow \;\; x - m = \begin{bmatrix} x_1 - m\\ x_2 - m \\ \vdots \\ x_N - m \end{bmatrix} \end{align}</script><ul>
+<li>아래 그림에서 볼 수 있듯이, 행렬의 곱셈에 대한 교환법칙은 성립하지 않는다. 물론, $AB=BA$인 경우도 존재하지만, 항상 존재하진 않기 때문이다.</li>
+</ul>
+<h3 id="벡터와-벡터의-곱셈"><a href="#벡터와-벡터의-곱셈" class="headerlink" title="벡터와 벡터의 곱셈"></a>벡터와 벡터의 곱셈</h3><ul>
+<li>벡터 $x$와 벡터 $y$의 내적은 다음처럼 표기 한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x^T y \end{align}</script><ul>
+<li>내적은 다음처럼 점(dot)으로 표기하는 경우도 있어서 닷 프로덕트(dot product)라고도 부르고 &lt; x, y &gt; 기호로 나타낼 수도 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x \cdot y = \, < x, y > \, = x^T y \end{align}</script><ul>
+<li><p>두 벡터를 내적하려면 다음과 같은 조건이 만족되어야 한다.</p>
+<ul>
+<li><ol>
+<li>우선 두 벡터의 차원(길이)이 같아야 한다.</li>
+</ol>
+</li>
+<li><ol>
+<li>앞의 벡터가 행 벡터이고 뒤의 벡터가 열 벡터여야 한다.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>이때 내적의 결과는 스칼라값이 되며 다음처럼 계산한다. 우선 같은 위치에 있는 원소들을 요소별 곱셈처럼 곱한 다음, 그 값들을 다시 모두 더해서 하나의 스칼라값으로 만든다.</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} x^T y = \begin{bmatrix} x_{1} & x_{2} & \cdots & x_{N} \end{bmatrix} \begin{bmatrix} y_{1} \\ y_{2} \\ \vdots \\ y_{N} \\ \end{bmatrix} = x_1 y_1 + \cdots + x_N y_N = \sum_{i=1}^N x_i y_i \end{align}</script><script type="math/tex; mode=display">\begin{align} x \in \mathbf{R}^{N \times 1}, y \in \mathbf{R}^{N \times 1}, x^T y \in \mathbf{R} \end{align}</script><h3 id="행렬과-행렬의-곱셈"><a href="#행렬과-행렬의-곱셈" class="headerlink" title="행렬과 행렬의 곱셈"></a>행렬과 행렬의 곱셈</h3><ul>
+<li>벡터의 곱셈을 정의한 후에는 이를 이용하여 행렬의 곱셈을 정의할 수 있다. 행렬과 행렬을 곱하면 행렬이 된다. 방법은 다음과 같다.</li>
+</ul>
+<ul>
+<li>$A$ 행렬과 $B$ 행렬을 곱한 결과가 $C$ 행렬이 된다고 하자. $C$의 $i$번째 행, $j$번째 열의 원소 $c_{ij}$의 값은 $A$ 행렬의 $i$번째 행 벡터 $a^{T}_{i}$와 $B$ 행렬의 $j$번째 열 벡터 $b_{j}$의 곱이다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} C = AB \; \rightarrow \; c_{ij} = a_i^T b_j \end{align}</script><ul>
+<li>이 정의가 성립하려면 앞의 행렬 $A$의 열의수가 뒤의 행렬 $B$의 행의 수와 일치해야만 한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} A \in \mathbf{R}^{N \times L} , \; B \in \mathbf{R}^{L \times M} \;  \rightarrow \; AB \in \mathbf{R}^{N \times M} \end{align}</script><h3 id="교환-법칙과-분배법칙"><a href="#교환-법칙과-분배법칙" class="headerlink" title="교환 법칙과 분배법칙"></a>교환 법칙과 분배법칙</h3><ul>
+<li><code>행렬의 곱셈</code>은 곱하는 행렬의 순서를 바꾸는 <code>교환 법칙이 성립하지 않는다.</code> 그러나 덧셈에 대한 분배 법칙은 성립한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} AB \neq BA \end{align}</script><script type="math/tex; mode=display">\begin{align} A(B + C) = AB + AC \end{align}</script><script type="math/tex; mode=display">\begin{align} (A + B)C = AC + BC \end{align}</script><ul>
+<li>전치 연산도 마찬가지로 마찬가지로 덧셈/뺄셈에 대해 분배 법칙이 성립한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} (A + B)^T = A^T + B^T \end{align}</script><ul>
+<li>전치 연산 곱셈의 경우에는 분배 법칙이 성립하기는 하지만 <code>전치 연산이 분배되면서 곱셈의 순서가 바뀐다.</code></li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} (AB)^T = B^T A^T \end{align}</script><script type="math/tex; mode=display">\begin{align} (ABC)^T = C^T B^T A^T \end{align}</script><p><img src="/image/matrix_operation_02.png" alt="행렬의 곱셈에 대한 교환법칙은 성립하지 않는다"></p>
+<h3 id="곱셈의-연결"><a href="#곱셈의-연결" class="headerlink" title="곱셈의 연결"></a>곱셈의 연결</h3><ul>
+<li>연속된 행렬의 곱셈은 계산 순서를 임의의 순서로 해도 상관없다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} ABC = (AB)C = A(BC) \end{align}</script><script type="math/tex; mode=display">\begin{align} ABCD = ((AB)C)D = (AB)(CD) = A(BCD) = A(BC)D \end{align}</script><p><img src="/image/matrix_operation_03.png" alt="행렬의 연산"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "선형대수 요소(Elements in linear algebra)",
+        "image": "https://heung-bae-lee.github.io/image/linear_algebra_elements.png",
+        "keywords": "",
+        "genre": "linear algebra",
+        "datePublished": "2020-05-12",
+        "dateCreated": "2020-05-12",
+        "dateModified": "2020-05-13",
+        "url": "https://heung-bae-lee.github.io/2020/05/12/linear_algebra_01/",
+        "description": "
+아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.
+
+Linearity(선형성)
+행렬로 표현할 수 있는 것들은 기본적으로 다 선형성이라는 것을 만족해야 한다. 선형성은 아래 두 가지 조건을 만족할 때 선형성을 갖는다고 할 수 있다.
+
+1)"
+        "wordCount": 2319
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/05/13/linear_algebra_02/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            선형 시스템(Linear system)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/05/02/machine_learning_14/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Ensemble Learning - 01</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/05/13/linear_algebra_02/" class="title">선형 시스템(Linear system)</a></p>
+                            <p class="item-date"><time datetime="2020-05-13T07:50:33.000Z" itemprop="datePublished">2020-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/05/12/linear_algebra_01/" class="title">선형대수 요소(Elements in linear algebra)</a></p>
+                            <p class="item-date"><time datetime="2020-05-12T13:41:59.000Z" itemprop="datePublished">2020-05-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/02/machine_learning_14/" class="title">Ensemble Learning - 01</a></p>
+                            <p class="item-date"><time datetime="2020-05-02T12:00:10.000Z" itemprop="datePublished">2020-05-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/02/data_structure_06/" class="title">내가 정리하는 자료구조 05 - 트리(Tree)</a></p>
+                            <p class="item-date"><time datetime="2020-05-02T10:27:21.000Z" itemprop="datePublished">2020-05-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/04/30/data_structure_05/" class="title">내가 정리하는 자료구조 04 - 해쉬 테이블</a></p>
+                            <p class="item-date"><time datetime="2020-04-30T14:32:54.000Z" itemprop="datePublished">2020-04-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">15</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/05/12/linear_algebra_01/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
