@@ -21,7 +21,7 @@
 <meta property="og:description" content="Linear combination, vector equation, Four views of matrix multiplication 아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_linear_combination.png">
-<meta property="og:updated_time" content="2020-05-14T14:23:04.026Z">
+<meta property="og:updated_time" content="2020-05-14T16:17:54.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linear combination, vector equation, Four views of matrix multiplication">
 <meta name="twitter:description" content="Linear combination, vector equation, Four views of matrix multiplication 아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조">
@@ -392,7 +392,21 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1  \\ 5 \\ 5 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 | 1 \\ 0 & 0 & 3 & 3 | 3 \\ 0 & 0 & 0 & 0 | 0 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 | 1 \\ 0 & 0 & 1 & 1 | 1 \\ 0 & 0 & 0 & 0 | 0 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 0 & -1 | -2 \\ 0 & 0 & 1 & 1 | 1 \\ 0 & 0 & 0 & 0 | 0 \end{bmatrix} \end{align}</script><blockquote>
 <p>$ X =  Null space + particular solution$으로 이루어져있음을 확인 할 수 있다. 원래 원점을 지나는 평면인 Null space이었는데 particular solution만큼 평생이동된 평면이 해 집합이 되었다는 것으로 해석 할 수 있다.</p>
 </blockquote>
-<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} \\ &=& v \begin{bmatrix} -3 \\ 1 \\ 0 \\ 0 \end{bmatrix} + z \begin{bmatrix} 1 \\ 0 \\ -1 \\ 1 \end{bmatrix} + \begin{bmatrix} -2 \\ 0 \\ 1 \\ 0 \end{bmatrix} \in N(A) \end{align}</script>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} \\ &=& v \begin{bmatrix} -3 \\ 1 \\ 0 \\ 0 \end{bmatrix} + z \begin{bmatrix} 1 \\ 0 \\ -1 \\ 1 \end{bmatrix} + \begin{bmatrix} -2 \\ 0 \\ 1 \\ 0 \end{bmatrix} \in N(A) \end{align}</script><ul>
+<li>행렬의 곱을 이제는 linear combination의 관점으로 계산하는 방법에 대해 살펴보자. 아래 그림에서 보듯이 행렬을 column vector로 나누어 linear combination으로 행렬의 곱을 볼 수 있다.</li>
+</ul>
+<p><img src="/image/matrix_multiplication_using_column_vectors_linear combination_01.png" alt="행렬의 곱을 column vector linear combination으로 생각하기 - 01"></p>
+<p><img src="/image/matrix_multiplication_using_column_vectors_linear combination_02.png" alt="행렬의 곱을 column vector linear combination으로 생각하기 - 02"></p>
+<ul>
+<li>아래와 같이 column vector말고 row vector를 사용한 곱의 방법을 사용할 수도 있다. 위의 경우와의 차이는 <code>왼쪽의 행렬에 관한 관점으로 바라볼때는 column vector들의 linear combination 오른쪽의 행렬의 관점으로 곱을 계산할 경우는 row vector들의 linear combination으로 계산 할 수 있다.</code></li>
+</ul>
+<p><img src="/image/matrix_multiplication_using_row_vectors_linear_combination.png" alt="행렬의 곱을 row vector linear combination으로 생각하기"></p>
+<ul>
+<li>위의 개념들을 생각하여 외적을 계산할 수 있다. 아래 그림에서와 같이 두 행렬의 외적을 2부분으로 나누어 계산하면 손쉽게 계산할 수 있다.</li>
+</ul>
+<p><img src="/image/how_to_outer_product_matrix_multiplication.png" alt="외적을 계산하는 방법"></p>
+<p><img src="/image/sum_of_outer_products.png" alt="머신러닝에서 외적이 사용되는 개념들"></p>
+
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 하단형 -->
@@ -480,13 +494,13 @@ ga('send', 'pageview');
         "genre": "linear algebra",
         "datePublished": "2020-05-14",
         "dateCreated": "2020-05-14",
-        "dateModified": "2020-05-14",
+        "dateModified": "2020-05-15",
         "url": "https://heung-bae-lee.github.io/2020/05/14/linear_algebra_03/",
         "description": "Linear combination, vector equation, Four views of matrix multiplication
 아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.
 
 앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조"
-        "wordCount": 1866
+        "wordCount": 1984
     }
 </script>
 
