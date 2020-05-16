@@ -21,7 +21,7 @@
 <meta property="og:description" content="Ensemble Learning이란? 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.   모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.  단일 모형을 사용할">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png">
-<meta property="og:updated_time" content="2020-05-12T04:16:30.077Z">
+<meta property="og:updated_time" content="2020-05-16T10:52:38.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ensemble Learning - 01">
 <meta name="twitter:description" content="Ensemble Learning이란? 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.   모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.  단일 모형을 사용할">
@@ -568,9 +568,236 @@ ga('send', 'pageview');
 <li>XGBoost의 핵심 라이브러리는 C/C++로 작성돼 있다. XGBoost 개발 그룹은 파이썬에서도 XGBoost를 구동할 수 있도록 파이썬 패키지를 제공한다. 이 파이썬 패키지의 역할은 대부분 C/C++ 핵심 라이브러리를 호출하는 것이다.</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># window용</span></span><br><span class="line"><span class="comment"># conda install -c anaconda py-xgboost</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Linux용</span></span><br><span class="line">conda install -c conda-forge xgboost</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import xgboost</span><br><span class="line"></span><br><span class="line">model_xgb = xgboost.XGBClassifier(n_estimators=100, max_depth=1, random_state=0)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>python 래퍼 모듈과 Scikit-Learn 래퍼 XGBoost 모듈의 일부 hyper-parameter는 약간 다르므로 이에 대한 주의가 필요</code>하다.</p>
+</li>
+<li><p>python 래퍼 XGBoost 모듈</p>
+<ul>
+<li><p>XGboost 고유의 프레임워크를 python 언어 기반에서 구현한 것으로 별도의 API기반을 갖고 있어 Scikit-Learn 프레임워크를 기반으로 한 것이 아니기에 Scikit-Learn의 fit(), predict() 메서드 같은 Scikit-Learn 고유의 아키텍처와 다른 다양한 유틸리티(cross_val_score, GridSearchCV, Pipeline 등)와 함께 사용될 수 없다.</p>
+</li>
+<li><p>일반 parameter</p>
+<ul>
+<li>일반적으로 실행 시 thread의 개수나 silent 모드 등의 선택을 위한 parameter로서 default parameter 값을 바꾸는 경우는 거의 없다.</li>
+<li><code>booster</code> : gbtree(tree based model) 또는 gblinear(linear model)선택 default=gbtree</li>
+<li><code>silent</code> : default=0이며, 출력 메시지를 나타내고 싶지 않을 경우 1로 설정한다.</li>
+<li><code>nthread</code> : CPU의 실행 thread 개수를 조정하며, <code>default는 CPU의 전체 thread를 다 사용하는 것</code>이다. Multi Core/thread CPU 시스템에서 전체 CPU를 사용하지 않고 일부 CPU만 사용해 ML 애플리케이션을 구동하는 경우에 변경한다.</li>
+</ul>
+</li>
+<li><p>Booster parameter</p>
+<ul>
+<li><p>tree 최적화, Boosting, Regularization 등과 관련 parameter 등을 지칭한다.</p>
+</li>
+<li><p><code>eta [default=0.3, alias:learning_rate]</code> : GBM의 학습률(learning rate)과 같은 parameter이다. 0~1 사이의 값을 지정하며 Boosting step을 반복적으로 수행할 때 업데이트되는 학습률 값. python 래퍼 기반의 xgboost를 이용할 경우 default=0.3 scikit-learn 래퍼를 이용할 경우 eta는 learning_rate로 대체되며, default=0.1이다. <code>보통은 0.01~0.2 사이의 값을 선호</code>한다.</p>
+</li>
+<li><p><code>num_boost_rounds</code> : GBM의 n_estimators와 같은 parameter이다.</p>
+</li>
+<li><code>min_child_weight[default=1]</code> : GBM의 min_child_leaf와 유사함(똑같지는 않음). 과적합을 조절하기 위해 사용된다.</li>
+<li><code>gamma [default=0, alias: min_split_loss]</code> : tree의 leaf 노드를 추가적으로 나눌지를 결정할 최소 손실 감소 값이다. <code>해당 값보다 큰 손실(loss)이 감소된 경우에 leaf 노드를 분리</code>한다. 값이 클수록 과적합 감소 효과가 있다.</li>
+<li><code>max_depth [default=6]</code> : tree 기반 알고리즘의 max_depth와 같다. 0을 지정하면 깊이에 제한이 없다. Max_depth가 높으면 특정 feature 조건에 특화되어 룰 조건이 만들어지므로 과적합 가능성이 높아지며 <code>보통은 3~10</code>사이의 값을 적용한다.</li>
+<li><code>sub_sample [default=1]</code> : GBM의 subsample과 동일하다. tree가 커져서 과적합되는 것을 제어하기 위해 데이터를 샘플링하는 비율을 지정한다. sub_sample=0.5로 지정하면 전체 데이터의 절반을 tree를 생성하는 데 사용한다. <code>0에서 1사이의 값이 가능하나 일반적으로 0.5~1사이의 값을 사용한다.</code></li>
+<li><code>colsample_bytree [default=1]</code> : GBM의 max_features와 유사하다. tree 생성에 필요한 feature(column)를 임의로 샘플링 하는 데 사용된다. 매우 많은 feature가 있는 경우 과적합을 조정하는 데 적용한다.</li>
+<li><code>lambda [default=1, alias:reg_lambda]</code> : <code>L2 Regularization 적용 값</code>이다. feature 개수가 많을 경우 적용을 검토하며 값이 클수록 과적합 감소 효과가 있다.</li>
+<li><code>alpha</code> : <code>L1 Regularization 적용값</code>이다. feature 개수가 많을 경우 적용을 검토하며 값이 클수록 감소 효과가 있다.</li>
+<li><code>scale_pos_weight [default=1]</code> : 특정 값으로 치우친 비대칭한 클래스로 구성된 데이터 세트의 균형을 유지하기 위한 paramter이다.</li>
+</ul>
+</li>
+<li><p>학습 task parameter</p>
+<ul>
+<li>학습 수행 시의 객체 함수, 평가를 위한 지표 등을 설정하는 parameter이다.</li>
+<li><code>objective</code> : 최솟값을 가져야할 손실 함수(loss function)을 정의한다. XGBoost는 많은 유형의 손실함수를 사용할 수 있다. 주로 사용되는 손실함수는 이진 분류인지 다중 분류인지에 따라 달라진다.<ul>
+<li><code>binary:logistic</code> : 이진 분류일 때 적용한다.</li>
+<li><code>multi:softmax</code> : 다중 분류일 때 적용한다. 손실 함수가 multi:softmax 일 경우에는 label class의 개수인 num_class parameter를 지정해야 한다.</li>
+<li><code>multi:softprob</code> : multi:softmax와 유사하나 개별 label class의 해당되는 예측 확률을 반환한다.</li>
+</ul>
+</li>
+<li><code>eval_metric</code> : 검증에 사용되는 함수를 정의한다. default는 회귀인 경우 rmse, 분류인 경우 error이다. 다음은 eval_metric의 값 유형이다.<ul>
+<li>rmse : Root Mean Square Error</li>
+<li>mae : Mean Absolute Error</li>
+<li>logloss : Negative log-likelihood</li>
+<li>error : Binary classification error rate (0.5 threshold)</li>
+<li>merror : Multiclass classification error rate</li>
+<li>mlogloss : Multiclass logloss</li>
+<li>auc : Area under the curve</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>대부분의 hyper parameter는 Booster paramter에 속한다.</code></p>
+</li>
+</ul>
+</li>
+<li><p>Scikit-Learn 래퍼 XGBoost 모듈</p>
+<ul>
+<li>XGboost 패키지의 Scikit-Learn 래퍼 클래스는 <code>XGBClassifier</code>, <code>XGBRegressor</code>이다. 이를 이용하면 Scikit-Learn estimator가 학습을 위해 사용하는 fit(), predict() 와 같은 표준 Scikit-Learn 개발 프로세스 및 다양한 유틸리티를 활용할 수 있다.</li>
+</ul>
+</li>
+<li><p>과적합(overfitting) 문제가 심각하다면 다음과 같이 적용할 것을 고려할 수 있다.</p>
+<ul>
+<li>eta 값을 낮춘다.(0.01~0.1)<ul>
+<li>eta 값을 낮출 경우 num_round(또는 n_estimators)는 반대로 높여줘야 한다.</li>
+</ul>
+</li>
+<li>max_depth 값을 낮춘다.</li>
+<li>min_child_weight 값을 높인다.</li>
+<li>gamma 값을 높인다.</li>
+<li>또한 subsample과 colsample_bytree를 조정하는 것도 tree가 너무 복잡하게 생성되는 것을 막아 과적합 문제에 도움이 될 수 있다.</li>
+</ul>
+</li>
+<li><p>XGBoost 자체적으로 교차 검증, 성능 평가, feature 중요도 등의 시각화 기능을 가지고 있다. 또한 XGBoost는 기본 GBM에서 부족한 다른 여러 가지 성능 향상 기능이 있다. 그 중에 수행 속도를 향상시키기 위한 대표적인 기능으로 <code>Early Stopping</code> 기능이 있다. <code>기본 GBM의 경우 지정된 횟수를 다 완료해야 한다. 허나, XGBoost와 LightGBM은 모두 early Stopping 기능이 있어서 n_estimators에 지정한 Boosting 반복 횟수에 도달하지 않더라도 예측 오류가 더 이상 개선되지 않으면 반복을 끝까지 수행하지 않고 중지해 수행 시간을 개선 할 수 있다.</code></p>
+</li>
+<li><p>예를 들어 n_estimators=200, early Stopping 파라미터 값을 50으로 설정하면, 1부터 200회까지 Boosting을 반복하다가 50회를 반복하는 동안 학습 오류가 감소하지 않으면 더 이상 Boosting을 진행하지 않고 종료한다.(가령 100회에서 학습 오류 값이 0.8인데, 101회~150회 반복하는 동안 예측 오류가 0.8보다 작은 값이 하나도 없으면 Boosting을 종료한다.)</p>
+</li>
+<li><p>아래는 python 래퍼의 Xgboost 사용법을 간단히 정리해 놓은 것이다. <code>일반적으로 XGBoost는 GBM과는 다르게 병렬처리와 early Stopping 등으로 빠른 수행시간 처리가 가능하지만, CPU 코어가 많지 않은 개인용 PC에서는 수행시간 향상을 경험하기 어려울 수도 있다.</code></p>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import xgboost as xgb</span><br><span class="line">from xgboost import plot_importance</span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.datasets import load_breast_cancer</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">import warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</span><br><span class="line"></span><br><span class="line">dataset = load_breast_cancer()</span><br><span class="line">X_features = dataset.data</span><br><span class="line">y_label = dataset.target</span><br><span class="line"></span><br><span class="line">cancer_df = pd.DataFrame(data=X_features, columns=dataset.feature_names)</span><br><span class="line">cancer_df[<span class="string">'target'</span>] = y_label</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(dataset.target_names)</span><br><span class="line"><span class="built_in">print</span>(cancer_df[<span class="string">'target'</span>].value_counts())</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">'malignant'</span>, <span class="string">'benign'</span>]</span><br><span class="line">1    357</span><br><span class="line">0    212</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test=train_test_split(X_features, y_label, test_size=0.2, random_state=156)</span><br><span class="line"><span class="built_in">print</span>(X_train.shape, X_test.shape)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(455, 30) (114, 30)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>python 래퍼 XGboost가 Scikit-Learn 래퍼 XGboost와 차이점은 여러가지가 있지만, 가장 큰 차이는 학습용 데이터와 테스트용 데이터 세트를 위해 별도의 객체인 DMatrix를 생성한다는 점이다.</p>
+<ul>
+<li>Dmatrix는 주로 numpy 입력 parameter를 받아서 만들어지는 XGBoost만의 전용 데이터 세트이지만 numpy이외에 libsvm txt 포맷 파일, xgboost 이진 버퍼 파일을 parameter로 입력받아 변환할 수 있다.</li>
+</ul>
+</li>
+<li><p>data는 피처 데이터 세트이며, label은 classification의 경우에는 label 데이터 세트, regression의 경우에는 숫자형인 종속값 데이터 세트이다.</p>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dtrain = xgb.DMatrix(data=X_train, label=y_train)</span><br><span class="line">dtest = xgb.DMatrix(data=X_test, label=y_test)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>early_stopping_rounds 파라미터를 설정해 조기 중단을 수행하기 위해서는 <code>반드시 eval_set과 eval_metric이 함께 설정되야 한다.</code> XGboost는 반복마다 eval_set으로 지정된 데이터 세트에서 eval_metric의 지정된 평가 지표로 예측 오류를 측정한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">params = &#123;<span class="string">'max_depth'</span>:3,</span><br><span class="line">          <span class="string">'eta'</span>:0.1,</span><br><span class="line">          <span class="string">'objective'</span>:<span class="string">'binary:logistic'</span>,</span><br><span class="line">          <span class="string">'eval_metric'</span>:<span class="string">'logloss'</span>,</span><br><span class="line">          <span class="string">'early_stoppings'</span>:100</span><br><span class="line">      &#125;</span><br><span class="line">num_rounds = 400</span><br><span class="line"></span><br><span class="line"><span class="comment"># train 데이터 세트는 'train', evaluation(test) 데이터 세트는 'eval'로 명시한다.</span></span><br><span class="line">wlist = [(dtrain, <span class="string">'train'</span>), (dtest, <span class="string">'eval'</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 하이퍼 파라미터와 early stopping 파라미터를 train() 함수의 파라미터로 전달</span></span><br><span class="line">xgb_model = xgb.train(params=params, dtrain=dtrain, num_boost_round=num_rounds, evals=wlist)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>python 래퍼 xgboost는 predict() 메서드가 예측 결과값이 아닌 예측 결과를 추정할 수 있는 확률 값을 반환한다는 것이다.<ul>
+<li>예측 확률이 0.5보다 크면 1, 그렇지 않으면 0으로 예측하는 로직을 추가</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pred_probs = xgb_model.predict(dtest)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'predict() 수행 결과값을 10개만 표시, 예측 화귤값으로 표시된'</span>)</span><br><span class="line"><span class="built_in">print</span>(np.round(pred_probs[:10], 3))</span><br><span class="line"></span><br><span class="line">preds = [1 <span class="keyword">if</span> prob &gt; 0.5 <span class="keyword">else</span> 0 <span class="keyword">for</span> prob <span class="keyword">in</span> pred_probs]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'예측값 10개만 표시:'</span>, preds[:10])</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">predict() 수행 결과값을 10개만 표시, 예측 화귤값으로 표시된</span><br><span class="line">[0.95  0.003 0.9   0.086 0.993 1.    1.    0.999 0.998 0.   ]</span><br><span class="line">예측값 10개만 표시: [1, 0, 1, 0, 1, 1, 1, 1, 1, 0]</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>xgboost 패키지에 내장된 시각화 기능 중 <code>plot_importance() API</code>는 feature의 중요도를 막대그래프 형식으로 나타낸다. <code>기본 평가 지표로 f1-score를 기반으로 해 각 feature의 중요도를 나타낸다.</code> Scikit-Learn은 Estimator 객체의 feature_importances_ 속성을 이용해 직접 시각화 코드를 작성해야 하지만, xgboost 패키지는 plot_importance()를 이용해 바로 피처 중요도를 시각화할 수 있다. plot_importance() 호출 시 파라미터로 앞에서 학습이 완료된 모델 객체 및 Matplotlib의 ax 객체를 입력하기만 하면 된다.</li>
+</ul>
+<ul>
+<li>내장된 plot_importance() 이용 시 유의할 점은 xgboost numpy 기반의 feature 데이터터로 학습시에 피처명을 제대로 알 수 가 없으므로 f0, f1와 같이 feature 순서별로 f자 뒤에 순서를 붙여서 X 축에 feature들로 나열한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from xgboost import plot_importance</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(10, 12))</span><br><span class="line">plot_importance(xgb_model, ax=ax)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/python_wrapper_xgboost_feature_importance_bar_plot.png" alt="python 래퍼의 xgboost feature 중요도"></p>
+<ul>
+<li><p>또한, Decision Tree에서 보여준 tree 기반 규칙 구조도 xgboost에서 시각화할 수 있다. xgboost 모듈의 to_graphviz() API를 이용하면 jupyter notebook에 바로 규칙 tree 구조를 그릴 수 있다. xgboost.cv() API를 통해 GridSearchCV와 유사한 기증을 수행할 수 있다.</p>
+</li>
+<li><p>아래는 Scikit-Learn 래퍼의 xgboost의 사용법을 정리해 놓은 것이다.</p>
+<ul>
+<li>앞의 python 래퍼와 동일한 결과를 보여준다.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line">from sklearn.metrics import confusion_matrix</span><br><span class="line"></span><br><span class="line">xgb_wrapper = XGBClassifier(n_estimators=400, learning_rate=0.1, max_depth=3, random_state=156)</span><br><span class="line">xgb_wrapper.fit(X_train, y_train)</span><br><span class="line">w_preds = xgb_wrapper.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, w_preds))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[35  2]</span><br><span class="line"> [ 1 76]]</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>early stopping 기능을 사용하는 방법은 아래와 같다. 성능 평가를 수행할 데이터 세트는 학습 데이터가 아니라 별도의 데이터 세트이어야 한다. 허나, 아래 데이터 자체의 크기가 작기 때문에 평가용으로 사용해 보았다. 허나, 절대 아래와 같이 evals에 test 데이터를 사용하면 안된다. 만일 test data를 사용했다면 predict하는 경우에는 학습에 사용되지 않은 또 다른 데이터를 사용해야한다.</p>
+</li>
+<li><p><code>또한, early stopping을 너무 적게 잡는다면 전역 최적화가 이루어지지 않을 수도 있으므로 주의</code>하자</p>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xgb_wrapper = XGBClassifier(n_estimators=400, learning_rate=0.1, max_depth=3, random_state=156)</span><br><span class="line">evals = [(X_test, y_test)]</span><br><span class="line">xgb_wrapper.fit(X_train, y_train, early_stopping_rounds=100, eval_metric=<span class="string">'logloss'</span>, eval_set=evals, verbose=True)</span><br><span class="line">w_preds = xgb_wrapper.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, w_preds))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[34  3]</span><br><span class="line"> [ 1 76]]</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h3><ul>
+<li>LightGBM은 XGBoost와 함께 부스팅 계열 알고리즘에서 가장 각광 받고 있다. XGBoost는 매우 뛰어난 부스팅 알고리즘이지만, XGBoost에서 GridSearchCV로 hyper parameter 튜닝을 수행하다 보면 여전히 학습시간이 오래 걸린다. 물론 GBM 보다는 빠르지만, <code>대용량 데이터의 경우 만족할 만한 학습 성능을 기대하려면 많은 CPU Core를 가진 시스템에서 높은 병렬도로 학습을 진행해야 한다.</code></li>
+</ul>
+<ul>
+<li>LightGBM의 가장 큰 장점은 XGBoost보다 학습에 걸리는 시간이 훨씬 적다는 점이다. 또한 메모리 사용량도 상대적으로 적다. LightGBM이 XGBoost보다 2년 후에 만들어지다보니 XGBoost의 장점은 계승하고 단점은 보완하는 방식으로 개발되었기 때문에 예측 성능에서의 차이는 거의 없지만, 기능상의 다양성이 더 높다.</li>
+</ul>
+<ul>
+<li><code>LightGBM의 한 가지 단점으로 알려진 것은 적은 데이터 세트에 적용할 경우 과적합이 발생하기 쉽다는 것</code>이다. 적은 데이터 세트의 기준은 애매하지만, 일반적으로 10,000건 이하의 데이터 세트 정도라고 LightGBM 공식 문서에서 기술하고 있다.</li>
+</ul>
+<ul>
+<li>LightGBM은 일반 GBM 계열의 트리 분할 방법과 다르게 leaf 중심 트리 분할(Leaf Wise) 방식을 사용한다. 기존의 대부분 트리 기반 알고리즘은 트리의 깊이를 효과적으로 줄이기 위한 균형 트리 분할(Level wise)방식을 사용한다. 즉, <code>최대한 균형 잡힌 트리를 유지하면서 분할하기 때문에 트리의 깊이가 최소화될 수 있다.</code> 이렇게 균형잡힌 트리를 생성하는 이유는 과적합(overfitting)에 보다 더 강한 구조를 가질 수 있다고 알려져 있기 때문이다. 반대로 균형을 맞추기 위한 시간이 필요하다는 상대적인 단점이 있다. <code>하지만, LightGBM의 leaf 중심 트리 분할 방식은 트리의 균형을 맞추지 않고, 최대 손실 값(max delta loss)을 가지는 leaf 노드를 지속적으로 분할하면서 트리의 깊이가 깊어지고 비대칭적인 규칙 트리가 생성된다. 하지만 이렇게 최대 손실값을 가지는 leaf 노드를 지속적으로 분할해 생성된 규칙 트리는 학습을 반복할수록 결국은 균형 트리 분할 방식보다 예측 오류 손실을 최소화 할 수 있다는 것이 LightGBM의 구현 사상</code>이다.</li>
+</ul>
+<p><img src="/image/what_is_lightGBM.png" alt="LightGBM의 개념"></p>
+<ul>
+<li>LightGBM 설치 방법<ul>
+<li>Window에 설치할 경우에는 Visual Studio Build tool 2015 이상이 설치돼있어야 한다.</li>
+<li>아나콘다 프롬프트를 관리자 권한으로 실행한 다음 아래 명려어 실행</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c conda-forge lightgbm</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>LightGBM 하이퍼 파라미터는 XGBoost와 많은 부분이 유사하지만 트리의 분할 방식이 다르므로 예를 들어 max_depth를 매우 크게 가져가는 것과 같이 트리 특성에 맞게 설정해 주어야 할 것</code>이다.</li>
+</ul>
+<h4 id="주요-파라미터"><a href="#주요-파라미터" class="headerlink" title="주요 파라미터"></a>주요 파라미터</h4><ul>
+<li><p><code>num_iterations [default = 100]</code> : 반복 수행하려는 트리의 개수를 지정한다. 크게 지정할수록 예측 성능이 높아질수 있으나, 너무 크게 지정하면 오히려 과적합으로 성능이 저하 될 수 있다. Scikit-Learn GBM과 XGBoost의 Scikit-Learn 호환 클래스의 n_estimators와 같은 파라미터이므로 LightGBM의 Scikit-Learn 호환 클래스에서는 n_estimators로 이름이 변경된다.</p>
+</li>
+<li><p><code>learning_rate [default = 0.1]</code> : 0에서 1사이의 값을 지정하며 Boosting 스텝을 반복적으로 수행할 때 업데이트되는 학습롤값이다. 일반적으로 n_estimators를 크게하고 learning_rate를 작게해서 예측 성능을 향상시킬 수 있으나, 마찬가지로 과적합(overfitting) 이슈와 학습 시간이 길어지는 부정적인 영향도 고려해야한다. GBM, XGBoost의 learning_rate와 같은 파라미터이다.</p>
+</li>
+<li><p><code>max_depth [default=1]</code> : 트리 기반 알고리즘의 max_depth와 같다. 0보다 작은 값을 지정하면 깊이에 제한이 없다. <code>지금까지 소개한 Depth Wise 방식의 트리와 다르게 LightGBM은 Leaf wise 기반이므로 깊이가 상대적으로 더 깊다.</code></p>
+</li>
+<li><p><code>min_data_in_leaf [default=20]</code> : Decision Tree의 min_samples_leaf와 같은 파라미터이다. 하지만 Scikit-Learn 래퍼 LightGBM 클래스인 LightGBMClassifier에서는 min_child_samples 파라미터로 이름이 변경된다. <code>최종 결정 클래스인 Leaf 노드가 되기 위해서 최소한으로 필요한 레코드(데이터) 수이며, 과적합을 제어하기 위한 파라미터이다.</code></p>
+</li>
+<li><p><code>num_leaves [default=31]</code> : 하나의 트리가 가질 수 있는 최대 Leaf 개수이다.</p>
+</li>
+<li><p><code>boosting [default=gbdt]</code> : Boosting 트리를 생성하는 알고리즘을 기술한다.</p>
+<ul>
+<li>gbdt : 일반적인 그레디언트 부스팅 결정트리</li>
+<li>rf : 랜덤포레스트</li>
+</ul>
+</li>
+<li><p><code>bagging_fraction [default=1.0]</code> : 트리가 커져서 과적합되는 것을 제어하기 위해서 데이터 샘플링하는 비율을 지정한다. Scikit-Learn의 GBM과 XGBoost의 sub_sample 파라미터와 동일하기에 Scikit-Learn 래퍼 LightGBM인 LightGBMClassifier에서는 sub_sample로 동일하게 파라미터 이름이 변경된다.</p>
+</li>
+<li><p><code>feature_fraction [default=1.0]</code> : 개별 트리를 학습할 때마다 무작위로 선택하는 feature의 비율이다. 과적합을 막기 위해 사용된다. GBM의 max_features와 유사하며, XGBClassifier의 colsample_bytree와 똑같으므로 LightGBMClassifier에서는 동일하게 colsample_bytree로 변경된다.</p>
+</li>
+<li><p><code>lambda_l2 [default=0.0]</code> : L2 Regulation 제어를 위한 값이다. feature 개수가 많을 경우 적용을 검토하며 값이 클수록 과적합 감소 효과가 있다. XGBClassifier의 reg_lambda와 동일하므로 LightGBMClassifier에서는 reg_lambda로 변경된다.</p>
+</li>
+<li><p><code>lambda_l1 [default=0.0]</code> : L1 Regulation 제어를 위한 갑이다. L2와 마찬가지로 과적합 제어를 위한 것이며, XGBClassifier의 reg_alpha와 동일하므로 LightGBMClassifier에서는 reg_alpha로 변경된다.</p>
+</li>
+</ul>
+<h4 id="Learning-Task-파라미터"><a href="#Learning-Task-파라미터" class="headerlink" title="Learning Task 파라미터"></a>Learning Task 파라미터</h4><ul>
+<li><code>objective</code> : 최솟값을 가져야 할 손실함수(loss function)을 정의한다. XGBoost의 objective 파라미터와 동일하다. 애플리케이션 유형, 즉 regression, multiclass classification, binary classificationdl인지에 따라 objective인 손실함수가 지정된다.</li>
+</ul>
+<h4 id="하이퍼-파라미터-튜닝-방안"><a href="#하이퍼-파라미터-튜닝-방안" class="headerlink" title="하이퍼 파라미터 튜닝 방안"></a>하이퍼 파라미터 튜닝 방안</h4><ul>
+<li><p><code>num_leaves의 개수를 중심으로 min_child_samples(min_data_in_leaf), max_depth를 함께 조정하면서 모델의 복잡도를 줄이는 것이 기본 튜닝 방안</code>이다.</p>
+<ul>
+<li><p>num_leaves는 개별 트리가 가질 수 있는 최대 Leaf의 개수이고 LightGBM 모델의 복잡도를 제어하는 주요 파라미터이다. 일반적으로 num_leaves의 개수를 높이면 정확도가 높아지지만, 반대로 트리의 깊이가 깊어지고 모델의 복잡도가 커져서 과적합 영향도가 커진다.</p>
+</li>
+<li><p>min_data_in_leaf는 Scikit-Learn 래퍼 클래스에서는 min_child_samples로 이름이 바뀐다. 과적합을 개선하기 위한 중요한 파라미터이다. num_leaves와 학습 데이터의 크기에 따라 달라지지만, 보통 큰 값으로 설정하면 트리가 깊어지는 것을 방지한다.</p>
+</li>
+<li><p>max_depth는 명시적으로 깊이의 크기를 제한한다. num_leaves, min_data_in_leaf와 결합해 과적합을 개선하는데 사용한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -659,7 +886,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-05-02",
         "dateCreated": "2020-05-02",
-        "dateModified": "2020-05-12",
+        "dateModified": "2020-05-16",
         "url": "https://heung-bae-lee.github.io/2020/05/02/machine_learning_14/",
         "description": "Ensemble Learning이란?
 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.
@@ -668,7 +895,7 @@ ga('send', 'pageview');
 모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.
 
 단일 모형을 사용할"
-        "wordCount": 5277
+        "wordCount": 7502
     }
 </script>
 
