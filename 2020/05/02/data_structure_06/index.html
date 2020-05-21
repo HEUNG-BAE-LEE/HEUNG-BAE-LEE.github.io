@@ -13,18 +13,18 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 실제로 어디에 많이 사용되나? 트리 중 이진 트리 (Binary Tree) 형태의 구조로, 탐색(검색) 알고리즘 구현을 위해 많이 사용됨    2. 알아둘 용어 Node: 트리에서 데이터를 저장하는 기본 요소 (데이">
+    <meta name="description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다. 루트 노드(root)를 반드시 가진다. 트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고">
 <meta property="og:type" content="article">
 <meta property="og:title" content="내가 정리하는 자료구조 05 - 트리(Tree)">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/05/02/data_structure_06/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 실제로 어디에 많이 사용되나? 트리 중 이진 트리 (Binary Tree) 형태의 구조로, 탐색(검색) 알고리즘 구현을 위해 많이 사용됨    2. 알아둘 용어 Node: 트리에서 데이터를 저장하는 기본 요소 (데이">
+<meta property="og:description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다. 루트 노드(root)를 반드시 가진다. 트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://www.fun-coding.org/00_Images/tree.png">
-<meta property="og:updated_time" content="2020-05-18T08:18:36.267Z">
+<meta property="og:updated_time" content="2020-05-21T14:56:38.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="내가 정리하는 자료구조 05 - 트리(Tree)">
-<meta name="twitter:description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 실제로 어디에 많이 사용되나? 트리 중 이진 트리 (Binary Tree) 형태의 구조로, 탐색(검색) 알고리즘 구현을 위해 많이 사용됨    2. 알아둘 용어 Node: 트리에서 데이터를 저장하는 기본 요소 (데이">
+<meta name="twitter:description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다. 루트 노드(root)를 반드시 가진다. 트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고">
 <meta name="twitter:image" content="http://www.fun-coding.org/00_Images/tree.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -207,7 +207,12 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <h2 id="대표적인-데이터-구조7-트리"><a href="#대표적인-데이터-구조7-트리" class="headerlink" title="대표적인 데이터 구조7: 트리"></a>대표적인 데이터 구조7: 트리</h2><h3 id="1-트리-Tree-구조"><a href="#1-트리-Tree-구조" class="headerlink" title="1. 트리 (Tree) 구조"></a>1. 트리 (Tree) 구조</h3><ul>
-<li>트리: <code>Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조</code></li>
+<li>트리: <code>Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조</code><ul>
+<li><code>트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다.</code></li>
+<li>루트 노드(root)를 반드시 가진다.</li>
+<li>트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고 나머지 노드들은 <code>서로 연결 될 수 없는 분리집합</code> $T_{1}, T_{2}, \ldots, T_{n}$으로 분할 가능하다. $T_{1}, T_{2}, \ldots, T_{n}$등은 각각 하나의 트리(서브 트리)로 재귀적 정의로서 표현 할 수도 있다.</li>
+</ul>
+</li>
 <li>실제로 어디에 많이 사용되나?<ul>
 <li>트리 중 이진 트리 (Binary Tree) 형태의 구조로, <code>탐색(검색) 알고리즘 구현을 위해 많이 사용</code>됨</li>
 </ul>
@@ -215,14 +220,94 @@ ga('send', 'pageview');
 </ul>
 <h3 id="2-알아둘-용어"><a href="#2-알아둘-용어" class="headerlink" title="2. 알아둘 용어"></a>2. 알아둘 용어</h3><ul>
 <li>Node: 트리에서 데이터를 저장하는 기본 요소 (데이터와 다른 연결된 노드에 대한 Branch 정보 포함)</li>
+<li>Degree : 어떤 노드의 자식 노드의 개수</li>
+<li>Degree of a tree : 트리에 있는 노드의 최대 차수</li>
 <li>Root Node: 트리 맨 위에 있는 노드</li>
 <li>Level: 최상위 노드를 Level 0으로 하였을 때, 하위 Branch로 연결된 노드의 깊이를 나타냄</li>
 <li>Parent Node: 어떤 노드의 다음 레벨에 연결된 노드</li>
 <li>Child Node: 어떤 노드의 상위 레벨에 연결된 노드</li>
-<li>Leaf Node (Terminal Node): Child Node가 하나도 없는 노드</li>
+<li>Leaf Node (Terminal Node): Child Node가 하나도 없는 노드, 즉 Degree가 0인 노드</li>
 <li>Sibling (Brother Node): 동일한 Parent Node를 가진 노드</li>
-<li>Depth: 트리에서 Node가 가질 수 있는 최대 Level<br><img src="http://www.fun-coding.org/00_Images/tree.png" width="600"></li>
+<li>Depth(Height): 트리에서 Node가 가질 수 있는 최대 Level</li>
+<li>forest: 루트 노드를 없앤 후 얻은 서브 트리의 집합<br><img src="http://www.fun-coding.org/00_Images/tree.png" width="600"></li>
 </ul>
+<p><img src="/image/tree_structure_conception.png" alt="트리의 구조"></p>
+<p><img src="/image/what_is_binary_tree_conception.png" alt="이진 트리(binary tree)"></p>
+<p><img src="/image/relationship_between_node_and_edge.png" alt="노드와 엣지의 관계"></p>
+<ul>
+<li><p>이진 트리(binary tree)의 특징</p>
+<ul>
+<li>1) level i에서 최대 노드 수 : $2^{i-1}$</li>
+<li>2) 높이가 h인 이진 트리의 최대 노드 수 : $2^{h}-1$</li>
+<li>3) 높이가 h인 이진 트리의 최소 노드의 개수 : h</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/binary_tree_relationship_example.png" alt="이진 트리의 예시"></p>
+<ul>
+<li>이진 트리(binary tree)의 종류</li>
+</ul>
+<p><img src="/image/full_binary_tree.png" alt="이진 트리의 종류 - 포화 이진 트리"></p>
+<p><img src="/image/complete_binary_tree.png" alt="이진 트리의 종류 - 완전 이진 트리"></p>
+<p><img src="/image/skewed_binary_tree.png" alt="이진 트리의 종류 - 편향 이진 트리"></p>
+<ul>
+<li><p>이진 트리는 말 그대로 부모노드가 가질수 있는 자식노드가 최대 2개라는 의미이다. 그러한 이진 트리의 데이터를 탐색하는 방법을 설명하면 다음과 같은 방법들이 있다.</p>
+</li>
+<li><p>전위 순회(preorder traversal)</p>
+<ul>
+<li><code>현재 노드</code>가 처음 그리고 <code>왼쪽 자식 노드</code> 다음 <code>오른쪽 자식노드</code>를 탐색하게 하는 방식으로 <code>노드에 값이 존재하지 않을 때까지 순회(재귀)하도록</code>하는 탐색방식이다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/preorder_traversal.png" alt="전위 순회(preorder traversal)"></p>
+<ul>
+<li>중위 순회(inorder traversal)<ul>
+<li>현재 노드의 <code>왼쪽 자식노드</code>부터 시작해서 <code>현재 노드</code> 그리고 마지막으로 <code>오른쪽 자식 노드</code>를 순회하는 방법이다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/inorder_traversal.png" alt="중위 순회(inorder traversal)"></p>
+<ul>
+<li>후위 순회(postorder traversal)<ul>
+<li>현재 노드의 <code>왼쪽 자식노드</code>부터 시작해서 현재 노드의 <code>오른쪽 자식노드</code> 그리고 마지막으로 <code>현재노드</code>를 순회하는 방법이다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/postorder_traversal.png" alt="후위 순회(postorder traversal)"></p>
+<ul>
+<li>레벨 순회(level traversal)<ul>
+<li><code>level(depth)순으로 위에서 아래로 그리고 왼쪽부터 오른쪽으로 순회하는 방법</code>이다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/level_traversal.png" alt="레벨 순회(level traversal)"></p>
+<ul>
+<li>위의 이진 트리의 순회를 반복적으로 하기 위해서 이전에 배웠던 자료구조인 스택과 큐를 활용할 것이다. 활용하기 위해서 다시 한번 기억을 떠올리며 만들어 본다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">class Node:</span><br><span class="line">    def __init__(self, data=None):</span><br><span class="line">        self.__data=data</span><br><span class="line">        self.__next=None</span><br><span class="line">    @property</span><br><span class="line">    def data(self):</span><br><span class="line">        <span class="built_in">return</span> self.__data</span><br><span class="line"></span><br><span class="line">    @data.setter</span><br><span class="line">    def data(self, data):</span><br><span class="line">        self.__data=data</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def next(self):</span><br><span class="line">        <span class="built_in">return</span> self.__next</span><br><span class="line"></span><br><span class="line">    @next.setter</span><br><span class="line">    def next(self, target):</span><br><span class="line">        self.__next=target</span><br><span class="line"></span><br><span class="line">class My_Queue:</span><br><span class="line">    def __init__(self, head=None, tail=None):</span><br><span class="line">        self.head=head</span><br><span class="line">        self.tail=tail</span><br><span class="line"></span><br><span class="line">    def is_empty(self):</span><br><span class="line">        <span class="keyword">if</span> self.head == None:</span><br><span class="line">            <span class="built_in">return</span> True</span><br><span class="line"></span><br><span class="line">    def enqueue(self, data):</span><br><span class="line">        new_node=Node(data)</span><br><span class="line">        <span class="keyword">if</span> self.is_empty():</span><br><span class="line">            self.head=new_node</span><br><span class="line">            self.tail=new_node</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.tail.next=new_node</span><br><span class="line">            self.tail=new_node</span><br><span class="line"></span><br><span class="line">    def dequeue(self):</span><br><span class="line">        <span class="keyword">if</span> self.is_empty():</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"현재 Queue에 노드가 존재하지 않습니다."</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            pop_data=self.head</span><br><span class="line">            self.head=self.head.next</span><br><span class="line">            <span class="built_in">return</span> pop_data.data</span><br><span class="line"></span><br><span class="line">class My_stack:</span><br><span class="line">    def __init__(self, head=None, tail=None):</span><br><span class="line">        self.head=head</span><br><span class="line">        self.tail=tail</span><br><span class="line"></span><br><span class="line">    def is_empty(self):</span><br><span class="line">        <span class="keyword">if</span> self.head:</span><br><span class="line">            <span class="built_in">return</span> False</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">return</span> True</span><br><span class="line"></span><br><span class="line">    def push(self, data):</span><br><span class="line">        new_node=Node(data)</span><br><span class="line">        <span class="keyword">if</span> self.is_empty():</span><br><span class="line">            self.head=new_node</span><br><span class="line">            self.tail=new_node</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            new_node.next=self.head</span><br><span class="line">            self.head=new_node</span><br><span class="line"></span><br><span class="line">    def pop(self):</span><br><span class="line">        <span class="keyword">if</span> self.is_empty():</span><br><span class="line">            <span class="built_in">return</span> None</span><br><span class="line">        pop_node=self.head</span><br><span class="line">        self.head=self.head.next</span><br><span class="line"><span class="comment">#         print(pop_node.next)</span></span><br><span class="line">        pop_node.next=None</span><br><span class="line">        <span class="built_in">return</span> pop_node.data</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>정상적으로 작동하는지 확인하기 위해 테스트를 해본다.</p>
+</li>
+<li><p>Queue 테스트</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">q = My_Queue()</span><br><span class="line">q.enqueue(1)</span><br><span class="line">q.enqueue(2)</span><br><span class="line">q.enqueue(3)</span><br><span class="line">q.enqueue(4)</span><br><span class="line">q.enqueue(5)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> not q.is_empty():</span><br><span class="line">    <span class="built_in">print</span>(q.dequeue(), end=<span class="string">'  '</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1  2  3  4  5</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Stack 테스트</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">s = My_stack()</span><br><span class="line"></span><br><span class="line">s.push(1)</span><br><span class="line">s.push(2)</span><br><span class="line">s.push(3)</span><br><span class="line">s.push(4)</span><br><span class="line">s.push(5)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> not s.is_empty():</span><br><span class="line">    <span class="built_in">print</span>(s.pop(), end=<span class="string">"  "</span>)</span><br></pre></td></tr></table></figure>
+<h4 id><a href="#" class="headerlink" title="#"></a>#</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5  4  3  2  1</span><br></pre></td></tr></table></figure>
+<h3 id="스택-큐는-순회를-구현할때-사용"><a href="#스택-큐는-순회를-구현할때-사용" class="headerlink" title="스택, 큐는 순회를 구현할때 사용"></a>스택, 큐는 순회를 구현할때 사용</h3><ul>
+<li>위의 파일을 스택과 큐를 나누어서 각각 queue1, stack1이라는 python 파일로 저장하였다.</li>
+</ul>
+<h4 id="큐-레벨-순서-순회시-필요"><a href="#큐-레벨-순서-순회시-필요" class="headerlink" title="큐 : 레벨 순서 순회시 필요"></a>큐 : 레벨 순서 순회시 필요</h4><h4 id="스택-전위-중위-후위-순회를-반복문으로-구현할때-필요"><a href="#스택-전위-중위-후위-순회를-반복문으로-구현할때-필요" class="headerlink" title="스택 : 전위, 중위, 후위 순회를 반복문으로 구현할때 필요"></a>스택 : 전위, 중위, 후위 순회를 반복문으로 구현할때 필요</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from queue1 import My_Queue</span><br><span class="line">from stack1 import My_Stack</span><br></pre></td></tr></table></figure>
+<ul>
+<li>기본적으로 Tree의 노드를 먼저 만들어 본다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class TreeNode:</span><br><span class="line">    def __init__(self, data=None):</span><br><span class="line">        <span class="comment"># 데이터 저장</span></span><br><span class="line">        self.__data=data</span><br><span class="line">        <span class="comment"># 왼쪽 자식 노드</span></span><br><span class="line">        self.__left=None</span><br><span class="line">        <span class="comment"># 오른쪽 자식 노드</span></span><br><span class="line">        self.__right=None</span><br><span class="line"></span><br><span class="line">    def __del__(self):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">'data &#123;&#125; is deleted'</span>.format(self.__data))</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def data(self):</span><br><span class="line">        <span class="built_in">return</span> self.__data</span><br><span class="line"></span><br><span class="line">    @data.setter</span><br><span class="line">    def data(self, data):</span><br><span class="line">        self.__data=data</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def left(self):</span><br><span class="line">        <span class="built_in">return</span> self.__left</span><br><span class="line"></span><br><span class="line">    @left.setter</span><br><span class="line">    def left(self, left):</span><br><span class="line">        self.__left=left</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def right(self):</span><br><span class="line">        <span class="built_in">return</span> self.__right</span><br><span class="line"></span><br><span class="line">    @right.setter</span><br><span class="line">    def right(self, right):</span><br><span class="line">        self.__right=right</span><br></pre></td></tr></table></figure>
 <h3 id="4-자료-구조-이진-탐색-트리의-장점과-주요-용도"><a href="#4-자료-구조-이진-탐색-트리의-장점과-주요-용도" class="headerlink" title="4. 자료 구조 이진 탐색 트리의 장점과 주요 용도"></a>4. 자료 구조 이진 탐색 트리의 장점과 주요 용도</h3><ul>
 <li>주요 용도: 데이터 검색(탐색)</li>
 <li>장점: 탐색 속도를 개선할 수 있음</li>
@@ -253,7 +338,7 @@ ga('send', 'pageview');
 <hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">head = Node(1)</span><br><span class="line">BST = NodeMgmt(head)</span><br><span class="line">BST.insert(2)</span><br><span class="line">BST.insert(3)</span><br><span class="line">BST.insert(0)</span><br><span class="line">BST.insert(4)</span><br><span class="line">BST.insert(8)</span><br><span class="line">BST.search(-1)</span><br></pre></td></tr></table></figure>
 <hr>
-<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><hr>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">False</span><br></pre></td></tr></table></figure>
 <hr>
 <h4 id="5-4-이진-탐색-트리-삭제"><a href="#5-4-이진-탐색-트리-삭제" class="headerlink" title="5.4. 이진 탐색 트리 삭제"></a>5.4. 이진 탐색 트리 삭제</h4><ul>
@@ -461,18 +546,14 @@ ga('send', 'pageview');
         "genre": "C/C++/자료구조",
         "datePublished": "2020-05-02",
         "dateCreated": "2020-05-02",
-        "dateModified": "2020-05-18",
+        "dateModified": "2020-05-21",
         "url": "https://heung-bae-lee.github.io/2020/05/02/data_structure_06/",
         "description": "대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조
 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조
-실제로 어디에 많이 사용되나?
-트리 중 이진 트리 (Binary Tree) 형태의 구조로, 탐색(검색) 알고리즘 구현을 위해 많이 사용됨
-
-
-
-2. 알아둘 용어
-Node: 트리에서 데이터를 저장하는 기본 요소 (데이"
-        "wordCount": 4323
+트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다.
+루트 노드(root)를 반드시 가진다.
+트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고 "
+        "wordCount": 5744
     }
 </script>
 
@@ -745,5 +826,22 @@ Node: 트리에서 데이터를 저장하는 기본 요소 (데이"
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

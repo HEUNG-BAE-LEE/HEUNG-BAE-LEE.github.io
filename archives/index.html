@@ -377,13 +377,9 @@ Linearity(선형성)
         <p class="article-excerpt">
             대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조
 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조
-실제로 어디에 많이 사용되나?
-트리 중 이진 트리 (Binary Tree) 형태의 구조로, 탐색(검색) 알고리즘 구현을 위해 많이 사용됨
-
-
-
-2. 알아둘 용어
-Node: 트리에서 데이터를 저장하는 기본 요소 (데이
+트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다.
+루트 노드(root)를 반드시 가진다.
+트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고 
         </p>
     </div>
 </article>
@@ -1469,5 +1465,22 @@ XGBoost
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
