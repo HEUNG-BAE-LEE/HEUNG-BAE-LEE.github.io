@@ -21,7 +21,7 @@
 <meta property="og:description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다. 루트 노드(root)를 반드시 가진다. 트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://www.fun-coding.org/00_Images/tree.png">
-<meta property="og:updated_time" content="2020-05-24T15:27:44.619Z">
+<meta property="og:updated_time" content="2020-05-25T15:57:59.646Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="내가 정리하는 자료구조 05 - 트리(Tree)">
 <meta name="twitter:description" content="대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조 트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다. 루트 노드(root)를 반드시 가진다. 트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고">
@@ -567,6 +567,30 @@ ga('send', 'pageview');
 <p><img src="/image/why_update_root_nodein_remove_function_03.png" alt="BST - remove 함수에서 root node를 업데이트 하는 이유 - 03"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">def __remove_recursion(self, cur, target):</span><br><span class="line">    <span class="keyword">if</span> not cur:</span><br><span class="line">        <span class="built_in">return</span> None, None <span class="comment">#recursion은 점화식이랑 기저조건이 필요한데, 기저조건은 탈출할때 필요하므로 기저조건1</span></span><br><span class="line">    <span class="keyword">elif</span> target &lt; cur.data:</span><br><span class="line">        cur.left, rem_node=self.__remove_recursion(cur.left, target)</span><br><span class="line">    <span class="keyword">elif</span> target &gt; cur.data:</span><br><span class="line">        cur.right, rem_node=self.__remove_recursion(cur.right, target)</span><br><span class="line">    <span class="keyword">else</span>: <span class="comment">#기저조건(base case) 2</span></span><br><span class="line">        <span class="keyword">if</span> not cur.left and not cur.right:</span><br><span class="line">            rem_node=cur</span><br><span class="line">            cur=None</span><br><span class="line">        <span class="keyword">elif</span> not cur.right:</span><br><span class="line">            rem_node=cur</span><br><span class="line">            cur=cur.left</span><br><span class="line">        <span class="keyword">elif</span> not cur.left:</span><br><span class="line">            rem_node=cur</span><br><span class="line">            cur=cur.right</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            replace=cur.left</span><br><span class="line">            <span class="keyword">while</span> replace.right:</span><br><span class="line">                replace=replace.right</span><br><span class="line">            cur.data, replace.data=replace.data, cur.data</span><br><span class="line">            cur.left, rem_node=self.__remove_recursion(cur.left, replace.data)</span><br><span class="line">    <span class="built_in">return</span> cur, rem_node</span><br><span class="line"></span><br><span class="line">def remove(self, target):</span><br><span class="line">    self.root, removed_node=self.__remove_recursion(self.root, target)</span><br><span class="line">    <span class="comment"># self.root를 출력해주는 이유 루트를 삭제시 기존의 root에 계속 있어 꼬이므로!</span></span><br><span class="line">    <span class="keyword">if</span> removed_node:</span><br><span class="line">        removed_node.left=removed_node.right=None</span><br><span class="line">    <span class="built_in">return</span> removed_node</span><br></pre></td></tr></table></figure>
 <hr>
+<h4 id="테스트"><a href="#테스트" class="headerlink" title="테스트"></a>테스트</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bst=BST()</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bst.insert(6)</span><br><span class="line">bst.insert(3)</span><br><span class="line">bst.insert(2)</span><br><span class="line">bst.insert(4)</span><br><span class="line">bst.insert(5)</span><br><span class="line">bst.insert(8)</span><br><span class="line">bst.insert(10)</span><br><span class="line">bst.insert(9)</span><br><span class="line">bst.insert(11)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f=lambda x: <span class="built_in">print</span>(x.data, end=<span class="string">'  '</span>)</span><br><span class="line">bst.preorder_traverse(bst.get_root(), f)</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6  3  2  4  5  8  10  9  11</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="search"><a href="#search" class="headerlink" title="search"></a>search</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res=bst.search(8)</span><br><span class="line"><span class="keyword">if</span> res:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'searched data : &#123;&#125;'</span>.format(res.data))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'search failed'</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searched data : 8</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#지울 노드가 리프 노드일 때</span></span><br><span class="line"><span class="comment">#bst.remove(9)</span></span><br><span class="line"><span class="comment">#자식 노드가 하나일 때</span></span><br><span class="line"><span class="comment">#bst.remove(8)</span></span><br><span class="line"><span class="comment">#자식 노드가 둘일 때</span></span><br><span class="line">bst.remove(6)</span><br><span class="line">bst.preorder_traverse(bst.get_root(), f)</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data 6 is deleted</span><br><span class="line">5  3  2  4  8  10  9  11</span><br></pre></td></tr></table></figure>
+<hr>
 <h3 id="6-이진-탐색-트리의-시간-복잡도와-단점"><a href="#6-이진-탐색-트리의-시간-복잡도와-단점" class="headerlink" title="6. 이진 탐색 트리의 시간 복잡도와 단점"></a>6. 이진 탐색 트리의 시간 복잡도와 단점</h3><h4 id="6-1-시간-복잡도-탐색시"><a href="#6-1-시간-복잡도-탐색시" class="headerlink" title="6.1. 시간 복잡도 (탐색시)"></a>6.1. 시간 복잡도 (탐색시)</h4><ul>
 <li>depth (트리의 높이) 를 h라고 표기한다면, O(h)</li>
 <li>n개의 노드를 가진다면, $h = log_2{n} $ 에 가까우므로, 시간 복잡도는 $ O(log{n}) $<ul>
@@ -673,14 +697,14 @@ ga('send', 'pageview');
         "genre": "C/C++/자료구조",
         "datePublished": "2020-05-02",
         "dateCreated": "2020-05-02",
-        "dateModified": "2020-05-25",
+        "dateModified": "2020-05-26",
         "url": "https://heung-bae-lee.github.io/2020/05/02/data_structure_06/",
         "description": "대표적인 데이터 구조7: 트리1. 트리 (Tree) 구조
 트리: Node와 Branch를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조
 트리는 connected acyclic graph구조로 즉, 1개 이상의 노드로 이루어진 유한 집합이다.
 루트 노드(root)를 반드시 가진다.
 트리를 구성하는 노드 간에 단순 경로가 존재 또는 루트노드를 제외하고 "
-        "wordCount": 9444
+        "wordCount": 9639
     }
 </script>
 
