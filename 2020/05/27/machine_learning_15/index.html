@@ -21,7 +21,7 @@
 <meta property="og:description" content="Boosting 앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Boosting_conception.png">
-<meta property="og:updated_time" content="2020-05-26T17:04:08.430Z">
+<meta property="og:updated_time" content="2020-05-26T18:26:38.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ensemble Learning - Boosting, Stacking">
 <meta name="twitter:description" content="Boosting 앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이">
@@ -38,9 +38,11 @@
     <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/libs/titillium-web/styles.css">
     <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
-
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
     <link rel="stylesheet" href="/css/style.css">
-
+   
     <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
     
     
@@ -351,19 +353,19 @@ ga('send', 'pageview');
 </tr>
 <tr>
 <td>GBM 대비 빠른 수행 시간</td>
-<td>일반적인 GBM은 순차적으로 Weak Learner가 가중치를 증감하는 방법으로 학습하기 때문에 전반적으로 \\ 속도가 느리다. 하지만 XGBoost는 병렬 수행 및 다양한 기능으로 GBM에 비해 빠른 수행 성능을 보장한다.\\ 아쉽게도 XGBoost가 일반적인 GBM에 비해 수행 시간이 빠르다는 것이지, 다른 머신러닝 알고리즘\\ (예를 들어 랜덤 포레스트)에 비해서 빠르다는 의미는 아니다.</td>
+<td>일반적인 GBM은 순차적으로 Weak Learner가 가중치를 증감하는 방법으로 학습하기 때문에 전반적으로 속도가 느리다. 하지만 XGBoost는 병렬 수행 및 다양한 기능으로 GBM에 비해 빠른 수행 성능을 보장한다. 아쉽게도 XGBoost가 일반적인 GBM에 비해 수행 시간이 빠르다는 것이지, 다른 머신러닝 알고리즘 (예를 들어 랜덤 포레스트)에 비해서 빠르다는 의미는 아니다.</td>
 </tr>
 <tr>
-<td>과적합 규제\\ (Regularization)</td>
-<td>표준 GBM의 경우 과적합 규제 기능이 없으나 XGBoost는 자체에 과적합 규제 기능으로 과적합에 \\ 좀 더 강한 내구성을 가질 수 있다.</td>
+<td>과적합 규제 (Regularization)</td>
+<td>표준 GBM의 경우 과적합 규제 기능이 없으나 XGBoost는 자체에 과적합 규제 기능으로 과적합에 좀 더 강한 내구성을 가질 수 있다.</td>
 </tr>
 <tr>
 <td>Tree pruning (나무 가지치기)</td>
-<td>일반적으로 GBM은 분할 시 부정 손실이 발생하면 분할을 더 이상 수행하지 않지만, 이러한 방식도 자칫\\ 지나치게 많은 분할을 발생할 수 있다. 다른 GBM과 마찬가지로 XGBoost도 max_depth 파라미터로 \\ 분할 깊이를 조정하기도 하지만, tree pruning으로 더 이상 긍정 이득이 없는 분할을 가지치기 해서\\ 분할 수를 더 줄이는 추가적인 장점을 가지고 있다.</td>
+<td>일반적으로 GBM은 분할 시 부정 손실이 발생하면 분할을 더 이상 수행하지 않지만, 이러한 방식도 자칫 지나치게 많은 분할을 발생할 수 있다. 다른 GBM과 마찬가지로 XGBoost도 max_depth 파라미터로  분할 깊이를 조정하기도 하지만, tree pruning으로 더 이상 긍정 이득이 없는 분할을 가지치기 해서 분할 수를 더 줄이는 추가적인 장점을 가지고 있다.</td>
 </tr>
 <tr>
 <td>자체 내장된 교차 검증</td>
-<td>XGBoost는 반복 수행 시마다 내부적으로 학습 데이터 세트와 평가 데이터 세트에 대한 교차 검증을 수행해\\ 최적화된 반복 수행 횟수를 가질 수 있다. 지정된 반복 횟수가 아니라 교차 검증을 통해 평가 데이터 세트의\\ 평가값이 최적화 되면 반복을 중간에 멈출 수 있는 조기 중단 기능이 있다.</td>
+<td>XGBoost는 반복 수행 시마다 내부적으로 학습 데이터 세트와 평가 데이터 세트에 대한 교차 검증을 수행해 최적화된 반복 수행 횟수를 가질 수 있다. 지정된 반복 횟수가 아니라 교차 검증을 통해 평가 데이터 세트의 평가값이 최적화 되면 반복을 중간에 멈출 수 있는 조기 중단 기능이 있다.</td>
 </tr>
 <tr>
 <td>결손값 자체 처리</td>
@@ -1024,7 +1026,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/05/27/machine_learning_15/",
         "description": "Boosting
 앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이"
-        "wordCount": 8268
+        "wordCount": 8266
     }
 </script>
 

@@ -21,7 +21,7 @@
 <meta property="og:description" content="Support Vector Machine(SVM) 데이터의 분포가 정규분포를 띈다고 보이지 않는다면 이전에 말했던 LDA나 QDA를 사용하기 힘들다. 이런 경우 클래스간 분류를 하려고 할 때 사용될 수 있는 방법 중 하나가 SVM이다. 아래 그림과 같이 클래스 집단을 분류할 수 있는 벡터를 기준으로 최대한의 마진을 주어 분류하는 방식이다.    아래 그림과">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/background_of_svm_concept_01.png">
-<meta property="og:updated_time" content="2020-04-28T19:34:21.024Z">
+<meta property="og:updated_time" content="2020-05-26T18:26:26.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Support Vector Machine(SVM) - 01">
 <meta name="twitter:description" content="Support Vector Machine(SVM) 데이터의 분포가 정규분포를 띈다고 보이지 않는다면 이전에 말했던 LDA나 QDA를 사용하기 힘들다. 이런 경우 클래스간 분류를 하려고 할 때 사용될 수 있는 방법 중 하나가 SVM이다. 아래 그림과 같이 클래스 집단을 분류할 수 있는 벡터를 기준으로 최대한의 마진을 주어 분류하는 방식이다.    아래 그림과">
@@ -38,9 +38,11 @@
     <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/libs/titillium-web/styles.css">
     <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
-
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
     <link rel="stylesheet" href="/css/style.css">
-
+   
     <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
     
     
@@ -623,7 +625,7 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(0)</span><br><span class="line">X = np.r_[np.random.randn(20, 2) - [2, 2], np.random.randn(20, 2) + [2, 2]]</span><br><span class="line">Y = [-1] * 20 + [1] * 20</span><br><span class="line"></span><br><span class="line">plotnum = 1</span><br><span class="line"><span class="keyword">for</span> name, penalty <span class="keyword">in</span> ((<span class="string">'C=10'</span>, 10), (<span class="string">'C=0.1'</span>, 0.1)):</span><br><span class="line">    clf = SVC(kernel=<span class="string">'linear'</span>, C=penalty).fit(X, Y)</span><br><span class="line">    xx = np.linspace(-5, 5)</span><br><span class="line"></span><br><span class="line">    x_jin = -5</span><br><span class="line">    x_jax = 5</span><br><span class="line">    y_jin = -9</span><br><span class="line">    y_jax = 9</span><br><span class="line">    XX, YY = np.mgrid[x_jin:x_jax:200j, y_jin:y_jax:200j]</span><br><span class="line"></span><br><span class="line">    levels = [-1, 0, 1]</span><br><span class="line">    linestyles = [<span class="string">'dashed'</span>, <span class="string">'solid'</span>, <span class="string">'dashed'</span>]</span><br><span class="line">    Z = clf.decision_function(np.c_[XX.ravel(), YY.ravel()])</span><br><span class="line">    Z = Z.reshape(XX.shape)</span><br><span class="line"></span><br><span class="line">    plt.subplot(1, 2, plotnum)</span><br><span class="line">    plt.contour(XX, YY, Z, levels, colors=<span class="string">'k'</span>, linestyles=linestyles)</span><br><span class="line">    plt.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1], s=120, linewidth=4)</span><br><span class="line">    plt.scatter(X[:, 0], X[:, 1], c=Y, s=60, linewidth=1, cmap=plt.cm.Paired)</span><br><span class="line">    plt.xlim(x_jin, x_jax)</span><br><span class="line">    plt.ylim(y_jin, y_jax)</span><br><span class="line">    plt.title(name)</span><br><span class="line"></span><br><span class="line">    plotnum += 1</span><br><span class="line"></span><br><span class="line">plt.suptitle(<span class="string">"슬랙변수 가중치 C의 영향"</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/image/influence_of_weighted_value_C_with_slack_variables.png" alt="슬랙변수 가중치 C의 영향"></p>
 <ul>
-<li>다시 한번 정리하자면, 아래 그림에서 살펴보면 직선의 방정식 $x^{T} \beta + \beta_{0}$와 각 서포트 벡터 $x(x^{+}, x^{-})$와의 거리가 $\frac{1}{\beta$}이므로 결굴 마진을 크게 하는 것은 $\beta$를 작게 하는 것과 동일한 의미이다. 그러한 측면에서도 위에서 자세히 언급했듯이 Cost function(목적함수, 비용함수)가 아래와 같이 나온다는 것을 알 수 있다. 여기서 동시에 error를 최소화하고 싶으므로 라그랑주 승수 $C$를 크게가져가면서 error를 허용하는 slack변수를 최소화하는 동시에 $\beta$ 의 값도 최소화하는 optimization 문제를 풀 수 있다.</li>
+<li>다시 한번 정리하자면, 아래 그림에서 살펴보면 직선의 방정식 $ x^{T} \beta + \beta_{0} $와 각 서포트 벡터 $ x(x^{+}, x^{-}) $와의 거리가 $ \frac{1}{\beta}$ 이므로 결굴 마진을 크게 하는 것은 $ \beta $를 작게 하는 것과 동일한 의미이다. 그러한 측면에서도 위에서 자세히 언급했듯이 Cost function(목적함수, 비용함수)가 아래와 같이 나온다는 것을 알 수 있다. 여기서 동시에 error를 최소화하고 싶으므로 라그랑주 승수 $ C $를 크게가져가면서 error를 허용하는 slack변수를 최소화하는 동시에 $ \beta $ 의 값도 최소화하는 optimization 문제를 풀 수 있다.</li>
 </ul>
 <p><img src="/image/calculate_svm.png" alt="SVM 계산 - 01"></p>
 <ul>
@@ -742,7 +744,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-22",
         "dateCreated": "2020-04-22",
-        "dateModified": "2020-04-29",
+        "dateModified": "2020-05-27",
         "url": "https://heung-bae-lee.github.io/2020/04/22/machine_learning_11/",
         "description": "Support Vector Machine(SVM)
 데이터의 분포가 정규분포를 띈다고 보이지 않는다면 이전에 말했던 LDA나 QDA를 사용하기 힘들다. 이런 경우 클래스간 분류를 하려고 할 때 사용될 수 있는 방법 중 하나가 SVM이다. 아래 그림과 같이 클래스 집단을 분류할 수 있는 벡터를 기준으로 최대한의 마진을 주어 분류하는 방식이다.
@@ -750,7 +752,7 @@ ga('send', 'pageview');
 
 
 아래 그림과"
-        "wordCount": 10091
+        "wordCount": 10103
     }
 </script>
 

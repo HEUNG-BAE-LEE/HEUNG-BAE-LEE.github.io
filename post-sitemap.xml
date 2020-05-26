@@ -8,6 +8,30 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/05/17/data_structure_07/</loc>
+        <lastmod>2020-05-26T18:57:45.610Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/05/27/machine_learning_15/</loc>
+        <lastmod>2020-05-26T18:26:38.560Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/04/22/machine_learning_11/</loc>
+        <lastmod>2020-05-26T18:26:26.961Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/05/02/machine_learning_14/</loc>
         <lastmod>2020-05-26T17:05:52.337Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -24,14 +48,6 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2020/05/27/machine_learning_15/</loc>
-        <lastmod>2020-05-26T17:04:08.430Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/</loc>
         <lastmod>2020-05-25T16:14:20.474Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -42,14 +58,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/05/14/linear_algebra_03/</loc>
         <lastmod>2020-05-25T16:13:59.813Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/05/17/data_structure_07/</loc>
-        <lastmod>2020-05-25T16:13:39.864Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -106,14 +114,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/04/26/machine_learning_13/</loc>
         <lastmod>2020-04-30T14:32:46.338Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/04/22/machine_learning_11/</loc>
-        <lastmod>2020-04-28T19:34:21.024Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
