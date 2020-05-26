@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Ensemble Learning - Boosting, Stacking | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Boosting 앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ensemble Learning - Boosting, Stacking">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/05/27/machine_learning_15/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Boosting 앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/Boosting_conception.png">
+<meta property="og:updated_time" content="2020-05-26T17:04:08.430Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ensemble Learning - Boosting, Stacking">
+<meta name="twitter:description" content="Boosting 앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Boosting_conception.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/05/27/machine_learning_15/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/machine-learning/">machine learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-machine_learning_15" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Ensemble Learning - Boosting, Stacking
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/05/27/machine_learning_15/" class="article-date">
+            <time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><ul>
+<li>앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, <code>Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이다.</code></li>
+</ul>
+<p><img src="/image/Boosting_conception.png" alt="Boosting 개념"></p>
+<ul>
+<li>부스트(boost) 방법은 미리 정해진 갯수의 모형 집합을 사용하는 것이 아니라 하나의 모형에서 시작하여 모형 집합에 포함할 개별 모형을 하나씩 추가한다. 모형의 집합은 위원회(commit) $C$라고 하고 $m$개의 모형을 포함하는 위원회를 $C_{m}$으로 표시한다. 위원회에 들어가는 개별 모형을 약 분류기(weak classifier)라고 하며 $k$로 표시한다.</li>
+</ul>
+<ul>
+<li><code>부스트 방법의 특징은 한번에 하나씩 모형을 추가한다는 것</code>이다.</li>
+</ul>
+<script type="math/tex; mode=display">C_1 = \{ k_1 \}</script><script type="math/tex; mode=display">C_2 = C_1 \cup k_2 = \{ k_1, k_2 \}</script><script type="math/tex; mode=display">C_3 = C_2 \cup k_3 = \{ k_1, k_2, k_3 \}</script><script type="math/tex; mode=display">\vdots</script><script type="math/tex; mode=display">C_m = C_{m-1} \cup k_m = \{ k_1, k_2, \ldots, k_m \}</script><ul>
+<li>그리고 m번째로 위원회에 추가할 개별 모형 $k_{m}$의 선택 기준은 그 전단계의 위원회 $C_{m-1}$의 성능을 보완하는 것이다. <code>위원회 $C_{m}$의 최종 결정은 다수결 방법을 사용하지 않고 각각의 개별 모형의 출력을 가중치 $\alpha$로 가중 선형조합한 값을 판별함수로 사용</code>한다. 또한 부스트 방법은 이진 분류에만 사용할 수 있으며 $y$값은 1 또는 -1의 값을 가진다.</li>
+</ul>
+<script type="math/tex; mode=display">y = -1 \text{ or } 1</script><script type="math/tex; mode=display">C_{m}(x_i) =  \text{sign} \left( \alpha_1k_1(x_i) + \cdots + \alpha_{m}k_{m}(x_i) \right)</script><h2 id="AdaBoost-에이다부스트"><a href="#AdaBoost-에이다부스트" class="headerlink" title="AdaBoost(에이다부스트)"></a>AdaBoost(에이다부스트)</h2><p><img src="/image/Adaboosting_conception.png" alt="AdaBoost 개념"></p>
+<ul>
+<li>에이다 부스트(adaboost)라는 이름은 적응 부스트(adaptive boost)라는 용어에서 나왔다. 에이다부스트는 위원회에 넣을 개별 모형 $k_{m}$을 선별하는 방법으로학습데이터 집합의 $i$번째 데이터에 가중치 $w_{i}$를 주고 분류 모형이 틀리게 예측한 데이터의 가중치를 합한 값을 손실함수 $L$로 사용한다. 이 손실함수를 최소화하는 모형이 k_{m}으로 선택된다.</li>
+</ul>
+<script type="math/tex; mode=display">L_m = \sum_{i=1}^N w_{m,i} I\left(k_m(x_i) \neq y_i\right)</script><ul>
+<li>위 식에서 $I$는 $k(x_{i}) \neq y_{i}$라는 조건이 만족되면 1, 아니면 0을 갖는 indicator function이다. 즉 예측을 틀리게한 데이터들에 대한 가중치의 합이다. 위원회 $C_{m}$에 포함될 개별 모형 $k_{m}$이 선택된 후에는 가중치 $\alpha_{m}$을 결정해야 한다. 이 값은 다음처럼 계산한다.</li>
+</ul>
+<script type="math/tex; mode=display">\epsilon_m = \dfrac{\sum_{i=1}^N w_{m,i} I\left(k_m(x_i) \neq y_i\right)}{\sum_{i=1}^N w_{m,i}}</script><script type="math/tex; mode=display">\alpha_m = \frac{1}{2}\log\left( \frac{1 - \epsilon_m}{\epsilon_m}\right)</script><ul>
+<li>데이터에 대한 가중치 $w_{m, i}$는 최초에는$(m=1)$ 모든 데이터에 대해 동일한 값을 갖지만, 위원회가 증가하면서 값이 바뀐다. 가중치의 값은 지시함수를 사용하여 위원회 $C_{m-1}$이 맞춘 문제는 작게, 틀린 문제는 크게 확대(boosting)된다.</li>
+</ul>
+<script type="math/tex; mode=display">w_{m,i} = w_{m-1,i}  \exp (-y_iC_{m-1}) = \begin{cases} w_{m-1,i}e^{-1}  & \text{ if } C_{m-1} = y_i\\ w_{m-1,i}e & \text{ if } C_{m-1} \neq y_i \end{cases}</script><ul>
+<li>$m$번째 멤버의 모든 후보에 대해 위 손실함수를 적용하여 가장 값이 작은 후보를 $m$번째 멤버로 선정한다.</li>
+</ul>
+<ul>
+<li>에이다 부스팅은 사실 다음과 같은 손실함수를 최소화하는 $C_{m}$을 찾아가는 방법이라는 것을 증명할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">L_m = \sum_{i=1}^N \exp(−y_i C_m(x_i))</script><ul>
+<li>개별 멤버 $k_{m}$과 위원회 관계는</li>
+</ul>
+<script type="math/tex; mode=display">C_m(x_i) = \sum_{j=1}^m \alpha_j k_j(x_i) = C_{m-1}(x_i) + \alpha_m k_m(x_i)</script><ul>
+<li>이고 이 식을 대입하면</li>
+</ul>
+<script type="math/tex; mode=display">\begin{eqnarray} L_m &=& \sum_{i=1}^N \exp(−y_i C_m(x_i)) \\ &=& \sum_{i=1}^N \exp\left(−y_iC_{m-1}(x_i) - \alpha_m y_i k_m(x_i) \right) \\ &=& \sum_{i=1}^N \exp(−y_iC_{m-1}(x_i)) \exp\left(-\alpha_m y_i k_m(x_i)\right) \\ &=& \sum_{i=1}^N w_{m,i} \exp\left(-\alpha_m y_i k_m(x_i)\right) \\ \end{eqnarray}</script><ul>
+<li>$y_{i}$와 $k_{M}(x_{i})$ 1 또는 -1값만 가질 수 있다는 점을 이용하면,</li>
+</ul>
+<script type="math/tex; mode=display">\begin{eqnarray} L_m &=& e^{-\alpha_m}\sum_{k_m(x_i) = y_i} w_{m,i} + e^{\alpha_m}\sum_{k_m(x_i) \neq y_i} w_{m,i} \\ &=& \left(e^{\alpha_m}-e^{-\alpha_m}\right) \sum_{i=1}^N w_{m,i} I\left(k_m(x_i) \neq y_i\right) + e^{-\alpha_m}\sum_{i=1}^N w_{m,i} \end{eqnarray}</script><ul>
+<li>$L_{m}$을 최소화하려면 $\sum_{i=1}^N w_{m,i} I\left(k_m(x_i) \neq y_i\right)$을 최소화하는 $k_{m}$ 함수를 찾은 다음 $L_{m}$을 최소화하는 $\alpha_{m}$을 찾아야 한다.</li>
+</ul>
+<script type="math/tex; mode=display">\dfrac{d L_m}{d \alpha_m} = 0</script><ul>
+<li>이 조건으로부터 $\alpha_{m}$ 공식을 유도할 수 있다.</li>
+</ul>
+<p><img src="/image/cost_function_of_adaboost.png" alt="Adaboost 비용함수"></p>
+<ul>
+<li>다음은 Scikit-Learn의 ensemble 서브패키지가 제공하는 <code>AdaBoostClassifier</code> 클래스를 사용하여 분류 예측을 하는 예이다. 약분류기로는 깊이가 1인 단순한 의사결정나무를 채택하였다. 여기에서는 각 표본 데이터의 가중치 값을 알아보기 위해 기존의 <code>AdaBoostClassifier</code> 클래스를 서브 클래싱하여 가중치를 속성으로 저장하도록 수정한 모형을 사용하였다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import make_gaussian_quantiles</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">from sklearn.ensemble import AdaBoostClassifier</span><br><span class="line"></span><br><span class="line">X1, y1 = make_gaussian_quantiles(cov=2.,</span><br><span class="line">                                 n_samples=100, n_features=2,</span><br><span class="line">                                 n_classes=2, random_state=1)</span><br><span class="line">X2, y2 = make_gaussian_quantiles(mean=(3, 3), cov=1.5,</span><br><span class="line">                                 n_samples=200, n_features=2,</span><br><span class="line">                                 n_classes=2, random_state=1)</span><br><span class="line">X = np.concatenate((X1, X2))</span><br><span class="line">y = np.concatenate((y1, - y2 + 1))</span><br><span class="line"></span><br><span class="line">class MyAdaBoostClassifier(AdaBoostClassifier):</span><br><span class="line"></span><br><span class="line">    def __init__(self,</span><br><span class="line">                 base_estimator=None,</span><br><span class="line">                 n_estimators=50,</span><br><span class="line">                 learning_rate=1.,</span><br><span class="line">                 algorithm=<span class="string">'SAMME.R'</span>,</span><br><span class="line">                 random_state=None):</span><br><span class="line"></span><br><span class="line">        super(MyAdaBoostClassifier, self).__init__(</span><br><span class="line">            base_estimator=base_estimator,</span><br><span class="line">            n_estimators=n_estimators,</span><br><span class="line">            learning_rate=learning_rate,</span><br><span class="line">            random_state=random_state)</span><br><span class="line">        self.sample_weight = [None] * n_estimators</span><br><span class="line"></span><br><span class="line">    def _boost(self, iboost, X, y, sample_weight, random_state):</span><br><span class="line">        sample_weight, estimator_weight, estimator_error = \</span><br><span class="line">        super(MyAdaBoostClassifier, self)._boost(iboost, X, y, sample_weight, random_state)</span><br><span class="line">        self.sample_weight[iboost] = sample_weight.copy()</span><br><span class="line">        <span class="built_in">return</span> sample_weight, estimator_weight, estimator_error</span><br><span class="line"></span><br><span class="line">model_ada = MyAdaBoostClassifier(DecisionTreeClassifier(max_depth=1, random_state=0), n_estimators=20)</span><br><span class="line">model_ada.fit(X, y)</span><br><span class="line"></span><br><span class="line">def plot_result(model, title=<span class="string">"분류결과"</span>, legend=False, s=50):</span><br><span class="line">    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1</span><br><span class="line">    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1</span><br><span class="line">    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, 0.02), np.arange(x2_min, x2_max, 0.02))</span><br><span class="line">    <span class="keyword">if</span> isinstance(model, list):</span><br><span class="line">        Y = model[0].predict(np.c_[xx1.ravel(), xx2.ravel()]).reshape(xx1.shape)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(model) - 1):</span><br><span class="line">            Y += model[i + 1].predict(np.c_[xx1.ravel(), xx2.ravel()]).reshape(xx1.shape)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        Y = model.predict(np.c_[xx1.ravel(), xx2.ravel()]).reshape(xx1.shape)</span><br><span class="line">    cs = plt.contourf(xx1, xx2, Y, cmap=plt.cm.Paired, alpha=0.5)</span><br><span class="line">    <span class="keyword">for</span> i, n, c <span class="keyword">in</span> zip(range(2), <span class="string">"01"</span>, <span class="string">"br"</span>):</span><br><span class="line">        idx = np.where(y == i)</span><br><span class="line">        plt.scatter(X[idx, 0], X[idx, 1], c=c, s=s, alpha=0.5, label=<span class="string">"Class %s"</span> % n)</span><br><span class="line">    plt.xlim(x1_min, x1_max)</span><br><span class="line">    plt.ylim(x2_min, x2_max)</span><br><span class="line">    plt.xlabel(<span class="string">'x1'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'x2'</span>)</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plt.colorbar(cs)</span><br><span class="line">    <span class="keyword">if</span> legend:</span><br><span class="line">        plt.legend()</span><br><span class="line">    plt.grid(False)</span><br><span class="line"></span><br><span class="line">plot_result(model_ada, <span class="string">"에이다부스트(m=20) 분류 결과"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/Adaboost_m_20_result.png" alt="Adaboost 20번째 모델까지의 결과"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(10, 15))</span><br><span class="line">plt.subplot(421);</span><br><span class="line">plot_result(model_ada.estimators_[0], <span class="string">"1번 분류모형의 분류 결과"</span>, s=10)</span><br><span class="line">plt.subplot(422);</span><br><span class="line">plot_result(model_ada.estimators_[1], <span class="string">"2번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[0]).astype(int))</span><br><span class="line">plt.subplot(423);</span><br><span class="line">plot_result(model_ada.estimators_[2], <span class="string">"3번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[1]).astype(int))</span><br><span class="line">plt.subplot(424);</span><br><span class="line">plot_result(model_ada.estimators_[3], <span class="string">"4번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[2]).astype(int))</span><br><span class="line">plt.subplot(425);</span><br><span class="line">plot_result(model_ada.estimators_[4], <span class="string">"5번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[3]).astype(int))</span><br><span class="line">plt.subplot(426);</span><br><span class="line">plot_result(model_ada.estimators_[5], <span class="string">"6번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[4]).astype(int))</span><br><span class="line">plt.subplot(427);</span><br><span class="line">plot_result(model_ada.estimators_[6], <span class="string">"7번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[5]).astype(int))</span><br><span class="line">plt.subplot(428);</span><br><span class="line">plot_result(model_ada.estimators_[7], <span class="string">"8번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[6]).astype(int))</span><br><span class="line">plt.tight_layout()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/Adaboost_m_20_result_01.png" alt="Adaboost 모델의 가중치의 변화에 따른 decision boundary의 변화 - 01"></p>
+<p><img src="/image/Adaboost_m_20_result_02.png" alt="Adaboost 모델의 가중치의 변화에 따른 decision boundary의 변화 - 02"></p>
+<h2 id="Adaboost-모형의-정규화"><a href="#Adaboost-모형의-정규화" class="headerlink" title="Adaboost 모형의 정규화"></a>Adaboost 모형의 정규화</h2><ul>
+<li>Adaboost 모형이 과최적화(overfitting)가 되는 경우에는 학습 속도(learning rate)를 조정하여 정규화를 할 수 있다. 이는 <code>필요한 멤버의 수를 강제로 증가시켜서 과최적화를 막는 역할을 한다.</code> 즉, 새롭게 적용되는 모형에 대한 가중치를 줄여서 동일한 모형의 횟수를 거치더라도 가중치가 크게 영향을 받지 않도록 하여 과최적화를 없애는 방법이다.</li>
+</ul>
+<script type="math/tex; mode=display">C_m = C_{m-1} + \mu \alpha_m k_m</script><ul>
+<li><code>AdaBoostClassifier</code> 클래스에서는  <code>learning_rate</code>인수를 1보다 적게 주면 새로운 멤버의 가중치를 강제로 낮춘다.</li>
+</ul>
+<h2 id="그레디언트-부스팅-Gradient-boosting"><a href="#그레디언트-부스팅-Gradient-boosting" class="headerlink" title="그레디언트 부스팅 (Gradient boosting)"></a>그레디언트 부스팅 (Gradient boosting)</h2><ul>
+<li>기본적으로 부스팅은 다음 Round에서 이전에 잘못 예측한 데이터들에 대한 처리를 어떻게 하느냐에 따라 종류별로 차이가 존재한다. <code>Gradient Boosting은 이전 Round의 분류기로 예측한 error를 다음 Round의 분류기가 예측할 수 있도록 학습하면서 진행</code>한다.</li>
+</ul>
+<p><img src="/image/what_is_gradient_boosting.png" alt="그레디언트 부스팅의 개념"></p>
+<ul>
+<li>이전 모델의 error를 다음 모델이 예측할 수 있게끔 학습시켜 해당 분류기들의 학습된 결과를 계속해서 합해 나가면 마지막에는 최소한의 error만 남으므로, error를 최대한 줄일 수 있게 된다.</li>
+</ul>
+<p><img src="/image/gradient_boosting_method_principal.png" alt="그레디언트 부스팅의 원리"></p>
+<ul>
+<li>위에서 언급했던 것과 같이 error를 예측하게 하므로 이해하기 쉽게 regression을 통한 예시로 설명하겠다. 처음 모델의 error를 다음 모델은 예측하도록 학습하므로 이전 모델보다 오차가 더 줄어들 것이다. 그 다음 모델도 이전 모델의 오차를 학습하게 되므로 더 오차가 줄어들 것이다. 이렇게 최종적으로는 error가 최대한 0에 가까워질 때 까지 학습하여 train set에 대해서는 과최적화가 이루어 질 것이다.</li>
+</ul>
+<p><img src="/image/gradient_boosting_steps.png" alt="그레디언트 부스팅의 이해"></p>
+<ul>
+<li>최종적으로는 학습 데이터에 대한 error를 작게 하는 것이므로 아래 그림에서와 같이 negative gradient를 최소화시키면서 학습 될 것이다.</li>
+</ul>
+<p><img src="/image/cost_function_with_gradient_boosting.png" alt="그레디언트 부스팅의 cost function"></p>
+<ul>
+<li>위의 그림에서 볼 수 있듯이 <code>그레디언트 부스트 모형은 변분법(calculus of variations)을 사용한 모형</code>이다. 학습 $f(x)$를 최소화하는 $x$는 다음과 같이 gradient descent 방법으로 찾을 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">x_{m} = x_{m-1} - \alpha_m \dfrac{df}{dx}</script><ul>
+<li>그레디언트 부스트 모형에서는 손실 범함수(loss functional) $L(y, C_{m-1})$을 최소화하는 개별 분류함수 $k_{m}$를 찾는다. 이론적으로 가장 최적의 함수는 범함수의 미분이다.</li>
+</ul>
+<script type="math/tex; mode=display">C_{m} = C_{m-1} - \alpha_m \dfrac{\delta L(y, C_{m-1})}{\delta C_{m-1}} = C_{m-1} + \alpha_m k_m</script><ul>
+<li><code>따라서 그레디언트 부스트 모형은 분류/회귀 문제에 상관없이 개별 멤버 모형으로 회귀분석 모형을 사용</code>한다. 가장 많이 사용되는 회귀분석 모형은 의사결정 회귀나무(decision tree regression model)모형이다.</li>
+</ul>
+<ul>
+<li><p>그레디언트 부스트 모형에서는 다음과 같은 과정을 반복하여 멤버와 그 가중치를 계산한다.</p>
+<ul>
+<li><ol>
+<li>$-\tfrac{\delta L(y, C_m)}{\delta C_m}$를 목표값으로 개별 멤버 모형 $k_{m}$을 찾는다.</li>
+</ol>
+</li>
+<li><ol>
+<li>$ \left( y - (C_{m-1} + \alpha_m k_m) \right)^2 $ 를 최소화하는 스텝사이즈 $\alpha_{m}$을 찾는다.</li>
+</ol>
+</li>
+<li><ol>
+<li>$ C_m = C_{m-1} + \alpha_m k_m $ 최종 모형을 갱신한다.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>만약 손실 범함수가 오차 제곱 형태라면</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">L(y, C_{m-1}) = \dfrac{1}{2}(y - C_{m-1})^2</script><ul>
+<li>범함수의 미분은 실제 목표값 $y$와 $C_{m-1}$과의 차이 즉, 잔차(residual)가 된다.</li>
+</ul>
+<script type="math/tex; mode=display">-\dfrac{dL(y, C_m)}{dC_m} = y - C_{m-1}</script><ul>
+<li><p>Scikit-Learn의 GradientBoostingClassifier는 약한 학습기의 순차적인 예측 오류 보정을 통해 학습을 수행하므로 멀티 CPU 코어 시스템을 사용하더라도 병렬처리가 지원되지 않아서 대용량 데이터의 경우 학습에 매우 많은 시간이 필요하다. 또한 일반적으로 GBM이 랜덤 포레스트보다는 예측 성능이 조금 뛰어난 경우가 많다. 그러나 수행시간이 오래 걸리고, 하이퍼 파라미터 튜닝 노력도 더 필요하다.</p>
+</li>
+<li><p><code>loss</code>: 경사 하강법에서 사용할 비용 함수를 저장한다. 특별한 이유가 없으면 default인 ‘deviance’를 그대로 적용한다.</p>
+</li>
+</ul>
+<ul>
+<li><code>learning_rate</code>: GBM이 학습을 진행할 때마다 적용하는 학습률이다. Weak learner가 순차적으로 오류 값을 보정해 나가는 데 적용하는 계수이다. 0~1 사이의 값을 지정할 수 있으며 default=0.1이다. 너무 작은 값을 적용하면 업데이트 되는 값이 작아져서 최소 오류 값을 찾아 예측 성능이 높아질 가능성이 높다. 하지만 많은 weak learner는 순차적인 반복이 필요해서 수행 시간이 오래 걸리고, 또 너무 작게 설정하면 모든 weak learner의 반복이 완료돼도 최소 오류 값을 찾지 못할 수 있다. 반대로 큰 값을 적용하면 최소 오류 값을 찾지 못하고 그냥 지나챠 버려 예측 성능이 떨어질 가능성이 높아지지만, 빠른 수행이 가능하다. <code>이러한 특성 때문에 learning_rate는 n_estimators와 상호 보완적으로 조합해 사용한다. learning_rate를 작게하고 n_estimators를 크게 하면 더 이상 성능이 좋아지지 않는 한계점까지는 예측 성능이 조금씩 좋아질 수 있다.</code></li>
+</ul>
+<ul>
+<li><code>subsample</code>: weak learner가 학습에 사용하는 데이터의 샘플링 비율이다. default=1이며, 이는 전체 학습 데이터를 기반으로 학습한다는 의미이다.(0.5이면 학습데이터의 50%를 의미) 과적합이 염려되는 경우 subsample을 1보다 작은 값으로 설정한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.ensemble import GradientBoostingClassifier</span><br><span class="line"></span><br><span class="line">model_grad = GradientBoostingClassifier(n_estimators=100, max_depth=2, random_state=0)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line">model_grad.fit(X, y)</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CPU <span class="built_in">times</span>: user 50 ms, sys: 0 ns, total: 50 ms</span><br><span class="line">Wall time: 50.4 ms</span><br><span class="line"></span><br><span class="line">GradientBoostingClassifier(criterion=<span class="string">'friedman_mse'</span>, init=None,</span><br><span class="line">                           learning_rate=0.1, loss=<span class="string">'deviance'</span>, max_depth=2,</span><br><span class="line">                           max_features=None, max_leaf_nodes=None,</span><br><span class="line">                           min_impurity_decrease=0.0, min_impurity_split=None,</span><br><span class="line">                           min_samples_leaf=1, min_samples_split=2,</span><br><span class="line">                           min_weight_fraction_leaf=0.0, n_estimators=100,</span><br><span class="line">                           n_iter_no_change=None, presort=<span class="string">'auto'</span>,</span><br><span class="line">                           random_state=0, subsample=1.0, tol=0.0001,</span><br><span class="line">                           validation_fraction=0.1, verbose=0,</span><br><span class="line">                           warm_start=False)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_result(model_grad)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/result_of_gradient_boost_plot_decision_boundary.png" alt="그레디언트 부스트의 decision boundary"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.subplot(121)</span><br><span class="line">plot_result(model_grad.estimators_[3][0])</span><br><span class="line">plt.subplot(122)</span><br><span class="line">plot_result([model_grad.estimators_[0][0],</span><br><span class="line">             model_grad.estimators_[1][0],</span><br><span class="line">             model_grad.estimators_[2][0],</span><br><span class="line">             model_grad.estimators_[3][0]])</span><br></pre></td></tr></table></figure>
+<p><img src="/image/result_of_gradient_boost_plot_decision_boundary_01.png" alt="그레디언트 부스트에 사용된 모형들의 4번째 까지의 각각의 decision decision boundary"></p>
+<h2 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h2><p><img src="/image/XGBoost_conception.png" alt="XGBoost 개념"></p>
+<ul>
+<li>XGboost는 GBM에 기반하고 있지만, GBM의 단점인 느린 수행 시간 및 과적합 규제(Regularization) 부재 등의 문제를 해결해서 매우 각광을 받고 있다. 특히 XGBoost는 병렬 CPU 환경에서 병렬 학습이 가능해 기존 GBM보다 빠르게 학습을 완료할 수 있다. 다음은 XGboost의 장점이다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>뛰어난 예측성능</td>
+<td>일반적으로 분류와 회귀 영역에서 뛰어난 예측 성능을 발휘한다.</td>
+</tr>
+<tr>
+<td>GBM 대비 빠른 수행 시간</td>
+<td>일반적인 GBM은 순차적으로 Weak Learner가 가중치를 증감하는 방법으로 학습하기 때문에 전반적으로 \\ 속도가 느리다. 하지만 XGBoost는 병렬 수행 및 다양한 기능으로 GBM에 비해 빠른 수행 성능을 보장한다.\\ 아쉽게도 XGBoost가 일반적인 GBM에 비해 수행 시간이 빠르다는 것이지, 다른 머신러닝 알고리즘\\ (예를 들어 랜덤 포레스트)에 비해서 빠르다는 의미는 아니다.</td>
+</tr>
+<tr>
+<td>과적합 규제\\ (Regularization)</td>
+<td>표준 GBM의 경우 과적합 규제 기능이 없으나 XGBoost는 자체에 과적합 규제 기능으로 과적합에 \\ 좀 더 강한 내구성을 가질 수 있다.</td>
+</tr>
+<tr>
+<td>Tree pruning (나무 가지치기)</td>
+<td>일반적으로 GBM은 분할 시 부정 손실이 발생하면 분할을 더 이상 수행하지 않지만, 이러한 방식도 자칫\\ 지나치게 많은 분할을 발생할 수 있다. 다른 GBM과 마찬가지로 XGBoost도 max_depth 파라미터로 \\ 분할 깊이를 조정하기도 하지만, tree pruning으로 더 이상 긍정 이득이 없는 분할을 가지치기 해서\\ 분할 수를 더 줄이는 추가적인 장점을 가지고 있다.</td>
+</tr>
+<tr>
+<td>자체 내장된 교차 검증</td>
+<td>XGBoost는 반복 수행 시마다 내부적으로 학습 데이터 세트와 평가 데이터 세트에 대한 교차 검증을 수행해\\ 최적화된 반복 수행 횟수를 가질 수 있다. 지정된 반복 횟수가 아니라 교차 검증을 통해 평가 데이터 세트의\\ 평가값이 최적화 되면 반복을 중간에 멈출 수 있는 조기 중단 기능이 있다.</td>
+</tr>
+<tr>
+<td>결손값 자체 처리</td>
+<td>XGBoost는 결손값을 자체 처리할 수 있는 기능을 가지고 있다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="/image/XGboost_better_than_gbm.png" alt="XGBoost의 장점"></p>
+<ul>
+<li>XGBoost의 핵심 라이브러리는 C/C++로 작성돼 있다. XGBoost 개발 그룹은 파이썬에서도 XGBoost를 구동할 수 있도록 파이썬 패키지를 제공한다. 이 파이썬 패키지의 역할은 대부분 C/C++ 핵심 라이브러리를 호출하는 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># window용</span></span><br><span class="line"><span class="comment"># conda install -c anaconda py-xgboost</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Linux용</span></span><br><span class="line">conda install -c conda-forge xgboost</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>python 래퍼 모듈과 Scikit-Learn 래퍼 XGBoost 모듈의 일부 hyper-parameter는 약간 다르므로 이에 대한 주의가 필요</code>하다.</p>
+</li>
+<li><p>python 래퍼 XGBoost 모듈</p>
+<ul>
+<li><p>XGboost 고유의 프레임워크를 python 언어 기반에서 구현한 것으로 별도의 API기반을 갖고 있어 Scikit-Learn 프레임워크를 기반으로 한 것이 아니기에 Scikit-Learn의 fit(), predict() 메서드 같은 Scikit-Learn 고유의 아키텍처와 다른 다양한 유틸리티(cross_val_score, GridSearchCV, Pipeline 등)와 함께 사용될 수 없다.</p>
+</li>
+<li><p>일반 parameter</p>
+<ul>
+<li>일반적으로 실행 시 thread의 개수나 silent 모드 등의 선택을 위한 parameter로서 default parameter 값을 바꾸는 경우는 거의 없다.</li>
+<li><code>booster</code> : gbtree(tree based model) 또는 gblinear(linear model)선택 default=gbtree</li>
+<li><code>silent</code> : default=0이며, 출력 메시지를 나타내고 싶지 않을 경우 1로 설정한다.</li>
+<li><code>nthread</code> : CPU의 실행 thread 개수를 조정하며, <code>default는 CPU의 전체 thread를 다 사용하는 것</code>이다. Multi Core/thread CPU 시스템에서 전체 CPU를 사용하지 않고 일부 CPU만 사용해 ML 애플리케이션을 구동하는 경우에 변경한다.</li>
+</ul>
+</li>
+<li><p>Booster parameter</p>
+<ul>
+<li><p>tree 최적화, Boosting, Regularization 등과 관련 parameter 등을 지칭한다.</p>
+</li>
+<li><p><code>eta [default=0.3, alias:learning_rate]</code> : GBM의 학습률(learning rate)과 같은 parameter이다. 0~1 사이의 값을 지정하며 Boosting step을 반복적으로 수행할 때 업데이트되는 학습률 값. python 래퍼 기반의 xgboost를 이용할 경우 default=0.3 scikit-learn 래퍼를 이용할 경우 eta는 learning_rate로 대체되며, default=0.1이다. <code>보통은 0.01~0.2 사이의 값을 선호</code>한다.</p>
+</li>
+<li><p><code>num_boost_rounds</code> : GBM의 n_estimators와 같은 parameter이다.</p>
+</li>
+<li><code>min_child_weight[default=1]</code> : GBM의 min_child_leaf와 유사함(똑같지는 않음). 과적합을 조절하기 위해 사용된다.</li>
+<li><code>gamma [default=0, alias: min_split_loss]</code> : tree의 leaf 노드를 추가적으로 나눌지를 결정할 최소 손실 감소 값이다. <code>해당 값보다 큰 손실(loss)이 감소된 경우에 leaf 노드를 분리</code>한다. 값이 클수록 과적합 감소 효과가 있다.</li>
+<li><code>max_depth [default=6]</code> : tree 기반 알고리즘의 max_depth와 같다. 0을 지정하면 깊이에 제한이 없다. Max_depth가 높으면 특정 feature 조건에 특화되어 룰 조건이 만들어지므로 과적합 가능성이 높아지며 <code>보통은 3~10</code>사이의 값을 적용한다.</li>
+<li><code>sub_sample [default=1]</code> : GBM의 subsample과 동일하다. tree가 커져서 과적합되는 것을 제어하기 위해 데이터를 샘플링하는 비율을 지정한다. sub_sample=0.5로 지정하면 전체 데이터의 절반을 tree를 생성하는 데 사용한다. <code>0에서 1사이의 값이 가능하나 일반적으로 0.5~1사이의 값을 사용한다.</code></li>
+<li><code>colsample_bytree [default=1]</code> : GBM의 max_features와 유사하다. tree 생성에 필요한 feature(column)를 임의로 샘플링 하는 데 사용된다. 매우 많은 feature가 있는 경우 과적합을 조정하는 데 적용한다.</li>
+<li><code>lambda [default=1, alias:reg_lambda]</code> : <code>L2 Regularization 적용 값</code>이다. feature 개수가 많을 경우 적용을 검토하며 값이 클수록 과적합 감소 효과가 있다.</li>
+<li><code>alpha</code> : <code>L1 Regularization 적용값</code>이다. feature 개수가 많을 경우 적용을 검토하며 값이 클수록 감소 효과가 있다.</li>
+<li><code>scale_pos_weight [default=1]</code> : 특정 값으로 치우친 비대칭한 클래스로 구성된 데이터 세트의 균형을 유지하기 위한 paramter이다.</li>
+</ul>
+</li>
+<li><p>학습 task parameter</p>
+<ul>
+<li>학습 수행 시의 객체 함수, 평가를 위한 지표 등을 설정하는 parameter이다.</li>
+<li><code>objective</code> : 최솟값을 가져야할 손실 함수(loss function)을 정의한다. XGBoost는 많은 유형의 손실함수를 사용할 수 있다. 주로 사용되는 손실함수는 이진 분류인지 다중 분류인지에 따라 달라진다.<ul>
+<li><code>binary:logistic</code> : 이진 분류일 때 적용한다.</li>
+<li><code>multi:softmax</code> : 다중 분류일 때 적용한다. 손실 함수가 multi:softmax 일 경우에는 label class의 개수인 num_class parameter를 지정해야 한다.</li>
+<li><code>multi:softprob</code> : multi:softmax와 유사하나 개별 label class의 해당되는 예측 확률을 반환한다.</li>
+</ul>
+</li>
+<li><code>eval_metric</code> : 검증에 사용되는 함수를 정의한다. default는 회귀인 경우 rmse, 분류인 경우 error이다. 다음은 eval_metric의 값 유형이다.<ul>
+<li>rmse : Root Mean Square Error</li>
+<li>mae : Mean Absolute Error</li>
+<li>logloss : Negative log-likelihood</li>
+<li>error : Binary classification error rate (0.5 threshold)</li>
+<li>merror : Multiclass classification error rate</li>
+<li>mlogloss : Multiclass logloss</li>
+<li>auc : Area under the curve</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>대부분의 hyper parameter는 Booster paramter에 속한다.</code></p>
+</li>
+</ul>
+</li>
+<li><p>Scikit-Learn 래퍼 XGBoost 모듈</p>
+<ul>
+<li>XGboost 패키지의 Scikit-Learn 래퍼 클래스는 <code>XGBClassifier</code>, <code>XGBRegressor</code>이다. 이를 이용하면 Scikit-Learn estimator가 학습을 위해 사용하는 fit(), predict() 와 같은 표준 Scikit-Learn 개발 프로세스 및 다양한 유틸리티를 활용할 수 있다.</li>
+</ul>
+</li>
+<li><p>과적합(overfitting) 문제가 심각하다면 다음과 같이 적용할 것을 고려할 수 있다.</p>
+<ul>
+<li>eta 값을 낮춘다.(0.01~0.1)<ul>
+<li>eta 값을 낮출 경우 num_round(또는 n_estimators)는 반대로 높여줘야 한다.</li>
+</ul>
+</li>
+<li>max_depth 값을 낮춘다.</li>
+<li>min_child_weight 값을 높인다.</li>
+<li>gamma 값을 높인다.</li>
+<li>또한 subsample과 colsample_bytree를 조정하는 것도 tree가 너무 복잡하게 생성되는 것을 막아 과적합 문제에 도움이 될 수 있다.</li>
+</ul>
+</li>
+<li><p>XGBoost 자체적으로 교차 검증, 성능 평가, feature 중요도 등의 시각화 기능을 가지고 있다. 또한 XGBoost는 기본 GBM에서 부족한 다른 여러 가지 성능 향상 기능이 있다. 그 중에 수행 속도를 향상시키기 위한 대표적인 기능으로 <code>Early Stopping</code> 기능이 있다. <code>기본 GBM의 경우 지정된 횟수를 다 완료해야 한다. 허나, XGBoost와 LightGBM은 모두 early Stopping 기능이 있어서 n_estimators에 지정한 Boosting 반복 횟수에 도달하지 않더라도 예측 오류가 더 이상 개선되지 않으면 반복을 끝까지 수행하지 않고 중지해 수행 시간을 개선 할 수 있다.</code></p>
+</li>
+<li><p>예를 들어 n_estimators=200, early Stopping 파라미터 값을 50으로 설정하면, 1부터 200회까지 Boosting을 반복하다가 50회를 반복하는 동안 학습 오류가 감소하지 않으면 더 이상 Boosting을 진행하지 않고 종료한다.(가령 100회에서 학습 오류 값이 0.8인데, 101회~150회 반복하는 동안 예측 오류가 0.8보다 작은 값이 하나도 없으면 Boosting을 종료한다.)</p>
+</li>
+<li><p>아래는 python 래퍼의 Xgboost 사용법을 간단히 정리해 놓은 것이다. <code>일반적으로 XGBoost는 GBM과는 다르게 병렬처리와 early Stopping 등으로 빠른 수행시간 처리가 가능하지만, CPU 코어가 많지 않은 개인용 PC에서는 수행시간 향상을 경험하기 어려울 수도 있다.</code></p>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import xgboost as xgb</span><br><span class="line">from xgboost import plot_importance</span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.datasets import load_breast_cancer</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">import warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</span><br><span class="line"></span><br><span class="line">dataset = load_breast_cancer()</span><br><span class="line">X_features = dataset.data</span><br><span class="line">y_label = dataset.target</span><br><span class="line"></span><br><span class="line">cancer_df = pd.DataFrame(data=X_features, columns=dataset.feature_names)</span><br><span class="line">cancer_df[<span class="string">'target'</span>] = y_label</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(dataset.target_names)</span><br><span class="line"><span class="built_in">print</span>(cancer_df[<span class="string">'target'</span>].value_counts())</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">'malignant'</span>, <span class="string">'benign'</span>]</span><br><span class="line">1    357</span><br><span class="line">0    212</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test=train_test_split(X_features, y_label, test_size=0.2, random_state=156)</span><br><span class="line"><span class="built_in">print</span>(X_train.shape, X_test.shape)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(455, 30) (114, 30)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>python 래퍼 XGboost가 Scikit-Learn 래퍼 XGboost와 차이점은 여러가지가 있지만, 가장 큰 차이는 학습용 데이터와 테스트용 데이터 세트를 위해 별도의 객체인 DMatrix를 생성한다는 점이다.</p>
+<ul>
+<li>Dmatrix는 주로 numpy 입력 parameter를 받아서 만들어지는 XGBoost만의 전용 데이터 세트이지만 numpy이외에 libsvm txt 포맷 파일, xgboost 이진 버퍼 파일을 parameter로 입력받아 변환할 수 있다.</li>
+</ul>
+</li>
+<li><p>data는 피처 데이터 세트이며, label은 classification의 경우에는 label 데이터 세트, regression의 경우에는 숫자형인 종속값 데이터 세트이다.</p>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dtrain = xgb.DMatrix(data=X_train, label=y_train)</span><br><span class="line">dtest = xgb.DMatrix(data=X_test, label=y_test)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>early_stopping_rounds 파라미터를 설정해 조기 중단을 수행하기 위해서는 <code>반드시 eval_set과 eval_metric이 함께 설정되야 한다.</code> XGboost는 반복마다 eval_set으로 지정된 데이터 세트에서 eval_metric의 지정된 평가 지표로 예측 오류를 측정한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">params = &#123;<span class="string">'max_depth'</span>:3,</span><br><span class="line">          <span class="string">'eta'</span>:0.1,</span><br><span class="line">          <span class="string">'objective'</span>:<span class="string">'binary:logistic'</span>,</span><br><span class="line">          <span class="string">'eval_metric'</span>:<span class="string">'logloss'</span>,</span><br><span class="line">          <span class="string">'early_stoppings'</span>:100</span><br><span class="line">      &#125;</span><br><span class="line">num_rounds = 400</span><br><span class="line"></span><br><span class="line"><span class="comment"># train 데이터 세트는 'train', evaluation(test) 데이터 세트는 'eval'로 명시한다.</span></span><br><span class="line">wlist = [(dtrain, <span class="string">'train'</span>), (dtest, <span class="string">'eval'</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 하이퍼 파라미터와 early stopping 파라미터를 train() 함수의 파라미터로 전달</span></span><br><span class="line">xgb_model = xgb.train(params=params, dtrain=dtrain, num_boost_round=num_rounds, evals=wlist)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>python 래퍼 xgboost는 predict() 메서드가 예측 결과값이 아닌 예측 결과를 추정할 수 있는 확률 값을 반환한다는 것이다.<ul>
+<li>예측 확률이 0.5보다 크면 1, 그렇지 않으면 0으로 예측하는 로직을 추가</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pred_probs = xgb_model.predict(dtest)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'predict() 수행 결과값을 10개만 표시, 예측 화귤값으로 표시된'</span>)</span><br><span class="line"><span class="built_in">print</span>(np.round(pred_probs[:10], 3))</span><br><span class="line"></span><br><span class="line">preds = [1 <span class="keyword">if</span> prob &gt; 0.5 <span class="keyword">else</span> 0 <span class="keyword">for</span> prob <span class="keyword">in</span> pred_probs]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'예측값 10개만 표시:'</span>, preds[:10])</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">predict() 수행 결과값을 10개만 표시, 예측 화귤값으로 표시된</span><br><span class="line">[0.95  0.003 0.9   0.086 0.993 1.    1.    0.999 0.998 0.   ]</span><br><span class="line">예측값 10개만 표시: [1, 0, 1, 0, 1, 1, 1, 1, 1, 0]</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>xgboost 패키지에 내장된 시각화 기능 중 <code>plot_importance() API</code>는 feature의 중요도를 막대그래프 형식으로 나타낸다. <code>기본 평가 지표로 f1-score를 기반으로 해 각 feature의 중요도를 나타낸다.</code> Scikit-Learn은 Estimator 객체의 feature_importances_ 속성을 이용해 직접 시각화 코드를 작성해야 하지만, xgboost 패키지는 plot_importance()를 이용해 바로 피처 중요도를 시각화할 수 있다. plot_importance() 호출 시 파라미터로 앞에서 학습이 완료된 모델 객체 및 Matplotlib의 ax 객체를 입력하기만 하면 된다.</li>
+</ul>
+<ul>
+<li>내장된 plot_importance() 이용 시 유의할 점은 xgboost numpy 기반의 feature 데이터터로 학습시에 피처명을 제대로 알 수 가 없으므로 f0, f1와 같이 feature 순서별로 f자 뒤에 순서를 붙여서 X 축에 feature들로 나열한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from xgboost import plot_importance</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(10, 12))</span><br><span class="line">plot_importance(xgb_model, ax=ax)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/python_wrapper_xgboost_feature_importance_bar_plot.png" alt="python 래퍼의 xgboost feature 중요도"></p>
+<ul>
+<li><p>또한, Decision Tree에서 보여준 tree 기반 규칙 구조도 xgboost에서 시각화할 수 있다. xgboost 모듈의 to_graphviz() API를 이용하면 jupyter notebook에 바로 규칙 tree 구조를 그릴 수 있다. xgboost.cv() API를 통해 GridSearchCV와 유사한 기증을 수행할 수 있다.</p>
+</li>
+<li><p>아래는 Scikit-Learn 래퍼의 xgboost의 사용법을 정리해 놓은 것이다.</p>
+<ul>
+<li>앞의 python 래퍼와 동일한 결과를 보여준다.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line">from sklearn.metrics import confusion_matrix</span><br><span class="line"></span><br><span class="line">xgb_wrapper = XGBClassifier(n_estimators=400, learning_rate=0.1, max_depth=3, random_state=156)</span><br><span class="line">xgb_wrapper.fit(X_train, y_train)</span><br><span class="line">w_preds = xgb_wrapper.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, w_preds))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[35  2]</span><br><span class="line"> [ 1 76]]</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>early stopping 기능을 사용하는 방법은 아래와 같다. 성능 평가를 수행할 데이터 세트는 학습 데이터가 아니라 별도의 데이터 세트이어야 한다. 허나, 아래 데이터 자체의 크기가 작기 때문에 평가용으로 사용해 보았다. 허나, 절대 아래와 같이 evals에 test 데이터를 사용하면 안된다. 만일 test data를 사용했다면 predict하는 경우에는 학습에 사용되지 않은 또 다른 데이터를 사용해야한다.</p>
+</li>
+<li><p><code>또한, early stopping을 너무 적게 잡는다면 전역 최적화가 이루어지지 않을 수도 있으므로 주의</code>하자</p>
+<ul>
+<li>GridSearchCV와 같이 hyper parameter를 tuning할 경우에는 XGBoost가 GBM보다는 빠르지만 아무래도 GBM을 기반으로 하고 있기 때문에 수행 시간이 상당히 더 많이 요구된다. 앙상블 계열 알고리즘은 overfitting이나 noise에 기본적으로 뛰어난 알고리즘이므로 hyper parameter tuning으로 성능 수치 개선이 급격하게 좋아지는 경우는 그리 많지 않다. 일반 PC가 아닌 적어도 8-Core이상의 병렬 CPU Core 시스템을 가진 컴퓨터가 있다면 더 다양하게 hyper parameter 변경해 가면서 성능 향상을 적극저으로 시도해 보면 좋을 것이다.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xgb_wrapper = XGBClassifier(n_estimators=400, learning_rate=0.1, max_depth=3, random_state=156)</span><br><span class="line">evals = [(X_test, y_test)]</span><br><span class="line">xgb_wrapper.fit(X_train, y_train, early_stopping_rounds=100, eval_metric=<span class="string">'logloss'</span>, eval_set=evals, verbose=True)</span><br><span class="line">w_preds = xgb_wrapper.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, w_preds))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[34  3]</span><br><span class="line"> [ 1 76]]</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h2><ul>
+<li>LightGBM은 XGBoost와 함께 부스팅 계열 알고리즘에서 가장 각광 받고 있다. XGBoost는 매우 뛰어난 부스팅 알고리즘이지만, XGBoost에서 GridSearchCV로 hyper parameter 튜닝을 수행하다 보면 여전히 학습시간이 오래 걸린다. 물론 GBM 보다는 빠르지만, <code>대용량 데이터의 경우 만족할 만한 학습 성능을 기대하려면 많은 CPU Core를 가진 시스템에서 높은 병렬도로 학습을 진행해야 한다.</code></li>
+</ul>
+<ul>
+<li>LightGBM의 가장 큰 장점은 XGBoost보다 학습에 걸리는 시간이 훨씬 적다는 점이다. 또한 메모리 사용량도 상대적으로 적다. LightGBM이 XGBoost보다 2년 후에 만들어지다보니 XGBoost의 장점은 계승하고 단점은 보완하는 방식으로 개발되었기 때문에 예측 성능에서의 차이는 거의 없지만, 기능상의 다양성이 더 높다.</li>
+</ul>
+<ul>
+<li><code>LightGBM의 한 가지 단점으로 알려진 것은 적은 데이터 세트에 적용할 경우 과적합이 발생하기 쉽다는 것</code>이다. 적은 데이터 세트의 기준은 애매하지만, 일반적으로 10,000건 이하의 데이터 세트 정도라고 LightGBM 공식 문서에서 기술하고 있다.</li>
+</ul>
+<ul>
+<li>LightGBM은 일반 GBM 계열의 트리 분할 방법과 다르게 leaf 중심 트리 분할(Leaf Wise) 방식을 사용한다. 기존의 대부분 트리 기반 알고리즘은 트리의 깊이를 효과적으로 줄이기 위한 균형 트리 분할(Level wise)방식을 사용한다. 즉, <code>최대한 균형 잡힌 트리를 유지하면서 분할하기 때문에 트리의 깊이가 최소화될 수 있다.</code> 이렇게 균형잡힌 트리를 생성하는 이유는 과적합(overfitting)에 보다 더 강한 구조를 가질 수 있다고 알려져 있기 때문이다. 반대로 균형을 맞추기 위한 시간이 필요하다는 상대적인 단점이 있다. <code>하지만, LightGBM의 leaf 중심 트리 분할 방식은 트리의 균형을 맞추지 않고, 최대 손실 값(max delta loss)을 가지는 leaf 노드를 지속적으로 분할하면서 트리의 깊이가 깊어지고 비대칭적인 규칙 트리가 생성된다. 하지만 이렇게 최대 손실값을 가지는 leaf 노드를 지속적으로 분할해 생성된 규칙 트리는 학습을 반복할수록 결국은 균형 트리 분할 방식보다 예측 오류 손실을 최소화 할 수 있다는 것이 LightGBM의 구현 사상</code>이다.</li>
+</ul>
+<p><img src="/image/what_is_lightGBM.png" alt="LightGBM의 개념"></p>
+<ul>
+<li>LightGBM 설치 방법<ul>
+<li>Window에 설치할 경우에는 Visual Studio Build tool 2015 이상이 설치돼있어야 한다.</li>
+<li>아나콘다 프롬프트를 관리자 권한으로 실행한 다음 아래 명려어 실행</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c conda-forge lightgbm</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>LightGBM 하이퍼 파라미터는 XGBoost와 많은 부분이 유사하지만 트리의 분할 방식이 다르므로 예를 들어 max_depth를 매우 크게 가져가는 것과 같이 트리 특성에 맞게 설정해 주어야 할 것</code>이다.</li>
+</ul>
+<h4 id="주요-파라미터"><a href="#주요-파라미터" class="headerlink" title="주요 파라미터"></a>주요 파라미터</h4><ul>
+<li><p><code>num_iterations [default = 100]</code> : 반복 수행하려는 트리의 개수를 지정한다. 크게 지정할수록 예측 성능이 높아질수 있으나, 너무 크게 지정하면 오히려 과적합으로 성능이 저하 될 수 있다. Scikit-Learn GBM과 XGBoost의 Scikit-Learn 호환 클래스의 n_estimators와 같은 파라미터이므로 LightGBM의 Scikit-Learn 호환 클래스에서는 n_estimators로 이름이 변경된다.</p>
+</li>
+<li><p><code>learning_rate [default = 0.1]</code> : 0에서 1사이의 값을 지정하며 Boosting 스텝을 반복적으로 수행할 때 업데이트되는 학습롤값이다. 일반적으로 n_estimators를 크게하고 learning_rate를 작게해서 예측 성능을 향상시킬 수 있으나, 마찬가지로 과적합(overfitting) 이슈와 학습 시간이 길어지는 부정적인 영향도 고려해야한다. GBM, XGBoost의 learning_rate와 같은 파라미터이다.</p>
+</li>
+<li><p><code>max_depth [default=1]</code> : 트리 기반 알고리즘의 max_depth와 같다. 0보다 작은 값을 지정하면 깊이에 제한이 없다. <code>지금까지 소개한 Depth Wise 방식의 트리와 다르게 LightGBM은 Leaf wise 기반이므로 깊이가 상대적으로 더 깊다.</code></p>
+</li>
+<li><p><code>min_data_in_leaf [default=20]</code> : Decision Tree의 min_samples_leaf와 같은 파라미터이다. 하지만 Scikit-Learn 래퍼 LightGBM 클래스인 LightGBMClassifier에서는 min_child_samples 파라미터로 이름이 변경된다. <code>최종 결정 클래스인 Leaf 노드가 되기 위해서 최소한으로 필요한 레코드(데이터) 수이며, 과적합을 제어하기 위한 파라미터이다.</code></p>
+</li>
+<li><p><code>num_leaves [default=31]</code> : 하나의 트리가 가질 수 있는 최대 Leaf 개수이다.</p>
+</li>
+<li><p><code>boosting [default=gbdt]</code> : Boosting 트리를 생성하는 알고리즘을 기술한다.</p>
+<ul>
+<li>gbdt : 일반적인 그레디언트 부스팅 결정트리</li>
+<li>rf : 랜덤포레스트</li>
+</ul>
+</li>
+<li><p><code>bagging_fraction [default=1.0]</code> : 트리가 커져서 과적합되는 것을 제어하기 위해서 데이터 샘플링하는 비율을 지정한다. Scikit-Learn의 GBM과 XGBoost의 sub_sample 파라미터와 동일하기에 Scikit-Learn 래퍼 LightGBM인 LightGBMClassifier에서는 sub_sample로 동일하게 파라미터 이름이 변경된다.</p>
+</li>
+<li><p><code>feature_fraction [default=1.0]</code> : 개별 트리를 학습할 때마다 무작위로 선택하는 feature의 비율이다. 과적합을 막기 위해 사용된다. GBM의 max_features와 유사하며, XGBClassifier의 colsample_bytree와 똑같으므로 LightGBMClassifier에서는 동일하게 colsample_bytree로 변경된다.</p>
+</li>
+<li><p><code>lambda_l2 [default=0.0]</code> : L2 Regulation 제어를 위한 값이다. feature 개수가 많을 경우 적용을 검토하며 값이 클수록 과적합 감소 효과가 있다. XGBClassifier의 reg_lambda와 동일하므로 LightGBMClassifier에서는 reg_lambda로 변경된다.</p>
+</li>
+<li><p><code>lambda_l1 [default=0.0]</code> : L1 Regulation 제어를 위한 갑이다. L2와 마찬가지로 과적합 제어를 위한 것이며, XGBClassifier의 reg_alpha와 동일하므로 LightGBMClassifier에서는 reg_alpha로 변경된다.</p>
+</li>
+</ul>
+<h4 id="Learning-Task-파라미터"><a href="#Learning-Task-파라미터" class="headerlink" title="Learning Task 파라미터"></a>Learning Task 파라미터</h4><ul>
+<li><code>objective</code> : 최솟값을 가져야 할 손실함수(loss function)을 정의한다. XGBoost의 objective 파라미터와 동일하다. 애플리케이션 유형, 즉 regression, multiclass classification, binary classificationdl인지에 따라 objective인 손실함수가 지정된다.</li>
+</ul>
+<h4 id="하이퍼-파라미터-튜닝-방안"><a href="#하이퍼-파라미터-튜닝-방안" class="headerlink" title="하이퍼 파라미터 튜닝 방안"></a>하이퍼 파라미터 튜닝 방안</h4><ul>
+<li><p><code>num_leaves의 개수를 중심으로 min_child_samples(min_data_in_leaf), max_depth를 함께 조정하면서 모델의 복잡도를 줄이는 것이 기본 튜닝 방안</code>이다.</p>
+<ul>
+<li><p>num_leaves는 개별 트리가 가질 수 있는 최대 Leaf의 개수이고 LightGBM 모델의 복잡도를 제어하는 주요 파라미터이다. 일반적으로 num_leaves의 개수를 높이면 정확도가 높아지지만, 반대로 트리의 깊이가 깊어지고 모델의 복잡도가 커져서 과적합 영향도가 커진다.</p>
+</li>
+<li><p>min_data_in_leaf는 Scikit-Learn 래퍼 클래스에서는 min_child_samples로 이름이 바뀐다. 과적합을 개선하기 위한 중요한 파라미터이다. num_leaves와 학습 데이터의 크기에 따라 달라지지만, 보통 큰 값으로 설정하면 트리가 깊어지는 것을 방지한다.</p>
+</li>
+<li><p>max_depth는 명시적으로 깊이의 크기를 제한한다. num_leaves, min_data_in_leaf와 결합해 과적합을 개선하는데 사용한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from lightgbm import LGBMClassifier</span><br><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.datasets import load_breast_cancer</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">dataset = load_breast_cancer()</span><br><span class="line">X_data = dataset.data</span><br><span class="line">y = dataset.target</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X_data, y, test_size=0.2 ,random_state=1234)</span><br><span class="line"></span><br><span class="line">lgbm_wrapper = LGBMClassifier(n_estimators=400)</span><br><span class="line"></span><br><span class="line">evals = [(X_test, y_test)]</span><br><span class="line">lgbm_wrapper.fit(X_train, y_train, early_stopping_rounds=100, eval_metric=<span class="string">"logloss"</span>, eval_set=evals, verbose=True)</span><br><span class="line">preds = lgbm_wrapper.predict(X_test)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import confusion_matrix</span><br><span class="line">confusion_matrix(y_test, preds)</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[36,  9],</span><br><span class="line">       [ 2, 67]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def confusion_matrix_mine(y_test, pred):</span><br><span class="line">    class_types=list(<span class="built_in">set</span>(y_test))</span><br><span class="line">    confusion_matrix=np.zeros((len(class_types),len(class_types)))</span><br><span class="line">    <span class="keyword">for</span> y, pred <span class="keyword">in</span> zip(y_test, preds):</span><br><span class="line">        <span class="keyword">if</span> y==pred:</span><br><span class="line">            confusion_matrix[y,pred]=confusion_matrix[y,pred]+1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            confusion_matrix[y,pred]=confusion_matrix[y,pred]+1</span><br><span class="line">    <span class="built_in">return</span> confusion_matrix</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">confusion_matrix_mine(y_test, pred)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[36.,  9.],</span><br><span class="line">       [ 2., 67.]])</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import classification_report</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, preds))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">           0       0.95      0.80      0.87        45</span><br><span class="line">           1       0.88      0.97      0.92        69</span><br><span class="line"></span><br><span class="line">    accuracy                           0.90       114</span><br><span class="line">   macro avg       0.91      0.89      0.90       114</span><br><span class="line">weighted avg       0.91      0.90      0.90       114</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from lightgbm import plot_importance</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(10,12))</span><br><span class="line">plot_importance(lgbm_wrapper, ax=ax)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/python_wrapper_xgboost_feature_importance_bar_plot.png" alt="lightgbm 피처 중요도 그래프"></p>
+<h2 id="CatBoost"><a href="#CatBoost" class="headerlink" title="CatBoost"></a>CatBoost</h2><ul>
+<li>최근 machine learning 알고리즘은 아래 그림에서 볼 수 있듯이 lightgbm과 catboost를 사용하는 유저들이 많아졌다는 것을 확인할 수 있다. 그렇다면 과연 CatBoost과 무엇이길래 많은 사람들이 사용하는지 한번 알아보자.</li>
+</ul>
+<p><img src="/image/catboost_having__many_user.png" alt="CatBoost의 성장"></p>
+<ul>
+<li>categorical feature에 잘 맞는다고 알려져있다. 일반적으로 머신러닝의 모델은 분산(Variance)과 편향(bias)의 trade-off관계를 조절하며 어떤 것에 더 중점을 둘지를 결정하여 만들게 된다. 그러나 이 CatBoost는 <code>잔차 추정의 분산을 최소로 하면서 bias를 피하는 boosting</code>기법이다. 즉, validation set을 제외한 data set에서 train에 사용되지 않은 data들을 통해 잔차의 분산을 최소화시키도록 학습을 시키는 방법이다.</li>
+</ul>
+<p><img src="/image/what_is_cat_boost.png" alt="Catboost 개념"></p>
+<p><a href="https://gentlej90.tistory.com/100" target="_blank" rel="noopener">CatBoost 참조</a></p>
+<h3 id="기존의-부스팅-방법"><a href="#기존의-부스팅-방법" class="headerlink" title="기존의 부스팅 방법"></a>기존의 부스팅 방법</h3><ul>
+<li><p>기존의 부스팅 기법을 간략히 설명하면 다음과 같다.</p>
+<ul>
+<li>1) 실제 값들의 평균과 차이인 잔차(Residual)를 구한다.</li>
+<li>2) 데이터로 이 잔차들을 학습하는 모델을 만든다.</li>
+<li>3) 모델을 통해 학습한 파라미터 (평균 + 잔차예측 값 * learning_rate)를 업데이트한다.</li>
+<li>4) 위의 과정을 loss값이 일정 round 동안 수렴할때까지 반복한다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="기존의-부스팅의-문제점"><a href="#기존의-부스팅의-문제점" class="headerlink" title="기존의 부스팅의 문제점"></a>기존의 부스팅의 문제점</h3><ul>
+<li><p>1) <code>느린 학습 속도</code></p>
+<ul>
+<li>부스팅 모델이 아닌 배깅과 비교했을 때, 훨씬 느린 속도를 보인다. 배깅의 경우 여러 트리들이 병렬적으로 모델 학습을 수행하고 부스팅의 경우 순차적으로 모델학습을 수행하기 때문에 느린 속도를 갖을 수 밖에 없다. 이런 문제점을 보완한 것이 XGBoost, LightGBM, CatBoost들이다.</li>
+</ul>
+</li>
+<li><p>2) overfitting</p>
+<ul>
+<li>속도문제를 샘플링이나 알고리즘 최적화로 어느정도 개선이 되었다면, 남아있는 문제는 overfitting이다. 이는 부스팅이라는 개념 자체가 가지고 있는 문제인데, 부스팅 자체가 <code>오차(error)를 줄여나가기 위해 학습하는 모델이기 때문에 굉장히 High Variance한 모델이기 때문이다.</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="CatBoost의-특징"><a href="#CatBoost의-특징" class="headerlink" title="CatBoost의 특징"></a>CatBoost의 특징</h3><h4 id="Level-wise-Tree"><a href="#Level-wise-Tree" class="headerlink" title="Level-wise Tree"></a>Level-wise Tree</h4><ul>
+<li>LightGBM은 Leaf-wise 방식으로 트리를 만들었지만, XGBoost와 동일하게 Level-wise 방식으로 트리를 만들어 나간다. 직관적으로 표현하자면 Level-wise는 BFS같이 트리를 만들어나가는 방식이고, Leaf-wise는 DFS 같이 트리를 만들어나가는 형태인 것이다.</li>
+</ul>
+<h4 id="Ordered-Boosting"><a href="#Ordered-Boosting" class="headerlink" title="Ordered Boosting"></a>Ordered Boosting</h4><ul>
+<li><p>CatBoost는 기존의 부스팅 과정과 전체적인 양상은 비슷하되, 조금 다르다. <code>기존의 부스팅 모델이 일괄적으로 모든 훈련 데이터를 대상으로 잔차를 계산 했다면, CatBoost는 일부 즉, 훈련에 사용되지 않은 나머지 데이터에 대해 error를 추정한 뒤, 이것을 통해 모델을 만들고, 그 뒤에 데이터의 잔차는 만들어진 모델을 통해 예측한 값을 사용한다.</code></p>
+</li>
+<li><p>예를 들면, 아래와 같은 데이터가 있다고 가정해보자.</p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>time</th>
+<th>datapoint</th>
+<th>class label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12:00</td>
+<td>$x_1$</td>
+<td>10</td>
+</tr>
+<tr>
+<td>12:01</td>
+<td>$x_2$</td>
+<td>12</td>
+</tr>
+<tr>
+<td>12:02</td>
+<td>$x_3$</td>
+<td>9</td>
+</tr>
+<tr>
+<td>12:03</td>
+<td>$x_4$</td>
+<td>4</td>
+</tr>
+<tr>
+<td>12:04</td>
+<td>$x_5$</td>
+<td>52</td>
+</tr>
+<tr>
+<td>12:05</td>
+<td>$x_6$</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>기존의 부스팅 기법은 모든 학습 데이터(x1~x10)까지의 잔차를 일괄 계산한다. 반면, CatBoost의 과정은 다음과 같다.</p>
+<ul>
+<li>1) 먼저 $x_{1}$의 잔차만 계산하고, 이를 기반으로 모델을 만든다. 그리고 $x_{2}$의 잔차를 이 모델로 예측한다.</li>
+<li>2) $x_{1}, x_{2}$의 잔차를 가지고 모델을 만든다. 이를 기반으로 $x_{3}, x_{4}$의 잔차를 모델로 예측한다.</li>
+<li>3) $x_{1}, x_{2}, x_{3}, x_{4}$를 가지고 모델을 만든다. 이를 기반으로 $x_{5}, x_{6}, x_{7}, x_{8}$의 잔차를 모델로 예측한다.</li>
+<li>4) 반복</li>
+</ul>
+</li>
+<li><p><code>위와 같이 순서에 따라 모델을 만들고 예측하는 방식을 Ordered Boosting</code>이라고 부른다.</p>
+</li>
+</ul>
+<h4 id="Random-Permutation"><a href="#Random-Permutation" class="headerlink" title="Random Permutation"></a>Random Permutation</h4><ul>
+<li>위에서 Ordered Boosting을 할 때, 데이터 순서를 섞어주지 않으면 매번 같은 순서대로 잔차를 예측하는 모델을 만들 가능성이 있다. <code>그러므로 이 순서를 위사 임의로 랜덤하게 섞어주어야 한다.</code> CatBoost는 이러한 점을 감안해서 데이터를 셔플링하여 뽑아낸다. 뽑아낼 때도 역시 모든 데이터를 뽑는게 아니라, 그 중 일부만 가져오게 할 수 있다. 이 모든 기법이 overffiting을 방지하기 위해 tree를 다각적으로 만들려는 시도인 것이다.</li>
+</ul>
+<h4 id="Ordered-Target-Encoding"><a href="#Ordered-Target-Encoding" class="headerlink" title="Ordered Target Encoding"></a>Ordered Target Encoding</h4><ul>
+<li>Target Encoding, Mean Encoding, Response Encoding이라고 불리는 데 모두 다 같은 개념을 지칭하는 용어이다.</li>
+<li>범주형 변수를 수로 인코딩 시키는 방법 중, 비교적 가장 최근에 나온 기법인데, 간단한 설명을 하면 다음과 같다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>time</th>
+<th>feature</th>
+<th>class_labels(max_temperature on that day)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sunday</td>
+<td>sunny</td>
+<td>35</td>
+</tr>
+<tr>
+<td>monday</td>
+<td>sunny</td>
+<td>32</td>
+</tr>
+<tr>
+<td>tuesday</td>
+<td>cloudy</td>
+<td>15</td>
+</tr>
+<tr>
+<td>wednesday</td>
+<td>cloudy</td>
+<td>14</td>
+</tr>
+<tr>
+<td>thursday</td>
+<td>mostly_cloudy</td>
+<td>10</td>
+</tr>
+<tr>
+<td>friday</td>
+<td>cloudy</td>
+<td>20</td>
+</tr>
+<tr>
+<td>saturday</td>
+<td>cloudy</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>위 데이터에서 time, feature로 class_label을 예측한다고 가정해보자. feature의 cloudy는 다음과 같이 인코딩 할 수 있다.<ul>
+<li>즉, cloudy를 cloudy를 가진 데이터들의 class_label의 값의 평균으로 인코딩하는 것이다. 이러한 이유로 Mean encoding이라 불리기도 한다.</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">cloudy = \frac{(15+14+20+25)}{4} = 18.5</script><ul>
+<li><p>그런데, 위에서 우리가 예측하는 값이 Train set feature에 들어가버리는 문제, 즉 Data Leakage 문제를 일으킨다. 이는 overfitting을 발생시키는 주 원인이자, Mean encoding 방법 자체의 문제이기도 하다. <code>그래서 CatBoost는 이에 대한 해결책으로, 현재 데이터의 인코딩을 위해 이전 데이터들의 인코딩된 값을 사용한다.</code></p>
+</li>
+<li><p>즉, 현재 데이터의 Target값을 사용하지 않고, 이전 데이터들의 Target값 만을 사용하니, Data Leakage가 일어나지 않는 것이다. <code>물론 data 중 이미 평균값과 동일한 값이 존재 한다면 사용할 수 없을 것이다.</code></p>
+</li>
+</ul>
+<script type="math/tex; mode=display">Friday: cloudy = \frac{(15+14)}{2} = 15.5</script><script type="math/tex; mode=display">Saturday: cloudy = \frac{(15+14+20)}{3} = 16.3</script><h4 id="Categorical-Feature-Combinations"><a href="#Categorical-Feature-Combinations" class="headerlink" title="Categorical Feature Combinations"></a>Categorical Feature Combinations</h4><ul>
+<li>아래 데이터의 경우에는 country만 보아도 hair_color feature를 알 수 있기 때문에, class_label을 예측하는데 있어, 두 feature 다 필요 없이 이 중 하나의 feature만 있으면 된다. CatBoost는 이렇게 information gain이 동일한 두 feature를 하나의 feature로 묶어버린다. <code>결과적으로, 데이터 전처리에 있어 feature selection에 대해 부담이 줄어들 수 있다고 볼 수 있다.</code></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>country</th>
+<th>hair clolor</th>
+<th>class_label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>russia</td>
+<td>white</td>
+<td>0</td>
+</tr>
+<tr>
+<td>russia</td>
+<td>white</td>
+<td>0</td>
+</tr>
+<tr>
+<td>russia</td>
+<td>white</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="One-hot-Encoding"><a href="#One-hot-Encoding" class="headerlink" title="One-hot Encoding"></a>One-hot Encoding</h4><ul>
+<li>범주형 변수를 항상 Target Encoding하는 것은 아니다. Catboost는 낮은 Cardinality를 가지는 범주형 변수에 한해서, 기본적으로 One-hot encoding을 시행한다. Cardinality 기준은 <code>one_hot_max_size</code> 파라미터로 설정할 수 있다.</li>
+</ul>
+<ul>
+<li>예를 들어, <code>one_hot_max_size = 3</code>으로 설정한 경우, Cardinality가 3이하인 범주형 변수들은 Target Encoding이 아니라 One-hot Encoding으로 변환한다. 낮은 개수를 갖는 범주형 변수의 경우 One-hot Encoding이 더 효율적이라 그런 것이라 생각든다.</li>
+</ul>
+<h4 id="Optimized-Parameter-tuning"><a href="#Optimized-Parameter-tuning" class="headerlink" title="Optimized Parameter tuning"></a>Optimized Parameter tuning</h4><ul>
+<li>CatBoost는 파라미터들의 default 값이 기본적으로 최적화가 잘 되어서, 파라미터 튜닝에 크게 신경쓰지 않아도 된다고한다. 물론 데이터 마다 다르기 때문에 튜닝을 해보는 것이 좋긴하다.</li>
+</ul>
+<h3 id="CatBoost의-한계"><a href="#CatBoost의-한계" class="headerlink" title="CatBoost의 한계"></a>CatBoost의 한계</h3><ul>
+<li><code>Sparse한 Matrix는 처리하지 못한다.</code></li>
+</ul>
+<ul>
+<li><code>데이터 대부분이 수치형 변수인 경우, LightGBM보다 학습 속도가 느리다.</code>그러므로 대부분이 범주형 변수인 경우에만 사용하는 것을 추천한다.</li>
+</ul>
+<h3 id="Ensemble-실습"><a href="#Ensemble-실습" class="headerlink" title="Ensemble 실습"></a>Ensemble 실습</h3><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="데이터-info"><a href="#데이터-info" class="headerlink" title="데이터 info"></a>데이터 info</h4><ul>
+<li>id: 고유 아이디</li>
+<li>feat_1 ~ feat_93: 설명변수</li>
+<li>target: 타겟변수 (1~9)</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 불러오기</span></span><br><span class="line">data = pd.read_csv(<span class="string">"../data/otto_train.csv"</span>) <span class="comment"># Product Category</span></span><br><span class="line">data.head() <span class="comment"># 데이터 확인</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nCar = data.shape[0] <span class="comment"># 데이터 개수</span></span><br><span class="line">nVar = data.shape[1] <span class="comment"># 변수 개수</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'nCar: %d'</span> % nCar, <span class="string">'nVar: %d'</span> % nVar )</span><br></pre></td></tr></table></figure>
+<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nCar: 61878 nVar: 95</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="의미가-없다고-판단되는-변수-제거"><a href="#의미가-없다고-판단되는-변수-제거" class="headerlink" title="의미가 없다고 판단되는 변수 제거"></a>의미가 없다고 판단되는 변수 제거</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = data.drop([<span class="string">'id'</span>], axis = 1) <span class="comment"># id 제거</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="타겟-변수의-문자열을-숫자로-변환"><a href="#타겟-변수의-문자열을-숫자로-변환" class="headerlink" title="타겟 변수의 문자열을 숫자로 변환"></a>타겟 변수의 문자열을 숫자로 변환</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mapping_dict = &#123;<span class="string">"Class_1"</span>: 1,</span><br><span class="line">                <span class="string">"Class_2"</span>: 2,</span><br><span class="line">                <span class="string">"Class_3"</span>: 3,</span><br><span class="line">                <span class="string">"Class_4"</span>: 4,</span><br><span class="line">                <span class="string">"Class_5"</span>: 5,</span><br><span class="line">                <span class="string">"Class_6"</span>: 6,</span><br><span class="line">                <span class="string">"Class_7"</span>: 7,</span><br><span class="line">                <span class="string">"Class_8"</span>: 8,</span><br><span class="line">                <span class="string">"Class_9"</span>: 9&#125;</span><br><span class="line">after_mapping_target = data[<span class="string">'target'</span>].apply(lambda x: mapping_dict[x])</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="설명변수와-타겟변수를-분리-학습데이터와-평가데이터-분리"><a href="#설명변수와-타겟변수를-분리-학습데이터와-평가데이터-분리" class="headerlink" title="설명변수와 타겟변수를 분리, 학습데이터와 평가데이터 분리"></a>설명변수와 타겟변수를 분리, 학습데이터와 평가데이터 분리</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">feature_columns = list(data.columns.difference([<span class="string">'target'</span>])) <span class="comment"># target을 제외한 모든 행</span></span><br><span class="line">X = data[feature_columns] <span class="comment"># 설명변수</span></span><br><span class="line">y = after_mapping_target <span class="comment"># 타겟변수</span></span><br><span class="line">train_x, test_x, train_y, test_y = train_test_split(X, y, test_size = 0.2, random_state = 42) <span class="comment"># 학습데이터와 평가데이터의 비율을 8:2 로 분할|</span></span><br><span class="line"><span class="built_in">print</span>(train_x.shape, test_x.shape, train_y.shape, test_y.shape) <span class="comment"># 데이터 개수 확인</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(49502, 93) (12376, 93) (49502,) (12376,)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="1-XGBoost"><a href="#1-XGBoost" class="headerlink" title="1. XGBoost"></a>1. XGBoost</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install xgboost</span></span><br><span class="line">import xgboost as xgb</span><br><span class="line">import time</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">xgb_dtrain = xgb.DMatrix(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 XGBoost 모델에 맞게 변환</span></span><br><span class="line">xgb_dtest = xgb.DMatrix(data = test_x) <span class="comment"># 평가 데이터를 XGBoost 모델에 맞게 변환</span></span><br><span class="line">xgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">         <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">         <span class="string">'n_estimators'</span>: 100, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">         <span class="string">'objective'</span>: <span class="string">'multi:softmax'</span>, <span class="comment"># 목적 함수</span></span><br><span class="line">        <span class="string">'num_class'</span>: len(<span class="built_in">set</span>(train_y)) + 1&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">xgb_model = xgb.train(params = xgb_param, dtrain = xgb_dtrain) <span class="comment"># 학습 진행</span></span><br><span class="line">xgb_model_predict = xgb_model.predict(xgb_dtest) <span class="comment"># 평가 데이터 예측</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %.2f"</span> % (accuracy_score(test_y, xgb_model_predict) * 100), <span class="string">"%"</span>) <span class="comment"># 정확도 % 계산</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Time: %.2f"</span> % (time.time() - start), <span class="string">"seconds"</span>) <span class="comment"># 코드 실행 시간 계산</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Accuracy: 76.67 %</span><br><span class="line">Time: 20.48 seconds</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="2-LightGBM"><a href="#2-LightGBM" class="headerlink" title="2. LightGBM"></a>2. LightGBM</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install lightgbm</span></span><br><span class="line">import lightgbm as lgb</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">lgb_dtrain = lgb.Dataset(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 LightGBM 모델에 맞게 변환</span></span><br><span class="line">lgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">            <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">            <span class="string">'n_estimators'</span>: 100, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">            <span class="string">'objective'</span>: <span class="string">'multiclass'</span>, <span class="comment"># 목적 함수</span></span><br><span class="line">            <span class="string">'num_class'</span>: len(<span class="built_in">set</span>(train_y)) + 1&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">lgb_model = lgb.train(params = lgb_param, train_set = lgb_dtrain) <span class="comment"># 학습 진행</span></span><br><span class="line">lgb_model_predict = np.argmax(lgb_model.predict(test_x), axis = 1) <span class="comment"># 평가 데이터 예측, Softmax의 결과값 중 가장 큰 값의 Label로 예측</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %.2f"</span> % (accuracy_score(test_y, lgb_model_predict) * 100), <span class="string">"%"</span>) <span class="comment"># 정확도 % 계산</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Time: %.2f"</span> % (time.time() - start), <span class="string">"seconds"</span>) <span class="comment"># 코드 실행 시간 계산</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-12"><a href="#결과-12" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Accuracy: 73.57 %</span><br><span class="line">Time: 8.46 seconds</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="3-Catboost"><a href="#3-Catboost" class="headerlink" title="3. Catboost"></a>3. Catboost</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install catboost</span></span><br><span class="line">import catboost as cb</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">cb_dtrain = cb.Pool(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 Catboost 모델에 맞게 변환</span></span><br><span class="line">cb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">            <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">            <span class="string">'n_estimators'</span>: 100, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">            <span class="string">'eval_metric'</span>: <span class="string">'Accuracy'</span>, <span class="comment"># 평가 척도</span></span><br><span class="line">            <span class="string">'loss_function'</span>: <span class="string">'MultiClass'</span>&#125; <span class="comment"># 손실 함수, 목적 함수</span></span><br><span class="line">cb_model = cb.train(pool = cb_dtrain, params = cb_param) <span class="comment"># 학습 진행</span></span><br><span class="line">cb_model_predict = np.argmax(cb_model.predict(test_x), axis = 1) + 1 <span class="comment"># 평가 데이터 예측, Softmax의 결과값 중 가장 큰 값의 Label로 예측, 인덱스의 순서를 맞추기 위해 +1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %.2f"</span> % (accuracy_score(test_y, cb_model_predict) * 100), <span class="string">"%"</span>) <span class="comment"># 정확도 % 계산</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Time: %.2f"</span> % (time.time() - start), <span class="string">"seconds"</span>) <span class="comment"># 코드 실행 시간 계산</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-13"><a href="#결과-13" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">90:	learn: 0.6928407	total: 53s	remaining: 5.24s</span><br><span class="line">91:	learn: 0.6930427	total: 53.5s	remaining: 4.66s</span><br><span class="line">92:	learn: 0.6935073	total: 54.1s	remaining: 4.07s</span><br><span class="line">93:	learn: 0.6940932	total: 54.6s	remaining: 3.49s</span><br><span class="line">94:	learn: 0.6944972	total: 55.2s	remaining: 2.9s</span><br><span class="line">95:	learn: 0.6948810	total: 55.7s	remaining: 2.32s</span><br><span class="line">96:	learn: 0.6951840	total: 56.3s	remaining: 1.74s</span><br><span class="line">97:	learn: 0.6954264	total: 56.8s	remaining: 1.16s</span><br><span class="line">98:	learn: 0.6955881	total: 57.4s	remaining: 580ms</span><br><span class="line">99:	learn: 0.6956285	total: 57.9s	remaining: 0us</span><br><span class="line">Accuracy: 69.64 %</span><br><span class="line">Time: 58.31 seconds</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 불러오기</span></span><br><span class="line">data = pd.read_csv(<span class="string">"./data/kc_house_data.csv"</span>)</span><br><span class="line">data.head() <span class="comment"># 데이터 확인</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = data.drop([<span class="string">'id'</span>, <span class="string">'date'</span>, <span class="string">'zipcode'</span>, <span class="string">'lat'</span>, <span class="string">'long'</span>], axis = 1) <span class="comment"># id, date, zipcode, lat, long  제거</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">feature_columns = list(data.columns.difference([<span class="string">'price'</span>])) <span class="comment"># Price를 제외한 모든 행</span></span><br><span class="line">X = data[feature_columns]</span><br><span class="line">y = data[<span class="string">'price'</span>]</span><br><span class="line">train_x, test_x, train_y, test_y = train_test_split(X, y, test_size = 0.3, random_state = 42) <span class="comment"># 학습데이터와 평가데이터의 비율을 7:3</span></span><br><span class="line"><span class="built_in">print</span>(train_x.shape, test_x.shape, train_y.shape, test_y.shape) <span class="comment"># 데이터 개수 확인</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-14"><a href="#결과-14" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(15129, 8) (6484, 8) (15129,) (6484,)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install lightgbm</span></span><br><span class="line">import lightgbm as lgb</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">lgb_dtrain = lgb.Dataset(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 LightGBM 모델에 맞게 변환</span></span><br><span class="line">lgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">            <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">            <span class="string">'n_estimators'</span>: 500, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">            <span class="string">'objective'</span>: <span class="string">'regression'</span>&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">lgb_model = lgb.train(params = lgb_param, train_set = lgb_dtrain) <span class="comment"># 학습 진행</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import mean_squared_error, r2_score</span><br><span class="line">from math import sqrt</span><br><span class="line"></span><br><span class="line">sqrt(mean_squared_error(lgb_model.predict(test_x),test_y))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-15"><a href="#결과-15" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">210904.17249451784</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Ensemble의-Ensemble"><a href="#Ensemble의-Ensemble" class="headerlink" title="Ensemble의 Ensemble"></a>Ensemble의 Ensemble</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line">bagging_predict_result = [] <span class="comment"># 빈 리스트 생성</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(30):</span><br><span class="line">    data_index = [data_index <span class="keyword">for</span> data_index <span class="keyword">in</span> range(train_x.shape[0])] <span class="comment"># 학습 데이터의 인덱스를 리스트로 변환</span></span><br><span class="line">    random_data_index = np.random.choice(data_index, train_x.shape[0]) <span class="comment"># 데이터의 1/10 크기만큼 랜덤 샘플링, // 는 소수점을 무시하기 위함</span></span><br><span class="line">    <span class="built_in">print</span>(len(<span class="built_in">set</span>(random_data_index)))</span><br><span class="line">    lgb_dtrain = lgb.Dataset(data = train_x.iloc[random_data_index,], label = train_y.iloc[random_data_index]) <span class="comment"># 학습 데이터를 LightGBM 모델에 맞게 변환</span></span><br><span class="line">    lgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">                <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">                <span class="string">'n_estimators'</span>: 500, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">                <span class="string">'objective'</span>: <span class="string">'regression'</span>&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">    lgb_model = lgb.train(params = lgb_param, train_set = lgb_dtrain) <span class="comment"># 학습 진행</span></span><br><span class="line"></span><br><span class="line">    predict1 = lgb_model.predict(test_x) <span class="comment"># 테스트 데이터 예측</span></span><br><span class="line">    bagging_predict_result.append(predict1) <span class="comment"># 반복문이 실행되기 전 빈 리스트에 결과 값 저장</span></span><br><span class="line">    <span class="built_in">print</span>(sqrt(mean_squared_error(lgb_model.predict(test_x),test_y)))</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Bagging을 바탕으로 예측한 결과값에 대한 평균을 계산</span></span><br><span class="line">bagging_predict = [] <span class="comment"># 빈 리스트 생성</span></span><br><span class="line"><span class="keyword">for</span> lst2_index <span class="keyword">in</span> range(test_x.shape[0]): <span class="comment"># 테스트 데이터 개수만큼의 반복</span></span><br><span class="line">    temp_predict = [] <span class="comment"># 임시 빈 리스트 생성 (반복문 내 결과값 저장)</span></span><br><span class="line">    <span class="keyword">for</span> lst_index <span class="keyword">in</span> range(len(bagging_predict_result)): <span class="comment"># Bagging 결과 리스트 반복</span></span><br><span class="line">        temp_predict.append(bagging_predict_result[lst_index][lst2_index]) <span class="comment"># 각 Bagging 결과 예측한 값 중 같은 인덱스를 리스트에 저장</span></span><br><span class="line">    bagging_predict.append(np.mean(temp_predict)) <span class="comment"># 해당 인덱스의 30개의 결과값에 대한 평균을 최종 리스트에 추가</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqrt(mean_squared_error(bagging_predict,test_y))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-16"><a href="#결과-16" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">209736.90720982864</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h3><ul>
+<li>위의 Ensemble 방법들과 다르게 python의 내장 모듈로 되어있지는 않다. 그러므로 직접 코딩을 해서 사용해야 한다. 학습 데이터에 대해 단일 모델만 사용하는 것이 아니라 여러 모델을 사용한다. 이렇게 추정한 학습 모델을 통해 학습데이터를 예측한다. <code>이렇게 얻게 된 각 모델의 예측결과를 다시 독립 변수로 사용</code>한다. 해당 독립 변수들을 통해 검증 데이터를 예측하여 성능을 측정한다.</li>
+</ul>
+<p><img src="/image/what_is_stacking.png" alt="Stacking이란?"></p>
+<ul>
+<li>Stacking을 할 때 k-fold를 통해 학습 데이터와 검증데이터를 나누어 주어야 한다. 또한 <code>학습하는데 굉장히 오랜 시간이 소요되므로 비효율적인 모델이긴 하지만 성능은 좋다.</code> 그러므로 <code>캐글 같이 성능을 올려야만 성적이 좋아지는 상황이 아닌 현업에서 사용하기에는 굉장히 무리가 있다.</code> 그러므로 성능이 중요한 상황에서 최후의 보루로 생각하고 있는 것이 좋다.</li>
+</ul>
+<ul>
+<li>아래의 그림에서 예를 들어 설명하자면 다음과 같다. 먼저 train과 test 데이터를 각각 5-fold로 나누어 준다. 모델은 총 4가지로 SVM, KNN, RF, GBM을 사용할 것이다. 4가지 모델에 대해 5번 학습을 하므로 총 20번을 학습해야 한다. 그러므로 그에 따른 소요시간은 엄청날 것이다. 이렇게 학습한 모델을 통해 train 데이터 중 학습에 사용되지 않은 데이터를 예측하여 새로운 feature들을 얻는다. 본래 데이터의 feature는 2개 였지만 각 모델의 예측값을 통해 새로운 feature 4개를 얻게 된다. Test 데이터에 대해서도 학습한 모델을 통해 예측한 결과를 새로운 feature로 사용한다.</li>
+</ul>
+<p><img src="/image/what_is_stacking_01.png" alt="Stacking이란? - 01"></p>
+<p><img src="/image/what_is_stacking_02.png" alt="Stacking이란? - 02"></p>
+<p><img src="/image/what_is_stacking_03.png" alt="Stacking이란? - 03"></p>
+<ul>
+<li>아래와 같이 학습한 모델들의 예측값들을 새로운 feature로 사용하여 기존의 train 데이터와 test 데이터에 merge 시켜준다.</li>
+</ul>
+<p><img src="/image/new_feature_merge_train_data_stacking.png" alt="Stacking이란? - 04"></p>
+<p><img src="/image/new_feature_merge_test_data_stacking.png" alt="Stacking이란? - 05"></p>
+<ul>
+<li>새롭게 얻은 train 데이터를 모델에 적합시키고 test 데이터를 예측하여 성능을 계산한다.</li>
+</ul>
+<p><img src="/image/final_step_in_stacking.png" alt="Stacking이란? - 06"></p>
+<ul>
+<li>다음과 같이 <code>각 모델별 prediction을 통해 얻은 feature들만을 사용하기도 한다.</code></li>
+</ul>
+<p><img src="/image/Stacking_method_new_prediciton_feature.png" alt="Stacking이란? - 07"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Ensemble Learning - Boosting, Stacking",
+        "image": "https://heung-bae-lee.github.io/image/Boosting_conception.png",
+        "keywords": "",
+        "genre": "machine learning",
+        "datePublished": "2020-05-27",
+        "dateCreated": "2020-05-27",
+        "dateModified": "2020-05-27",
+        "url": "https://heung-bae-lee.github.io/2020/05/27/machine_learning_15/",
+        "description": "Boosting
+앞에서 언급했던 Bagging이나 Random Forests는 부트스트랩 방식으로 데이터를 뽑긴해도 각 모델에 대해 독립적이라고 가정하지만, Boosting은 resampling을 할 때 오분류된 데이터에 더 가중치를 주어서 오분류된 데이터가 뽑힐 확률이 높도록 하여 복원 추출을 하고 다시 학습하기 때문에 모델들이 Sequential한 것이"
+        "wordCount": 8268
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/05/27/machine_learning_16/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Ensemble Learning - Ensemble의 Ensemble
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/05/17/data_structure_07/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">내가 정리하는 자료구조 06 - 힙(heap)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/05/14/linear_algebra_03/" class="title">Linear combination, vector equation, Four views of matrix multiplication</a></p>
+                            <p class="item-date"><time datetime="2020-05-14T06:36:03.000Z" itemprop="datePublished">2020-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/05/13/linear_algebra_02/" class="title">선형 시스템(Linear system)</a></p>
+                            <p class="item-date"><time datetime="2020-05-13T07:50:33.000Z" itemprop="datePublished">2020-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">17</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/05/27/machine_learning_15/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
