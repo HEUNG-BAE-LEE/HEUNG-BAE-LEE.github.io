@@ -21,7 +21,7 @@
 <meta property="og:description" content="Ensemble Learning이란? 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.   모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.  단일 모형을 사용할">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png">
-<meta property="og:updated_time" content="2020-05-16T10:52:38.331Z">
+<meta property="og:updated_time" content="2020-05-26T08:50:51.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ensemble Learning - 01">
 <meta name="twitter:description" content="Ensemble Learning이란? 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.   모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.  단일 모형을 사용할">
@@ -450,13 +450,13 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(10, 15))</span><br><span class="line">plt.subplot(421);</span><br><span class="line">plot_result(model_ada.estimators_[0], <span class="string">"1번 분류모형의 분류 결과"</span>, s=10)</span><br><span class="line">plt.subplot(422);</span><br><span class="line">plot_result(model_ada.estimators_[1], <span class="string">"2번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[0]).astype(int))</span><br><span class="line">plt.subplot(423);</span><br><span class="line">plot_result(model_ada.estimators_[2], <span class="string">"3번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[1]).astype(int))</span><br><span class="line">plt.subplot(424);</span><br><span class="line">plot_result(model_ada.estimators_[3], <span class="string">"4번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[2]).astype(int))</span><br><span class="line">plt.subplot(425);</span><br><span class="line">plot_result(model_ada.estimators_[4], <span class="string">"5번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[3]).astype(int))</span><br><span class="line">plt.subplot(426);</span><br><span class="line">plot_result(model_ada.estimators_[5], <span class="string">"6번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[4]).astype(int))</span><br><span class="line">plt.subplot(427);</span><br><span class="line">plot_result(model_ada.estimators_[6], <span class="string">"7번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[5]).astype(int))</span><br><span class="line">plt.subplot(428);</span><br><span class="line">plot_result(model_ada.estimators_[7], <span class="string">"8번 분류모형의 분류 결과"</span>, s=(4000*model_ada.sample_weight[6]).astype(int))</span><br><span class="line">plt.tight_layout()</span><br></pre></td></tr></table></figure>
 <p><img src="/image/Adaboost_m_20_result_01.png" alt="Adaboost 모델의 가중치의 변화에 따른 decision boundary의 변화 - 01"></p>
 <p><img src="/image/Adaboost_m_20_result_02.png" alt="Adaboost 모델의 가중치의 변화에 따른 decision boundary의 변화 - 02"></p>
-<h3 id="Adaboost-모형의-정규화"><a href="#Adaboost-모형의-정규화" class="headerlink" title="Adaboost 모형의 정규화"></a>Adaboost 모형의 정규화</h3><ul>
+<h2 id="Adaboost-모형의-정규화"><a href="#Adaboost-모형의-정규화" class="headerlink" title="Adaboost 모형의 정규화"></a>Adaboost 모형의 정규화</h2><ul>
 <li>Adaboost 모형이 과최적화(overfitting)가 되는 경우에는 학습 속도(learning rate)를 조정하여 정규화를 할 수 있다. 이는 <code>필요한 멤버의 수를 강제로 증가시켜서 과최적화를 막는 역할을 한다.</code> 즉, 새롭게 적용되는 모형에 대한 가중치를 줄여서 동일한 모형의 횟수를 거치더라도 가중치가 크게 영향을 받지 않도록 하여 과최적화를 없애는 방법이다.</li>
 </ul>
 <script type="math/tex; mode=display">C_m = C_{m-1} + \mu \alpha_m k_m</script><ul>
 <li><code>AdaBoostClassifier</code> 클래스에서는  <code>learning_rate</code>인수를 1보다 적게 주면 새로운 멤버의 가중치를 강제로 낮춘다.</li>
 </ul>
-<h3 id="그레디언트-부스팅-Gradient-boosting"><a href="#그레디언트-부스팅-Gradient-boosting" class="headerlink" title="그레디언트 부스팅 (Gradient boosting)"></a>그레디언트 부스팅 (Gradient boosting)</h3><ul>
+<h2 id="그레디언트-부스팅-Gradient-boosting"><a href="#그레디언트-부스팅-Gradient-boosting" class="headerlink" title="그레디언트 부스팅 (Gradient boosting)"></a>그레디언트 부스팅 (Gradient boosting)</h2><ul>
 <li>기본적으로 부스팅은 다음 Round에서 이전에 잘못 예측한 데이터들에 대한 처리를 어떻게 하느냐에 따라 종류별로 차이가 존재한다. <code>Gradient Boosting은 이전 Round의 분류기로 예측한 error를 다음 Round의 분류기가 예측할 수 있도록 학습하면서 진행</code>한다.</li>
 </ul>
 <p><img src="/image/what_is_gradient_boosting.png" alt="그레디언트 부스팅의 개념"></p>
@@ -523,7 +523,7 @@ ga('send', 'pageview');
 <p><img src="/image/result_of_gradient_boost_plot_decision_boundary.png" alt="그레디언트 부스트의 decision boundary"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.subplot(121)</span><br><span class="line">plot_result(model_grad.estimators_[3][0])</span><br><span class="line">plt.subplot(122)</span><br><span class="line">plot_result([model_grad.estimators_[0][0],</span><br><span class="line">             model_grad.estimators_[1][0],</span><br><span class="line">             model_grad.estimators_[2][0],</span><br><span class="line">             model_grad.estimators_[3][0]])</span><br></pre></td></tr></table></figure>
 <p><img src="/image/result_of_gradient_boost_plot_decision_boundary_01.png" alt="그레디언트 부스트에 사용된 모형들의 4번째 까지의 각각의 decision decision boundary"></p>
-<h3 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h3><p><img src="/image/XGBoost_conception.png" alt="XGBoost 개념"></p>
+<h2 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h2><p><img src="/image/XGBoost_conception.png" alt="XGBoost 개념"></p>
 <ul>
 <li>XGboost는 GBM에 기반하고 있지만, GBM의 단점인 느린 수행 시간 및 과적합 규제(Regularization) 부재 등의 문제를 해결해서 매우 각광을 받고 있다. 특히 XGBoost는 병렬 CPU 환경에서 병렬 학습이 가능해 기존 GBM보다 빠르게 학습을 완료할 수 있다. 다음은 XGboost의 장점이다.</li>
 </ul>
@@ -711,13 +711,16 @@ ga('send', 'pageview');
 <li><p>early stopping 기능을 사용하는 방법은 아래와 같다. 성능 평가를 수행할 데이터 세트는 학습 데이터가 아니라 별도의 데이터 세트이어야 한다. 허나, 아래 데이터 자체의 크기가 작기 때문에 평가용으로 사용해 보았다. 허나, 절대 아래와 같이 evals에 test 데이터를 사용하면 안된다. 만일 test data를 사용했다면 predict하는 경우에는 학습에 사용되지 않은 또 다른 데이터를 사용해야한다.</p>
 </li>
 <li><p><code>또한, early stopping을 너무 적게 잡는다면 전역 최적화가 이루어지지 않을 수도 있으므로 주의</code>하자</p>
+<ul>
+<li>GridSearchCV와 같이 hyper parameter를 tuning할 경우에는 XGBoost가 GBM보다는 빠르지만 아무래도 GBM을 기반으로 하고 있기 때문에 수행 시간이 상당히 더 많이 요구된다. 앙상블 계열 알고리즘은 overfitting이나 noise에 기본적으로 뛰어난 알고리즘이므로 hyper parameter tuning으로 성능 수치 개선이 급격하게 좋아지는 경우는 그리 많지 않다. 일반 PC가 아닌 적어도 8-Core이상의 병렬 CPU Core 시스템을 가진 컴퓨터가 있다면 더 다양하게 hyper parameter 변경해 가면서 성능 향상을 적극저으로 시도해 보면 좋을 것이다.</li>
+</ul>
 </li>
 </ul>
 <hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xgb_wrapper = XGBClassifier(n_estimators=400, learning_rate=0.1, max_depth=3, random_state=156)</span><br><span class="line">evals = [(X_test, y_test)]</span><br><span class="line">xgb_wrapper.fit(X_train, y_train, early_stopping_rounds=100, eval_metric=<span class="string">'logloss'</span>, eval_set=evals, verbose=True)</span><br><span class="line">w_preds = xgb_wrapper.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, w_preds))</span><br></pre></td></tr></table></figure>
 <h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[34  3]</span><br><span class="line"> [ 1 76]]</span><br></pre></td></tr></table></figure>
 <hr>
-<h3 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h3><ul>
+<h2 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h2><ul>
 <li>LightGBM은 XGBoost와 함께 부스팅 계열 알고리즘에서 가장 각광 받고 있다. XGBoost는 매우 뛰어난 부스팅 알고리즘이지만, XGBoost에서 GridSearchCV로 hyper parameter 튜닝을 수행하다 보면 여전히 학습시간이 오래 걸린다. 물론 GBM 보다는 빠르지만, <code>대용량 데이터의 경우 만족할 만한 학습 성능을 기대하려면 많은 CPU Core를 가진 시스템에서 높은 병렬도로 학습을 진행해야 한다.</code></li>
 </ul>
 <ul>
@@ -783,20 +786,316 @@ ga('send', 'pageview');
 </li>
 </ul>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from lightgbm import LGBMClassifier</span><br><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.datasets import load_breast_cancer</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">dataset = load_breast_cancer()</span><br><span class="line">X_data = dataset.data</span><br><span class="line">y = dataset.target</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X_data, y, test_size=0.2 ,random_state=1234)</span><br><span class="line"></span><br><span class="line">lgbm_wrapper = LGBMClassifier(n_estimators=400)</span><br><span class="line"></span><br><span class="line">evals = [(X_test, y_test)]</span><br><span class="line">lgbm_wrapper.fit(X_train, y_train, early_stopping_rounds=100, eval_metric=<span class="string">"logloss"</span>, eval_set=evals, verbose=True)</span><br><span class="line">preds = lgbm_wrapper.predict(X_test)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import confusion_matrix</span><br><span class="line">confusion_matrix(y_test, preds)</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[36,  9],</span><br><span class="line">       [ 2, 67]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def confusion_matrix_mine(y_test, pred):</span><br><span class="line">    class_types=list(<span class="built_in">set</span>(y_test))</span><br><span class="line">    confusion_matrix=np.zeros((len(class_types),len(class_types)))</span><br><span class="line">    <span class="keyword">for</span> y, pred <span class="keyword">in</span> zip(y_test, preds):</span><br><span class="line">        <span class="keyword">if</span> y==pred:</span><br><span class="line">            confusion_matrix[y,pred]=confusion_matrix[y,pred]+1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            confusion_matrix[y,pred]=confusion_matrix[y,pred]+1</span><br><span class="line">    <span class="built_in">return</span> confusion_matrix</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">confusion_matrix_mine(y_test, pred)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[36.,  9.],</span><br><span class="line">       [ 2., 67.]])</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import classification_report</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, preds))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">           0       0.95      0.80      0.87        45</span><br><span class="line">           1       0.88      0.97      0.92        69</span><br><span class="line"></span><br><span class="line">    accuracy                           0.90       114</span><br><span class="line">   macro avg       0.91      0.89      0.90       114</span><br><span class="line">weighted avg       0.91      0.90      0.90       114</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from lightgbm import plot_importance</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(10,12))</span><br><span class="line">plot_importance(lgbm_wrapper, ax=ax)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/python_wrapper_xgboost_feature_importance_bar_plot.png" alt="lightgbm 피처 중요도 그래프"></p>
+<h2 id="CatBoost"><a href="#CatBoost" class="headerlink" title="CatBoost"></a>CatBoost</h2><ul>
+<li>최근 machine learning 알고리즘은 아래 그림에서 볼 수 있듯이 lightgbm과 catboost를 사용하는 유저들이 많아졌다는 것을 확인할 수 있다. 그렇다면 과연 CatBoost과 무엇이길래 많은 사람들이 사용하는지 한번 알아보자.</li>
+</ul>
+<p><img src="/image/catboost_having__many_user.png" alt="CatBoost의 성장"></p>
+<ul>
+<li>categorical feature에 잘 맞는다고 알려져있다. 일반적으로 머신러닝의 모델은 분산(Variance)과 편향(bias)의 trade-off관계를 조절하며 어떤 것에 더 중점을 둘지를 결정하여 만들게 된다. 그러나 이 CatBoost는 <code>잔차 추정의 분산을 최소로 하면서 bias를 피하는 boosting</code>기법이다. 즉, validation set을 제외한 data set에서 train에 사용되지 않은 data들을 통해 잔차의 분산을 최소화시키도록 학습을 시키는 방법이다.</li>
+</ul>
+<p><img src="/image/what_is_cat_boost.png" alt="Catboost 개념"></p>
+<p><a href="https://gentlej90.tistory.com/100" target="_blank" rel="noopener">CatBoost 참조</a></p>
+<h3 id="기존의-부스팅-방법"><a href="#기존의-부스팅-방법" class="headerlink" title="기존의 부스팅 방법"></a>기존의 부스팅 방법</h3><ul>
+<li><p>기존의 부스팅 기법을 간략히 설명하면 다음과 같다.</p>
+<ul>
+<li>1) 실제 값들의 평균과 차이인 잔차(Residual)를 구한다.</li>
+<li>2) 데이터로 이 잔차들을 학습하는 모델을 만든다.</li>
+<li>3) 모델을 통해 학습한 파라미터 (평균 + 잔차예측 값 * learning_rate)를 업데이트한다.</li>
+<li>4) 위의 과정을 loss값이 일정 round 동안 수렴할때까지 반복한다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="기존의-부스팅의-문제점"><a href="#기존의-부스팅의-문제점" class="headerlink" title="기존의 부스팅의 문제점"></a>기존의 부스팅의 문제점</h3><ul>
+<li><p>1) <code>느린 학습 속도</code></p>
+<ul>
+<li>부스팅 모델이 아닌 배깅과 비교했을 때, 훨씬 느린 속도를 보인다. 배깅의 경우 여러 트리들이 병렬적으로 모델 학습을 수행하고 부스팅의 경우 순차적으로 모델학습을 수행하기 때문에 느린 속도를 갖을 수 밖에 없다. 이런 문제점을 보완한 것이 XGBoost, LightGBM, CatBoost들이다.</li>
+</ul>
+</li>
+<li><p>2) overfitting</p>
+<ul>
+<li>속도문제를 샘플링이나 알고리즘 최적화로 어느정도 개선이 되었다면, 남아있는 문제는 overfitting이다. 이는 부스팅이라는 개념 자체가 가지고 있는 문제인데, 부스팅 자체가 <code>오차(error)를 줄여나가기 위해 학습하는 모델이기 때문에 굉장히 High Variance한 모델이기 때문이다.</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="CatBoost의-특징"><a href="#CatBoost의-특징" class="headerlink" title="CatBoost의 특징"></a>CatBoost의 특징</h3><h4 id="Level-wise-Tree"><a href="#Level-wise-Tree" class="headerlink" title="Level-wise Tree"></a>Level-wise Tree</h4><ul>
+<li>LightGBM은 Leaf-wise 방식으로 트리를 만들었지만, XGBoost와 동일하게 Level-wise 방식으로 트리를 만들어 나간다. 직관적으로 표현하자면 Level-wise는 BFS같이 트리를 만들어나가는 방식이고, Leaf-wise는 DFS 같이 트리를 만들어나가는 형태인 것이다.</li>
+</ul>
+<h4 id="Ordered-Boosting"><a href="#Ordered-Boosting" class="headerlink" title="Ordered Boosting"></a>Ordered Boosting</h4><ul>
+<li><p>CatBoost는 기존의 부스팅 과정과 전체적인 양상은 비슷하되, 조금 다르다. <code>기존의 부스팅 모델이 일괄적으로 모든 훈련 데이터를 대상으로 잔차를 계산 했다면, CatBoost는 일부 즉, 훈련에 사용되지 않은 나머지 데이터에 대해 error를 추정한 뒤, 이것을 통해 모델을 만들고, 그 뒤에 데이터의 잔차는 만들어진 모델을 통해 예측한 값을 사용한다.</code></p>
+</li>
+<li><p>예를 들면, 아래와 같은 데이터가 있다고 가정해보자.</p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>time</th>
+<th>datapoint</th>
+<th>class label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12:00</td>
+<td>$x_1$</td>
+<td>10</td>
+</tr>
+<tr>
+<td>12:01</td>
+<td>$x_2$</td>
+<td>12</td>
+</tr>
+<tr>
+<td>12:02</td>
+<td>$x_3$</td>
+<td>9</td>
+</tr>
+<tr>
+<td>12:03</td>
+<td>$x_4$</td>
+<td>4</td>
+</tr>
+<tr>
+<td>12:04</td>
+<td>$x_5$</td>
+<td>52</td>
+</tr>
+<tr>
+<td>12:05</td>
+<td>$x_6$</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>기존의 부스팅 기법은 모든 학습 데이터(x1~x10)까지의 잔차를 일괄 계산한다. 반면, CatBoost의 과정은 다음과 같다.</p>
+<ul>
+<li>1) 먼저 $x_{1}$의 잔차만 계산하고, 이를 기반으로 모델을 만든다. 그리고 $x_{2}$의 잔차를 이 모델로 예측한다.</li>
+<li>2) $x_{1}, x_{2}$의 잔차를 가지고 모델을 만든다. 이를 기반으로 $x_{3}, x_{4}$의 잔차를 모델로 예측한다.</li>
+<li>3) $x_{1}, x_{2}, x_{3}, x_{4}$를 가지고 모델을 만든다. 이를 기반으로 $x_{5}, x_{6}, x_{7}, x_{8}$의 잔차를 모델로 예측한다.</li>
+<li>4) 반복</li>
+</ul>
+</li>
+<li><p><code>위와 같이 순서에 따라 모델을 만들고 예측하는 방식을 Ordered Boosting</code>이라고 부른다.</p>
+</li>
+</ul>
+<h4 id="Random-Permutation"><a href="#Random-Permutation" class="headerlink" title="Random Permutation"></a>Random Permutation</h4><ul>
+<li>위에서 Ordered Boosting을 할 때, 데이터 순서를 섞어주지 않으면 매번 같은 순서대로 잔차를 예측하는 모델을 만들 가능성이 있다. <code>그러므로 이 순서를 위사 임의로 랜덤하게 섞어주어야 한다.</code> CatBoost는 이러한 점을 감안해서 데이터를 셔플링하여 뽑아낸다. 뽑아낼 때도 역시 모든 데이터를 뽑는게 아니라, 그 중 일부만 가져오게 할 수 있다. 이 모든 기법이 overffiting을 방지하기 위해 tree를 다각적으로 만들려는 시도인 것이다.</li>
+</ul>
+<h4 id="Ordered-Target-Encoding"><a href="#Ordered-Target-Encoding" class="headerlink" title="Ordered Target Encoding"></a>Ordered Target Encoding</h4><ul>
+<li>Target Encoding, Mean Encoding, Response Encoding이라고 불리는 데 모두 다 같은 개념을 지칭하는 용어이다.</li>
+<li>범주형 변수를 수로 인코딩 시키는 방법 중, 비교적 가장 최근에 나온 기법인데, 간단한 설명을 하면 다음과 같다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>time</th>
+<th>feature</th>
+<th>class_labels(max_temperature on that day)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sunday</td>
+<td>sunny</td>
+<td>35</td>
+</tr>
+<tr>
+<td>monday</td>
+<td>sunny</td>
+<td>32</td>
+</tr>
+<tr>
+<td>tuesday</td>
+<td>cloudy</td>
+<td>15</td>
+</tr>
+<tr>
+<td>wednesday</td>
+<td>cloudy</td>
+<td>14</td>
+</tr>
+<tr>
+<td>thursday</td>
+<td>mostly_cloudy</td>
+<td>10</td>
+</tr>
+<tr>
+<td>friday</td>
+<td>cloudy</td>
+<td>20</td>
+</tr>
+<tr>
+<td>saturday</td>
+<td>cloudy</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>위 데이터에서 time, feature로 class_label을 예측한다고 가정해보자. feature의 cloudy는 다음과 같이 인코딩 할 수 있다.<ul>
+<li>즉, cloudy를 cloudy를 가진 데이터들의 class_label의 값의 평균으로 인코딩하는 것이다. 이러한 이유로 Mean encoding이라 불리기도 한다.</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">cloudy = \frac{(15+14+20+25)}{4} = 18.5</script><ul>
+<li><p>그런데, 위에서 우리가 예측하는 값이 Train set feature에 들어가버리는 문제, 즉 Data Leakage 문제를 일으킨다. 이는 overfitting을 발생시키는 주 원인이자, Mean encoding 방법 자체의 문제이기도 하다. <code>그래서 CatBoost는 이에 대한 해결책으로, 현재 데이터의 인코딩을 위해 이전 데이터들의 인코딩된 값을 사용한다.</code></p>
+</li>
+<li><p>즉, 현재 데이터의 Target값을 사용하지 않고, 이전 데이터들의 Target값 만을 사용하니, Data Leakage가 일어나지 않는 것이다. <code>물론 data 중 이미 평균값과 동일한 값이 존재 한다면 사용할 수 없을 것이다.</code></p>
+</li>
+</ul>
+<script type="math/tex; mode=display">Friday: cloudy = \frac{(15+14)}{2} = 15.5</script><script type="math/tex; mode=display">Saturday: cloudy = \frac{(15+14+20)}{3} = 16.3</script><h4 id="Categorical-Feature-Combinations"><a href="#Categorical-Feature-Combinations" class="headerlink" title="Categorical Feature Combinations"></a>Categorical Feature Combinations</h4><ul>
+<li>아래 데이터의 경우에는 country만 보아도 hair_color feature를 알 수 있기 때문에, class_label을 예측하는데 있어, 두 feature 다 필요 없이 이 중 하나의 feature만 있으면 된다. CatBoost는 이렇게 information gain이 동일한 두 feature를 하나의 feature로 묶어버린다. <code>결과적으로, 데이터 전처리에 있어 feature selection에 대해 부담이 줄어들 수 있다고 볼 수 있다.</code></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>country</th>
+<th>hair clolor</th>
+<th>class_label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>India</td>
+<td>Black</td>
+<td>1</td>
+</tr>
+<tr>
+<td>russia</td>
+<td>white</td>
+<td>0</td>
+</tr>
+<tr>
+<td>russia</td>
+<td>white</td>
+<td>0</td>
+</tr>
+<tr>
+<td>russia</td>
+<td>white</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="One-hot-Encoding"><a href="#One-hot-Encoding" class="headerlink" title="One-hot Encoding"></a>One-hot Encoding</h4><ul>
+<li>범주형 변수를 항상 Target Encoding하는 것은 아니다. Catboost는 낮은 Cardinality를 가지는 범주형 변수에 한해서, 기본적으로 One-hot encoding을 시행한다. Cardinality 기준은 <code>one_hot_max_size</code> 파라미터로 설정할 수 있다.</li>
+</ul>
+<ul>
+<li>예를 들어, <code>one_hot_max_size = 3</code>으로 설정한 경우, Cardinality가 3이하인 범주형 변수들은 Target Encoding이 아니라 One-hot Encoding으로 변환한다. 낮은 개수를 갖는 범주형 변수의 경우 One-hot Encoding이 더 효율적이라 그런 것이라 생각든다.</li>
+</ul>
+<h4 id="Optimized-Parameter-tuning"><a href="#Optimized-Parameter-tuning" class="headerlink" title="Optimized Parameter tuning"></a>Optimized Parameter tuning</h4><ul>
+<li>CatBoost는 파라미터들의 default 값이 기본적으로 최적화가 잘 되어서, 파라미터 튜닝에 크게 신경쓰지 않아도 된다고한다. 물론 데이터 마다 다르기 때문에 튜닝을 해보는 것이 좋긴하다.</li>
+</ul>
+<h3 id="CatBoost의-한계"><a href="#CatBoost의-한계" class="headerlink" title="CatBoost의 한계"></a>CatBoost의 한계</h3><ul>
+<li><code>Sparse한 Matrix는 처리하지 못한다.</code></li>
+</ul>
+<ul>
+<li><code>데이터 대부분이 수치형 변수인 경우, LightGBM보다 학습 속도가 느리다.</code>그러므로 대부분이 범주형 변수인 경우에만 사용하는 것을 추천한다.</li>
+</ul>
+<h3 id="Ensemble-실습"><a href="#Ensemble-실습" class="headerlink" title="Ensemble 실습"></a>Ensemble 실습</h3><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="데이터-info"><a href="#데이터-info" class="headerlink" title="데이터 info"></a>데이터 info</h4><ul>
+<li>id: 고유 아이디</li>
+<li>feat_1 ~ feat_93: 설명변수</li>
+<li>target: 타겟변수 (1~9)</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 불러오기</span></span><br><span class="line">data = pd.read_csv(<span class="string">"../data/otto_train.csv"</span>) <span class="comment"># Product Category</span></span><br><span class="line">data.head() <span class="comment"># 데이터 확인</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nCar = data.shape[0] <span class="comment"># 데이터 개수</span></span><br><span class="line">nVar = data.shape[1] <span class="comment"># 변수 개수</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'nCar: %d'</span> % nCar, <span class="string">'nVar: %d'</span> % nVar )</span><br></pre></td></tr></table></figure>
+<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nCar: 61878 nVar: 95</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="의미가-없다고-판단되는-변수-제거"><a href="#의미가-없다고-판단되는-변수-제거" class="headerlink" title="의미가 없다고 판단되는 변수 제거"></a>의미가 없다고 판단되는 변수 제거</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = data.drop([<span class="string">'id'</span>], axis = 1) <span class="comment"># id 제거</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="타겟-변수의-문자열을-숫자로-변환"><a href="#타겟-변수의-문자열을-숫자로-변환" class="headerlink" title="타겟 변수의 문자열을 숫자로 변환"></a>타겟 변수의 문자열을 숫자로 변환</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mapping_dict = &#123;<span class="string">"Class_1"</span>: 1,</span><br><span class="line">                <span class="string">"Class_2"</span>: 2,</span><br><span class="line">                <span class="string">"Class_3"</span>: 3,</span><br><span class="line">                <span class="string">"Class_4"</span>: 4,</span><br><span class="line">                <span class="string">"Class_5"</span>: 5,</span><br><span class="line">                <span class="string">"Class_6"</span>: 6,</span><br><span class="line">                <span class="string">"Class_7"</span>: 7,</span><br><span class="line">                <span class="string">"Class_8"</span>: 8,</span><br><span class="line">                <span class="string">"Class_9"</span>: 9&#125;</span><br><span class="line">after_mapping_target = data[<span class="string">'target'</span>].apply(lambda x: mapping_dict[x])</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="설명변수와-타겟변수를-분리-학습데이터와-평가데이터-분리"><a href="#설명변수와-타겟변수를-분리-학습데이터와-평가데이터-분리" class="headerlink" title="설명변수와 타겟변수를 분리, 학습데이터와 평가데이터 분리"></a>설명변수와 타겟변수를 분리, 학습데이터와 평가데이터 분리</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">feature_columns = list(data.columns.difference([<span class="string">'target'</span>])) <span class="comment"># target을 제외한 모든 행</span></span><br><span class="line">X = data[feature_columns] <span class="comment"># 설명변수</span></span><br><span class="line">y = after_mapping_target <span class="comment"># 타겟변수</span></span><br><span class="line">train_x, test_x, train_y, test_y = train_test_split(X, y, test_size = 0.2, random_state = 42) <span class="comment"># 학습데이터와 평가데이터의 비율을 8:2 로 분할|</span></span><br><span class="line"><span class="built_in">print</span>(train_x.shape, test_x.shape, train_y.shape, test_y.shape) <span class="comment"># 데이터 개수 확인</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(49502, 93) (12376, 93) (49502,) (12376,)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="1-XGBoost"><a href="#1-XGBoost" class="headerlink" title="1. XGBoost"></a>1. XGBoost</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install xgboost</span></span><br><span class="line">import xgboost as xgb</span><br><span class="line">import time</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">xgb_dtrain = xgb.DMatrix(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 XGBoost 모델에 맞게 변환</span></span><br><span class="line">xgb_dtest = xgb.DMatrix(data = test_x) <span class="comment"># 평가 데이터를 XGBoost 모델에 맞게 변환</span></span><br><span class="line">xgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">         <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">         <span class="string">'n_estimators'</span>: 100, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">         <span class="string">'objective'</span>: <span class="string">'multi:softmax'</span>, <span class="comment"># 목적 함수</span></span><br><span class="line">        <span class="string">'num_class'</span>: len(<span class="built_in">set</span>(train_y)) + 1&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">xgb_model = xgb.train(params = xgb_param, dtrain = xgb_dtrain) <span class="comment"># 학습 진행</span></span><br><span class="line">xgb_model_predict = xgb_model.predict(xgb_dtest) <span class="comment"># 평가 데이터 예측</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %.2f"</span> % (accuracy_score(test_y, xgb_model_predict) * 100), <span class="string">"%"</span>) <span class="comment"># 정확도 % 계산</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Time: %.2f"</span> % (time.time() - start), <span class="string">"seconds"</span>) <span class="comment"># 코드 실행 시간 계산</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Accuracy: 76.67 %</span><br><span class="line">Time: 20.48 seconds</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="2-LightGBM"><a href="#2-LightGBM" class="headerlink" title="2. LightGBM"></a>2. LightGBM</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install lightgbm</span></span><br><span class="line">import lightgbm as lgb</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">lgb_dtrain = lgb.Dataset(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 LightGBM 모델에 맞게 변환</span></span><br><span class="line">lgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">            <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">            <span class="string">'n_estimators'</span>: 100, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">            <span class="string">'objective'</span>: <span class="string">'multiclass'</span>, <span class="comment"># 목적 함수</span></span><br><span class="line">            <span class="string">'num_class'</span>: len(<span class="built_in">set</span>(train_y)) + 1&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">lgb_model = lgb.train(params = lgb_param, train_set = lgb_dtrain) <span class="comment"># 학습 진행</span></span><br><span class="line">lgb_model_predict = np.argmax(lgb_model.predict(test_x), axis = 1) <span class="comment"># 평가 데이터 예측, Softmax의 결과값 중 가장 큰 값의 Label로 예측</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %.2f"</span> % (accuracy_score(test_y, lgb_model_predict) * 100), <span class="string">"%"</span>) <span class="comment"># 정확도 % 계산</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Time: %.2f"</span> % (time.time() - start), <span class="string">"seconds"</span>) <span class="comment"># 코드 실행 시간 계산</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-12"><a href="#결과-12" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Accuracy: 73.57 %</span><br><span class="line">Time: 8.46 seconds</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="3-Catboost"><a href="#3-Catboost" class="headerlink" title="3. Catboost"></a>3. Catboost</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install catboost</span></span><br><span class="line">import catboost as cb</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">cb_dtrain = cb.Pool(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 Catboost 모델에 맞게 변환</span></span><br><span class="line">cb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">            <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">            <span class="string">'n_estimators'</span>: 100, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">            <span class="string">'eval_metric'</span>: <span class="string">'Accuracy'</span>, <span class="comment"># 평가 척도</span></span><br><span class="line">            <span class="string">'loss_function'</span>: <span class="string">'MultiClass'</span>&#125; <span class="comment"># 손실 함수, 목적 함수</span></span><br><span class="line">cb_model = cb.train(pool = cb_dtrain, params = cb_param) <span class="comment"># 학습 진행</span></span><br><span class="line">cb_model_predict = np.argmax(cb_model.predict(test_x), axis = 1) + 1 <span class="comment"># 평가 데이터 예측, Softmax의 결과값 중 가장 큰 값의 Label로 예측, 인덱스의 순서를 맞추기 위해 +1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %.2f"</span> % (accuracy_score(test_y, cb_model_predict) * 100), <span class="string">"%"</span>) <span class="comment"># 정확도 % 계산</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Time: %.2f"</span> % (time.time() - start), <span class="string">"seconds"</span>) <span class="comment"># 코드 실행 시간 계산</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-13"><a href="#결과-13" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">90:	learn: 0.6928407	total: 53s	remaining: 5.24s</span><br><span class="line">91:	learn: 0.6930427	total: 53.5s	remaining: 4.66s</span><br><span class="line">92:	learn: 0.6935073	total: 54.1s	remaining: 4.07s</span><br><span class="line">93:	learn: 0.6940932	total: 54.6s	remaining: 3.49s</span><br><span class="line">94:	learn: 0.6944972	total: 55.2s	remaining: 2.9s</span><br><span class="line">95:	learn: 0.6948810	total: 55.7s	remaining: 2.32s</span><br><span class="line">96:	learn: 0.6951840	total: 56.3s	remaining: 1.74s</span><br><span class="line">97:	learn: 0.6954264	total: 56.8s	remaining: 1.16s</span><br><span class="line">98:	learn: 0.6955881	total: 57.4s	remaining: 580ms</span><br><span class="line">99:	learn: 0.6956285	total: 57.9s	remaining: 0us</span><br><span class="line">Accuracy: 69.64 %</span><br><span class="line">Time: 58.31 seconds</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 불러오기</span></span><br><span class="line">data = pd.read_csv(<span class="string">"./data/kc_house_data.csv"</span>)</span><br><span class="line">data.head() <span class="comment"># 데이터 확인</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = data.drop([<span class="string">'id'</span>, <span class="string">'date'</span>, <span class="string">'zipcode'</span>, <span class="string">'lat'</span>, <span class="string">'long'</span>], axis = 1) <span class="comment"># id, date, zipcode, lat, long  제거</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">feature_columns = list(data.columns.difference([<span class="string">'price'</span>])) <span class="comment"># Price를 제외한 모든 행</span></span><br><span class="line">X = data[feature_columns]</span><br><span class="line">y = data[<span class="string">'price'</span>]</span><br><span class="line">train_x, test_x, train_y, test_y = train_test_split(X, y, test_size = 0.3, random_state = 42) <span class="comment"># 학습데이터와 평가데이터의 비율을 7:3</span></span><br><span class="line"><span class="built_in">print</span>(train_x.shape, test_x.shape, train_y.shape, test_y.shape) <span class="comment"># 데이터 개수 확인</span></span><br></pre></td></tr></table></figure>
+<h5 id="결과-14"><a href="#결과-14" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(15129, 8) (6484, 8) (15129,) (6484,)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install lightgbm</span></span><br><span class="line">import lightgbm as lgb</span><br><span class="line">start = time.time() <span class="comment"># 시작 시간 지정</span></span><br><span class="line">lgb_dtrain = lgb.Dataset(data = train_x, label = train_y) <span class="comment"># 학습 데이터를 LightGBM 모델에 맞게 변환</span></span><br><span class="line">lgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">            <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">            <span class="string">'n_estimators'</span>: 500, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">            <span class="string">'objective'</span>: <span class="string">'regression'</span>&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">lgb_model = lgb.train(params = lgb_param, train_set = lgb_dtrain) <span class="comment"># 학습 진행</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import mean_squared_error, r2_score</span><br><span class="line">from math import sqrt</span><br><span class="line"></span><br><span class="line">sqrt(mean_squared_error(lgb_model.predict(test_x),test_y))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-15"><a href="#결과-15" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">210904.17249451784</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Ensemble의-Ensemble"><a href="#Ensemble의-Ensemble" class="headerlink" title="Ensemble의 Ensemble"></a>Ensemble의 Ensemble</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line">bagging_predict_result = [] <span class="comment"># 빈 리스트 생성</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(30):</span><br><span class="line">    data_index = [data_index <span class="keyword">for</span> data_index <span class="keyword">in</span> range(train_x.shape[0])] <span class="comment"># 학습 데이터의 인덱스를 리스트로 변환</span></span><br><span class="line">    random_data_index = np.random.choice(data_index, train_x.shape[0]) <span class="comment"># 데이터의 1/10 크기만큼 랜덤 샘플링, // 는 소수점을 무시하기 위함</span></span><br><span class="line">    <span class="built_in">print</span>(len(<span class="built_in">set</span>(random_data_index)))</span><br><span class="line">    lgb_dtrain = lgb.Dataset(data = train_x.iloc[random_data_index,], label = train_y.iloc[random_data_index]) <span class="comment"># 학습 데이터를 LightGBM 모델에 맞게 변환</span></span><br><span class="line">    lgb_param = &#123;<span class="string">'max_depth'</span>: 10, <span class="comment"># 트리 깊이</span></span><br><span class="line">                <span class="string">'learning_rate'</span>: 0.01, <span class="comment"># Step Size</span></span><br><span class="line">                <span class="string">'n_estimators'</span>: 500, <span class="comment"># Number of trees, 트리 생성 개수</span></span><br><span class="line">                <span class="string">'objective'</span>: <span class="string">'regression'</span>&#125; <span class="comment"># 파라미터 추가, Label must be in [0, num_class) -&gt; num_class보다 1 커야한다.</span></span><br><span class="line">    lgb_model = lgb.train(params = lgb_param, train_set = lgb_dtrain) <span class="comment"># 학습 진행</span></span><br><span class="line"></span><br><span class="line">    predict1 = lgb_model.predict(test_x) <span class="comment"># 테스트 데이터 예측</span></span><br><span class="line">    bagging_predict_result.append(predict1) <span class="comment"># 반복문이 실행되기 전 빈 리스트에 결과 값 저장</span></span><br><span class="line">    <span class="built_in">print</span>(sqrt(mean_squared_error(lgb_model.predict(test_x),test_y)))</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Bagging을 바탕으로 예측한 결과값에 대한 평균을 계산</span></span><br><span class="line">bagging_predict = [] <span class="comment"># 빈 리스트 생성</span></span><br><span class="line"><span class="keyword">for</span> lst2_index <span class="keyword">in</span> range(test_x.shape[0]): <span class="comment"># 테스트 데이터 개수만큼의 반복</span></span><br><span class="line">    temp_predict = [] <span class="comment"># 임시 빈 리스트 생성 (반복문 내 결과값 저장)</span></span><br><span class="line">    <span class="keyword">for</span> lst_index <span class="keyword">in</span> range(len(bagging_predict_result)): <span class="comment"># Bagging 결과 리스트 반복</span></span><br><span class="line">        temp_predict.append(bagging_predict_result[lst_index][lst2_index]) <span class="comment"># 각 Bagging 결과 예측한 값 중 같은 인덱스를 리스트에 저장</span></span><br><span class="line">    bagging_predict.append(np.mean(temp_predict)) <span class="comment"># 해당 인덱스의 30개의 결과값에 대한 평균을 최종 리스트에 추가</span></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqrt(mean_squared_error(bagging_predict,test_y))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-16"><a href="#결과-16" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">209736.90720982864</span><br></pre></td></tr></table></figure>
 <hr>
 
         </div>
@@ -886,7 +1185,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-05-02",
         "dateCreated": "2020-05-02",
-        "dateModified": "2020-05-16",
+        "dateModified": "2020-05-26",
         "url": "https://heung-bae-lee.github.io/2020/05/02/machine_learning_14/",
         "description": "Ensemble Learning이란?
 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.
@@ -895,7 +1194,7 @@ ga('send', 'pageview');
 모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.
 
 단일 모형을 사용할"
-        "wordCount": 7502
+        "wordCount": 10600
     }
 </script>
 
