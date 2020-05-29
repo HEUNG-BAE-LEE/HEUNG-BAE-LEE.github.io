@@ -9,7 +9,7 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그</description>
-    <pubDate>Thu, 28 May 2020 18:24:05 GMT</pubDate>
+    <pubDate>Fri, 29 May 2020 11:32:46 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -21,13 +21,14 @@
       
         
         
-          &lt;h2 id=&quot;Clustering이란&quot;&gt;&lt;a href=&quot;#Clustering이란&quot; class=&quot;headerlink&quot; title=&quot;Clustering이란?&quot;&gt;&lt;/a&gt;Clustering이란?&lt;/h2&gt;&lt;h3 id=&quot;K-means-Clusterig&quot;&gt;&lt;a h
+          &lt;h2 id=&quot;Clustering이란&quot;&gt;&lt;a href=&quot;#Clustering이란&quot; class=&quot;headerlink&quot; title=&quot;Clustering이란?&quot;&gt;&lt;/a&gt;Clustering이란?&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;군집 분석이라고도 불리며 클러스터링 알고
         
       
       </description>
       
       
-      <content:encoded><![CDATA[<h2 id="Clustering이란"><a href="#Clustering이란" class="headerlink" title="Clustering이란?"></a>Clustering이란?</h2><h3 id="K-means-Clusterig"><a href="#K-means-Clusterig" class="headerlink" title="K-means Clusterig"></a>K-means Clusterig</h3>]]></content:encoded>
+      <content:encoded><![CDATA[<h2 id="Clustering이란"><a href="#Clustering이란" class="headerlink" title="Clustering이란?"></a>Clustering이란?</h2><ul><li>군집 분석이라고도 불리며 클러스터링 알고리즘은 비지도 학습(Unsupervised Learning)에 해당한다. <code>X(입력변수)간의 관계를 규명하거나 살펴보는 것에 많이 사용</code>된다.</li></ul><p><img src="/image/what_is_clustering_01.png" alt="Clustering이란? - 01"></p><ul><li>군집 분석이란 <code>유사성을 측정하여 높은 대상 집단을 분류하고, 군집 간에 상이성을 규명하는 방법</code>이다. <code>군집 분석을 통해 분류된 군집에 대한 해석은 분석자가 직접해야한다.</code> 단지 군집을 나누는 행위만을 생가했을 땐 classification과 별 다를것이 없을 것이라고 생각이 들겠지만, Classification은 Supervised Learning으로써 Y(label)값이 존재하여 같이 학습시킨다. clustering은 학습에 Y(label)이 필요하지 않다. 그러므로 전반적인 성능은 Y(label)값을 같이 학습시키는 Supervised Learning이 더 좋은 것이 일반적이다. 허나, 무조건적으로 예측을 할 때 사용하는 것보다 <code>X(입력변수)간의 관계를 규명하거나 살펴보기위한 시각화를 위해 많이 사용</code>되므로 label값이 존재한다고 해서 분석 시에 Unsupervised Learning을 고려하지 않아도 된다는 것은 아니다.</li></ul><p><img src="/image/what_is_clustering_02.png" alt="Clustering이란? - 02"></p><ul><li>앞으로 소개할 Clustering은 다음과 같이 3가지이다.</li></ul><p><img src="/image/what_is_clustering_03.png" alt="Clustering이란? - 03"></p><h3 id="K-means-Clusterig"><a href="#K-means-Clusterig" class="headerlink" title="K-means Clusterig"></a>K-means Clusterig</h3><ul><li><code>각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트</code>하면서 군집을 분류해 나가는 방법</li></ul><ul><li>초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.</li></ul><p><img src="/image/how_to_decide_mean_point_in_K_means_clustering_01.png" alt="K-means clustering의 작동 원리"></p><ul><li>여기서 그렇다면 중심을 구할 경우에는 각 데이터(포인트)들간의 거리의 합이 최소화하는 되는 지점이 중심이 될 것이므로 포인트간의 거리를 계산해야 한다. 여기서는 가장 간단하고 많이들 알고있는 유클리디안 거리와 맨하탄 거리를 소개할 것이다. 이외에도 마할라노비스의 거리등 <code>거리를 구하는 방법</code>은 여러가지가 있다. 이를 결정하는 것은 <code>해당 데이터에 성질(예를 들어 위도 경도 데이터라고 해서 무조건적으로 Haversine distance를 사용하는 것은아니지만 위도와 경도의 데이터를 통해 항공기들간의 시간대 별 위치의 중심점을 찾아야 하는 경우 Haversine distance를 사용하듯)에 따라 분석자가 결정해야 할 몫</code>이다.</li></ul><p><a href="https://en.wikipedia.org/wiki/Euclidean_distance" target="_blank" rel="noopener">참조 Distance type</a></p><p><img src="/image/how_to_decide_mean_point_in_K_means_clustering_02.png" alt="K-means clustering의 작동 원리"></p><h4 id="최적의-K를-찾는-방법"><a href="#최적의-K를-찾는-방법" class="headerlink" title="최적의 K를 찾는 방법"></a>최적의 K를 찾는 방법</h4><ul><li>K값을 설정하는 방법 중 가장 좋은 것은 군집의 개수를 미리 알고있는 경우이다. 예를 들어 뉴스기사를</li></ul>]]></content:encoded>
       
       <comments>https://heung-bae-lee.github.io/2020/05/29/machine_learning_17/#disqus_thread</comments>
     </item>
