@@ -21,7 +21,7 @@
 <meta property="og:description" content="Clustering(군집화)이란? 군집 분석이라고도 불리며 클러스터링 알고리즘은 비지도 학습(Unsupervised Learning)에 해당한다. X(입력변수)간의 관계를 규명하거나 살펴보는 것에 많이 사용된다.    주어딘 데이터 집합을 유사한 데이터들의 그룹으로 나누는 것을 군집화(clustering)이라 하고 이렇게 나누어진 유사한 데이터의 그룹을 군">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_clustering_01.png">
-<meta property="og:updated_time" content="2020-06-01T14:44:47.997Z">
+<meta property="og:updated_time" content="2020-06-01T16:11:35.356Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clustering">
 <meta name="twitter:description" content="Clustering(군집화)이란? 군집 분석이라고도 불리며 클러스터링 알고리즘은 비지도 학습(Unsupervised Learning)에 해당한다. X(입력변수)간의 관계를 규명하거나 살펴보는 것에 많이 사용된다.    주어딘 데이터 집합을 유사한 데이터들의 그룹으로 나누는 것을 군집화(clustering)이라 하고 이렇게 나누어진 유사한 데이터의 그룹을 군">
@@ -306,11 +306,32 @@ ga('send', 'pageview');
 <h3 id="조정-상호정보량"><a href="#조정-상호정보량" class="headerlink" title="조정 상호정보량"></a>조정 상호정보량</h3><ul>
 <li><p>상호정보량(mutual information)은 두 확률변수간의 상호 의존성을 측정한 값이다. 군집화 결과를 <code>이산확률변수라고 가정</code>한다.</p>
 </li>
-<li><p>정답은 </p>
+<li><p>정답은 아래와 같이 $ r $ 개의 값을 가질 수 있는 이산확률변수이고</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">T = \{T_1, T_2,\ldots, T_r\}</script><ul>
+<li>군집화 결과는 아래와 같이 $ s $ 개의 값을 가질 수 있는 이산확률 변수라고 하자.</li>
+</ul>
+<script type="math/tex; mode=display">C = \{C_1, C_2,\ldots, C_s\}</script><ul>
+<li>전체 데이터의 개수를 $ N $ 이라고 하면 이산확률변수 $ T $ 의 분포는 아래와 같이 추정할 수 있다. 이 식에서 $ |T_i| $는 군집 $ T_{i} $ 에 속하는 데이터의 개수를 나타낸다.</li>
+</ul>
+<script type="math/tex; mode=display">P(i)=\frac{|T_i|}{N}</script><ul>
+<li>비슷하게 이산확률 변수 $ C $ 의 분포는 아래와 같이 추정할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">P'(j)=\frac{|C_i|}{N}</script><ul>
+<li><p>$ T $ 와 $ C $ 의 결합확률분포는 아래와 같이 추정할 수 있다. 여기에서 $ |T_i \cap C_j| $ 는 군집 $ T_{i} $ 에도 속하고 군집 $ C_{j} $ 에도 속하는 데이터의 개수를 나타낸다.</p>
+</li>
+<li><p>확률변수 $ T, C $ 의 상호정보량은 아래와 같이 정의한다.</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">MI(T,C)=\sum_{i=1}^r \sum_{j=1}^s P(i,j)\log \frac{P(i,j)}{P(i)P'(j)}</script><ul>
+<li><p><code>만약 두 확률변수가 서로 독립이면 상호정보량의 값은 로그값이 1이 되어 0이며 이 값이 상호정보량이 가질 수 있는 최소값</code>이다. <code>두 확률변수가 의존성이 강할수록 상호정보량은 증가</code>한다. <code>또한 군집의 개수가 많아져도 상호정보량이 증가하므로 올바른 비교가 어렵다.</code> 따라서 조정 랜드지수의 경우와 마찬가지로 각 경우에 따른 상호정보량의 기댓값을 빼서 재조정한 것이 조정 상호정보량이다.</p>
+</li>
+<li><p>다음은 위에서 예로 들었던 타원형 데이터 예제에 대해 여러가지 군집화 방법을 적용하였을때 조정 상호 정보량값을 계산한 결과이다. Scikit-Learn 패키지의 met rics.cluster 서브패키지는 조정 상호정보량을 계산하는 <code>adjusted_mutual_info_score</code> 명령을 제공한다.</p>
 </li>
 </ul>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics.cluster import adjusted_mutual_info_score</span><br><span class="line"></span><br><span class="line">X, y_true = anisotropic</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(20, 5))</span><br><span class="line">plot_num = 1</span><br><span class="line">X = StandardScaler().fit_transform(X)</span><br><span class="line"><span class="keyword">for</span> name, algorithm <span class="keyword">in</span> clustering_algorithms:</span><br><span class="line">    with ignore_warnings(category=UserWarning):</span><br><span class="line">        algorithm.fit(X)</span><br><span class="line">    <span class="keyword">if</span> hasattr(algorithm, <span class="string">'labels_'</span>):</span><br><span class="line">        y_pred = algorithm.labels_.astype(np.int)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        y_pred = algorithm.predict(X)</span><br><span class="line">    title = <span class="string">"AMI=&#123;:5.3f&#125;"</span>.format(adjusted_mutual_info_score(y_true, y_pred))</span><br><span class="line">    plt.subplot(1, len(datasets), plot_num)</span><br><span class="line">    plt.scatter(X[:, 0], X[:, 1], s=5, color=colors[y_pred])</span><br><span class="line">    plt.xlim(-2.5, 2.5)</span><br><span class="line">    plt.ylim(-2.5, 2.5)</span><br><span class="line">    plt.xlabel(name)</span><br><span class="line">    plt.xticks(())</span><br><span class="line">    plt.yticks(())</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plot_num += 1</span><br><span class="line">plt.savefig(<span class="string">"adjusted_rand_score"</span>)</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -410,7 +431,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-05-29",
         "dateCreated": "2020-05-29",
-        "dateModified": "2020-06-01",
+        "dateModified": "2020-06-02",
         "url": "https://heung-bae-lee.github.io/2020/05/29/machine_learning_17/",
         "description": "Clustering(군집화)이란?
 군집 분석이라고도 불리며 클러스터링 알고리즘은 비지도 학습(Unsupervised Learning)에 해당한다. X(입력변수)간의 관계를 규명하거나 살펴보는 것에 많이 사용된다.
@@ -418,7 +439,7 @@ ga('send', 'pageview');
 
 
 주어딘 데이터 집합을 유사한 데이터들의 그룹으로 나누는 것을 군집화(clustering)이라 하고 이렇게 나누어진 유사한 데이터의 그룹을 군"
-        "wordCount": 1907
+        "wordCount": 2279
     }
 </script>
 
@@ -691,22 +712,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
