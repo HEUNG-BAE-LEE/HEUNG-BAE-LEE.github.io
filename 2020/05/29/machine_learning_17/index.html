@@ -21,7 +21,7 @@
 <meta property="og:description" content="Clustering(군집화)이란? 군집 분석이라고도 불리며 클러스터링 알고리즘은 비지도 학습(Unsupervised Learning)에 해당한다. X(입력변수)간의 관계를 규명하거나 살펴보는 것에 많이 사용된다.    주어딘 데이터 집합을 유사한 데이터들의 그룹으로 나누는 것을 군집화(clustering)이라 하고 이렇게 나누어진 유사한 데이터의 그룹을 군">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_clustering_01.png">
-<meta property="og:updated_time" content="2020-06-01T16:11:35.356Z">
+<meta property="og:updated_time" content="2020-06-04T11:19:39.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clustering">
 <meta name="twitter:description" content="Clustering(군집화)이란? 군집 분석이라고도 불리며 클러스터링 알고리즘은 비지도 학습(Unsupervised Learning)에 해당한다. X(입력변수)간의 관계를 규명하거나 살펴보는 것에 많이 사용된다.    주어딘 데이터 집합을 유사한 데이터들의 그룹으로 나누는 것을 군집화(clustering)이라 하고 이렇게 나누어진 유사한 데이터의 그룹을 군">
@@ -331,18 +331,47 @@ ga('send', 'pageview');
 </li>
 </ul>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics.cluster import adjusted_mutual_info_score</span><br><span class="line"></span><br><span class="line">X, y_true = anisotropic</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(20, 5))</span><br><span class="line">plot_num = 1</span><br><span class="line">X = StandardScaler().fit_transform(X)</span><br><span class="line"><span class="keyword">for</span> name, algorithm <span class="keyword">in</span> clustering_algorithms:</span><br><span class="line">    with ignore_warnings(category=UserWarning):</span><br><span class="line">        algorithm.fit(X)</span><br><span class="line">    <span class="keyword">if</span> hasattr(algorithm, <span class="string">'labels_'</span>):</span><br><span class="line">        y_pred = algorithm.labels_.astype(np.int)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        y_pred = algorithm.predict(X)</span><br><span class="line">    title = <span class="string">"AMI=&#123;:5.3f&#125;"</span>.format(adjusted_mutual_info_score(y_true, y_pred))</span><br><span class="line">    plt.subplot(1, len(datasets), plot_num)</span><br><span class="line">    plt.scatter(X[:, 0], X[:, 1], s=5, color=colors[y_pred])</span><br><span class="line">    plt.xlim(-2.5, 2.5)</span><br><span class="line">    plt.ylim(-2.5, 2.5)</span><br><span class="line">    plt.xlabel(name)</span><br><span class="line">    plt.xticks(())</span><br><span class="line">    plt.yticks(())</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plot_num += 1</span><br><span class="line">plt.savefig(<span class="string">"adjusted_rand_score"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics.cluster import adjusted_mutual_info_score</span><br><span class="line"></span><br><span class="line">X, y_true = anisotropic</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(20, 5))</span><br><span class="line">plot_num = 1</span><br><span class="line">X = StandardScaler().fit_transform(X)</span><br><span class="line"><span class="keyword">for</span> name, algorithm <span class="keyword">in</span> clustering_algorithms:</span><br><span class="line">    with ignore_warnings(category=UserWarning):</span><br><span class="line">        algorithm.fit(X)</span><br><span class="line">    <span class="keyword">if</span> hasattr(algorithm, <span class="string">'labels_'</span>):</span><br><span class="line">        y_pred = algorithm.labels_.astype(np.int)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        y_pred = algorithm.predict(X)</span><br><span class="line">    title = <span class="string">"AMI=&#123;:5.3f&#125;"</span>.format(adjusted_mutual_info_score(y_true, y_pred))</span><br><span class="line">    plt.subplot(1, len(datasets), plot_num)</span><br><span class="line">    plt.scatter(X[:, 0], X[:, 1], s=5, color=colors[y_pred])</span><br><span class="line">    plt.xlim(-2.5, 2.5)</span><br><span class="line">    plt.ylim(-2.5, 2.5)</span><br><span class="line">    plt.xlabel(name)</span><br><span class="line">    plt.xticks(())</span><br><span class="line">    plt.yticks(())</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plot_num += 1</span><br></pre></td></tr></table></figure>
 <hr>
-<hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<hr>
-<hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li>앞으로 소개할 Clustering은 다음과 같이 3가지이다.</li>
+<p><img src="/image/adjusted_mutual_info_score.png" alt="알고리즘별 조정 상호정보량"></p>
+<h3 id="실루엣-계수"><a href="#실루엣-계수" class="headerlink" title="실루엣 계수"></a>실루엣 계수</h3><ul>
+<li>지금까지는 각각의 데이터가 원래 어떤 군집에 속해있었는지 정답(groundtruth)를 알고있는 경우를 다루었다. 하지만 <code>정답 정보가 없다면 어떻게 군집화가 잘 되어었는지 판단할 수 있을까?</code> 실루엣 계수(Silhouette Coefficient)는 이러한 경우에 군집화의 성능을 판단하기 위한 기준의 하나이다.</li>
 </ul>
-<p><img src="/image/what_is_clustering_03.png" alt="Clustering이란? - 03"></p>
+<ul>
+<li><p>우선 모든 데이터 쌍 $ (i, j) $ 에 대해 거리 혹은 비유사도(dissimilarity)을 구한다. 이 결과를 이용하여 모든 데이터 $ i $ 에 대해 다음 값을 구한다.</p>
+<ul>
+<li>$ a_{i} $ : $ i $ 와 같은 군집에 속한 원소들의 평균 거리</li>
+<li>$ b_{i} $ : $ i $ 와 다른 군집 중 가장 가까운 군집까지의 평균 거리</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>이 때 데이터 $ i $에 대한 실루엣 계수는 아래와 같이 정의하며 <code>전체 데이터의 실루엣계수를 평균된 값을 평균 실루엣 계수</code>라고 한다.</li>
+</ul>
+<script type="math/tex; mode=display">s_i = \dfrac{b_i - a_i}{\max{(a_i, b_i)}}</script><ul>
+<li>만약 데이터 $ i $ 에 대해 같은 군집의 데이터가 다른 군집의 데이터 보다 더 가깝다면 그 데이터의 실루엣 계수는 양수가 된다. 하지만 만약 다른 군집의 데이터가 같은 군집의 데이터 보다 더 가깝다면 군집화가 잘못된 경우라고 볼 수 있는데 이 때는 그 데이터의 실루엣 계수가 음수가 된다. <code>잘못된 군집화에서는 실루엣 계수가 음수인 데이터가 많아지므로 평균 실루엣 계수가 작아진다.</code> 따라서 <code>실루엣 계수가 클수록 좋은 군집화</code>라고 할 수 있다.</li>
+</ul>
+<ul>
+<li><code>군집화 방법 중에는 군집의 개수를 사용자가 정해주어야 하는 것들이 있는데 실루엣 계수는 이 경우 군집의 개수를 정하는데 큰 도움이 된다.</code></li>
+</ul>
+<ul>
+<li>앞에서 예로 들었던 3개의 원형 데이터에 대해 Spectral Clustering 방법으로 군집 개수를 바꾸어 가면서 군집화 결과를 살펴보자.<ul>
+<li>참고로, Scikit-Learn 패키지의 metrics 서브패키지는 실루엣계수를 계산하는 <code>silhouette_samples</code> 명령을 제공한다.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">silhouette_samples(X, y_pred)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import silhouette_samples</span><br><span class="line"></span><br><span class="line">def plot_silhouette(data):</span><br><span class="line">    X = StandardScaler().fit_transform(data[0])</span><br><span class="line">    colors = plt.cm.tab10(np.arange(20, dtype=int))</span><br><span class="line">    plt.figure(figsize=(15, 12))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(4):</span><br><span class="line">        model = SpectralClustering(n_clusters=i + 2, affinity=<span class="string">"nearest_neighbors"</span>)</span><br><span class="line">        cluster_labels = model.fit_predict(X)</span><br><span class="line">        sample_silhouette_values = silhouette_samples(X, cluster_labels)</span><br><span class="line">        silhouette_avg = sample_silhouette_values.mean()</span><br><span class="line"></span><br><span class="line">        plt.subplot(4, 2, 2 * i + 1)</span><br><span class="line">        y_lower = 10</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + 2):</span><br><span class="line">            jth_cluster_silhouette_values = sample_silhouette_values[cluster_labels == j]</span><br><span class="line">            jth_cluster_silhouette_values.sort()</span><br><span class="line">            size_cluster_j = jth_cluster_silhouette_values.shape[0]</span><br><span class="line">            y_upper = y_lower + size_cluster_j</span><br><span class="line">            plt.fill_betweenx(np.arange(y_lower, y_upper),</span><br><span class="line">                              0, jth_cluster_silhouette_values,</span><br><span class="line">                              facecolor=colors[j], edgecolor=colors[j])</span><br><span class="line">            plt.text(-0.05, y_lower + 0.5 * size_cluster_j, str(j + 1))</span><br><span class="line">            plt.axvline(x=silhouette_avg, color=<span class="string">"red"</span>, linestyle=<span class="string">"--"</span>)</span><br><span class="line">            plt.xticks([-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1])</span><br><span class="line">            plt.yticks([])</span><br><span class="line">            plt.title(<span class="string">"실루엣계수 평균: &#123;:5.2f&#125;"</span>.format(silhouette_avg))</span><br><span class="line">            y_lower = y_upper + 10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        plt.subplot(4, 2, 2 * i + 2)</span><br><span class="line">        plt.scatter(X[:, 0], X[:, 1], s=5, color=colors[cluster_labels])</span><br><span class="line">        plt.xlim(-2.5, 2.5)</span><br><span class="line">        plt.ylim(-2.5, 2.5)</span><br><span class="line">        plt.xticks(())</span><br><span class="line">        plt.yticks(())</span><br><span class="line">        plt.title(<span class="string">"군집 수: &#123;&#125;"</span>.format(i + 2))</span><br><span class="line"></span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    <span class="comment"># plt.savefig("silhouette_coefficient")</span></span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">plot_silhouette(blobs)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/silhouette_coefficient.png" alt="타원형 데이터를 Spectral Clustering한 결과와 실루엣 계수값"></p>
+<ul>
+<li><code>다만 실루엣 계수는 군집의 형상이 복잡하거나 크기의 차이가 많이 나면 정상적인 비교가 불가능</code>하다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_silhouette(noisy_circles)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/silhouette_coefficient_01.png" alt="원형 데이터를 Spectral Clustering한 결과와 실루엣 계수값"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -431,7 +460,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-05-29",
         "dateCreated": "2020-05-29",
-        "dateModified": "2020-06-02",
+        "dateModified": "2020-06-04",
         "url": "https://heung-bae-lee.github.io/2020/05/29/machine_learning_17/",
         "description": "Clustering(군집화)이란?
 군집 분석이라고도 불리며 클러스터링 알고리즘은 비지도 학습(Unsupervised Learning)에 해당한다. X(입력변수)간의 관계를 규명하거나 살펴보는 것에 많이 사용된다.
@@ -439,7 +468,7 @@ ga('send', 'pageview');
 
 
 주어딘 데이터 집합을 유사한 데이터들의 그룹으로 나누는 것을 군집화(clustering)이라 하고 이렇게 나누어진 유사한 데이터의 그룹을 군"
-        "wordCount": 2279
+        "wordCount": 3048
     }
 </script>
 

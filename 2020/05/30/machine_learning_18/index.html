@@ -13,18 +13,18 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법   초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.    여기서 그렇다면 중심을 구할 경우에는 각 데이터(포인트)들간의">
+    <meta name="description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법 가장 단순하고 빠른 군집화 방법     초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다. 다음과 같은 목저함수 값이 최소">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Clustering - K-means, K-medoid">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/05/30/machine_learning_18/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법   초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.    여기서 그렇다면 중심을 구할 경우에는 각 데이터(포인트)들간의">
+<meta property="og:description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법 가장 단순하고 빠른 군집화 방법     초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다. 다음과 같은 목저함수 값이 최소">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/how_to_decide_mean_point_in_K_means_clustering_01.png">
-<meta property="og:updated_time" content="2020-05-29T16:03:08.125Z">
+<meta property="og:updated_time" content="2020-06-04T11:30:03.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clustering - K-means, K-medoid">
-<meta name="twitter:description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법   초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.    여기서 그렇다면 중심을 구할 경우에는 각 데이터(포인트)들간의">
+<meta name="twitter:description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법 가장 단순하고 빠른 군집화 방법     초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다. 다음과 같은 목저함수 값이 최소">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/how_to_decide_mean_point_in_K_means_clustering_01.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -209,14 +209,104 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <h2 id="K-means-Clusterig"><a href="#K-means-Clusterig" class="headerlink" title="K-means Clusterig"></a>K-means Clusterig</h2><ul>
-<li><code>각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트</code>하면서 군집을 분류해 나가는 방법</li>
+<li><code>각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트</code>하면서 군집을 분류해 나가는 방법<ul>
+<li>가장 단순하고 빠른 군집화 방법</li>
+</ul>
+</li>
 </ul>
 <ul>
-<li>초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.</li>
+<li>초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.<ul>
+<li>다음과 같은 목저함수 값이 최소화될 때까지 군집의 중심위치와 각 데이터가 소속될 군집을 반복해서 찾는다. 이 값을 관성(inertia)이라 한다.</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">J = \sum_{k=1}^K \sum_{i \in C_k} d(x_i, \mu_k)</script><ul>
+<li>이 식에서 $ K $ 는 군집의 갯수이고 $ C_{k} $ 는 $ k $ 번쨰 군집에 속하는 데이터의 집합, $ \mu_{k} $ 는 $ k $ 번째 군집의 중심위치(centroid), $ d $ 는 $ x_{i}, \mu_{k} $ 두 데이터 사이의 거리 혹은 비유사도(dissimilarity)로 정의한다. 만약 유클리드 거리를 사용한다면 다음과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">d(x_i, \mu_k) = || x_i - \mu_k ||^2</script><ul>
+<li>위 식은 다음처럼 표현할 수 도 있다.</li>
+</ul>
+<script type="math/tex; mode=display">J = \sum_{i=1}^{N}\min_{\mu_j \in C}(||x_i - \mu_j||^2)</script><ul>
+<li>세부 알고리즘은 다음과 같다.<ul>
+<li><ol>
+<li>임의의 중심위치 $ \mu_{k} (k=1, \ldots , K) $ 를 고른다. 보통 데이터 표본 중에서 $ K $ 개를 선택한다.</li>
+</ol>
+</li>
+<li><ol>
+<li>모든 데이터 $ x_{i} (i = 1, \lodts , N) $ 에서 각각의 중심위치 $ \mu_{k} $ 까지의 거리를 계산한다.</li>
+</ol>
+</li>
+<li><ol>
+<li>각 데이터에서 가장 가까운 중심위치를 선택하여 각 데이터가 속하는 군집을 정한다.</li>
+</ol>
+</li>
+<li><ol>
+<li>각 군집에 대해 중심위치 $ \mu_{k} $ 를 다시 계산한다.</li>
+</ol>
+</li>
+<li><ol>
+<li>2~4를 반복한다.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>K-means 군집화는 <code>항상 수렴하지만 최종 군집화 결과가 전역 최적점이라는 보장은 없다. 군집화 결과는 초기 중심위치에 따라 달라질 수 있다.</code></li>
+</ul>
+<ul>
+<li><code>K-means clusetering은 유클리드 거리를 사용하므로 너무 차원이 높을 때는 군집화 성능이 떨어질 수 있다.</code></li>
 </ul>
 <p><img src="/image/how_to_decide_mean_point_in_K_means_clustering_01.png" alt="K-means clustering의 작동 원리"></p>
 <ul>
-<li>여기서 그렇다면 중심을 구할 경우에는 각 데이터(포인트)들간의 거리의 합이 최소화하는 되는 지점이 중심이 될 것이므로 포인트간의 거리를 계산해야 한다. 여기서는 가장 간단하고 많이들 알고있는 유클리디안 거리와 맨하탄 거리를 소개할 것이다. 이외에도 마할라노비스의 거리등 <code>거리를 구하는 방법</code>은 여러가지가 있다. 이를 결정하는 것은 <code>해당 데이터에 성질(예를 들어 위도 경도 데이터라고 해서 무조건적으로 Haversine distance를 사용하는 것은아니지만 위도와 경도의 데이터를 통해 항공기들간의 시간대 별 위치의 중심점을 찾아야 하는 경우 Haversine distance를 사용하듯)에 따라 분석자가 결정해야 할 몫</code>이다.</li>
+<li><p>Scikit-Learn의 cluster 서브패키지는 K-means 군집화를 위한 <code>KMeans</code> 클래스를 제공한다. 다음과 같은 인수를 받을 수 있다.</p>
+<ul>
+<li><code>n_clusters</code> : 군집의 개수</li>
+<li><code>init</code> : 초기화 방법 <code>random</code>이면 무작위, <code>k-means++</code> 이면 K-means++ 방법. 또는 각 데이터의 군집 label</li>
+<li><code>n_init</code> : 초기 중심위치 시도 횟수. default 10이고 10개의 무작위 중심위치 목록 중 가장 좋은 값을 선택한다.</li>
+<li><code>max_iter</code> : 최대 반복 횟수</li>
+<li><code>random_state</code> : 시드값</li>
+</ul>
+</li>
+<li><p>다음은 <code>make_blobs</code> 커맨드를 통해 만든 데이터를 2개로 K-means 군집화하는 과정을 나타낸 것이다. 각각의 그림은 군집을 정하는 단계 3에서 멈춘 것이다. 마커(marker)의 모양은 소속된 군집을 나타내고 크기가 큰 마커가 해당 군집의 중심위치이다. 각 단계에서 중심위치는 전단계의 군집의 평균으로 다시 계산되는 것을 확인할 수 있다.</p>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import make_blobs</span><br><span class="line">from sklearn.cluster import KMeans</span><br><span class="line"></span><br><span class="line">X, _ = make_blobs(n_samples=20, random_state=4)</span><br><span class="line"></span><br><span class="line">def plot_KMeans(n):</span><br><span class="line">    model = KMeans(n_clusters=2, init=<span class="string">"random"</span>, n_init=1, max_iter=n, random_state=6).fit(X)</span><br><span class="line">    c0, c1 = model.cluster_centers_</span><br><span class="line">    plt.scatter(X[model.labels_ == 0, 0], X[model.labels_ == 0, 1], marker=<span class="string">'v'</span>, facecolor=<span class="string">'r'</span>, edgecolors=<span class="string">'k'</span>)</span><br><span class="line">    plt.scatter(X[model.labels_ == 1, 0], X[model.labels_ == 1, 1], marker=<span class="string">'^'</span>, facecolor=<span class="string">'y'</span>, edgecolors=<span class="string">'k'</span>)</span><br><span class="line">    plt.scatter(c0[0], c0[1], marker=<span class="string">'v'</span>, c=<span class="string">"r"</span>, s=200)</span><br><span class="line">    plt.scatter(c1[0], c1[1], marker=<span class="string">'^'</span>, c=<span class="string">"y"</span>, s=200)</span><br><span class="line">    plt.grid(False)</span><br><span class="line">    plt.title(<span class="string">"반복횟수=&#123;&#125;, 관성=&#123;:5.2f&#125;"</span>.format(n, -model.score(X)))</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12, 10))</span><br><span class="line">plt.subplot(321)</span><br><span class="line">plot_KMeans(1)</span><br><span class="line">plt.subplot(322)</span><br><span class="line">plot_KMeans(2)</span><br><span class="line">plt.subplot(323)</span><br><span class="line">plot_KMeans(3)</span><br><span class="line">plt.subplot(324)</span><br><span class="line">plot_KMeans(4)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/k_means_center_moving_each_iter_step.png" alt="k-means 반복횟수 증가에 따른 중심 위치의 변화"></p>
+<h3 id="K-means-알고리즘"><a href="#K-means-알고리즘" class="headerlink" title="K-means++ 알고리즘"></a>K-means++ 알고리즘</h3><ul>
+<li><p>K-means++ 알고리즘은 <code>초기 중심위치를 설정하기 위한 알고리즘</code>이다. 다음과 같은 방법을 통해 <code>되도록 멀리 떨어진 중심위치 집합을 찾아낸다.</code></p>
+<ul>
+<li><ol>
+<li>중심위치를 저장할 집합 $ M $ 준비</li>
+</ol>
+</li>
+<li><ol>
+<li>우선 하나의 중심위치 $ \mu_{0} $ 를 랜덤하게 선택하여 $ M $ 에 넣는다.</li>
+</ol>
+</li>
+<li><ol>
+<li>$ M $ 에 속하지 않는 모든 표본 $ x_{i} $ 에 대해 거리 $ d(M, x_{i}) $ 를 계산. $ d(M, x_{i}) $ 는 $ M $ 안의 모든 샘플 $ \mu_{k} $ 에 대해 $ d(\mu_{k}, x_{i}) $ 를 계산하여 가장 작은 값 선택</li>
+</ol>
+</li>
+<li><ol>
+<li>$ d(M, x_{i}) $ 에 비례한 확률로 다음 중심위치 $ \mu $를 선택</li>
+</ol>
+</li>
+<li><ol>
+<li>K 개의 중심위치를 선택할 때 까지 반복</li>
+</ol>
+</li>
+<li><ol>
+<li>K-means 방법 사용</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>중심을 구할 경우에는 각 데이터(포인트)들간의 거리의 합이 최소화하는 되는 지점이 중심이 될 것이므로 포인트간의 거리를 계산해야 한다. 여기서는 가장 간단하고 많이들 알고있는 유클리디안 거리와 맨하탄 거리를 소개할 것이다. 이외에도 마할라노비스의 거리등 <code>거리를 구하는 방법</code>은 여러가지가 있다. 이를 결정하는 것은 <code>해당 데이터에 성질(예를 들어 위도 경도 데이터라고 해서 무조건적으로 Haversine distance를 사용하는 것은아니지만 위도와 경도의 데이터를 통해 항공기들간의 시간대 별 위치의 중심점을 찾아야 하는 경우 Haversine distance를 사용하듯)에 따라 분석자가 결정해야 할 몫</code>이다.</li>
 </ul>
 <p><a href="https://en.wikipedia.org/wiki/Euclidean_distance" target="_blank" rel="noopener">참조 Distance type</a></p>
 <p><img src="/image/how_to_decide_mean_point_in_K_means_clustering_02.png" alt="K-means clustering의 작동 원리"></p>
@@ -368,9 +458,76 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Y = vectorizer.transform([<span class="string">"chrome browser to open."</span>])</span><br><span class="line">prediction = model.predict(Y)</span><br><span class="line"><span class="built_in">print</span>(prediction)</span><br><span class="line"></span><br><span class="line">Y = vectorizer.transform([<span class="string">"I want to have a dog"</span>])</span><br><span class="line">prediction = model.predict(Y)</span><br><span class="line"><span class="built_in">print</span>(prediction)</span><br><span class="line"></span><br><span class="line">Y = vectorizer.transform([<span class="string">"My cat is hungry."</span>])</span><br><span class="line">prediction = model.predict(Y)</span><br><span class="line"><span class="built_in">print</span>(prediction)</span><br></pre></td></tr></table></figure>
 <h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[0]</span><br><span class="line">[1]</span><br><span class="line">[0]</span><br></pre></td></tr></table></figure>
 <hr>
+<ul>
+<li>다음은 K-means++ 방법을 사용하여 MNIST Digit 이미지 데이터를 군집화한 결과이다. 각 군집에서 10개씩의 데이터만 표시하였다.</li>
+</ul>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"><span class="comment">##### 결과</span></span><br><span class="line">``` bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_digits</span><br><span class="line"></span><br><span class="line">digits = load_digits()</span><br><span class="line"></span><br><span class="line">model = KMeans(init=<span class="string">"k-means++"</span>, n_clusters=10, random_state=0)</span><br><span class="line">model.fit(digits.data)</span><br><span class="line">y_pred = model.labels_</span><br><span class="line"></span><br><span class="line">def show_digits(images, labels):</span><br><span class="line">    f = plt.figure(figsize=(8, 2))</span><br><span class="line">    i = 0</span><br><span class="line">    <span class="keyword">while</span> (i &lt; 10 and i &lt; images.shape[0]):</span><br><span class="line">        ax = f.add_subplot(1, 10, i + 1)</span><br><span class="line">        ax.imshow(images[i], cmap=plt.cm.bone)</span><br><span class="line">        ax.grid(False)</span><br><span class="line">        ax.set_title(labels[i])</span><br><span class="line">        ax.xaxis.set_ticks([])</span><br><span class="line">        ax.yaxis.set_ticks([])</span><br><span class="line">        plt.tight_layout()</span><br><span class="line">        i += 1</span><br><span class="line"></span><br><span class="line">def show_cluster(images, y_pred, cluster_number):</span><br><span class="line">    images = images[y_pred == cluster_number]</span><br><span class="line">    y_pred = y_pred[y_pred == cluster_number]</span><br><span class="line">    show_digits(images, y_pred)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(10):</span><br><span class="line">    show_cluster(digits.images, y_pred, i)</span><br></pre></td></tr></table></figure>
 <hr>
+<p><img src="/image/mnist_k_means_cluster_result.png" alt="MNIST 데이터 K-means 군집화한 결과"></p>
+<ul>
+<li><code>이미지의 제목에 있는 숫자는 군집 번호에 지나지 않으므로 원래 숫자의 번호와 일치하지 않는다.</code> 하지만 이를 예측문제라고 가정하고 분류 결과 행렬을 만들면 아래와 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import confusion_matrix</span><br><span class="line"></span><br><span class="line">confusion_matrix(digits.target, y_pred)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">array([[  1,   0,   0,   0,   0, 177,   0,   0,   0,   0],</span><br><span class="line">       [  0,   1,  55,  24,   0,   0,   0,   2,   1,  99],</span><br><span class="line">       [  0,  13,   2, 148,   2,   1,   3,   0,   0,   8],</span><br><span class="line">       [  0, 155,   0,   1,  11,   0,   7,   0,   2,   7],</span><br><span class="line">       [163,   0,   7,   0,   0,   0,   7,   0,   0,   4],</span><br><span class="line">       [  2,   1,   0,   0,  42,   0,   0,   1, 136,   0],</span><br><span class="line">       [  0,   0,   1,   0,   0,   1,   0, 177,   0,   2],</span><br><span class="line">       [  0,   0,   0,   0,   0,   0, 177,   0,   0,   2],</span><br><span class="line">       [  0,   4,   6,   3,  48,   0,   5,   2,   4, 102],</span><br><span class="line">       [  0,   6,  20,   0, 139,   0,   7,   0,   6,   2]])</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>이 군집화 결과의 ARI, AMI, 실루엣 계수 값은 다음과 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics.cluster import adjusted_mutual_info_score, adjusted_rand_score, silhouette_score</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"ARI:"</span>, adjusted_rand_score(digits.target, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"AMI:"</span>, adjusted_mutual_info_score(digits.target, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Silhouette Score:"</span>, silhouette_score(digits.data, y_pred))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ARI: 0.6703800183468681</span><br><span class="line">AMI: 0.7417664506416767</span><br><span class="line">Silhouette Score: 0.18249069204151275</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>군집화 결과를 주성분 분석을 통해 2차원에 투영하면 다음과 같다. 겹쳐져 있는 부분은 고차원상에서는 떨어져 있을 수 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line">pca = PCA(n_components=2)</span><br><span class="line">X = pca.fit_transform(digits.data)</span><br><span class="line"></span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y_pred, cmap=plt.cm.Set1)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="MNIST_K_means_clustering_PCA_2_ponents.png" alt="MNIST 데이터를 PCA를 통해 2개의 주성분 벡터를 갖도록 차원을 축소한 그래프"></p>
+<ul>
+<li><code>K-means clusetering은 유클리드 거리를 사용하므로 너무 차원이 높을 때는 군집화 성능이 떨어질 수 있다. 이 때는 차원 축소를 한 후 군집화를 하는 것이 도움이 될 수도 있다.</code></li>
+</ul>
+<ul>
+<li>MNIST Digit 데이터를 10차원으로 차원 축소하여 K-means 군집화하고 ARI, AMI, 실루엣 계수를 각각 계산하여 차원축소를 하지 않았을 때와 비교하라.</li>
+</ul>
+<h2 id="차원을-축소하여도-실루엣계수를-포함한-모든-지표들이-살펴보았을-때-오히려-낮아졌다-이를-통해-복잡한-데이터에-대해서는-적합하지-않은-실루엣계수의-단점을-확인-할-수-있으며-무조건-적으로-PCA를-하더라도-높아지지-않는다는-점을-확인할-수-있다"><a href="#차원을-축소하여도-실루엣계수를-포함한-모든-지표들이-살펴보았을-때-오히려-낮아졌다-이를-통해-복잡한-데이터에-대해서는-적합하지-않은-실루엣계수의-단점을-확인-할-수-있으며-무조건-적으로-PCA를-하더라도-높아지지-않는다는-점을-확인할-수-있다" class="headerlink" title="-  차원을 축소하여도 실루엣계수를 포함한 모든 지표들이 살펴보았을 때 오히려 낮아졌다. 이를 통해 복잡한 데이터에 대해서는 적합하지 않은 실루엣계수의 단점을 확인 할 수 있으며, 무조건 적으로 PCA를 하더라도 높아지지 않는다는 점을 확인할 수 있다."></a>-  차원을 축소하여도 실루엣계수를 포함한 모든 지표들이 살펴보았을 때 오히려 낮아졌다. 이를 통해 복잡한 데이터에 대해서는 적합하지 않은 실루엣계수의 단점을 확인 할 수 있으며, 무조건 적으로 PCA를 하더라도 높아지지 않는다는 점을 확인할 수 있다.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics.cluster import adjusted_mutual_info_score, adjusted_rand_score, silhouette_score</span><br><span class="line"></span><br><span class="line">model = KMeans(init=<span class="string">"k-means++"</span>, n_clusters=10, random_state=0)</span><br><span class="line">model.fit(digits.data)</span><br><span class="line">y_pred = model.labels_</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"ARI:"</span>, adjusted_rand_score(digits.target, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"AMI:"</span>, adjusted_mutual_info_score(digits.target, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Silhouette Score:"</span>, silhouette_score(digits.data, y_pred))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ARI: 0.6686991223627669</span><br><span class="line">AMI: 0.7397973157276612</span><br><span class="line">Silhouette Score: 0.18251916424600556</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pca = PCA(n_components=10)</span><br><span class="line">X = pca.fit_transform(digits.data)</span><br><span class="line"></span><br><span class="line">model = KMeans(init=<span class="string">"k-means++"</span>, n_clusters=10, random_state=0)</span><br><span class="line">model.fit(X)</span><br><span class="line">y_pred = model.labels_</span><br><span class="line"></span><br><span class="line">from sklearn.metrics.cluster import adjusted_mutual_info_score, adjusted_rand_score, silhouette_score</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"ARI:"</span>, adjusted_rand_score(digits.target, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"AMI:"</span>, adjusted_mutual_info_score(digits.target, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Silhouette Score:"</span>, silhouette_score(digits.data, y_pred))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ARI: 0.6492572540256956</span><br><span class="line">AMI: 0.7183058275931469</span><br><span class="line">Silhouette Score: 0.18116247153029966</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="미니배치-K-means-군집화"><a href="#미니배치-K-means-군집화" class="headerlink" title="미니배치 K-means 군집화"></a>미니배치 K-means 군집화</h3><ul>
+<li>K-means 방법에서는 중심위치와 모든 데이터 사이의 거리를 계산해야 하기 때문에 데이터의 갯수가 많아지면 계산량도 늘어난다. <code>데이터의 수가 너무 많을 때는 미니 배치 K-means 군집화 방법을 사용하면 계산량을 줄일 수 있다.</code> 미니배치 K-means 군집화는 데이터를 미니배치 크기만큼 무작위로 분리하여 K-means 군집화를 한다. 모든 데이터를 한꺼번에 썼을 때와 결과가 다를 수는 있지만 큰 차이가 없다.</li>
+</ul>
+<ul>
+<li>Scikit-Learn의 cluster 서브패키지는 미니배치 K-means 군집화를 위한 <code>MiniBatchKMeans</code> 클래스를 제공한다. 미니배치 크기 <code>batch_size</code>인수를 추가로 받는다.</li>
+</ul>
+<ul>
+<li>150,000개의 데이터를 사용하여 실행 시간을 비교할 것이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cluster import MiniBatchKMeans</span><br><span class="line">from sklearn.datasets import make_blobs</span><br><span class="line"></span><br><span class="line">X, y = make_blobs(n_samples=150000, cluster_std=[1.0, 2.5, 0.5], random_state=170)</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>미니배치 군집화의 속도가 훨씬 빠른 것을 알 수 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line"></span><br><span class="line">model1 = KMeans(n_clusters=3).fit(X)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CPU <span class="built_in">times</span>: user 1.01 s, sys: 66.8 ms, total: 1.08 s</span><br><span class="line">Wall time: 604 ms</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line"></span><br><span class="line">model2 = MiniBatchKMeans(n_clusters=3, batch_size=1000, compute_labels=True).fit(X)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-12"><a href="#결과-12" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CPU <span class="built_in">times</span>: user 191 ms, sys: 7.71 ms, total: 199 ms</span><br><span class="line">Wall time: 158 ms</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>군집화 결과는 그다지 차이가 없다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">idx = np.random.randint(150000, size=300)</span><br><span class="line">plt.subplot(121)</span><br><span class="line">plt.scatter(X[idx, 0], X[idx, 1], c=model1.labels_[idx])</span><br><span class="line">plt.title(<span class="string">"K-평균 군집화"</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">plt.scatter(X[idx, 0], X[idx, 1], c=model2.labels_[idx])</span><br><span class="line">plt.title(<span class="string">"미니배치 K-평균 군집화"</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/mini_batch_k_means_vs_k_means_clustering_result.png" alt="미니배치와 일반적인 K-means 군집화 결과"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -459,18 +616,18 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-05-30",
         "dateCreated": "2020-05-30",
-        "dateModified": "2020-05-30",
+        "dateModified": "2020-06-04",
         "url": "https://heung-bae-lee.github.io/2020/05/30/machine_learning_18/",
         "description": "K-means Clusterig
 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법
+가장 단순하고 빠른 군집화 방법
+
+
 
 
 초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.
-
-
-
-여기서 그렇다면 중심을 구할 경우에는 각 데이터(포인트)들간의"
-        "wordCount": 2550
+다음과 같은 목저함수 값이 최소"
+        "wordCount": 4322
     }
 </script>
 
