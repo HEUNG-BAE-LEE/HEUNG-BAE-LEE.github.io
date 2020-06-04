@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Regression(01) - 회귀의 종류 및 회귀계수 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="회귀분석이란?  지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.    회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Regression(01) - 회귀의 종류 및 회귀계수">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="회귀분석이란?  지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.    회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_regression.png">
+<meta property="og:updated_time" content="2020-03-24T09:01:44.489Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Regression(01) - 회귀의 종류 및 회귀계수">
+<meta name="twitter:description" content="회귀분석이란?  지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.    회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/what_is_regression.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/machine-learning/">machine learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-machine_learning_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Regression(01) - 회귀의 종류 및 회귀계수
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/04/machine_learning_01/" class="article-date">
+            <time datetime="2020-01-04T02:44:20.000Z" itemprop="datePublished">2020-01-04</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="회귀분석이란"><a href="#회귀분석이란" class="headerlink" title="회귀분석이란?"></a>회귀분석이란?</h2><p><img src="/image/what_is_regression.png" alt="회귀분석 - 01"></p>
+<ul>
+<li>지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.</li>
+</ul>
+<p><img src="/image/regression_01.png" alt="회귀분석 - 02"></p>
+<ul>
+<li><p>회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회귀분석시에 많이 들어봤을 예시는 부모의 키와 자식의 키에대한 예시가 있을 것이다. 부모의 키가 아주 크더라도 자식의 키가 부모보다 더 커서 세대를 이어가면서 무한정 커지는 것은 아니며, 부모의 키가 아주 작더라도 자식의 키가 부모보다 더 작아서 세대를 이어가며 무한정 작아지는 것이 아니라는 것이다. <code>즉, 사람의 키는 평균 키로 회귀하려는 경향을 가진다는 자연의 법칙이라는 의미이며, 회귀분석은 이처럼 데이터 값이 평균과 같은 일정한 값으로 돌아가려는 경향을 이용한 통계학 기법이다.</code></p>
+</li>
+<li><p>머신러닝 관점에서 보면 독립변수는 피처에 해당되며, 종속변수는 결정 값이다. <code>머신러닝 회귀 예측의 핵심은 주어진 피처와 결정 값 데이터 기반에서 학습을 통해 최적의 회귀 계수를 찾아내는 것</code>이다.</p>
+</li>
+<li><p>회귀에서 가장 중요한 것은 바로 회귀 계수이다. 이 회귀 계수가 선형이나 아니냐에 따라 <code>선형회귀</code>와 <code>비선형 회귀</code>로 나눌수 있으며, 독립변수의 개수가 한개 인지 여러개인지에 따라 <code>단일 회귀</code>, <code>다중 회귀</code>로 나뉜다.</p>
+</li>
+<li><p>선형(비선형)이라는 용어는 Y와 $X_{1},X_{2},…,X_{p}의 관계를 묘사하는 것이 아니라는 것에 주목하여라! 회귀계수가 방정식에 선형적(비선형적)으로 삽입되어 있다는 것과 관련이 있다.</p>
+</li>
+<li><p>선형 함수의 예</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">Y = \beta_{0} + \beta_{1}X_{1} + \epsilon</script><pre><code>- `Y와 X 사이의 관계는 비선형이지만, 모수들이 선형적으로 삽입되어 있기 때문에 선형 함수`
+</code></pre><script type="math/tex; mode=display">Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}{X_{2}}^{2}  + \epsilon</script><script type="math/tex; mode=display">Y = \beta_{0} + \beta_{1}\log X_{1} + \epsilon</script><ul>
+<li>비선형 함수의 예</li>
+</ul>
+<script type="math/tex; mode=display">Y = \beta_{0} + e^{\beta_{1}X_{1}} + \epsilon</script><ul>
+<li><p>각 독립변수들은 양적(quantitative) 혹은 질적(qualitative)으로 분류 될 수 있다.</p>
+<ul>
+<li>양적 변수의 예) : 주택 가격, 침실의 개수, 연수, 세금 등</li>
+<li>질적 변수의 예) : 이웃의 형태(좋은 혹은 나쁜 이웃), 집의 형태(정원이있는, 고풍스러운 등)</li>
+<li>독립변수들은 양적 질적 변수 모두 취할 수 있는데, 질적 변수들이 있다면, 계산상의 이유로 더미 변수(dummy variable)로 코딩을 해주어야 한다. <code>단, 질적인 변수들도 예를 들어 전문가들에 의해 이미 규정되어 신뢰성 있는 공식이나 규칙을 통해 연속적인 수치로 변환될 수 있다면 더미 변수로 만들어 주지 않고 사용해도 된다.</code></li>
+</ul>
+</li>
+<li><p><code>모든 독립변수들이 질적인 경우 분산 분석(ANOVA : analysis of variance)기법</code>이라고 한다. 분산 분석은 그 자신의 고유한 방법으로써 소개되고 통계학부생들이 통계적 자료분석이라는 주제로 수업을 수강할때 나오는 개념으로써 설명되고 있는데 <code>회귀분석의 특별한 경우임을 알고있어라!!!!</code> 또한, <code>어떤 예측변수들이 양적이고 반면에 다른 변수들이 질적이라면, 이러한 경우의 회귀분석을 공분산분석(ANCOVA : analysis of covariance)이라고 한다.</code></p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>회귀의 유형</th>
+<th>조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>- 일변량(Univariate)</td>
+<td>- 오직 하나의 양적 독립변수(설명변수)</td>
+</tr>
+<tr>
+<td>- 다변량(Multivariate)</td>
+<td>- 두 개 이상의 양적 독립변수(설명변수)</td>
+</tr>
+<tr>
+<td>- 단순(Simple)</td>
+<td>- 오직 하나의 종속변수(반응변수)</td>
+</tr>
+<tr>
+<td>- 다중(Multiple)</td>
+<td>- 두 개 이상의 종속변수(반응변수)</td>
+</tr>
+<tr>
+<td>- 선형(Linear)</td>
+<td>- 데이터에 대하여 가능한 변환을 취한 후, 모든 계수들이 방정식에 선형적으로 삽입되어 있음.</td>
+</tr>
+<tr>
+<td>- 비선형(Nonlinear)</td>
+<td>- 종속변수(반응변수)와 일부 독립변수들의 관계가 비선형이거나 일부 계수들이 비선형적으로 나타남.  계수들을 선형적으로 나타나게 하는 어떤 변환도 가능하지 않음.</td>
+</tr>
+<tr>
+<td>- 분산분석(ANOVA)</td>
+<td>- 모든 독립변수들이 질적 변수임.</td>
+</tr>
+<tr>
+<td>- 공분산분석(ANCOVA)</td>
+<td>- 어떤 독립변수들은 양적변수이고 다른 독립변수들은 질적변수임.</td>
+</tr>
+<tr>
+<td>- 로지스틱(Logistic)</td>
+<td>- 종속변수(반응변수)가 질적변수임.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="대표적인-선형-회귀-모형은-다음과-같다"><a href="#대표적인-선형-회귀-모형은-다음과-같다" class="headerlink" title="대표적인 선형 회귀 모형은 다음과 같다."></a>대표적인 선형 회귀 모형은 다음과 같다.</h4><h4 id="일반-선형-회귀"><a href="#일반-선형-회귀" class="headerlink" title="일반 선형 회귀"></a>일반 선형 회귀</h4><ul>
+<li>예측값과 실제값의 잔차 제곱합을 최소화할 수 있도록 회귀 계수를 최적화하며, 규제(Regularization)를 적용하지 않은 모델이다.</li>
+</ul>
+<h4 id="릿지-Ridge"><a href="#릿지-Ridge" class="headerlink" title="릿지(Ridge)"></a>릿지(Ridge)</h4><ul>
+<li>Ridge 회귀는 선형 회귀에 <code>L2 Regularization을 추가한 모형</code>이다. Ridge 회귀는 L2 Regularization을 적용하는데, L2 Regularization은 <code>상대적으로 큰 회귀 계수 값의 예측 영향도를 감소 시키기 위해서 회귀 계수값을 더 작게 만드는 Regularization 모형이다.</code></li>
+</ul>
+<h4 id="라쏘-Lasso"><a href="#라쏘-Lasso" class="headerlink" title="라쏘(Lasso)"></a>라쏘(Lasso)</h4><ul>
+<li>Lasso 회귀는 선형 회귀에 <code>L1 Regularization을 적용한 방식</code>이다. L2 Regularization이 회귀 계수 값의 크기를 줄이는 데 반해, <code>L1 Regularization은 예측 영향력이 작은 피처의 회귀계수를 0으로 만들어 회귀 예측 시 피처가 선택되지 않게 하는 것</code>이다. 이러한 특성 때문에 L1 Regularization은 <code>피처 선택 기능</code>으로도 불린다.</li>
+</ul>
+<h4 id="엘라스틱넷-ElasticNet"><a href="#엘라스틱넷-ElasticNet" class="headerlink" title="엘라스틱넷(ElasticNet)"></a>엘라스틱넷(ElasticNet)</h4><ul>
+<li><code>L2, L1 Regularization을 함께 결합한 모형</code>이다. 주로 피처가 많은 데이터 세트에서 적용되며, <code>L1 Regularization으로 피처의 개수를 줄임과 동시에 L2 Regularization으로 계수의 값의 크기를 조정한다.</code></li>
+</ul>
+<h4 id="로지스틱-Logistic"><a href="#로지스틱-Logistic" class="headerlink" title="로지스틱(Logistic)"></a>로지스틱(Logistic)</h4><ul>
+<li>로지스틱 회귀는 회귀라는 이름이 붙어 있지만, 사실은 분류에 사용되는 선형 모형이다. 로지스틱 회귀는 매우 강력한 분류 알고리즘이다. <code>일반적으로 이진 분류 뿐만아니라 희소 영역의 분류, 예를 들어 텍스트 분류와 같은 영역에서 뛰어난 예측 성능을 보인다.</code></li>
+</ul>
+<p><img src="/image/regression_02.png" alt="단순 선형 회귀분석"></p>
+<h4 id="가정에서-잔차-epsilon-i-와-target-값인-Y가-정규분포를-따른다는-것이-중요하다"><a href="#가정에서-잔차-epsilon-i-와-target-값인-Y가-정규분포를-따른다는-것이-중요하다" class="headerlink" title="가정에서 잔차( $\epsilon_{i}$ )와 target 값인 Y가 정규분포를 따른다는 것이 중요하다."></a>가정에서 잔차( $\epsilon_{i}$ )와 target 값인 Y가 정규분포를 따른다는 것이 중요하다.</h4><p><img src="/image/regression_03.png" alt="단순 선형 회귀분석 - 01"></p>
+<h3 id="회귀-계수-추정"><a href="#회귀-계수-추정" class="headerlink" title="회귀 계수 추정"></a>회귀 계수 추정</h3><p><img src="/image/estimation_of_regression_coefficient.png" alt="단순 선형 회귀 계수 추정"></p>
+<p><img src="/image/why_square_sum.png" alt="단순 선형 회귀 계수 추정시 제곱합 형태로 추정하는 이유"></p>
+<p><img src="/image/estimation_of_regression_coefficient_01.png" alt="단순 선형 회귀 계수 추정"></p>
+<p><img src="/image/estimation_of_regression_coefficient_02.png" alt="단순 선형 회귀 계수 추정"></p>
+<p><img src="/image/estimation_of_regression_coefficient_03.png" alt="단순 선형 회귀 계수 추정"></p>
+<h3 id="회귀-계수의-의미"><a href="#회귀-계수의-의미" class="headerlink" title="회귀 계수의 의미"></a>회귀 계수의 의미</h3><p><img src="/image/mean_of_coefficient.png" alt="단순 선형 회귀계수의 해석"></p>
+<p><img src="/image/evaluation_of_regression.png" alt="단순 선형 회귀의 평가 metric"></p>
+<p><img src="/image/mean_of_residuals.png" alt="잔차의 의미"></p>
+<p><img src="/image/mean_of_residuals_01.png" alt="잔차의 의미"></p>
+<p><img src="/image/mean_of_residuals_02.png" alt="잔차의 의미"></p>
+<h3 id="회귀-계수의-검정"><a href="#회귀-계수의-검정" class="headerlink" title="회귀 계수의 검정"></a>회귀 계수의 검정</h3><p><img src="/image/check_of_coefficient.png" alt="단순 선형 회귀 계수의 검정"></p>
+<p><img src="/image/check_of_coefficient_01.png" alt="단순 선형 회귀 계수의 검정"></p>
+<p><img src="/image/check_of_coefficient_02.png" alt="단순 선형 회귀 계수의 검정"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Regression(01) - 회귀의 종류 및 회귀계수",
+        "image": "https://heung-bae-lee.github.io/image/what_is_regression.png",
+        "keywords": "",
+        "genre": "machine learning",
+        "datePublished": "2020-01-04",
+        "dateCreated": "2020-01-04",
+        "dateModified": "2020-03-24",
+        "url": "https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/",
+        "description": "회귀분석이란?
+
+지도 학습은 두 가지 유형으로 나뉘는데, 바로 분류(classification)와 회귀(regression)이다. 이 두 가지 기법의 가장 큰 차이는 분류는 예측값이 카테고리와 같은 이산형 클래스 값이고, 회귀는 연속형 숫자 값이라는 것이다.
+
+
+
+회귀(regression)은 현대 통계학을 떠받치고 있는 주요 기중 중 하나이다. 여러분이 회"
+        "wordCount": 738
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/01/07/NLP_00/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            NLP를 공부하는데 도움되는 사이트 모음
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/12/30/machine_learning_00/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">머신러닝의 개요</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/04/machine_learning_01/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

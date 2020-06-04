@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>NLP 실습 텍스트 유사도 - 01 (데이터 EDA 및 전처리) | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="텍스트 유사도 텍스트 유사도 문제한 두 문장(글)이 있을 때 두 문장 간의 유사도를 측정할 수 있는 모델을 만드는 것이다.  문제소개 데이터 이름 : Quora Question Pairs 텍스트 용도 : 텍스트 유사도 학습을 목적으로 사용 데이터 권한 : Quora 권한을 가지고 있으며 Kaggle 가입 후 데이터를 내려받으면 문제없다. 데이터 출처 : h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 실습 텍스트 유사도 - 01 (데이터 EDA 및 전처리)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/10/NLP_10/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="텍스트 유사도 텍스트 유사도 문제한 두 문장(글)이 있을 때 두 문장 간의 유사도를 측정할 수 있는 모델을 만드는 것이다.  문제소개 데이터 이름 : Quora Question Pairs 텍스트 용도 : 텍스트 유사도 학습을 목적으로 사용 데이터 권한 : Quora 권한을 가지고 있으며 Kaggle 가입 후 데이터를 내려받으면 문제없다. 데이터 출처 : h">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/quora_web_site.png">
+<meta property="og:updated_time" content="2020-02-10T18:28:10.695Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 실습 텍스트 유사도 - 01 (데이터 EDA 및 전처리)">
+<meta name="twitter:description" content="텍스트 유사도 텍스트 유사도 문제한 두 문장(글)이 있을 때 두 문장 간의 유사도를 측정할 수 있는 모델을 만드는 것이다.  문제소개 데이터 이름 : Quora Question Pairs 텍스트 용도 : 텍스트 유사도 학습을 목적으로 사용 데이터 권한 : Quora 권한을 가지고 있으며 Kaggle 가입 후 데이터를 내려받으면 문제없다. 데이터 출처 : h">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/quora_web_site.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/10/nlp_10/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-NLP_10" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        NLP 실습 텍스트 유사도 - 01 (데이터 EDA 및 전처리)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/02/10/NLP_10/" class="article-date">
+            <time datetime="2020-02-09T17:34:30.000Z" itemprop="datePublished">2020-02-10</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="텍스트-유사도"><a href="#텍스트-유사도" class="headerlink" title="텍스트 유사도"></a>텍스트 유사도</h1><ul>
+<li>텍스트 유사도 문제한 두 문장(글)이 있을 때 두 문장 간의 유사도를 측정할 수 있는 모델을 만드는 것이다.</li>
+</ul>
+<h2 id="문제소개"><a href="#문제소개" class="headerlink" title="문제소개"></a>문제소개</h2><ul>
+<li>데이터 이름 : Quora Question Pairs</li>
+<li>텍스트 용도 : 텍스트 유사도 학습을 목적으로 사용</li>
+<li>데이터 권한 : Quora 권한을 가지고 있으며 Kaggle 가입 후 데이터를 내려받으면 문제없다.</li>
+<li><p>데이터 출처 : <a href="https://www.kaggle.com/c/quora-question-pairs/data" target="_blank" rel="noopener">https://www.kaggle.com/c/quora-question-pairs/data</a></p>
+</li>
+<li><p>이번에도 Kaggle의 대회 중 하나를 해결해 보려고 한다. “Quora Questions Pairs”라는 문제를 해결해보도록 할 것이다. Quora는 질문을 하고 다른 사용자들로부터 답변을 받을 수 있는 서비스이다. 실제로 딥러닝 공뷰할 때도 Quora의 질문들은 참고하면서 많은 공부를 할 수 있다. Quora의 월 사용자는 대략 1억명 정도 된다. 매일 수 많은 질문들이 사이트에 올라올 텐데 이 많은 질문 중에는 분명히 중복된 것들이 포함될 것이다. 따라서 Quora 입장에서는 중복된 질문들을 잘 찾기만 한다면 이미 잘 작성된 답변들을 사용자들이 참고하게 할 수 있고, 더 좋은 서비스를 제공할 수 있게 된다.</p>
+</li>
+</ul>
+<h3 id="목표-여러-질문들-중에서-어떤-질문이-서로-유사한지-판단하는-모델을-만드는-것"><a href="#목표-여러-질문들-중에서-어떤-질문이-서로-유사한지-판단하는-모델을-만드는-것" class="headerlink" title="목표 : 여러 질문들 중에서 어떤 질문이 서로 유사한지 판단하는 모델을 만드는 것"></a>목표 : <code>여러 질문들 중에서 어떤 질문이 서로 유사한지 판단하는 모델을 만드는 것</code></h3><p><img src="/image/quora_web_site.png" alt="Quora"></p>
+<ul>
+<li>캐글 API를 colab에서 사용하기 위한 인증 및 google storage에 업로드 되어있는 인증키 파일 현재 colab pwd로 복사해온 후 설정완료하기</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from google.colab import auth</span><br><span class="line">import warnings</span><br><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format = <span class="string">'retina'</span></span><br><span class="line">warnings.filterwarnings(<span class="string">"ignore"</span>)</span><br><span class="line">auth.authenticate_user()</span><br><span class="line"></span><br><span class="line">!gsutil cp gs://kaggle_key/kaggle.json kaggle.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">!mkdir -p ~/.kaggle</span><br><span class="line">!mv ./kaggle.json ~/.kaggle/</span><br><span class="line">!chmod 600 ~/.kaggle/kaggle.json</span><br><span class="line">!pip install kaggle</span><br></pre></td></tr></table></figure>
+<h3 id="데이터-불러오기와-분석하기"><a href="#데이터-불러오기와-분석하기" class="headerlink" title="데이터 불러오기와 분석하기"></a>데이터 불러오기와 분석하기</h3><ul>
+<li>데이터를 내려받는 것부터 시작할 것이다. 필자는 Google colab에서 kaggle API를 통해 다운로드 받을 것이다. 아래 그림과 같은 error가 발생한다면 kaggle API Token파일을 다시 받지 말고 그 전에 먼저 해당 competition의 rule을 수락을 했는지를 확이해보아야 한다. <a href="https://www.kaggle.com/c/quora-question-pairs/rules" target="_blank" rel="noopener">https://www.kaggle.com/c/quora-question-pairs/rules</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!kaggle competitions download -c quora-question-pairs</span><br></pre></td></tr></table></figure>
+<p><img src="/image/text_similarity_kaggle_error.png" alt="캐글 error"></p>
+<p><img src="/image/text_similarity_kaggle_error_rule.png" alt="해당 competition rule 체크"></p>
+<ul>
+<li><p>해당 데이터가 잘 다운로드 됐는지 확인한다. 확인해 보면 다음과 같이 3가지 파일이 있을 것이다.</p>
+<ul>
+<li>sample_submission.csv.zip</li>
+<li>test.csv.zip</li>
+<li>train.csv.zip</li>
+</ul>
+</li>
+<li><p>총 3개의 파일이 zip 형식으로 압축된 형태다. 이 파일들의 압축을 풀어주는 과정까지 할 것이다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import zipfile</span><br><span class="line"></span><br><span class="line">DATA_IN_PATH = <span class="string">'/content/'</span></span><br><span class="line">zip_list=[<span class="string">'sample_submission.csv.zip'</span>, <span class="string">'test.csv.zip'</span>, <span class="string">'train.csv.zip'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> zip_list:</span><br><span class="line">  zipRef = zipfile.ZipFile(DATA_IN_PATH + file, <span class="string">'r'</span>)</span><br><span class="line">  zipRef.extractall(DATA_IN_PATH)</span><br><span class="line">  zipRef.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>본격적으로 데이터를 불러온 후 데이터 분석을 해보기 위해 필요한 라이브러리들을 모두 Import 할 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import pandas as pd</span><br><span class="line">import os</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import seaborn as sns</span><br><span class="line">import pathlib as Path</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<ul>
+<li>가장 먼저 학습 데이터를 불러와서 어떤 형태로 데이터가 구성돼 있는지 확인해 볼 것이다.</li>
+</ul>
+<ul>
+<li>데이터는 ‘id’, ‘qid1’, ‘qid2’, ‘question1’, ‘question2’, ‘is_duplicate’열로 구성돼 있다. 각각의 description은 아래와 같다.<ul>
+<li>id : 각 행 데이터의 고유한 index 값</li>
+<li>qid1 : 질문들의 고유한 index 값</li>
+<li>qid2 : 질문들의 고유한 index 값</li>
+<li>question1 : 질문의 내용</li>
+<li>question2 : 질문의 내용</li>
+<li>is_duplicate : 0 또는 1(0이면 두 개의 질문이 중복이 아님을 의미, 1이면 두 개의 질문이 중복을 의미)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data = pd.read_csv(DATA_IN_PATH + <span class="string">'train.csv'</span>)</span><br><span class="line">train_data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/top_five_train_data_Quora.png" alt="학습 데이터 상위 5개"></p>
+<ul>
+<li>사용할 데이터가 어떤 데이터이고, 크기는 어느 정도 되는지 알아보기 위해 데이터 파일의 이름과 크기를 각각 출력해서 확인해 볼 것이다.</li>
+</ul>
+<ul>
+<li>대부분 train data가 test data 보다 크기가 큰데, 이 데이터는 test data가 train data 보다 5배 정도 더 큰 것을 알 수 있다. test data가 큰 이유는 Quora의 경우 질문에 대해 데이터의 수가 적다면 각각을 검색을 통해 중복을 찾아내는 편볍을 사용할 수 있으므로 이러한 편법을 방지하기 위해 Quora에서 직접 컴퓨터가 만든 질문 싸을 test data에 임의적으로 추가했기 때문이다. 따라서 test data가 크지만 실제 question data는 얼마 되지 않는다. 그리고 Kaggle의 경우 예측 결과를 제출하면 점수를 받을 수 있는데, 컴퓨터가 만든 질문 쌍에 대한 예측은 점수에 포함도지 않는다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">'파일 크기: '</span>)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(DATA_IN_PATH):</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'csv'</span> <span class="keyword">in</span> file) and (<span class="string">'zip'</span> not <span class="keyword">in</span> file):</span><br><span class="line">    <span class="built_in">print</span>(file.ljust(30) + str(round(os.path.getsize(DATA_IN_PATH + file) / 1000000, 2)) + <span class="string">'MB'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">파일 크기:</span><br><span class="line">test.csv                      314.02MB</span><br><span class="line">sample_submission.csv         22.35MB</span><br><span class="line">train.csv                     63.4MB</span><br></pre></td></tr></table></figure>
+<ul>
+<li>전체 데이터의 개수와 학습 데이터안의 NULL값이 존재하는지 먼저 확인 할 것이다.</li>
+</ul>
+<ul>
+<li>결과를 보면 전체 질문 쌍의 개수는 대략 40만개이며 3개의 데이터에 NULL값이 존재한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data.info()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;class <span class="string">'pandas.core.frame.DataFrame'</span>&gt;</span><br><span class="line">RangeIndex: 404290 entries, 0 to 404289</span><br><span class="line">Data columns (total 6 columns):</span><br><span class="line">id              404290 non-null int64</span><br><span class="line">qid1            404290 non-null int64</span><br><span class="line">qid2            404290 non-null int64</span><br><span class="line">question1       404289 non-null object</span><br><span class="line">question2       404288 non-null object</span><br><span class="line">is_duplicate    404290 non-null int64</span><br><span class="line">dtypes: int64(4), object(2)</span><br><span class="line">memory usage: 18.5+ MB</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>전체 질문(두 개의 질문)을 한번에 분석하기 위해 Pandas의 Series를 통해 두 개의 질문을 하나로 합친다.</p>
+</li>
+<li><p>각 질문을 list로 만든 뒤 하나의 Series 데이터 타입으로 만든다. 결과를 보면 아래와 같은 구조로 합쳐졌다. 기존 데이터에서 질문 쌍의 수가 40만개 정도이고 각각 질문이 2개 이므로 대략 80만개 정도의 질문이 있다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_set = pd.Series(train_data[<span class="string">'question1'</span>].to_list() + train_data[<span class="string">'question2'</span>].to_list()).astype(str)</span><br><span class="line">train_set.tail()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이제 질문들의 중복 여부를 확인해 볼 것이다. Numpy의 unique함수를 이용해 중복을 제거한 총 질문의 수와 반복해서 나오는 질문의 수를 확인한다.</li>
+</ul>
+<ul>
+<li>결과를 보면 80만 개의 데이터에서 537,361건이 Unique한 데이터이므로 262,639건이 중복돼 있음을 알 수 있다. 그러므로 262,639개 데이터는 131,318개의 동일한 질문 쌍으로 이루어져 있음을 알 수 있다.(1쌍은 NULL값이고, 1쌍은 값이 하나만 존재하므로)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">'교육 데이터의 총 질문 수 : &#123;&#125; 건'</span>.format(len(np.unique(train_set))))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'반복해서 나타나는 질문의 수 : &#123;&#125; 건'</span>.format(np.sum(train_set.value_counts() &gt; 1)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">교육 데이터의 총 질문 수 : 537361 건</span><br><span class="line">반복해서 나타나는 질문의 수 : 111873 건</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위의 결과를 시각화 해 볼 것이다. y축의 범위를 줄이기 위해 log을 사용했다. x값은 중복의 개수이며, y값은 동일한 중복 횟수를 가진 질문의 개수를 의미한다.</li>
+</ul>
+<ul>
+<li>histogram을 살펴보면 우선 중복 횟수가 1인 질문들, 즉 유일한 질문들이 가장 많고 대부분의 질문이 중복 횟수가 50번 이하이다. 그리고 매우 큰 빈도를 가진 질문은 이상치가 될 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12,5))</span><br><span class="line">plt.hist(train_set.value_counts(), bins=50, alpha=0.5, color=<span class="string">'r'</span>, label=<span class="string">'word'</span>)</span><br><span class="line">plt.yscale(<span class="string">'log'</span>, nonposy=<span class="string">'clip'</span>)</span><br><span class="line">plt.title(<span class="string">'Log-Histogram of question appearance counts'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Number of questions'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/histogram_of_question_appearance_counts_Quora.png" alt="중복 질문의 개수에 관한 histogram"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">'교육 데이터의 총 질문 수 : &#123;&#125; 건'</span>.format(len(np.unique(train_set))))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">교육 데이터의 총 질문 수 : 537361 건</span><br></pre></td></tr></table></figure>
+<ul>
+<li>중복이 최대로 발생한 개수는 161번이고, 평균적으로 보면 문장당 1.5개의 중복을 가지며, 표준편차는 1.9다. 중복이 발생하는 횟수의 평균이 1.5라는 것은 많은 데이터가 최소 1개 이상 중복돼 있음을 의미한다. 즉 <code>중복이 많다는 의미</code>이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_set.value_counts().describe()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">count    537361.000000</span><br><span class="line">mean          1.504724</span><br><span class="line">std           1.911439</span><br><span class="line">min           1.000000</span><br><span class="line">25%           1.000000</span><br><span class="line">50%           1.000000</span><br><span class="line">75%           1.000000</span><br><span class="line">max         161.000000</span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>이제 box plot을 통해 중복횟수와 관련해서 데이터를 직관적으로 이해해 보자.</p>
+</li>
+<li><p>아래의 분포는 중복 횟수의 이상치가 너무 넓고 많이 분포해서 box plot의 다른 값을 확인하기조차 어려운 데이터이다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12, 5))</span><br><span class="line">plt.boxplot([train_set.value_counts()],</span><br><span class="line">            labels=[<span class="string">'counts'</span>],</span><br><span class="line">            showmeans=True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/box_plot_Quora.png" alt="중복 질문의 개수에관한 box plot"></p>
+<ul>
+<li>데이터에 어떤 단어가 포함됐는지 간단히 알아보기 위해 워드클라우드를 사용할 것이다.</li>
+</ul>
+<ul>
+<li>워드 클라우드로 그려진 결과를 확인해 보면 best, way, good, difference 등의 단어들이 질문을 할 때 일반적으로 가장 많이 사용된다는 것을 알 수 있다. 특이한 점은 해당 결과에서 ‘Donald Trump’가 존재하는 것이다. ‘Donald Trump’가 존재하는 이유는 선거 기간 중 학습 데이터를 만들었기 때문이라고 많은 캐글러들이 말하고 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from wordcloud import WordCloud</span><br><span class="line">cloud = WordCloud(width=700, height=400).generate(<span class="string">' '</span>.join(train_set.astype(str)))</span><br><span class="line">plt.figure(figsize=(15,13))</span><br><span class="line">plt.imshow(cloud)</span><br><span class="line">plt.axis(<span class="string">'off'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/word_cloud_Quora.png" alt="Quora 학습데이터 워드 클라우드"></p>
+<ul>
+<li>질문 텍스트가 아닌 데이터의 라벨인 ‘is_duplicate’에 대해 count plot을 통해 살펴볼 것이다.</li>
+</ul>
+<ul>
+<li>라벨값의 개수를 확인해 보면 총 40만 개의 데이터에서 중복이 아닌 데이터가 25만개 정도이고 중복된 데이터가 약 15만개 정도로 보인다. <code>이 상태로 학습한다면 중복이 아닌 데이터 25만개에 의존도가 높아지면서 데이터가 한쪽 라벨로 편향된다. 이러한 경우 학습이 원활하게 되지 않을 수도 있으므로 최대한 라벨의 개수를 균형 있게 맞춰준 후 진행하는 것이 좋다. 많은 수의 데이터를 줄인 후 학습할 수도 있고, 적은 수의 데이터를 늘린 후 학습할 수도 있다.</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fig, axe = plt.subplots(ncols=1)</span><br><span class="line">fig.set_size_inches(10, 5)</span><br><span class="line">sns.countplot(train_data[<span class="string">'is_duplicate'</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/label_count_plot_Quora.png" alt="라벨값의 분포"></p>
+<ul>
+<li>학습 데이터의 길이를 분석해 볼 것이다. 문자단위로 먼저 길이를 분석한 후 단어 단위로 분석 할 것이다.</li>
+</ul>
+<ul>
+<li>데이터의 각 질문의 길이 분포는 15 ~ 150에 대부분 모여 있으며 길이가 150에서 급격하게 주어드는 것을 볼 때 Quora의 질문 길이 제한이 150 정도라는 것을 추정해 볼 수 있다. 길이가 150 이상인 데이터는 거의 없기 때문에 해당 데이터 때문에 문제가 되지는 않을 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">train_length = train_set.apply(len)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(15, 10))</span><br><span class="line">plt.hist(train_length, bins=200, range=[0, 200], facecolor=<span class="string">'r'</span>, normed=True, label=<span class="string">'train'</span>)</span><br><span class="line">plt.title(<span class="string">'Normalized histogram of chracter count in questions'</span>, fontsize=15)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlabel(<span class="string">'Number of characters'</span>, fontsize=15)</span><br><span class="line">plt.ylabel(<span class="string">'Probability'</span>, fontsize=15)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/char_histogram_with_Quora.png" alt="문자 단위 질문 길이에 관한 histogram"></p>
+<ul>
+<li>그에 따른 기초 통계량은 다음과 같으며, <code>평균적으로 길이가 60 정도라는 것을 확인할 수 있다. 그리고 중앙값의 경우 51 정도이다. 하지만 최댓값을 확인해 보면 1169로서 평균, 중앙값에 비해 매우 큰 차이를 보인다. 이런 데이터는 제외하고 학습하는 것이 좋을 것</code>이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_length.describe()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">count    808580.000000</span><br><span class="line">mean         59.822548</span><br><span class="line">std          31.963751</span><br><span class="line">min           1.000000</span><br><span class="line">25%          39.000000</span><br><span class="line">50%          51.000000</span><br><span class="line">75%          72.000000</span><br><span class="line">max        1169.000000</span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure>
+<ul>
+<li>데이터의 질문 길이값에 대해서도 box plot을 그려서 확인해 볼 것이다.</li>
+</ul>
+<ul>
+<li>분포를 보면 문자 수의 이상치 데이터가 너무 많이 분포해서 box plot의 다른 값을 확인하기 조차 어려운 상태다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12, 5))</span><br><span class="line">plt.boxplot(train_length, labels=[<span class="string">'char counts'</span>], showmeans=True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/char_box_plot_with_Quora.png" alt="문자 단위 길이 box plot"></p>
+<ul>
+<li>이제 문자가 아닌 단어를 한 단위로 사용해 길이값을 분석해 볼 것이다. 하나의 단어로 나누는 기준은 단순히 띄어쓰기로 정의할 것이다.</li>
+</ul>
+<ul>
+<li>histogram을 보면 대부분 10개 정도의 단어로 구성된 데이터가 가장 많다는 것을 볼 수 있다. 20개 이상의 단어로 구성되 데이터는 매우 적다는 것을 확인할 수 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">train_word_counts = train_set.apply(lambda x: len(x.split(<span class="string">' '</span>)))</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(15, 10))</span><br><span class="line">plt.hist(train_word_counts, bins=50, range=[0, 50], color=<span class="string">'r'</span>, label=<span class="string">'train'</span>, normed=True)</span><br><span class="line">plt.title(<span class="string">'Normalized histogram of word count in one question'</span>, fontsize=15)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlabel(<span class="string">'Number of Words'</span>, fontsize=15)</span><br><span class="line">plt.ylabel(<span class="string">'Probability'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/word_count_histogram_with_Quora.png" alt="질문 당 단어 단위 길이 histogram"></p>
+<ul>
+<li>그에 따른 기초통계량을 살펴볼 것이다.</li>
+</ul>
+<ul>
+<li>데이터의 문자 단위 길이를 확인했을 때와 비슷한 분포를 갖는다. 평균 개수의 경우 11개이며, 중앙값의 경우 평균 보다 1개 적은 10개를 갖는다. 문자 길이의 최댓값인 경우 1100 정도의 값을 보인다. 단어 길이는 최대 237개이다. 해당 데이터의 경우 지나치게 긴 문자 길이와 단어 개수를 보여준다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_word_counts.describe()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">count    808580.000000</span><br><span class="line">mean         11.064856</span><br><span class="line">std           5.889168</span><br><span class="line">min           1.000000</span><br><span class="line">25%           7.000000</span><br><span class="line">50%          10.000000</span><br><span class="line">75%          13.000000</span><br><span class="line">max         237.000000</span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.quantile(train_word_counts, 0.99)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">31.0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>box plot을 통해 데이터 분포를 다시 한번 확인해보자.</li>
+</ul>
+<ul>
+<li>문자 길이에 대한 box plot과 비슷한 모양의 그래프를 보여준다. Quora 데이터의 경우 이상치가 넓고 많이 분포 돼 있음을 알 수 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12, 5))</span><br><span class="line">plt.boxplot(train_word_counts, labels=[<span class="string">'word counts'</span>], showmeans=True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/word_count_boxplot_with_Quora.png" alt="질문 당 단어 단위 길이 box plot"></p>
+<ul>
+<li>몇 가지 특정 경우에 대한 비율을 확인해 볼 것이다. 특수 문자 중 구두점, 물음표, 마침표가 사용된 비율과 수학 기호가 사용된 비율, 대/소문자의 비율을 확인해 본다.</li>
+</ul>
+<ul>
+<li>대문자가 첫 글자인 질문과 물음표를 동반하는 질문이 99% 이상을 차지한다. 전체적으로 질문들이 물음표와 대문자로 된 첫 문자를 가지고 있음을 알 수 있다. 그럼 여기서 생각해 볼 부분이 있다. <code>즉, 모든 질문이 보편적으로 가지고 있는 이 특징의 유지 여부에 대해서인데, 모두가 가지고 있는 보편적인 특징은 여기서 제거한다.</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">qmarks = np.mean(train_set.apply(lambda x : <span class="string">'?'</span> <span class="keyword">in</span> x))</span><br><span class="line">math = np.mean(train_set.apply(lambda x : <span class="string">'[math]'</span> <span class="keyword">in</span> x))</span><br><span class="line">fullstop = np.mean(train_set.apply(lambda x : <span class="string">'.'</span> <span class="keyword">in</span> x))</span><br><span class="line">capital_first = np.mean(train_set.apply(lambda x : x[0].isupper()))</span><br><span class="line">capitals = np.mean(train_set.apply(lambda x : max([y.isupper() <span class="keyword">for</span> y <span class="keyword">in</span> x]))) <span class="comment"># 대문자가 사용된 질문이 몇 개인지</span></span><br><span class="line">numbers = np.mean(train_set.apply(lambda x : max([y.isdigit() <span class="keyword">for</span> y <span class="keyword">in</span> x]))) <span class="comment"># 숫자가 사용된 질문이 몇 개인지</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'물음표가 있는 질문: &#123;:.2f&#125;%'</span>.format(qmarks * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'수학 태그가 있는 질문: &#123;:.2f&#125;%'</span>.format(math * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'마침표가 있는 질문: &#123;:.2f&#125;%'</span>.format(fullstop * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'첫 글자가 대문자인 질문: &#123;:.2f&#125;%'</span>.format(capital_first * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'대문자가 있는 질문: &#123;:.2f&#125;%'</span>.format(capitals * 100))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'숫자가 있는 질문: &#123;:.2f&#125;%'</span>.format(numbers * 100))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">물음표가 있는 질문: 99.87%</span><br><span class="line">수학 태그가 있는 질문: 0.12%</span><br><span class="line">마침표가 있는 질문: 6.31%</span><br><span class="line">첫 글자가 대문자인 질문: 99.81%</span><br><span class="line">대문자가 있는 질문: 99.95%</span><br><span class="line">숫자가 있는 질문: 11.83%</span><br></pre></td></tr></table></figure>
+<h3 id="데이터-전처리"><a href="#데이터-전처리" class="headerlink" title="데이터 전처리"></a>데이터 전처리</h3><ul>
+<li>지금까지 데이터 EDA(탐색적 데이터 분석)를 통해 데이터의 구조와 분포를 확인했다. <code>질문 데이터의 중복 여부 분포, 즉 라벨의 분포가 크게 차이나서 학습에 편향을 주므로 좋지 않은 영향을 줄 수 있다. 따라서 전처리 과정에서 분포를 맞춰줄 것이다. 그리고 대부분의 질문에 포함된 첫 번째 대문자는 소문자로 통일한다. 물음표 같은 구두점은 삭제하는 식으로 보편적인 특성은 제거함으로써 필요한 부분만 학습하게 하는 이점을 얻을 수 있다.</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">from tensorflow.python.keras.preprocessing.text import Tokenizer</span><br><span class="line">from tensorflow.python.keras.preprocessing.sequence import pad_sequences</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DATA_IN_PATH = <span class="string">'/content/'</span></span><br><span class="line"></span><br><span class="line">train_data = pd.read_csv(DATA_IN_PATH + <span class="string">'train.csv'</span>, encoding=<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>맨 먼저 진행할 전처리 과정은 앞서 분석 과정에서 확인했던 내용 중 하나인 <code>라벨 개수의 균형을 맞추는 것</code>이다. 앞서 분석 과정에서 확인했듯이 중복이 아닌 데이터의 개수가 더욱 많기 때문에 이 경우에 해당하는 데이터의 개수를 줄인 후 분석을 진행하겠다. 먼저 중복인 경우와 아닌 경우로 데이터를 나눈 후 중복이 아닌 개수가 비슷하도록 데이터의 일부를 다시 뽑는다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">train_duplicate_data = train_data.loc[train_data[<span class="string">'is_duplicate'</span>]==1]</span><br><span class="line">train_non_duplicate_data = train_data.loc[train_data[<span class="string">'is_duplicate'</span>]==0]</span><br><span class="line"></span><br><span class="line">class_difference = len(train_non_duplicate_data) - len(train_duplicate_data)</span><br><span class="line">sample_frac = 1 - (class_difference / len(train_non_duplicate_data))</span><br><span class="line"></span><br><span class="line">train_non_duplicate_data = train_non_duplicate_data.sample(frac = sample_frac)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>샘플링한 후 데이터의 개수가 동일해졌다. 이제 해당 데이터를 사용하먄 균형 있게 학습할 수 있을 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">"중복 질문 개수 : &#123;&#125; 건"</span>.format(len(train_duplicate_data)))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"중복이 아닌 질문 개수 : &#123;&#125; 건"</span>.format(len(train_non_duplicate_data)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">중복 질문 개수 : 149263 건</span><br><span class="line">중복이 아닌 질문 개수 : 149263 건</span><br></pre></td></tr></table></figure>
+<ul>
+<li>우선 라벨에 따라 나눠진 데이터를 다시 하나로 합치자.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data = pd.concat([train_non_duplicate_data, train_duplicate_data])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>앞서 전처리에서 분석한 대로 문장 문자열에 대한 전처리를 먼저 진행한다. 우선 학습 데이터의 질문 쌍을 하나의 질문 리스트로 만들고, 정규 표현식을 사용해 물음표와 마침표 같은 구두점 및 기호를 제거하고 모든 문자를 소문자로 바꾸는 처리를 한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data.head()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>물음표와 마침표 같은 기호에 대해 정규 표현식을 사용하여 전처리하기 위해 re 라이브러리를 활용한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">FILTERS = <span class="string">"([~.,!?\"':;)(])"</span></span><br><span class="line"></span><br><span class="line">change_filter = re.compile(FILTERS)</span><br><span class="line"></span><br><span class="line">questions1 = [str(s) <span class="keyword">for</span> s <span class="keyword">in</span> train_data[<span class="string">'question1'</span>]]</span><br><span class="line">questions2 = [str(s) <span class="keyword">for</span> s <span class="keyword">in</span> train_data[<span class="string">'question2'</span>]]</span><br><span class="line"></span><br><span class="line">filtered_questions1 = []</span><br><span class="line">filtered_questions2 = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> q <span class="keyword">in</span> questions1:</span><br><span class="line">  filtered_questions1.append(re.sub(change_filter, <span class="string">""</span>, q).lower())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> q <span class="keyword">in</span> questions2:</span><br><span class="line">  filtered_questions2.append(re.sub(change_filter, <span class="string">""</span>, q).lower())</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이제 남은 과정은 정제된 위의 텍스트 테이터를 토크나이징하고 각 단어를 인덱스로 바꾼 후, 전체 데이터의 길이를 맞추기 위해 정의한 최대 길이보다 긴 문장은 자르고 짧은 문장은 패딩 처리를 하는 것이다. 문자열 토크나이징은 tensorflow keras에서 제공하는 NLP Processing 모듈을 활용한다.<code>객체를 만들 때는 두 질문 텍스트를 합친 리스트에 적용하고, 토크나이징은 해당 객체를 활용해 각 질문에 대해 따로 진행할 것이다. 이러한 방법은 두 질문에 대해 동일한 토크나이징 방식을 사용해야하며, 두 질문을 합친 전체 vocabulary를 만들어야 하기 때문이다.</code> 토크나이징 이후에는 패딩 처리를 한 벡터화를 진행할 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tokenizer = Tokenizer()</span><br><span class="line">tokenizer.fit_on_texts(filtered_questions1 + filtered_questions2)</span><br><span class="line"></span><br><span class="line">questions1_sequence = tokenizer.texts_to_sequences(filtered_questions1)</span><br><span class="line">questions2_sequence = tokenizer.texts_to_sequences(filtered_questions2)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>이제 모델에 적용하기 위해 특정 길이로 동일하게 맞춰야 한다. 따라서 최대 길이를 정한 후 그 길이보다 긴 질문은 자르고, 짧은 질문은 부족한 부분을 0으로 채우는 패딩 과정을 진행 할 것이다.</p>
+</li>
+<li><p>최대 길이는 앞서 EDA에서 확인했던 단어 개수의 99%인 31로 설정했다. 이렇게 설정한 이유는 이상치를 뺀 나머지를 포함하기 위해서이다.(다양한 값으로 실험했을 때 이 값이 가장 좋은 값이었다.) 전처리 모듈의 패딩 함수를 사용해 최대 길이로 자르고 짧은 데이터에 대해서는 데이터 뒤에 패딩값을 채워넣었다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MAX_SEQUENCE_LENGTH = 31</span><br><span class="line"></span><br><span class="line">q1_data = pad_sequences(questions1_sequence, maxlen=MAX_SEQUENCE_LENGTH, padding=<span class="string">'post'</span>)</span><br><span class="line">q2_data = pad_sequences(questions2_sequence, maxlen=MAX_SEQUENCE_LENGTH, padding=<span class="string">'post'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>전처리가 끝난 데이터를 저장한다. 저장하기 전에 라벨값과 단어 사전을 저장하기 위해 값을 저장한 후 각 데이터의 크기를 확인해 보자. 두 개의 질문 문장의 경우 각각 길이를 31로 설정했고, vocabulary의 길이인 전체 단어 개수는 76,594개로 돼 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">word_vocab = &#123;&#125;</span><br><span class="line">word_vocab = tokenizer.word_index</span><br><span class="line"></span><br><span class="line">labels = np.array(train_data[<span class="string">'is_duplicate'</span>], dtype=int)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Shape of question1 data : &#123;&#125;'</span>.format(q1_data.shape))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Shape of question2 data : &#123;&#125;'</span>.format(q2_data.shape))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Shape of question1 data : &#123;&#125;'</span>.format(labels.shape))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Words in index : &#123;&#125;'</span>.format(len(word_vocab)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Shape of question1 data : (298526, 31)</span><br><span class="line">Shape of question2 data : (298526, 31)</span><br><span class="line">Shape of question1 data : (298526,)</span><br><span class="line">Words <span class="keyword">in</span> index : 76594</span><br></pre></td></tr></table></figure>
+<ul>
+<li>단어 사전과 전체 단어의 개수는 dictionary 형태로 저장해 둘 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_configs = &#123;&#125;</span><br><span class="line">data_configs[<span class="string">'vocab'</span>] = word_vocab</span><br><span class="line">data_configs[<span class="string">'vocab_size'</span>] = len(word_vocab)+1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이제 각 데이터를 모델링 과정에서 사용할 수 있게 저장하면 된다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">TRAIN_Q1_DATA = <span class="string">'q1_train.npy'</span></span><br><span class="line">TRAIN_Q2_DATA = <span class="string">'q2_train.npy'</span></span><br><span class="line">TRAIN_LABEL_DATA = <span class="string">'label_train.npy'</span></span><br><span class="line">DATA_CONFIGS = <span class="string">'data_configs.npy'</span></span><br><span class="line"></span><br><span class="line">np.save(open(DATA_IN_PATH + TRAIN_Q1_DATA, <span class="string">'wb'</span>), q1_data)</span><br><span class="line">np.save(open(DATA_IN_PATH + TRAIN_Q2_DATA, <span class="string">'wb'</span>), q2_data)</span><br><span class="line">np.save(open(DATA_IN_PATH + TRAIN_LABEL_DATA, <span class="string">'wb'</span>), labels)</span><br><span class="line"></span><br><span class="line">json.dump(data_configs, open(DATA_IN_PATH + DATA_CONFIGS, <span class="string">'w'</span>))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>이제 평가 데이터에 대해서도 동일한 전처리를 실행해줄 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test_data = pd.read_csv(DATA_IN_PATH + <span class="string">'test.csv'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">valid_ids = [<span class="built_in">type</span>(x) == int <span class="keyword">for</span> x <span class="keyword">in</span> test_data.test_id]</span><br><span class="line">test_data = test_data[valid_ids].drop_duplicates()</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">test_questions1 = [str(s) <span class="keyword">for</span> s <span class="keyword">in</span> test_data[<span class="string">'question1'</span>]]</span><br><span class="line">test_questions2 = [str(s) <span class="keyword">for</span> s <span class="keyword">in</span> test_data[<span class="string">'question2'</span>]]</span><br><span class="line"></span><br><span class="line">filtered_test_questions1 = list()</span><br><span class="line">filtered_test_questions2 = list()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> q <span class="keyword">in</span> test_questions1:</span><br><span class="line">     filtered_test_questions1.append(re.sub(change_filter, <span class="string">""</span>, q).lower())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> q <span class="keyword">in</span> test_questions2:</span><br><span class="line">     filtered_test_questions2.append(re.sub(change_filter, <span class="string">""</span>, q).lower())</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test_questions1_sequence = tokenizer.texts_to_sequences(filtered_test_questions1)</span><br><span class="line">test_questions2_sequence = tokenizer.texts_to_sequences(filtered_test_questions2)</span><br><span class="line"></span><br><span class="line">test_q1_data = pad_sequences(test_questions1_sequence, maxlen=MAX_SEQUENCE_LENGTH, padding=<span class="string">'post'</span>)</span><br><span class="line">test_q2_data = pad_sequences(test_questions2_sequence, maxlen=MAX_SEQUENCE_LENGTH, padding=<span class="string">'post'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test_id = np.array(test_data[<span class="string">'test_id'</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Shape of question1 data: &#123;&#125;'</span>.format(test_q1_data.shape))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Shape of question2 data:&#123;&#125;'</span>.format(test_q2_data.shape))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Shape of ids: &#123;&#125;'</span>.format(test_id.shape))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TEST_Q1_DATA = <span class="string">'test_q1.npy'</span></span><br><span class="line">TEST_Q2_DATA = <span class="string">'test_q2.npy'</span></span><br><span class="line">TEST_ID_DATA = <span class="string">'test_id.npy'</span></span><br><span class="line"></span><br><span class="line">np.save(open(DATA_IN_PATH + TEST_Q1_DATA, <span class="string">'wb'</span>), test_q1_data)</span><br><span class="line">np.save(open(DATA_IN_PATH + TEST_Q2_DATA , <span class="string">'wb'</span>), test_q2_data)</span><br><span class="line">np.save(open(DATA_IN_PATH + TEST_ID_DATA , <span class="string">'wb'</span>), test_id)</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "NLP 실습 텍스트 유사도 - 01 (데이터 EDA 및 전처리)",
+        "image": "https://heung-bae-lee.github.io/image/quora_web_site.png",
+        "keywords": "",
+        "genre": "NLP",
+        "datePublished": "2020-02-10",
+        "dateCreated": "2020-02-10",
+        "dateModified": "2020-02-11",
+        "url": "https://heung-bae-lee.github.io/2020/02/10/NLP_10/",
+        "description": "텍스트 유사도
+텍스트 유사도 문제한 두 문장(글)이 있을 때 두 문장 간의 유사도를 측정할 수 있는 모델을 만드는 것이다.
+
+문제소개
+데이터 이름 : Quora Question Pairs
+텍스트 용도 : 텍스트 유사도 학습을 목적으로 사용
+데이터 권한 : Quora 권한을 가지고 있으며 Kaggle 가입 후 데이터를 내려받으면 문제없다.
+데이터 출처 : h"
+        "wordCount": 3454
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/02/11/NLP_11/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            NLP 실습 텍스트 유사도 - 02 (XGBoost, 1D-CNN, MaLSTM)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/02/08/NLP_09/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">NLP 문장 수준 임베딩 - 02</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/10/NLP_10/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

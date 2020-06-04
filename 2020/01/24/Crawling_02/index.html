@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Scrapy 웹 크롤링 03 - Exports, Settings, pipeline | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Exports 우리가 실행후 크롤링한 데이터를 저장하는 path를 실행할때마다 지정하거나 실행했는데, 일종의 template같이 미리 만들어 놓을 수 있는 기능이 Exports이다.  Exports 참조 사이트 : https://docs.scrapy.org/en/latest/topics/feed-exports.html   1234# 아래 2가지 방법은 동일">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy 웹 크롤링 03 - Exports, Settings, pipeline">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/24/Crawling_02/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Exports 우리가 실행후 크롤링한 데이터를 저장하는 path를 실행할때마다 지정하거나 실행했는데, 일종의 template같이 미리 만들어 놓을 수 있는 기능이 Exports이다.  Exports 참조 사이트 : https://docs.scrapy.org/en/latest/topics/feed-exports.html   1234# 아래 2가지 방법은 동일">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/spider_result_01.png">
+<meta property="og:updated_time" content="2020-01-27T16:05:56.552Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scrapy 웹 크롤링 03 - Exports, Settings, pipeline">
+<meta name="twitter:description" content="Exports 우리가 실행후 크롤링한 데이터를 저장하는 path를 실행할때마다 지정하거나 실행했는데, 일종의 template같이 미리 만들어 놓을 수 있는 기능이 Exports이다.  Exports 참조 사이트 : https://docs.scrapy.org/en/latest/topics/feed-exports.html   1234# 아래 2가지 방법은 동일">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/spider_result_01.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/24/crawling_02/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/crawling/">crawling</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-Crawling_02" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Scrapy 웹 크롤링 03 - Exports, Settings, pipeline
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/24/Crawling_02/" class="article-date">
+            <time datetime="2020-01-23T16:56:11.000Z" itemprop="datePublished">2020-01-24</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="Exports"><a href="#Exports" class="headerlink" title="Exports"></a>Exports</h2><ul>
+<li><p>우리가 실행후 크롤링한 데이터를 저장하는 path를 실행할때마다 지정하거나 실행했는데, 일종의 template같이 미리 만들어 놓을 수 있는 기능이 <code>Exports</code>이다.</p>
+</li>
+<li><p>Exports 참조 사이트 : <a href="https://docs.scrapy.org/en/latest/topics/feed-exports.html" target="_blank" rel="noopener">https://docs.scrapy.org/en/latest/topics/feed-exports.html</a></p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 아래 2가지 방법은 동일한 방법이다.</span></span><br><span class="line">scrapy runspider using_items.py -o test.json -t json</span><br><span class="line"></span><br><span class="line">scrapy runspider using_items.py --output test.json --output-format json</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>위에서와 같이 크롤링을 할 경우에 명령어를 통해 결과의 형식과 파일 이름을 지정해주는 것과 다르게 <code>Settings.py에서 미리 지정하여 사용할 수 있다.</code> 커맨드라인에서도 가능하지만, 모든 테스트를 다 거친 후 확정적으로 사용할 것이라면, settings.py에서 변수설정을 하는 것이 더 좋다.</p>
+</li>
+<li><p>우리가 크롤링할 사이트 <a href="https://globalvoices.org/" target="_blank" rel="noopener">https://globalvoices.org/</a> 사이트의 기사들의 제목만을 크롤링 할 것이다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line"><span class="comment"># Scrapy 환경설정</span></span><br><span class="line"><span class="comment"># 중요</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 실행방법</span></span><br><span class="line"><span class="comment"># 1.커맨드 라인 실행 -&gt; scrapy crawl 크롤러명 -s(--set) &lt;NAME&gt;=&lt;VALUE&gt;</span></span><br><span class="line"></span><br><span class="line">class ScrapyWithSettingsSpider(scrapy.Spider):</span><br><span class="line">    name = <span class="string">'scrapy_with_settings'</span></span><br><span class="line">    allowed_domains = [<span class="string">'globalvoices.org'</span>]</span><br><span class="line">    start_urls = [<span class="string">'https://globalvoices.org/'</span>]</span><br><span class="line"></span><br><span class="line">    def parse(self, response):</span><br><span class="line">        <span class="comment"># 아래 3가지는 동일한 결과를 보여주는 코드</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># response.css('#main &gt; div.post-archive-container &gt; div#post-archive div.dategroup div.post-excerpt-container &gt; h3 &gt; a::text').getall()</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># response.xpath('//*[@id="post-archive"]//div[@class="dategroup"]//div[@class="post-summary-content"]//div[@class="post-excerpt-container"]/h3/a/text()').getall()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment"># xpath + css 혼합</span></span><br><span class="line">        <span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(response.xpath(<span class="string">'//div[@class="post-summary-content"]'</span>).css(<span class="string">'div.post-excerpt-container &gt; h3 &gt; a::text'</span>).extract(),1):</span><br><span class="line">            <span class="comment"># 인덱스 번호, 헤드라인</span></span><br><span class="line">            yield dict(num=i, headline=v)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/spider_result_01.png" alt="최종 spider"></p>
+<h3 id="settings-py에서-export하는-변수-설정"><a href="#settings-py에서-export하는-변수-설정" class="headerlink" title="settings.py에서 export하는 변수 설정"></a>settings.py에서 export하는 변수 설정</h3><ul>
+<li>settings.py에 아래와 같이 필요한 변수를 추가로 설정하면된다.</li>
+<li><a href="https://docs.scrapy.org/en/latest/topics/feed-exports.html#settings" target="_blank" rel="noopener">저장소, 저장 형식 관련 레퍼런스</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 출력(Exports)설정</span></span><br><span class="line"><span class="comment"># 파일이름 및 경로</span></span><br><span class="line"><span class="comment"># 만약 다른 특정 위치를 지정하고 싶다면 가능하다.</span></span><br><span class="line">FEED_URI = <span class="string">'result.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 파일 형식</span></span><br><span class="line">FEED_FORMAT = <span class="string">'json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 출력 인코딩</span></span><br><span class="line">FEED_EXPORT_ENCODING = <span class="string">'utf-8'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 기본 들여쓰기</span></span><br><span class="line">FEED_EXPORT_INDENT = 2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>또한, 동일한 자원을 반복해서 크롤링할 경우 서버에 과부하를 주는 것을 막기 위해 cache를 사용할 수도 있다. 이 또한, setting.py에서 변수를 설정할 수 있다.</li>
+</ul>
+<p><img src="/image/settings_py_variable_01.png" alt="setting.py에서 설정가능한 변수들에 대한 설명 - 01"></p>
+<p><img src="/image/settings_py_variable_02.png" alt="setting.py에서 설정가능한 변수들에 대한 설명 - 02"></p>
+<h2 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline</h2><ul>
+<li><a href="https://docs.scrapy.org/en/latest/topics/item-pipeline.html" target="_blank" rel="noopener">참고</a></li>
+<li><p>pipeline은 item들이 최종적으로 나오는 파일을 만들기 전에 약간의 처리를 해주는 작업이라고 생각하면된다. 물론 spider에서도 가능하지만 장기적으로 코드 관리적인 면을 봤을 때 너무 좋지 않은 방식이다. 예를 들어, 크롤러를 만들었던 사이트의 구조가 바뀌었다면 한 python script에 모든 코드를 작성한다면 변경된 사이트의 구조에 맞춰 코드를 변경하려면 코드를 해석하는데 오랜시간을 투자해야 할 것이다.</p>
+<ul>
+<li>Item pipeline의 전형적인 예시<ul>
+<li>HTML data 제거</li>
+<li>정확하지 않은 데이터(또는 동일 데이터)가 수집되었다면 출력 전 pipeline단계에서 validation을 할 수 있다.</li>
+<li>중복 체크</li>
+<li>데이터베이스에 저장</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/scrapy_item_pipeline.png" alt="scrapy item pipeline"></p>
+<ul>
+<li>pipeline 사용을 위한 새로운 크롤링 사이트 : <a href="https://www.alexa.com/topsites" target="_blank" rel="noopener">https://www.alexa.com/topsites</a></li>
+<li>자신의 사이트 방문 50위 사이트를 알 수 있는 웹사이트이다.</li>
+<li>사이트 순위, 사이트 명, 하루에 방문하는 평균 시간, 하루에 방문하는 평균 페이지뷰수를 크롤링할 것이다. items를 사용할 것이며, 모든 정보를 크롤링한후 pipeline을 통해 40위권안의 순위에 해당하는 데이터만 저장하는 방식으로 코드를 작성할 것이다.</li>
+</ul>
+<p><img src="/image/item_change.png" alt="새로운 크롤링을 위한 item.py 변경"></p>
+<ul>
+<li>setting.py에서 아래 그림과 같이 pipeline을 사용하기 위해 주석을 풀어주어서 사용할 것이다. 만약 아래에서와 다르게 <code>여러개의 pipeline을 사용한다면 숫자가 낮을 수록 우선 순위를 갖는다는 점에 유의</code>하자.</li>
+</ul>
+<p><img src="/image/setting_py_change_for_pipelines.png" alt="settings.py에서 pipeline을 사용하기위한 변경사항"></p>
+<ul>
+<li>spider를 다음과 같이 구성하였다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">import scrapy</span><br><span class="line">import sys</span><br><span class="line"><span class="comment"># items.py에 대한 path 추가</span></span><br><span class="line">sys.path.insert(0, <span class="string">'../project/chat_bot_project/section01_2/section01_2'</span>)</span><br><span class="line">from items import SiteRankItems</span><br><span class="line"></span><br><span class="line">class Pipeline01Spider(scrapy.Spider):</span><br><span class="line">    name = <span class="string">'pipeline_01'</span></span><br><span class="line">    allowed_domains = [<span class="string">'alexa.com/topsites'</span>]</span><br><span class="line">    start_urls = [<span class="string">'https://www.alexa.com/topsites'</span>]</span><br><span class="line"></span><br><span class="line">    def parse(self, response):</span><br><span class="line">        <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">        :param :response</span></span><br><span class="line"><span class="string">        : return : SiteRankItems</span></span><br><span class="line"><span class="string">        "</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> response.css(<span class="string">'div.listings.table &gt; div.tr.site-listing'</span>):</span><br><span class="line">            <span class="comment"># 아이템 객체 생성</span></span><br><span class="line">            item = SiteRankItems()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 순위</span></span><br><span class="line">            item[<span class="string">'rank_num'</span>] = p.xpath(<span class="string">'./div[1]/text()'</span>).get()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 사이트명</span></span><br><span class="line">            item[<span class="string">'site_name'</span>] = p.xpath(<span class="string">'./div[2]/p/a/text()'</span>).get()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 평균 접속 시간</span></span><br><span class="line">            item[<span class="string">'daily_time_site'</span>] = p.xpath(<span class="string">'./div[3]/p/text()'</span>).get()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 평균 본 횟수</span></span><br><span class="line">            item[<span class="string">'daily_page_view'</span>] = p.xpath(<span class="string">'./div[4]/p/text()'</span>).get()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            yield item</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위의 코드를 통해 크롤링한 데이터를 이제 pipeline을 통해 처리해보자. 간단히 csv파일과 엑셀파일을 만들어 볼 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">class Section012Pipeline(object):</span><br><span class="line">    <span class="comment"># 초기화 method</span></span><br><span class="line">    <span class="comment"># init method도 class가 초기화될 때 최초로 실행되므로 open_spider와 동일하게 사용가능</span></span><br><span class="line">    def __init__(self):</span><br><span class="line">        <span class="comment"># 엑셀 처리 선언</span></span><br><span class="line">        self.workbook = xlsxwriter.Workbook(<span class="string">"../chat_bot_project/section01_2/section01_2/spiders/result_excel.xlsx"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># CSV 처리 선언 (a, w 옵션 변경)</span></span><br><span class="line">        self.file_opener = open(<span class="string">"../chat_bot_project/section01_2/section01_2/spiders/result_csv.csv"</span>, <span class="string">"w"</span>)</span><br><span class="line">        self.csv_writer = csv.DictWriter(self.file_opener, fieldnames=[<span class="string">'rank_num'</span>,<span class="string">'site_name'</span>,<span class="string">'daily_time_site'</span>,<span class="string">'daily_page_view'</span>,<span class="string">'is_pass'</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 워크시트</span></span><br><span class="line">        self.worksheet = self.workbook.add_worksheet()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 삽입 수</span></span><br><span class="line">        self.rowcount = 1</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 최초 1회 실행</span></span><br><span class="line">    def open_spider(self, spider):</span><br><span class="line">        spider.logger.info(<span class="string">"TestSpider Pipelines Started."</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 데이터를 크롤링할때 매번실행</span></span><br><span class="line">    def process_item(self, item, spider):</span><br><span class="line">        <span class="comment"># 현재 item은 spider에서 item을 활용해서 작성했으므로 dictionary로 되어있다.</span></span><br><span class="line">        <span class="comment"># rank_num이 40위 안에 있는 사이트들만 저장하기 위한 코드</span></span><br><span class="line">        <span class="keyword">if</span> int(item.get(<span class="string">'rank_num'</span>)) &lt; 41 :</span><br><span class="line">            item[<span class="string">'is_pass'</span>] = True</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 엑셀 저장</span></span><br><span class="line">            <span class="comment"># item['rank_num']처럼 접근가능하지만 데이터가 없다면 에러가 발생하므로 아래에서 처럼 get method를 사용하는 것이 좋다.</span></span><br><span class="line">            self.worksheet.write(<span class="string">'A%s'</span> % self.rowcount, item.get(<span class="string">'rank_num'</span> ))</span><br><span class="line">            self.worksheet.write(<span class="string">'B%s'</span> % self.rowcount, item.get(<span class="string">'site_name'</span> ))</span><br><span class="line">            self.worksheet.write(<span class="string">'C%s'</span> % self.rowcount, item.get(<span class="string">'daily_tiem_site'</span> ))</span><br><span class="line">            self.worksheet.write(<span class="string">'D%s'</span> % self.rowcount, item.get(<span class="string">'daily_page_view'</span> ))</span><br><span class="line">            self.worksheet.write(<span class="string">'E%s'</span> % self.rowcount, item.get(<span class="string">'is_pass'</span> ))</span><br><span class="line">            self.rowcount += 1</span><br><span class="line"></span><br><span class="line">            <span class="comment"># csv 저장</span></span><br><span class="line">            self.csv_writer.writerow(item)</span><br><span class="line"></span><br><span class="line">            <span class="built_in">return</span> item</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            raise DropItem(f<span class="string">'Dropped Item. Because This Site Rank is &#123;item.get("rank_num")&#125;'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 마지막 1회 실행</span></span><br><span class="line">    def close_spider(self, spider):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 엑셀 파일 닫기</span></span><br><span class="line">        self.workbook.close()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># CSV 파일 닫기</span></span><br><span class="line">        self.file_opener.close()</span><br><span class="line"></span><br><span class="line">        spider.logger.info(<span class="string">"TestSpider Pipelines Finished"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/image/result_excel.png" alt="결과파일"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Scrapy 웹 크롤링 03 - Exports, Settings, pipeline",
+        "image": "https://heung-bae-lee.github.io/image/spider_result_01.png",
+        "keywords": "",
+        "genre": "crawling",
+        "datePublished": "2020-01-24",
+        "dateCreated": "2020-01-24",
+        "dateModified": "2020-01-28",
+        "url": "https://heung-bae-lee.github.io/2020/01/24/Crawling_02/",
+        "description": "Exports
+우리가 실행후 크롤링한 데이터를 저장하는 path를 실행할때마다 지정하거나 실행했는데, 일종의 template같이 미리 만들어 놓을 수 있는 기능이 Exports이다.
+
+Exports 참조 사이트 : https://docs.scrapy.org/en/latest/topics/feed-exports.html
+
+
+1234# 아래 2가지 방법은 동일"
+        "wordCount": 1628
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/01/28/Crawling_03/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Scrapy 웹 크롤링 04 - 실습
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/01/22/deep_learning_11/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Attention mechanism을 사용한 Seq2seq 구현</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/24/Crawling_02/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

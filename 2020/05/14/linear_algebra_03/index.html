@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Linear combination, vector equation, Four views of matrix multiplication | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Linear combination, vector equation, Four views of matrix multiplication 아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linear combination, vector equation, Four views of matrix multiplication">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/05/14/linear_algebra_03/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Linear combination, vector equation, Four views of matrix multiplication 아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_linear_combination.png">
+<meta property="og:updated_time" content="2020-05-25T16:13:59.813Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linear combination, vector equation, Four views of matrix multiplication">
+<meta name="twitter:description" content="Linear combination, vector equation, Four views of matrix multiplication 아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/what_is_linear_combination.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/05/14/linear_algebra_03/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/linear-algebra/">linear algebra</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-linear_algebra_03" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Linear combination, vector equation, Four views of matrix multiplication
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/05/14/linear_algebra_03/" class="article-date">
+            <time datetime="2020-05-14T06:36:03.000Z" itemprop="datePublished">2020-05-14</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Linear-combination-vector-equation-Four-views-of-matrix-multiplication"><a href="#Linear-combination-vector-equation-Four-views-of-matrix-multiplication" class="headerlink" title="Linear combination, vector equation, Four views of matrix multiplication"></a>Linear combination, vector equation, Four views of matrix multiplication</h1><ul>
+<li><p>아래 내용은 <a href="https://datascienceschool.net/view-notebook/04358acdcf3347fc989c4cfc0ef6121c/" target="_blank" rel="noopener">김도형 박사님의 선형대수 강의안</a> <a href="https://www.edwith.org/linearalgebra4ai/joinLectures/14072" target="_blank" rel="noopener">edwith의 인공지능을 위한 선형대수</a> 강의와 <a href="http://www.kocw.net/home/search/kemView.do?kemId=977757" target="_blank" rel="noopener">KOCW의 한양대학교 이상화 교수님의 선형대수학</a> 강의를 보고 정리한 내용이다.</p>
+</li>
+<li><p>앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조합이 선형 조합이다.</p>
+</li>
+</ul>
+<p><img src="/image/what_is_linear_combination.png" alt="선형조합의 의미"></p>
+<ul>
+<li>아래 그림처럼 일반적으로 연립방정식으로 생각하기 보다는 column form으로 나타내 linear combination으로 나타내는 것이 solution을 찾는데 기하학적으로나 직관적으로 해석하기 더 쉽다. 이제 부터 그 이유에 대해서 살펴 볼 것이다.</li>
+</ul>
+<p><img src="/image/linear_combination_example_matrix_multiplication_01.png" alt="선형조합의 예시 - 01"></p>
+<ul>
+<li>이전에는 아래 수식에서 Unique한 Solution이 존재하려면 행렬 A에 대한 역행렬이 존재해야 한다고 설명했다. 수식적으로 이해를 했다면 이제는 <code>기하학적</code>으로 살펴보자.</li>
+</ul>
+<p><img src="/image/linear_combination_example_matrix_multiplication_02.png" alt="선형조합의 예시 - 02"></p>
+<ul>
+<li>Solution의 집합이 어떤 형태인지 어디에 속해있는지를 다루기 위해서는 먼저 <code>Vector Space에 대해 알고 있어야한다.</code></li>
+</ul>
+<h2 id="Vector-Space"><a href="#Vector-Space" class="headerlink" title="Vector Space"></a>Vector Space</h2><ul>
+<li><p>space : set(집합) closed under addition and scalar multiplication</p>
+<ul>
+<li>즉, <code>덧셈과 곱셈에 대하여 닫혀있는 집합</code>을 Space라고 한다. 위에서의 <code>벡터의 선형조합을 보면 scalar와의 곱셈에의해 닫혀있고 벡터간의 덧셈에 대해 닫혀 있으므로 하나의 space를 갖는다고 볼 수 있다.</code></li>
+</ul>
+</li>
+<li><p>좀 더 엄밀히 말하자면 다음을 만족해야 한다.</p>
+</li>
+</ul>
+<ul>
+<li><p>for any vectors $x, y \in R^{n}$, any scalar $c \in R$</p>
+<ul>
+<li>1) $x+y = y+x$</li>
+<li>2) $x+(y+z) = (x+y)+z$</li>
+<li>3) There is a zero-vector such that $x+o = o+x = x $<ul>
+<li>여기서 0(zero-vector)는 벡터의 덧셈연산에 대한 항등원이다. 이 처럼 항등원이 있는지를 확인할 경우에는 항상, 교환법칙이 성립하는 지도 확인 해야한다.</li>
+<li>위의 사실로 부터 vector Space가 되려면 원점을 포함해야한다는 사실을 알 수 있다.</li>
+<li>참고로 원점을 포함하지 않는 공간을 아핀 공간(Affine Space)라고 한다.</li>
+</ul>
+</li>
+<li>4) For each vectore $x, x+(-x) = (-x) + x = o$<ul>
+<li>$-x$ 벡터의 덧셈 연산에 대한 역원이다. 또한 -x는 unique하다.</li>
+</ul>
+</li>
+<li>5) $1 \cdot x=x$</li>
+<li>6) $c(x+y) = cx+cy$</li>
+<li>7) $(c_{1}+c_{2})x=c_{1}x+c_{2}x$</li>
+</ul>
+</li>
+<li><p>이해가 잘 가지 않을 수 있기 때문에 예시를 들자면 2차 다항함수가 아래와 같이 존재할 때의 vector Space는 3차원이다.</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} a x^{2}+ b x +c \Rightarrow \begin{bmatrix} a \\ b \\ c \end{bmatrix} \in R^{3} \end{align}</script><h2 id="Subspace"><a href="#Subspace" class="headerlink" title="Subspace"></a>Subspace</h2><ul>
+<li>임의의 벡터들에 대한 선형조합의 결과도 여전히 그 set에 대해 닫혀 있으면서도 전체 Vector Space에 부분집합을 Subspace라고 한다.</li>
+</ul>
+<p><img src="/image/vector_space_and_subspace_related_in_point.png" alt="Vector Space, Subspace 그리고 원점의 관계"></p>
+<ul>
+<li><p>임의의 벡터들을 가지고 온갖 종류의 linear combination을 해서 vector space를 만들어 내는 것을 Spanning이라고 하고, 공간을 만든 벡터들은 특정한 vector space를 span한다라고 표현한다.</p>
+</li>
+<li><p>all linear combination of vectors $\{ v_{1}, v_{2}, \cdots ,v_{n} \}$ construct a vector space</p>
+<ul>
+<li>$= \{v_{1}, v_{2}, \cdots ,v_{n} \}$ span vector space</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/what_is_span_on_vector_space.png" alt="Span의 개념"></p>
+<ul>
+<li><p>Span의 개념에 대한 예시는 다음과 같다. 아래와 같은 두 개의 vector를 갖고 어떤 형태로 linear combination을 하던지 span할 수 있는 vector 공간은 x, y 평면이라는 2차원 공간밖에 안된다. 각 벡터의 차원은 3차원이지만 전체 vector space의 차원은 2이다.</p>
+</li>
+<li><p>아래의 벡터들의 linear combination은 2차원 공간(x,y 평면)을 span한다. 똑같은 <code>vector space라고 하더라고 span하는 vector들의 조합은 무한</code>하다.</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} \begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} \begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} \end{align}</script><h3 id="Column-Space-of-A-C-A"><a href="#Column-Space-of-A-C-A" class="headerlink" title="Column Space of A (C(A))"></a>Column Space of A (C(A))</h3><ul>
+<li><code>임의의 행렬 A의 열 벡터의 모든 선형조합(Linear combination)의 집합</code>을 <code>Column Space</code>라고 한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} A = \begin{bmatrix} a_{1} & a_{2} & \cdots & a_{N} \end{bmatrix} \Rightarrow \sum^{n}_{i=1} c_{i} a_{i} \end{align}</script><script type="math/tex; mode=display">\begin{align} Ax= \begin{bmatrix} a_{1} & a_{2} & \cdots & a_{M} \end{bmatrix} \begin{bmatrix} x_{1} \\ x_{2} \\ \vdots \\ x_{M} \end{bmatrix} = x_1 a_1 + x_2 a_2 + \cdots + x_M a_M  = b \end{align}</script><ul>
+<li>if $b \in C(A)$, there is at least one solution. else if $b \notin C(A)$<ul>
+<li>벡터 $x$라는 해가 존재한다는 것은 모든 Combination 중 하나가 벡터 $b$이라는 이야기이므로 벡터 $b$가 column space에 속하면 해가 존재하는 것이고 속하지 않으면 해가 존재하지 않는다.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>span한 결과가 모든 space를 만드러 내느냐 그렇지 않는냐는 행렬 A의 inverse가 존재하느냐 안하는냐에 달려 있다.</code></li>
+</ul>
+<blockquote>
+<p>$Ax=b$ 에서 unique한 solution이 존재할 조건은 임의의 행렬 $A$에 대하여 역행렬이 존재하는 것이다. 역행렬($A^{-1}$)이 존재한다면 항상 $b \in C(A)$이다.</p>
+</blockquote>
+<ul>
+<li>left Null space와 상호 보완관계<ul>
+<li>전체 Space의 차원 = Column space의 차원  + left Null space의 차원</li>
+</ul>
+</li>
+</ul>
+<p>Example) 아래와 같은 행렬 $A$는 역행렬(A^{-1})이 존재하지 않기에 모든 3차원 공간의 벡터를 표현할 수 없다. 그러므로 solution은 존재하지 않거나 무수히 많을 것이다.</p>
+<script type="math/tex; mode=display">\begin{align} A= \begin{bmatrix} 1 & -2 & 1 \\ 2 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix} \end{align}</script><ul>
+<li>아래 그림에서와 같이 non-zero 벡터이며 서로 상수배로 만들어질 수 없는 3차원 크기의 $v_{1}, v_{2}$ 벡터들은 3차원 상에서 평면을 span한다.</li>
+</ul>
+<p><img src="/image/column_space_of_v_01.png" alt="span 개념으로 보는 linear combination"></p>
+<ul>
+<li>만약 벡터 $b$가 column 벡터들의 linear combination으로 표현되어질 수 있다면, column space안에 벡터 $b$가 포함되어있다는 이야기가 된다.</li>
+</ul>
+<p><img src="/image/column_space_of_v_02.png" alt="span 개념으로 보는 해의 관계"></p>
+<h3 id="Null-Space-of-A-N-A"><a href="#Null-Space-of-A-N-A" class="headerlink" title="Null Space of A (N(A))"></a>Null Space of A (N(A))</h3><ul>
+<li><p>Set of vectors such that $Ax = 0$,</p>
+<ul>
+<li>$N(A)=\{ x| A x = 0 \}$</li>
+</ul>
+</li>
+<li><p>space는 덧셈과 곱셈에 대하여 닫혀있어야 하므로 다음과 같이 증명해 보일 수 있다.</p>
+</li>
+<li><p>1) closed under addition</p>
+<ul>
+<li>for $Ax_{1}=0, Ax_{2}=0$ $x_{1}+x_{2} \in N(A)$이려면, $A(x_{1}+x_{2})=0$인지 확인해주면 된다.</li>
+<li>$Ax_{1} +Ax_{2} = 0 + 0 = 0$ 이므로 $x_{1}+x_{2} \in N(A)$이다.</li>
+</ul>
+</li>
+<li><p>2) closed under scalar multiplication</p>
+<ul>
+<li>for $Ax=0, for any c cx \in N(A)?$</li>
+<li>$A(cx)=cAx=0$이므로 $cx \in N(A)$이다.</li>
+</ul>
+</li>
+<li><p>Row space와 상호 보완관계</p>
+<ul>
+<li>전체 Space의 차원 = Row space의 차원  + Null space의 차원</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>비대칭 구조인 rectangular system에서는 미지수하고 방정식의 개수가 똑같지 않은 비대칭적인 구조이기 때문에 해가 없을 때도 있겠지만 해가 존재하는 경우에는 무수히 많다. 무수히 많은 해 집합인 경우 $Ax=b$에 대한 해는 $Ax=0$인 방정식의 해집합과 상당히 연관이 높은데 그 이유는 $Ax=b$에 대한 해집합은 $Ax=0$인 경우에 대한 해인 Null space와 나머지로 나누어지기 때문이다.  </li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \boxed{\begin{matrix} \phantom{} & \phantom{} & \phantom{} & \phantom{} & \phantom{} \\ & & M & &\\ \phantom{} & \phantom{} & \phantom{} & \phantom{} & \phantom{} \\ \end{matrix}} \, \boxed{\begin{matrix} \phantom{\LARGE\mathstrut} \\ v \\ \phantom{\LARGE\mathstrut} \end{matrix}} = \boxed{\begin{matrix} \phantom{} \\ Mv \\ \phantom{} \end{matrix}} \end{align}</script><script type="math/tex; mode=display">Rectangular system에서의 해집합 = Null space + particular solution</script><ul>
+<li>지금부터 그에 대한 예시를 풀면서 이해해 볼 것이다. 아래 수식에 대한 해집합을 구해보자.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 \\ 2 & 6 & 9 & 7 \\ -1 & -3 & 3 & 4 \end{bmatrix} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0  \end{bmatrix} \end{align}</script><ul>
+<li>가우스 소거법을 사용하여 행렬을 풀어준다.<ul>
+<li>첫 번째 행에 2를 곱하여 두 번째 행에 빼준다.</li>
+<li>첫 번째 행을 세 번째 행에 더해준다.</li>
+<li>위의 2단계를 거치면 아래와 같은 행렬을 얻게 될 것이다.<ul>
+<li>아래 행렬처럼 A_{2,2}=0이 되어 pivot이 되지 못하므로 그 다음 0이 아닌 수가 있는 A_{2,3}이 pivot의 자리를 갖는다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 \\ 0 & 0 & 3 & 3 \\ 0 & 0 & 6 & 6 \end{bmatrix} \end{align}</script><ul>
+<li>두 번째 행에서 2를 곱해 세 번째 행에서 빼준다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 \\ 0 & 0 & 3 & 3 \\ 0 & 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0  \end{bmatrix} \end{align}</script><ul>
+<li>모든 pivot의 자리를 1로 만들어 주어야 하므로 두 번째 행을 3으로 나누어 준다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 0 \end{bmatrix} \end{align}</script><ul>
+<li>마지막으로 pivot이 존재하는 column에 pivot이 존재하는 자리를 제외하고는 0으로 만들어 주기 위해 위에서 소거해준 방법을 사용하여 정리해준다.<ul>
+<li>소거해주기 위해 두 번째 행에 3을 곱한뒤 첫 번째 행에서 빼주면 아래와 같은 행렬을 얻을 수 있다.</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 0 & -1 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 0 \end{bmatrix} \end{align}</script><ul>
+<li>최종적으로 얻은 행렬을 다시 처음 방정식에 맞춰서 정리하면 다음과 같다.<ul>
+<li>pivot variable : u, w</li>
+<li>free variable : v, z</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 0 & -1 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0  \end{bmatrix} \end{align}</script><ul>
+<li>위의 방정식을 풀어 써서 row form으로 바꿔 보면 아래와 같다. 또한 pivot variable을 free variable의 형태로 표현하면 행렬의 Null space를 구할 수 있다. 또한 pivot variable의 개수가 해당 행렬의 Null space의 차원이다. 예시의 행렬은 $Dim(N(A))=2$이다.</li>
+</ul>
+<script type="math/tex; mode=display">u + 3v -z =0 \\ w+z = 0</script><script type="math/tex; mode=display">u = =3v + z \\ w = -z</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} = \begin{bmatrix} -3v+z \\ v \\ -z \\ z \end{bmatrix} \end{align}</script><ul>
+<li>위와 같이 방정식을 모두 풀지 않아도 그 전 Row Reduced form 행렬에서 Null space를 구할 수 있다.<ul>
+<li>Row Reduced form에서 free variable들의 column에 계수들을 pivot variable인 경우에는 부호를 바꿔주고 자기 자신의 순서인 자리에는 1을 나머지 free variable 자리에는 0을 넣어주면 된다.</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 0 & -1 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 0 \end{bmatrix} \end{align}</script><ul>
+<li>자세하게 설명하자면 <code>pivot variable을 free variable의 형태로 표현</code>하는 것이므로 먼저 free variable의 column인 두 번째 열과 네 번째 열만 가져와 위의 방법 처럼 진행하면 아래와 같은 두 free variable 벡터의 조합을 구할 수 있으며 이 조합이 Null space이다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} v \begin{bmatrix} -3 \\ 1 \\ 0 \\ 0 \end{bmatrix} + z \begin{bmatrix} 1 \\ 0 \\ -1 \\ 1 \end{bmatrix} \in N(A) \end{align}</script><ul>
+<li>만약 위의 예시 문제가 $Ax=b$를 푸는 문제라고 가정해보자.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 \\ 2 & 6 & 9 & 7 \\ -1 & -3 & 3 & 4 \end{bmatrix} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} = \begin{bmatrix} b_{1} \\ b_{2} \\ b_{3}  \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 | b_{1} \\ 0 & 0 & 3 & 3 | b_{2} - 2b_{1} \\ 0 & 0 & 6 & 6 | b_{3}+b_{1} \end{bmatrix} \end{align}</script><ul>
+<li>행렬 A의 column vector들의 linear combination이 $b$이어야 하므로 해가 존재한다면 $b \in C(A)$일 것이다. 그런데 여기서는 그 $b$라는 벡터가 $5b_{1} - 2b_{2} + b_{3}=0$임을 만족해야 해가 존재한다. 그 이유는 아래 행렬을 살펴보면 마지막 행은 미지수들과 곱을 해도 0이 되기 때문이다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 | b_{1} \\ 0 & 0 & 3 & 3 | b_{2} - 2b_{1} \\ 0 & 0 & 0 & 0 | 5b_{1} - 2b_{2} + b_{3} \end{bmatrix} \end{align}</script><ul>
+<li>$5b_{1} - 2b_{2} + b_{3}=0$를 만족하는 벡터 $b$는 해를 찾을 수 있으므로 조건을 만족시키는 조합만 찾는다면 해를 구할 수 있다. 그러므로 해는 무한하다. 아래의 예시에서는 벡터 $b$를 다음과 같이 정의 할 것이다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1  \\ 5 \\ 5 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 | 1 \\ 0 & 0 & 3 & 3 | 3 \\ 0 & 0 & 0 & 0 | 0 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 3 & 2 | 1 \\ 0 & 0 & 1 & 1 | 1 \\ 0 & 0 & 0 & 0 | 0 \end{bmatrix} \end{align}</script><script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 1 & 3 & 0 & -1 | -2 \\ 0 & 0 & 1 & 1 | 1 \\ 0 & 0 & 0 & 0 | 0 \end{bmatrix} \end{align}</script><blockquote>
+<p>$ X =  Null space + particular solution$으로 이루어져있음을 확인 할 수 있다. 원래 원점을 지나는 평면인 Null space이었는데 particular solution만큼 평생이동된 평면이 해 집합이 되었다는 것으로 해석 할 수 있다.</p>
+</blockquote>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} u \\ v \\ w \\ z \end{bmatrix} = v \begin{bmatrix} -3 \\ 1 \\ 0 \\ 0 \end{bmatrix} + z \begin{bmatrix} 1 \\ 0 \\ -1 \\ 1 \end{bmatrix} + \begin{bmatrix} -2 \\ 0 \\ 1 \\ 0 \end{bmatrix} \in N(A) \end{align}</script><ul>
+<li>행렬의 곱을 이제는 linear combination의 관점으로 계산하는 방법에 대해 살펴보자. 아래 그림에서 보듯이 행렬을 column vector로 나누어 linear combination으로 행렬의 곱을 볼 수 있다.</li>
+</ul>
+<p><img src="/image/matrix_multiplication_using_column_vectors_linear combination_01.png" alt="행렬의 곱을 column vector linear combination으로 생각하기 - 01"></p>
+<p><img src="/image/matrix_multiplication_using_column_vectors_linear combination_02.png" alt="행렬의 곱을 column vector linear combination으로 생각하기 - 02"></p>
+<ul>
+<li>아래와 같이 column vector말고 row vector를 사용한 곱의 방법을 사용할 수도 있다. 위의 경우와의 차이는 <code>왼쪽의 행렬에 관한 관점으로 바라볼때는 column vector들의 linear combination 오른쪽의 행렬의 관점으로 곱을 계산할 경우는 row vector들의 linear combination으로 계산 할 수 있다.</code></li>
+</ul>
+<p><img src="/image/matrix_multiplication_using_row_vectors_linear_combination.png" alt="행렬의 곱을 row vector linear combination으로 생각하기"></p>
+<ul>
+<li>위의 개념들을 생각하여 외적을 계산할 수 있다. 아래 그림에서와 같이 두 행렬의 외적을 2부분으로 나누어 계산하면 손쉽게 계산할 수 있다.</li>
+</ul>
+<p><img src="/image/how_to_outer_product_matrix_multiplication.png" alt="외적을 계산하는 방법"></p>
+<p><img src="/image/sum_of_outer_products.png" alt="머신러닝에서 외적이 사용되는 개념들"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Linear combination, vector equation, Four views of matrix multiplication",
+        "image": "https://heung-bae-lee.github.io/image/what_is_linear_combination.png",
+        "keywords": "",
+        "genre": "linear algebra",
+        "datePublished": "2020-05-14",
+        "dateCreated": "2020-05-14",
+        "dateModified": "2020-05-26",
+        "url": "https://heung-bae-lee.github.io/2020/05/14/linear_algebra_03/",
+        "description": "Linear combination, vector equation, Four views of matrix multiplication
+아래 내용은 김도형 박사님의 선형대수 강의안 edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.
+
+앞서 언급했던 것과 같이 벡터에 스칼라를 곱하여 더한 조"
+        "wordCount": 1987
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/05/17/data_structure_07/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            내가 정리하는 자료구조 06 - 힙(heap)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/05/13/linear_algebra_02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">선형 시스템(Linear system)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/05/14/linear_algebra_03/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

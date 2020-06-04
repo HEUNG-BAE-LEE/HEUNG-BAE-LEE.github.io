@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="모델링 소개 선형모델  로지스틱회귀 모델 입력 벡터를 word2vec과 tf-idf를 사용해본다.     랜던포레스트   TF-IDF를 활용한 모델 구현 모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/30/NLP_04/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="모델링 소개 선형모델  로지스틱회귀 모델 입력 벡터를 word2vec과 tf-idf를 사용해본다.     랜던포레스트   TF-IDF를 활용한 모델 구현 모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/LogisticRegression_with_fiidf_vectorizing.png">
+<meta property="og:updated_time" content="2020-02-04T13:24:23.984Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02">
+<meta name="twitter:description" content="모델링 소개 선형모델  로지스틱회귀 모델 입력 벡터를 word2vec과 tf-idf를 사용해본다.     랜던포레스트   TF-IDF를 활용한 모델 구현 모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다.">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/LogisticRegression_with_fiidf_vectorizing.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/30/nlp_04/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-NLP_04" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/30/NLP_04/" class="article-date">
+            <time datetime="2020-01-29T15:13:48.000Z" itemprop="datePublished">2020-01-30</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="모델링-소개"><a href="#모델링-소개" class="headerlink" title="모델링 소개"></a>모델링 소개</h2><ul>
+<li><p>선형모델</p>
+<ul>
+<li>로지스틱회귀 모델<ul>
+<li>입력 벡터를 word2vec과 tf-idf를 사용해본다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>랜던포레스트</p>
+</li>
+</ul>
+<h3 id="TF-IDF를-활용한-모델-구현"><a href="#TF-IDF를-활용한-모델-구현" class="headerlink" title="TF-IDF를 활용한 모델 구현"></a>TF-IDF를 활용한 모델 구현</h3><ul>
+<li>모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">train_data = pd.read_csv(<span class="string">'train_clean.csv'</span>)</span><br><span class="line">reviews = list(train_data[<span class="string">'clean_review'</span>])</span><br><span class="line">sentiments = list(train_data[<span class="string">'sentiment'</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="TF-IDF-Vectorizing"><a href="#TF-IDF-Vectorizing" class="headerlink" title="TF-IDF Vectorizing"></a>TF-IDF Vectorizing</h3><ul>
+<li>데이터에 대해 TF-IDF 값으로 벡터화를 진행한다.<ul>
+<li>min_df : 설정한 값보다 특정 Token의 df 값이 더 적게 나오면 벡터화 과정에서 제거</li>
+<li>anlayzer : 분석 단위를 의미, ‘word’의 경우 간어 하나를 단위로, ‘char’는 문자 하나를 단위로</li>
+<li>sublinear_tf : 문서의 단어 빈도수(tf:term frequency)에 대한 smoothing 여부를 설정</li>
+<li>ngram_range : 빈도의 기본 단위를 어떤 범위의 n-gram으로 설정할 것인지를 보는 인자</li>
+<li>max_features : 각 벡터의 최대 길이(특징의 길이)를 설정</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_extraction.text import TfidfVectorizer</span><br><span class="line"></span><br><span class="line">vectorizer = TfidfVectorizer(min_df=0.0, analyzer=<span class="string">'char'</span>, sublinear_tf=True, ngram_range=(1,3), max_features=5000)</span><br><span class="line"></span><br><span class="line">X = vectorizer.fit_transform(reviews)</span><br><span class="line">X</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data.shape</span><br></pre></td></tr></table></figure>
+<h4 id="학습과-검증-데이터셋-분리"><a href="#학습과-검증-데이터셋-분리" class="headerlink" title="학습과 검증 데이터셋 분리"></a>학습과 검증 데이터셋 분리</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">RANDOM_SEED = 42</span><br><span class="line">TEST_SPLIT = 0.2</span><br><span class="line"></span><br><span class="line">y = np.array(sentiments)</span><br><span class="line"></span><br><span class="line">X_train, X_eval, y_train, y_eval = train_test_split(X, y, test_size=TEST_SPLIT)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_wight=’balanced’로 설정해서 각 label에 대해 균형 있게 학습할 수 있게 한 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">lgs = LogisticRegression(class_weight = <span class="string">'balanced'</span>)</span><br><span class="line">lgs.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: &#123;&#125;"</span>.format(lgs.score(X_eval, y_eval)))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>필자는 Accuracy: 0.8676을 출력으로 받았다. validation data에 대한 성능이 약 87%의 정확도를 갖으므로 test data에 대해서도 비슷한 수준일 것이라고 기대하며 kaggle에 test data의 예측값을 제출해 볼 것이다.</li>
+</ul>
+<h4 id="데이터-제출하기"><a href="#데이터-제출하기" class="headerlink" title="데이터 제출하기"></a>데이터 제출하기</h4><ul>
+<li>만든 모델을 활용해 평가 데이터 결과를 예측하고 캐글에 제출할 수 있도록 파일로 저장할 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test_data = pd.read_csv(<span class="string">'test_clean.csv'</span>)</span><br><span class="line"></span><br><span class="line">testDataVecs = vectorizer.transform(test_data[<span class="string">"review"</span>])</span><br><span class="line"></span><br><span class="line">test_predicted = lgs.predict(testDataVecs)</span><br><span class="line"><span class="built_in">print</span>(test_predicted)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> not os.path.exists(DATA_OUT_PATH):</span><br><span class="line">  os.makedirs(DATA_OUT_PATH)</span><br><span class="line"></span><br><span class="line">ids = list(test_data[<span class="string">'id'</span>])</span><br><span class="line">answer_dataset = pd.DataFrame(&#123;<span class="string">'id'</span> : ids, <span class="string">"sentiment"</span> : test_predicted&#125;)</span><br><span class="line">answer_dataset.to_csv(DATA_OUT_PATH + <span class="string">'lgs_tfidf_answer.csv'</span>, index=False, quoting=3)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!kaggle competitions submit word2vec-nlp-tutorial -f <span class="string">"lgs_tfidf_answer.csv"</span> -m <span class="string">"LogisticRegression Model with tf-idf"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/image/LogisticRegression_with_fiidf_vectorizing.png" alt="TfidfVectorizer를 사용한 LogisticRegression모델의 test data 정확도"></p>
+<h3 id="Woed2vec-CBOW-을-활용한-모델-구현"><a href="#Woed2vec-CBOW-을-활용한-모델-구현" class="headerlink" title="Woed2vec(CBOW)을 활용한 모델 구현"></a>Woed2vec(CBOW)을 활용한 모델 구현</h3><ul>
+<li>이번에는 word2vec을 활용해 모델을 구현할 것이다. 우선 각 단어에 대해 word2vec으로 벡터화해야 한다. word2vec의 경우 <code>단어로 표현된 리스트를 입력값</code>으로 넣어야 하기 때문에 전처리한 넘파이 배열을 바로 사용하지 않는다. 따라서 <code>전처리된 텍스트 데이터를 불러온 후 각 단어들의 리스트로 나눠야 한다.</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DATA_IN_PATH = <span class="string">"/content/"</span></span><br><span class="line"></span><br><span class="line">TRAIN_CLEAN_DATA = <span class="string">'train_clean.csv'</span></span><br><span class="line"></span><br><span class="line">train_data = pd.read_csv(DATA_IN_PATH + TRAIN_CLEAN_DATA)</span><br><span class="line"></span><br><span class="line">reviews = list(train_data[<span class="string">'review'</span>])</span><br><span class="line">sentiments = list(train_data[<span class="string">'sentiment'</span>])</span><br><span class="line"></span><br><span class="line">sentences = []</span><br><span class="line"><span class="keyword">for</span> review <span class="keyword">in</span> reviews:</span><br><span class="line">  sentences.append(review.split())</span><br></pre></td></tr></table></figure>
+<h4 id="word2ve-벡터화"><a href="#word2ve-벡터화" class="headerlink" title="word2ve 벡터화"></a>word2ve 벡터화</h4><ul>
+<li>num_features : 각 단어에 대해 임베딩된 벡터의 차원을 정한다.</li>
+<li>min_word_count : 모델에 의미 있는 단어를 가지고 학습하기 위해 적은 빈도 수의 단어들은 학습 하지 않기 위해 최소 빈도수를 설정한다.</li>
+<li>num_workers : 모델 학습 시 학습을 위한 프로세스 개수를 지정한다.</li>
+<li>context : word2vec을 수행하기 위한 context 윈도우 크기를 지정한다.</li>
+<li>downsampling : word2vec 학습을 수행할 때 빠른 학습을 위해 정답 단어 label에 대한 downsampling 비율을 지정한다. 보통 0.001이 좋은 성능을 낸다고 한다.</li>
+</ul>
+<h3 id="참고로-parameter-중에-sg의-default값인-0을-사용했으므로-이-모델은-Word2vec의-CBOW모델이다"><a href="#참고로-parameter-중에-sg의-default값인-0을-사용했으므로-이-모델은-Word2vec의-CBOW모델이다" class="headerlink" title="참고로 parameter 중에 sg의 default값인 0을 사용했으므로 이 모델은 Word2vec의 CBOW모델이다."></a>참고로 parameter 중에 sg의 default값인 0을 사용했으므로 이 모델은 Word2vec의 CBOW모델이다.</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num_features = 300</span><br><span class="line">min_word_count = 40</span><br><span class="line">num_workers = 4</span><br><span class="line">context = 10</span><br><span class="line">downsampling = 1e-3</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!pip install gensim</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>word2vec을 학습하는 과정에서 진행 상황을 확인해 보기 위해 다음과 같이 logging을 통해 확인해 볼 수 있다.</p>
+</li>
+<li><p>로깅을 할 때 format을 위와 같이 지정하고, 로그 수준은 INFO에 맞추면 word2vec의 학습과정에서 로그 메시지를 양식에 맞게 INFO 수준으로 보여준다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line">logging.basicConfig(format=<span class="string">'%(asctime)s : %(levelname)s : %(message)s'</span>, level=logging.INFO)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from gensim.models import word2vec</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Training model ...."</span>)</span><br><span class="line"></span><br><span class="line">model = word2vec.Word2Vec(sentences, workers=num_workers, size=num_features, min_count=min_word_count, window=context, sample=downsampling)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>word2vec으로 학습시킨 모델의 경우 모델을 따로 저장해두면 이후에 다시 사용할 수 있기 때문에 저장해 두고 이후에 학습한 값이 추가로 필요할 경우 사용하면 된다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 모델의 하이퍼파라미터를 설정한 내용을 모델 이름에 담는다면 나중에 참고하기에 좋다.</span></span><br><span class="line"><span class="comment"># 모델을 저장하면 Word2Vec.load()를 통해 모델을 다시 사용할 수 있다.</span></span><br><span class="line"></span><br><span class="line">model_name = <span class="string">"300features_40minwords_10context"</span></span><br><span class="line">model.save(model_name)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>word2vec 모델을 활용해서 선형 회귀 모델을 학습할 것이다. 우선 학습을 하기 위해서는 하나의 review를 같은 형태의 입력값으로 만들어야 한다. 지금은 word2vec 모델에서 각 단어가 벡터로 표현되어 있다. 그리고 review 마다 단어의 개수가 모두 다르기 때문에 입력값을 하나의 형태로 만들어야 한다.</p>
+</li>
+<li><p>아래 model을 통해 얻은 단어 하나의 feature는 (300,)의 shape를 갖게 될 것이다.</p>
+</li>
+<li><p>가장 단순한 방법은 문장에 있는 모든 단어의 벡터값에 대해 평균을 내서 리뷰 하나당 하나의 벡터로 만드는 방법이 있다.</p>
+<ul>
+<li>words : 단어의 모음인 하나의 review</li>
+<li>model : 학습한 word2vec 모델</li>
+<li>num_features : word2vec으로 임베딩할 때 정했던 벡터의 차원 수</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def get_features(words, model, num_features):</span><br><span class="line">  <span class="comment"># 출력 벡터 초기화</span></span><br><span class="line">  feature_vector = np.zeros((num_features), dtype=np.float32)</span><br><span class="line"></span><br><span class="line">  num_words = 0</span><br><span class="line">  <span class="comment"># 어휘사전 준비</span></span><br><span class="line">  index2word_set = <span class="built_in">set</span>(model.wv.index2word)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> w <span class="keyword">in</span> words:</span><br><span class="line">    <span class="keyword">if</span> w <span class="keyword">in</span> index2word_set:</span><br><span class="line">      num_words +=1</span><br><span class="line">      <span class="comment"># 사전에 해당하는 단어에 대해 단어 벡터를 더함</span></span><br><span class="line">      feature_vector = np.add(feature_vector, model[w])</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 문장의 단어 수만큼 나누어 단어 벡터의 평균값을 문장 벡터로 함</span></span><br><span class="line">  feature_vector = np.divide(feature_vector, num_words)</span><br><span class="line">  <span class="built_in">return</span> feature_vector</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def get_dataset(reviews, model, num_features):</span><br><span class="line">  dataset = list()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> s <span class="keyword">in</span> reviews:</span><br><span class="line">    dataset.append(get_features(s, model, num_features))</span><br><span class="line"></span><br><span class="line">  reviewFeatureVecs = np.stack(dataset)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> reviewFeatureVecs</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data_vecs = get_dataset(sentences, model, num_features)</span><br></pre></td></tr></table></figure>
+<h4 id="학습과-검증-데이터셋-분리-1"><a href="#학습과-검증-데이터셋-분리-1" class="headerlink" title="학습과 검증 데이터셋 분리"></a>학습과 검증 데이터셋 분리</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">X = train_data_vecs</span><br><span class="line">y = np.array(sentiments)</span><br><span class="line"></span><br><span class="line">RANDOM_SEED = 42</span><br><span class="line">TEST_SPLIT = 0.2</span><br><span class="line"></span><br><span class="line">X_train, X_eval, y_train, y_eval = train_test_split(X, y, test_size=TEST_SPLIT, random_state=RANDOM_SEED)</span><br></pre></td></tr></table></figure>
+<h4 id="모델-선언-및-학습"><a href="#모델-선언-및-학습" class="headerlink" title="모델 선언 및 학습"></a>모델 선언 및 학습</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">lgs = LogisticRegression(class_weight=<span class="string">'balanced'</span>)</span><br><span class="line">lgs.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+<h4 id="검증-데이터셋을-이용한-성능-평가"><a href="#검증-데이터셋을-이용한-성능-평가" class="headerlink" title="검증 데이터셋을 이용한 성능 평가"></a>검증 데이터셋을 이용한 성능 평가</h4><ul>
+<li>이전의 TF-IDF를 사용해서 학습한 것보단 상대적으로 성능이 떨어진다. word2vec이 단어 간의 유사도를 보는 관점에서는 분명히 효과적일 수는 있지만 word2vec을 사용하는 것이 항상 가장 좋은 성능을 보장하지는 않는다는 것을 다시 한번 알 수 있다!!!</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %f"</span> % lgs.score(X_eval, y_eval))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>validation data에 대한 정확도는 83%정도로 TF-IDF로 했던 것보단 조금 떨어지지만 캐글에 제출해보고 overfitting이 발생했는지 점검해 본다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TEST_CLEAN_DATA = <span class="string">'test_clean.csv'</span></span><br><span class="line"></span><br><span class="line">test_data = pd.read_csv(DATA_IN_PATH + TEST_CLEAN_DATA)</span><br><span class="line"></span><br><span class="line">test_review = list(test_data[<span class="string">'review'</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test_sentences = []</span><br><span class="line"><span class="keyword">for</span> review <span class="keyword">in</span> test_review:</span><br><span class="line">  test_sentences.append(review.split())</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_data_vecs = get_dataset(test_sentences, model, num_features)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DATA_OUT_PATH = <span class="string">'/content/'</span></span><br><span class="line"></span><br><span class="line">test_predicted = lgs.predict(test_data_vecs)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> not os.path.exists(DATA_OUT_PATH):</span><br><span class="line">  os.makedirs(DATA_OUT_PATH)</span><br><span class="line"></span><br><span class="line">test_data[<span class="string">'id'</span>]=test_data[<span class="string">'id'</span>].apply(lambda x : x[1:-1])</span><br><span class="line">ids = list(test_data[<span class="string">'id'</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">answer_dataset = pd.DataFrame(&#123;<span class="string">'id'</span>: ids, <span class="string">'sentiment'</span>: test_predicted&#125;)</span><br><span class="line">answer_dataset.to_csv(DATA_OUT_PATH + <span class="string">'lgs_answer.csv'</span>, index=False)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!kaggle competitions submit word2vec-nlp-tutorial -f <span class="string">"lgs_answer.csv"</span> -m <span class="string">"LogisticRegression Model with Word2vec"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/image/LogisticRegression_Model_with_Word2vec.png" alt="Word2vec Vectorizing을 사용한 LogisticRegression"></p>
+<h3 id="랜덤포레스트-분류-모델"><a href="#랜덤포레스트-분류-모델" class="headerlink" title="랜덤포레스트 분류 모델"></a>랜덤포레스트 분류 모델</h3><h4 id="CountVectorizer를-활용한-벡터화"><a href="#CountVectorizer를-활용한-벡터화" class="headerlink" title="CountVectorizer를 활용한 벡터화"></a>CountVectorizer를 활용한 벡터화</h4><ul>
+<li>CountVectorizer는 TF-IDF vectorizing과 동일하게 문장을 input으로 받기 때문에 Word2vec처럼 공백단위로 쪼개 단어로 사용하지 않을 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">DATA_IN_PATH = <span class="string">'/content/'</span></span><br><span class="line">TRAIN_CLEAN_DATA = <span class="string">'train_clean.csv'</span></span><br><span class="line"></span><br><span class="line">train_data = pd.read_csv(DATA_IN_PATH + TRAIN_CLEAN_DATA)</span><br><span class="line">reviews = list(train_data[<span class="string">'clean_review'</span>])</span><br><span class="line">y = np.array(train_data[<span class="string">'sentiment'</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_extraction.text import CountVectorizer</span><br><span class="line"></span><br><span class="line">vectorizer = CountVectorizer(analyzer = <span class="string">'word'</span>, max_features = 5000)</span><br><span class="line"></span><br><span class="line">train_data_features = vectorizer.fit_transform(reviews)</span><br></pre></td></tr></table></figure>
+<h4 id="학습과-검증-데이터-분리"><a href="#학습과-검증-데이터-분리" class="headerlink" title="학습과 검증 데이터 분리"></a>학습과 검증 데이터 분리</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TEST_SIZE = 0.2</span><br><span class="line">RANDOM_SEED = 42</span><br><span class="line"></span><br><span class="line">train_input, eval_input, train_label, eval_label = train_test_split(train_data_features, y, test_size=TEST_SIZE, random_state=RANDOM_SEED)</span><br></pre></td></tr></table></figure>
+<h4 id="모델-구현-및-학습"><a href="#모델-구현-및-학습" class="headerlink" title="모델 구현 및 학습"></a>모델 구현 및 학습</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="comment"># 랜덤 포레스트 분류기에 100개의 의사결정 트리를 사용한다.</span></span><br><span class="line">forest = RandomForestClassifier(n_estimators=100)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 단어 묶음을 벡터화한 데이터와 정답 데이터를 가지고 학습을 시작한다.</span></span><br><span class="line">forest.fit(train_input, train_label)</span><br></pre></td></tr></table></figure>
+<h4 id="검증-데이터셋으로-성능-평가"><a href="#검증-데이터셋으로-성능-평가" class="headerlink" title="검증 데이터셋으로 성능 평가"></a>검증 데이터셋으로 성능 평가</h4><ul>
+<li>결과를 보면 대략 85%의 정확도를 보여준다. 앙상블 모델인데도 앞서 사용한 간단한 모델(TF_IDF보단 상대적으로)보다 좋지 않은 성능을 보여준다. 이는 모델의 문제일 수도 있고 데이터에서 특징을 추출하는 방법의 문제일 수도 있다. 즉, 모델을 바꾸지 않더라도 특징 추출 방법을 앞서 사용한 TF-IDF나 word2vec을 사용해서 입력값을 만든다면 성능이 높아질 수 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy: %f"</span> % forest.score(eval_input, eval_label))</span><br></pre></td></tr></table></figure>
+<h4 id="데이터-제출"><a href="#데이터-제출" class="headerlink" title="데이터 제출"></a>데이터 제출</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TEST_CLEAN_DATA = <span class="string">'test_clean.csv'</span></span><br><span class="line">DATA_OUT_PATH = <span class="string">'/content/'</span></span><br><span class="line"></span><br><span class="line">test_data = pd.read_csv(DATA_OUT_PATH + TEST_CLEAN_DATA)</span><br><span class="line"></span><br><span class="line">test_reviews = list(test_data[<span class="string">'review'</span>])</span><br><span class="line">ids = list(test_data[<span class="string">'id'</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_data_features = vectorizer.transform(test_reviews)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> not os.path.exists(DATA_OUT_PATH):</span><br><span class="line">  os.makedirs(DATA_OUT_PATH)</span><br><span class="line"></span><br><span class="line">result = forest.predict(test_data_features)</span><br><span class="line"></span><br><span class="line">output = pd.DataFrame(&#123;<span class="string">'id'</span>: ids, <span class="string">"sentiment"</span>: result&#125;)</span><br><span class="line"></span><br><span class="line">output.to_csv(DATA_OUT_PATH + <span class="string">'Randomforest_model_with_Countvectorizer.csv'</span>, index=False, quoting=3)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!kaggle competitions submit word2vec-nlp-tutorial -f <span class="string">"Randomforest_model_with_Countvectorizer.csv"</span> -m <span class="string">"Randomforest Model with Countvectorizer"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/image/RandomForest_with_CountVectorizing.png" alt="Count vectorizing을 사용한 Random Forest 성능"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "NLP 실습 텍스트 분류(TF-IDF, CountVectorizer, Word2Vec) -02",
+        "image": "https://heung-bae-lee.github.io/image/LogisticRegression_with_fiidf_vectorizing.png",
+        "keywords": "",
+        "genre": "NLP",
+        "datePublished": "2020-01-30",
+        "dateCreated": "2020-01-30",
+        "dateModified": "2020-02-04",
+        "url": "https://heung-bae-lee.github.io/2020/01/30/NLP_04/",
+        "description": "모델링 소개
+선형모델
+
+로지스틱회귀 모델
+입력 벡터를 word2vec과 tf-idf를 사용해본다.
+
+
+
+
+랜던포레스트
+
+
+TF-IDF를 활용한 모델 구현
+모델의 입력값으로 TF-IDF 값을 갖는 벡터를 사용할 것이기 때문에 scikit-learn의 TfidfVectorizer를 사용할 것이다. 이를 위해서는 입력값이 텍스트로 이뤄진 데이터 형태이어야 한다."
+        "wordCount": 1679
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/02/01/NLP_05/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            NLP 실습 텍스트 분류(Conv1d CNN, LSTM) -03
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/01/29/NLP_03/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">NLP 실습 텍스트 분류 -01</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/30/NLP_04/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

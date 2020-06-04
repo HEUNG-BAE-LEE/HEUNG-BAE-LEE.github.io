@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Regression(03) - 회귀진단 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Regression(03) - 회귀진단">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
+<meta property="og:updated_time" content="2020-05-25T16:14:20.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Regression(03) - 회귀진단">
+<meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/machine-learning/">machine learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-machine_learning_04" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Regression(03) - 회귀진단
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/15/machine_learning_04/" class="article-date">
+            <time datetime="2020-01-15T09:24:28.000Z" itemprop="datePublished">2020-01-15</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="교호작용"><a href="#교호작용" class="headerlink" title="교호작용"></a>교호작용</h2><ul>
+<li>성별, 결혼여부, 혹은 소속 정치단체 등과 같은 <code>질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때</code>가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 <code>지시변수(Indicator variable) 또는 가변수(dummy variable)</code>의 형식으로 표현해야한다. 가변수는 다양한 용도를 가지고 있으며, 회귀관계에 영향을 주는 질적 요인을 고려할 때마다 항상 사용할 수 있다.</li>
+</ul>
+<p><img src="/image/interaction_term.png" alt="교호작용"></p>
+<p>-<code>여러 범주를 표현하기 위하여 가변수를 사용할 경우 필요한 가변수의 개수는 일반적으로 가능한 범주의 수보다 하나 작게 잡으면 된다.</code>왜냐하면, 가변수를 종합하면 교육수준에 관한 3개의 범주를 나타낼 수 있기 때문이다. 게다가, <code>범주를 모두 다 지시변수로 사용하면 범주화된 변수들끼리 완벽한 선형관계가 성립되어 극단적인 다중공선성을 보일수 있다.</code> 선형대수 측면에서도 각 Column vector들끼리 서로 linearly independent 해야 해를 갖을 수 있으므로 위의 방법으로 만드는 것이 옳은 방법이다. 여기서 지시변수 또는 가변수에 의하여 표현되지 않는 범주는 <code>기저범주(base category) 또는 대조 그룹(control group)이라고 불리는데, 지시변수의 회귀계수가 대조 그룹에 대한 상대적인 값으로 해석되기 때문이다.</code> 아래 표에서 만일, 최종학력이 대학원인 사람과 대학교인 사람의 평균적인 차이가 궁금할 경우는 $B_{2}-B-{1}=2,000$로 구할 수 있다. 또한 아래 <code>해석은 다른 변수들을 고정시켰을 경우에 해당</code>한다.</p>
+<script type="math/tex; mode=display">수입 = ( \beta_{0} + 대학교 + 대학원 )</script><p><img src="/image/interaction_term_translation.png" alt="교호작용 해석"></p>
+<ul>
+<li>반응변수는 급료(S), 설명변수를 경력년수(X), 교육수준(E), 관리직여부(M)라고 할 때, 교육수준은 3가지(고교졸업, 대학졸업, 대학원졸업)로서 고교졸업($E_{i1}$), 대학졸업($E_{i2}$)의 가변수를 만들어 아래와 같은 회귀모형을 만들었다고 가정하자.</li>
+</ul>
+<script type="math/tex; mode=display">S =  \beta_{0} +  \beta_{1}X + \beta_{2}E_{1} + \beta_{3}E_{2}, + \beta_{4}M + \varepsilon</script><ul>
+<li>아래 그래프를 보았을 때 왼쪽의 경력년수와 표준화 잔차의 플롯을 보게되면, <code>셋 또는 그 이상의 서로 다른 수준의 잔타가 있음을 볼 수 있다.</code> 이는 <code>교육수준과 관리직 여부의 영향을 나타내는 즉 현재 보여주는 변수를 제외한 나머지 변수들이 적절하지 않음으로써 생긴 현상일 수 도 있다.</code> 오른쪽의 교육수준 $\times$ 관리의 가능한 6가지 범주조합의 잔차 플롯을 살펴보면 6가지 범주조합에 따라 체계적인 군집을 이루고 있음을 볼 수 있다. 허나 <code>각 조합내에서 잔차들은 거의 전부 양이거나 음의 값을 취하고 있다. 이러한 현상은 위의 모형식이 급료(S), 경력년수(X), 교육수준(E), 관리직의 여부(M)의 관계를 적절히 표현하지 못한다는 것을 의미</code>한다.</li>
+</ul>
+<p><img src="/image/standardized_residual_vs_predictor_for_wrong_case.png" alt="교호작용이 필요한 예"></p>
+<ul>
+<li>위의 모형식에서 아래와 같이 교육과 관리직의 여부의 교호작용항을 추가해 주어서 다시 표준화잔차 vs 경력년수의 플롯을 살펴보면 아래 그래프와 같다. 단 하나의 관측개체에 의해 회귀계수의 추정값이 지나치게 많은 영향을 받고 있으므로, 해당 특이값을 제외하고 시행한 회귀분석의 결과 전체적으로 회귀계수의 추정값에는 별 변동이 없었으며, 잔차들의 표준편차가 오히려 줄어들었고, 결정계수가 늘어났다고 가정하자. 그렇다면, 해당 특이값을 제외한 모형식으로 적합을 시켜주는 것이 옳은 것이다.</li>
+</ul>
+<script type="math/tex; mode=display">S =  \beta_{0} +  \beta_{1}X + \beta_{2}E_{1} + \beta_{3}E_{2}, + \beta_{4}M + \beta_{5}(E_{1} \cdot M) + \beta_{6} (E_{2} \cdot M)+ \varepsilon</script><p><img src="/image/standardized_residual_vs_work_years_add_variables.png" alt="표준화 잔차 vs 경력연수 : 확장된 모형"></p>
+<ul>
+<li>해당 특이값을 제외한 후 표준화 잔차와 각 독립(설명)변수들의 플롯을 그려보니 아래와 같이 랜덤하게 분포되어있다면, 이전의 모형보다 설명을 더 잘하는 회귀모형식을 찾았다고 할 수 있다. 그러나, 해당 모형의 질적변수의 회귀계수에 대한 해석을 함에 있어서는 각 범주별로 회귀계수를 더해주면 된다. <code>물론 상수항을 포함하여 계산하여야 할 것</code>이다. 위의 방법과 다르게 처음부터 6개의 범주를 만들어 가변수를 취해 동일한 모형을 적합하는 방법도 있는데, 위의 방법이 가지는 장점은 <code>3가지 예측변수 (교육수준, 관리직의 여부, 교육수준-관리직의여부)가 가지는 효과를 명백하게 구분할 수 있다는 점</code>이다.</li>
+</ul>
+<p><img src="/image/standardized_residual_vs_work_years_add_variables_01.png" alt="확장된 모형의 표준화잔차 플롯"></p>
+<h2 id="가변수-dummy-variable-가-사용되는-또-다른-회귀식"><a href="#가변수-dummy-variable-가-사용되는-또-다른-회귀식" class="headerlink" title="가변수(dummy variable)가 사용되는 또 다른 회귀식"></a>가변수(dummy variable)가 사용되는 또 다른 회귀식</h2><ul>
+<li>하나의 데이터가 각각 다른 회귀식을 필요로 하는 두 개 또는 그 이상의 부분집단으로 구성되어 있을 수도 있다. 이런 경우에 <code>모든 부분집단들이 합쳐진 전체 데이터에 대하여 단 하나의 회귀관계만 사용된다면 심각한 편향의 문제가 발생할 수 있다.</code> 데이터의 부분집합들에 대해 별도의 회귀분석을 수행하는 기법은 횡단면(cross-sectional) 데이터나 시계열(time series) 데이터 등에 응용될 수 있다.</li>
+</ul>
+<h3 id="각-집단이-분리된-회귀모형을-가지는-경우-다른-기울기와-다른-절편항을-가지는-모형"><a href="#각-집단이-분리된-회귀모형을-가지는-경우-다른-기울기와-다른-절편항을-가지는-모형" class="headerlink" title="각 집단이 분리된 회귀모형을 가지는 경우(다른 기울기와 다른 절편항을 가지는 모형)"></a>각 집단이 분리된 회귀모형을 가지는 경우(다른 기울기와 다른 절편항을 가지는 모형)</h3><ul>
+<li>두 인종집단에서 업무 수행능력과 고용전 검사점수의 회귀관계가 서로 다르다는 가설을 검증한다고 가정해보자. 모형 1은 인종 간의 차이가 없다고 생각하고 통합된 데이터에 대해 하나의 회귀직선을 고려한다. 이에 대해 모형 2는 두 인종집단에 대해 각각 따로따로 회귀관계를 고려한다. 이때 각 인종집단에 대한 잔차의 분산은 동일하다고 가정한다.  </li>
+</ul>
+<script type="math/tex; mode=display">모형 1 (통합모형) \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) -  y_{i1} = \beta_{01} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 2 (백인) - y_{i2} = \beta_{02} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
+<li>분석에 앞서서, 얻어진 결과를 해석하고 이를 응용할 때 범할지도 모를 가능한 오류 몇 가지를 생각해 보자. 아래 그래프에서 $Y_{0}$를 고용에서 요구되는 최소한의 업무수행능력이라고 하자. 이때 모형 1을 사용하는 경우에는 고용전 검사점수가 적어도 $X_{p}$보다 높아야 선발될 것이다. 그러나 만일 모형 2가 옳다면 요구되는 고용전 검사점수는 백인의 경우 $X_{w}$, 그리고 소수민족에게는 $X_{m}$이상이면 될 것이다.</li>
+</ul>
+<blockquote>
+<p>$X_{m}$이나 $X_{w}$ 대신에 일괄적으로 $X_{p}$를 사용한다는 것은 백인에게는 고용전 검사점수에 혜택을 주는 반면에 소수민족에게는 불이익이 가게 됨을 의미한다. 따라서 만일 틀린 모형을 사용하여 지원자를 평가한다면 이는 곧 인종차별의 문제를 일으킬 소지가 있다고 할 수 있다.</p>
+</blockquote>
+<p><img src="/image/score_before_hiring.png" alt="고용전 검사에 기초한 고용자격 조건"></p>
+<ul>
+<li>위의 모형2 는 아래 모형 3으로부터 만들어짐을 알 수 있다. 즉, 소수민족 모형은 $x_{ij}=x_{i1}$, $z_{ij} = 1$을 아래 모형 3에 대입하면 계산되며, 백인 모형 또한 $x_{ij}=x_{i2}$, $z_{ij} = 0$을 대입하면 동일하게 나온다. 그러므로 <code>모형 1과 2를 비교하는 것은 모형 1과 3을 비교하는 것과 동일하다.</code> 모형 3에 $\gamma = \delta = 0$을 대입하면 모형 1을 얻을 수 있으므로, <code>모형 3을 완전모형(FM)으로 모형 1을 축소모형(RM)으로 간주할 수 있다.</code></li>
+</ul>
+<script type="math/tex; mode=display">모형 3 \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1}x_{ij} + \gamma z_{ij} + \delta(z_{ij} \cdot x_{ij}) + \varepsilon_{ij}</script><ul>
+<li>그러므로 $H_{0} : \gamma = \delta = 0$으로 아래와 같이 F 검정을 통해 검정할 수 있다. (k=2, p=3) F-통계량 값인 3.4는 통계적으로 유의한 결과이며, $H_{0}$를 기각하여 $H_{1}$를 채택한다고 할 수 있다. 그러므로 두 집단의 회귀 관계가 서로 다르다고 결론지을 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">F = \frac{[SSE(RM) - SSE(FM)]/p+1-k}{SSE(FM)/n-p-1}</script><script type="math/tex; mode=display">= \frac{(45.51 - 31.81)/2}{31.81/16} = 3.4</script><h3 id="모형들이-동일한-절편항을-가지지만-기울기는-다른-경우"><a href="#모형들이-동일한-절편항을-가지지만-기울기는-다른-경우" class="headerlink" title="모형들이 동일한 절편항을 가지지만 기울기는 다른 경우"></a>모형들이 동일한 절편항을 가지지만 기울기는 다른 경우</h3><ul>
+<li>두 집단이 동일한 기울기 $\beta_{1}$을 가진다는 것을 믿을 만한 이유가 있다고 가정하고, 두 집단이 동일한 절편항을 가진다는 가설 $H_{0}: \beta_{01} = \beta_{02}$을 검정하는 경우를 다루어 볼 것이다.</li>
+</ul>
+<script type="math/tex; mode=display">모형 1 (통합모형) \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) -  y_{i1} = \beta_{01} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 2 (백인) - y_{i2} = \beta_{02} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
+<li>두 모형이 동일한 기울기 $\beta_{1}$을 가지고 있으나 서로 다른 절편항 $\beta_{01}$과 $\beta_{02}$를 가지고 있음을 주목하자. 또한 위의 모형2는 아래와 같이 모형 3으로 바꿔 쓸 수 있다.<blockquote>
+<p>모형 3에서 상호작용 변수 $(z_{ij} \cdot x_{ij})$가 없음을 주목하자. 만약 상호작용항이 있다면, 두 집단은 다른 기울기와 다른 절편항을 갖는 두 모형을 가지게 된다.</p>
+</blockquote>
+</li>
+</ul>
+<script type="math/tex; mode=display">모형 3 : \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1}x_{ij} + \gamma z_{ij} + \varepsilon_{ij}</script><ul>
+<li>따라서 모형2(또는 모형 3)는 절편항 $\beta_{0} + \gamma$와  $\beta_{0}$를 가진 두 개의 평행인 직선을 나타낸다. 그러므로 귀무가설은 $H_{0}: \gamma = 0$이 된다. 이 가설을 검정하는 것도 동일하게 귀무가설에 해당하는 모형을 축소모형으로 간주하고 F 검정을 실시하면 된다.</li>
+</ul>
+<h3 id="모형들이-동일한-기울기를-가지지만-절편항은-다른-경우"><a href="#모형들이-동일한-기울기를-가지지만-절편항은-다른-경우" class="headerlink" title="모형들이 동일한 기울기를 가지지만 절편항은 다른 경우"></a>모형들이 동일한 기울기를 가지지만 절편항은 다른 경우</h3><ul>
+<li>두 집단이 동일한 절편항 $\beta$를 가지고 있으며, 두 집단이 기울기도 동일하다는 가설$(H_{0}:\beta_{11} = \beta_{12})$을 검정하는 경우를 다루어 볼 것이다.</li>
+</ul>
+<blockquote>
+<p>두 모형이 동일한 절편항 $\beta_{0}$을 가지고 있으나 서로 다른 기울기 \beta_{11}과 \beta_{12}를 가지고 있음을 주목하자.</p>
+</blockquote>
+<script type="math/tex; mode=display">모형 1 (통합모형) \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1} x_{ij} + \varepsilon_{ij}, j=1,2; i=1,2,\cdots,n_{j}</script><script type="math/tex; mode=display">모형 2 (소수민족) -  y_{i1} = \beta_{0} + \beta_{11} x_{i1} + \varepsilon_{i1}</script><script type="math/tex; mode=display">모형 2 (백인) - y_{i2} = \beta_{0} + \beta_{12} x_{i2} + \varepsilon_{i2}</script><ul>
+<li>위의 모형 2는 아래와 같이 모형 3으로 대체 될 수 있다. 이 모형에서 상호작용 변수 $(x_{ij} \cdot z_{ij})$가 있지만 변수 Z의 개별 공헌은 없음을 주목하자. 각각에 대입해 보면, 위에서와 같이 모형 3에서 $H_{0} : \delta = 0$을 F-검정하면된다.</li>
+</ul>
+<script type="math/tex; mode=display">모형 3 : \hspace{0.5cm} y_{ij} = \beta_{0} + \beta_{1}x_{ij} + \delta(x_{ij} \cdot z_{ij}) + \varepsilon_{ij}</script><h2 id="가변수-지시변수-에-대한-다른-응용들"><a href="#가변수-지시변수-에-대한-다른-응용들" class="headerlink" title="가변수(지시변수)에 대한 다른 응용들"></a>가변수(지시변수)에 대한 다른 응용들</h2><ul>
+<li>앞에서 묘사된 가변수(지시변수)의 응용들은 다양한 문제를 해결하기 위해 확장될 수 있다. 예를 들면 K개의 모집단 평균을 비교하는 경우 분산분석(ANOVA)도 표현할 수 있다. 크기 $n_{j}$의 표본이 j번째 모집단으로 부터 추출되었다고 하자.(j=1, \cdots, k) 종속(반응)변수에 대하여 총 $n=n_{1}+ \cdots + n_{k}$개의 관측개체가 주어진다. $y_{ij}$를 j번째 표본에서 i번째 반응값이라고 하자. 그러면 y_{ij}에 대한 모형은 다음과 같이 표현될 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">y_{ij} = \mu_{0} + \mu_{1}x_{i1} + \cdots + \mu_{p}x_{ip} + \varepsilon_{ij}</script><ul>
+<li>위의 모형에서는 $p = k-1$개의 지시 설명변수들 $x_{i1}, \cdots, x_{ip}$이 있다. 각 변수 $x_{ij}$는 대응 되는 반응값이 j번째 모집단으로부터 나왔을 때 1을 가지며, 그렇지 않으면 0을 가진다. 생략된 모집단은 대조(control)집단으로 알려져 있다. 대조집단에 대한 모든 지시변수들은 0이다. 따라서, 아래와 같은 모형식이 된다. $\varepsilon_{ij}$는 평균 0, 분산 $\sigma^{2}$을 가지고 독립인 정규분포에 따르는 것으로 가정되는 랜덤오차이다. 상수항 $\mu_{0}$는 대조집단의 평균을 나타내며, 회귀계수 $\mu_{j}$는 대조집단과 j번째 집단의 평균차이로 해석될 수 있다. 만약 모든 집단이 동일한 평균을 가진다는 귀무가설 $H_{0} : \mu_{1}= \cdots =\mu_{p}=0$을 검정하는 것은 아래 모형식과 위의 모형식을 각각 축소모형과 완전모형으로 간주하여 F-검정을 하는 것과 동일하다. <code>그러므로 지시변수의 사용은 회귀분석의 특별한 경우로서 ANOVA 기법을 표현할 수 있도록 한다.</code></li>
+</ul>
+<script type="math/tex; mode=display">y_{ij} = \mu_{0} + \varepsilon_{ij}</script><ul>
+<li>이외의 예들로는 가변수가 종속변수로 사용되는 로지스틱회귀모형과 시계열 데이터에 대하여 계절성과 시간의 경과에 따른 모수의 안정성의 문제를 다룰 수 있다. 계절성은 예를 들어 분기별로 되어있는 데이터를 가변수로 만들어주어 분기별로 주어지는 매출액에 영향을 주는 계절성의 존재를 검정하는 것을 말할 수 있을 것이다. 시간의 경과에 따른 모수의 안정성은 시간에 따른 가변수를 통해 이들의 계수가 0임을 검정하면 해당 기간동안의 회귀관계가 불변한다는 것을 보일 수도 있다.</li>
+</ul>
+<h2 id="변수-선택법"><a href="#변수-선택법" class="headerlink" title="변수 선택법"></a>변수 선택법</h2><p><img src="/image/variable_selection.png" alt="변수 선택법"></p>
+<p><img src="/image/FeedForward_selection.png" alt="점진적 선택법"></p>
+<p><img src="/image/Backward_Elimination.png" alt="후진적 제거법"></p>
+<p><img src="/image/stepwise_selection.png" alt="stepwise 방법"></p>
+<h2 id="회귀-분석의-진단-모형-위반의-검출"><a href="#회귀-분석의-진단-모형-위반의-검출" class="headerlink" title="회귀 분석의 진단 : 모형 위반의 검출"></a>회귀 분석의 진단 : 모형 위반의 검출</h2><ul>
+<li>주어진 데이터에 모형을 적합함에 있어서, 한 개 또는 몇 개의 관측 개체들에 의하여 적합이 과도하게 결정되는 것으 바람직 하지 않다. 앞서 말한 가설검정등은 <code>표준적인 회귀의 가정들이 만족될 때만 유의미</code>하다. <code>이들 가정이 위반된다면, 이전에 언급된 표준적인 결과들은 유효하지 않으며 결과의 응용이 심각한 오류를 야기할 수도 있다.</code> 모형위반을 검토하기 위해 엄격한 수치적 규칙들을 적용하는 것 대신에 주로 그래프적인 방법들을 소개할 것이다.</li>
+</ul>
+<h3 id="회귀분석의-표준적인-가정들"><a href="#회귀분석의-표준적인-가정들" class="headerlink" title="회귀분석의 표준적인 가정들"></a>회귀분석의 표준적인 가정들</h3><ul>
+<li>1) <code>선형성 가정</code> : 종속(반응)변수 Y와 독립(설명)변수 X들을 관계시키는 모형이 회귀계수 $\beta$들에 대하여 선형임을 가정한다. <code>만약, 선형성 가정이 만족되지 않는다면 종종 데이터에 대한 변환을 통해 선형성을 달성할 수 있다.</code> 단순회귀에서는 이 가정을 Y와 X의 산점도를 통해 쉽게 확인 할 수 있으나, 다중회귀에서는 고차원성 때문에 산점도를 통해 확인이 어렵다.</li>
+</ul>
+<script type="math/tex; mode=display">Y = \beta_{0} + \beta_{1}X_{1} + \cdots + \beta_{p}X_{p} + \epsilon</script><ul>
+<li><p>2) <code>잔차에 대한가정</code> : $\epsilon_{i}  \sim^{i.i.d} N(0, \sigma^{2})$ 이 가정을 통해 아래의 가정들을 만족해야한다.</p>
+<ul>
+<li>1) <code>잔차의 정규성</code> : 잔차 $\epsilon_{i}$는 정규분포를 따른다. 독립(설명)변수들의 값이 반복되어 있지 않다면 쉽게 위반되지 않는다.    </li>
+<li>2) <code>잔차의 등분산성</code> : 동일한 상수분산 $\sigma^{2}$을 가져야 한다. 이 가정이 만족하지 않을 때 <code>이분산성을 띈다</code>는 문제가 있다고 한다.</li>
+<li>3) <code>잔차의 독립성</code> : 잔차들이 서로 독립이므로 그들의 공분산은 모두 0이다. 이 가정이 만족되지 않으면 <code>자기상관의 문제</code>가 있다고 한다.</li>
+</ul>
+</li>
+<li><p>3) 독립(설명)변수들에 대한 가정(<code>1,2는 실제로 평가 불가하므로 3이 중요!!</code>) :</p>
+<ul>
+<li>1) 독립(설명)변수들은 확률변수가 아니다. 만약 실험 설계에 의해서 얻어진 데이터 값들에 의한 것이 아닌 비실험 또는 관측의 상황에서는 이것이 만족되지 않을 것이라는 것은 명확하며, 이에 대한 해석도 수정되어야한다. <code>독립(설명)변수들이 확률변수이면 모든 추론은 관측된 데이터에 의존하여 조건부적</code>이다.</li>
+<li>2) 값 $x_{1j}, x_{2j}, \cdots ,x_{nj}$는 오차 없이 측정된 것으로 가정된다. 허나 <code>이 가정은 만족되기 쉽지 않다</code>. 측정에서의 오차는 잔차의 분산, 다중상관계수, 회귀계수의 개별 추정치들에 영향을 줄 것이다. <code>추정된 회귀계수로부터 측정오차의 영향을 제거하는 것은 거의 기대하기 힘들다.</code>그러므로 변수들이 오차를 가지고 있어서 회귀계수의 추정에 문제가 있더라도 회귀방정식이 예측을 위해 여전히 사용될 수 있다. 그러나 독립(설명)변수에 존재하는 오차는 예측의 정확도를 감소 시킬 것이다.</li>
+<li>3) 독립(설명)변수는 선형종속이 아닌 것으로 가정된다. 즉, 위해서 언급했었던 <code>linearly independent</code>해야 한다는 의미이며 이 가정으로 인해 정규방정식의 해의 유일성을 보장받을 수 있다. 이 가정이 위반 되는 것이 <code>공선성(collinearity)</code>의 문제이다.</li>
+</ul>
+</li>
+<li><p>4) 관측개체에 대한 가정 : 모든 관측개체들은 동일하게 신뢰할 만하며, 회귀의 결과를 결정하고 결론을 도출함에 있어서 거의 동등한 역할을 한다.</p>
+</li>
+<li><p><code>최소제곱법의 특징 중 하나는 기본 가정에 대한 사소한 또는 작은 위반이 분석으로부터 도출된 추론이나 결론을 무효화할 만큼 큰 영향을 주지는 않는다는 것</code>이다. 그러나 모형의 가정에 대한 큰 위반은 결론을 심각하게 왜곡 시키므로 <code>결론적으로, 그래프를 통해서 잔차의 구조와 데이터의 패턴을 조사하는 것은 매우 중요</code>하다.</p>
+</li>
+</ul>
+<p><img src="/image/diagonosis_of_linear_regression.png" alt="회귀분석의 진단"></p>
+<h3 id="다양한-유형의-잔차들"><a href="#다양한-유형의-잔차들" class="headerlink" title="다양한 유형의 잔차들"></a>다양한 유형의 잔차들</h3><ul>
+<li>회귀분석에 있어서 모형이 가지는 가능한 결함을 찾아내는 데 가장 간단하고 효과적인 방법은 잔차플롯을 살펴보는 것이다. <code>더욱이, 분석이 요약통계량에만 근거할 경우 간과할지도 모를 데이터의 중요한 구조와 정보들을 잔차분석을 통해 발견할 수도 있다.</code></li>
+</ul>
+<script type="math/tex; mode=display">\hat{Y} = X\hat{\beta} = PY</script><script type="math/tex; mode=display">P = X(X^{T}X)X^{T}</script><ul>
+<li>즉, Y를 $\hat{Y}$로 만들기 위한 linear transform matrix를 모자(hat) 또는 사영(Projection) matrix P라고 한다. 여기서 $i=j일 때, p_{ii}=p_{ij}=p_{ji}=p_{jj}$는 사영행렬(P)의 i번째 대각원소이다. <code>이것은 i번째 관측개체에 대한 지레값(Leverage value)으로 불린다.</code> 아래의 식에서 볼 수 있듯이 $\hat{y}_{i}$은 Y의 모든 관측값들의 가중합이며, $p_{ii}$는 i번째 적합값 $\hat{y}_{i}$을 결정함에 있어서 $y_{i}$에 부여되는 가중치(지레)이기 때문이다.</li>
+</ul>
+<script type="math/tex; mode=display">\hat{y}_{i} = p_{i1}y_{1} + p_{i2}y_{2} + \cdots + p_{in}y_{n}, i=1,2,...,n</script><ul>
+<li>또한, 잔차($e_{i}$)의 분산은 그의 표준편차로 나누어 표준화하여 다음과 같이 평균 0과 표준편차 1을 가지는  <code>표준화 잔차(standardized residual)</code>을 얻을 수 있다. 자세하게는 $\sigma$를 어떤 것을 사용하냐에 따라 내적 표준화잔차와 외적 표준화잔차로 나뉘어지지만, 결국 <code>표본크기가 충분히 클때(30이상) 이 잔차들은 근사적으로 표준정규분포를 따른다. 또한 잔차들은 엄밀하게는 서로 독립이 아니지만, 표본크기가 크면 독립성의 문제는 무시 될 수 있다.</code> 따라서, <code>잔차플롯을 작성함에 있어서 두가지 형태의 잔차 중 어느 것을 사용하는가는 별로 문제가 되지 않는다.</code></li>
+</ul>
+<script type="math/tex; mode=display">z_{i} = \frac{e_{i}}{\sigma \sqrt{1-p_{ii}}}</script><h2 id="그래프적-방법들"><a href="#그래프적-방법들" class="headerlink" title="그래프적 방법들"></a>그래프적 방법들</h2><ul>
+<li>그래프적 방법들은 데이터 분석에서 중요한 역할을 하며, 특히 데이터에 선형모형을 적합할 때 더욱 중요하다. <code>분석이 수치적 결과에만 의존한다면 잘못된 결론에 도달할 수 있음을 볼 수 있다.</code>그 대표적인 예로는 Anscombe의 데이터를 들 수 있다. 아래의 데이터들은 동일한 상관계수를 가지도록 되어있다. 그러나 산점도는 완전히 다른 패턴을 보여준다. 아래의 그래프에서 상단의 두 그래프 중 왼쪽은 선형모형이 적절함을 보여준다. 오른쪽 그래프는 아마도 선형화가 가능한 비선형 모형을 나타낸다. 하단의 두 그래프중 왼쪽 그래프는 직선으로 부터 멀리 떨어져 있는 하나의 점을 제외하면 데이터가 거의 선형모형을 따르고 있음을 보여준다. <code>이 점은 특이값일 수 있으므로, 데이터로부터 어떤 결론을 도출하기 전에 조사되어야만 한다.</code> 마지막 오른쪽 그래프는 비효율적인 실험 또는 나쁜 표본임을 나타낸다. X=19인 점에 대하여, 대응되는 Y의 값이 아무리 크거나 작더라도 이 점에서의 잔차가 항상 0(분산 0을 가지는)이다. 이 점을 제외하고 나머지 데이터로부터 구한 최소제곱 추정치는 더 이상 유일하지 않다는 것을 보일 수 있다. 회귀 결과에 과도하게 큰 영향을 주는 관측개체를 영향력 있는 관측개체(influential observation)라고 하는데, <code>X=19에 있는 점은 이것이 적합선의 절편과 기울기를 완전히 결정하기 때문에 극단적으로 영향력이 있다.</code></li>
+</ul>
+<p><img src="/image/Anscombe_data.png" alt="Anscombe data"></p>
+<ul>
+<li><code>특정 그래프를 탐색하기에 앞서, 어떤 가정이 만족될 때 그 그래프가 어떻게 나타나야 하는지를 알아야 한다. 그러고 나서 그 그래프가 기대와 일치하는지를 살펴보아야 한다.</code> 이렇게 함으로써 가정의 올바름 또는 그릇됨을 확인할 수 있을 것이다.</li>
+</ul>
+<h3 id="1-모형을-적합하기-이전의-그래프"><a href="#1-모형을-적합하기-이전의-그래프" class="headerlink" title="1) 모형을 적합하기 이전의 그래프"></a>1) 모형을 적합하기 이전의 그래프</h3><ul>
+<li><code>종속(반응)변수와 독립(설명)변수 사이의 관계를 나타내는 모형의 형태는 이론적 배경 또는 검정될 가설에 근거해야 한다.</code></li>
+</ul>
+<ul>
+<li>1) 일차원 그래프 : 개별 변수의 분포를 개략적으로 살펴보기 위해 그린다. 이를 통해 <code>어떤 변수가 매우 치우쳐져 있다면 변환이 수행되어야 한다. 비대칭의 정도가 심한 변수에 대하여 로그 변환이 추천된다.</code> 일변량 그래프는 원래의 변수를 이용해야 할지 아니면 변환된 변수를 가지고 분석을 수행해야 하지에 대하여 정보를 제공한다. 또한 일변량 그래프는 <code>변수에 있는 특이값의 존재 유무를 제시</code>한다. 특이값은 그것이 입력오류 등에 의한 것인지(측정후 잘못 기입된 경우와 같은)를 알아보기 위해 조사되어야한다. 또한 특이값은 이후의 분석에서 문제를 발생시킬 수도 있기 때문에 분석을 수행할 때 주의깊게 다루어져야 한다.<ul>
+<li>ex) histogram, stem-and-leaf display, dot plot, box plot</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>2) 이차원 그래프 : 변수의 수가 많은 경우 해당 차원과 같은 차원에서 변수들을 볼 수 없으므로, <code>각 변수들의 쌍에 대한 관계를 탐색하고 일반적인 패턴을 파악하기 위해</code> 산점도를 통해 살펴볼 수 있다. <code>산점도행렬</code>을 살펴볼때 주의할 점은 상관계수는 오직 선형관계만을 측정하며 robust하지 않으므로 <code>쌍별 상관계수는 대응되는 산점도와 연관하여 해석</code>해야 한다는 점이다. 단순회귀에서는 Y대 X의 산점도가 선형의 형태를 보일 것으로 기대되나, <code>다중회귀에서는 Y대 각 독립(설명)변수의 산점도가 선형의 형태를 보일 수도 있고 그렇지 않을 수도 있다. 즉, 선형의 형태가 보이지 않는다고 해서 주어진 선형모형이 옳지 않다는 것을 의미하지 않늗다.</code> 또한, <code>독립(설명)변수들이 선형적으로 독립임을 가정하고 있기 때문에, 각각의 독립(설명)변수들끼리 선형패턴을 보이지 않아야 한다. 다만, 두 독립(설명)변수의 산점도에 선형관계가 보이지 않는다는 것이 전체 독립(설명)변수들의 집합이 선형적으로 독립이라는 것을 의미하지는 않기 때문에 주의가 필요하다. 선형 관계는 두개 이상의 변수들을 포함하고 있을 수 있다. scatter plot을 통해서는 그런 다변량 관계를 검출하는 것이 쉽지 않다.</code> 그러한 다중공선성 문제는 앞서 다룬 방법과 같이 해결하려고 해보아야 한다.</li>
+</ul>
+<ul>
+<li>3) 회전도표</li>
+</ul>
+<ul>
+<li>4) 동적그래프<ul>
+<li>다변량 데이터의 구조와 관계를 탐색하는 데 유용한 도구이다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-모형을-적합한-이후의-그래프"><a href="#2-모형을-적합한-이후의-그래프" class="headerlink" title="2) 모형을 적합한 이후의 그래프"></a>2) 모형을 적합한 이후의 그래프</h3><ul>
+<li>앞에서 소개된 그래프들은 데이터 검토와 모형설정 단계에서 유용하다. 데이터에 모형을 적합한 이후의 그래프들은 <code>가정들을 검토하고 주어진 모형의 적합도를 평가하는 데 도움을 준다.</code></li>
+</ul>
+<p><img src="/image/diagonosis_of_linear_regression_01.png" alt="잔차의 정규성"></p>
+<p><img src="/image/diagonosis_of_linear_regression_02.png" alt="회귀진단을 하기위한 그래프들"></p>
+<h4 id="1-선형성과-정규성-가정을-검토하기-위한-그래프"><a href="#1-선형성과-정규성-가정을-검토하기-위한-그래프" class="headerlink" title="1) 선형성과 정규성 가정을 검토하기 위한 그래프"></a>1) 선형성과 정규성 가정을 검토하기 위한 그래프</h4><h5 id="표준화잔차의-정규확률-plot-Q-Q-plot"><a href="#표준화잔차의-정규확률-plot-Q-Q-plot" class="headerlink" title="표준화잔차의 정규확률 plot (Q-Q plot)"></a>표준화잔차의 정규확률 plot (Q-Q plot)</h5><ul>
+<li>표준화 잔차의 분위수와 표준정규분포의 분위수의 scatter plot이라고 보면된다. 만약 잔차가 정규성을 띈다면 대각선과 최대한 비슷하게 그려져야한다.</li>
+</ul>
+<p><img src="/image/Q_Q_plot_tail.png" alt="Q-Q plot의 tail"></p>
+<p><img src="/image/Q_Q_plot_tail_01.png" alt="Q-Q plot의 나올수 있는 tail의 형태"></p>
+<h5 id="Standardized-Residual-vs-Predictor-독립변수-산점도"><a href="#Standardized-Residual-vs-Predictor-독립변수-산점도" class="headerlink" title="(Standardized) Residual vs Predictor(독립변수) 산점도"></a>(Standardized) Residual vs Predictor(독립변수) 산점도</h5><ul>
+<li>표준적인 가정 하에서 표준화잔차는 각 독립(설명)변수들과 상관되어 있지 않다. 이 가정이 만족된다면 이 플롯은 <code>랜덤하게 흩어진 점들이 나타나야 한다.</code> 이 plot에서 특정한 패턴이 발견된다면 어떤 가정들이 위반되었음을 의미한다. 아래 그림에서 <code>(a)는 선형성 가정이 만족되지 않았을 때 나타나는 플롯 중 하나이며, 이 경우에는 Y 또는 특정 예측 변수에 대한 변환이 선형성을 위하여 필요</code>할 수 있다. 그림 <code>(b)는 이분산성을 의미하며 분산의 안정화를 위하여 데이터 변환이 필요할 것</code>이다. <code>잔차와 X의 산점도를 그렸을 때 잔차들이 2차 곡선 모양을 보인다면 해당 변수의 제곱항을 추가해보는 것을 권한다.</code></li>
+</ul>
+<p><img src="/image/standadized_Residual_vs_predictor.png" alt="표준화잔차 vs 설명변수"></p>
+<h5 id="Standardized-Residual-vs-fitted-value-plot"><a href="#Standardized-Residual-vs-fitted-value-plot" class="headerlink" title="(Standardized) Residual vs fitted-value plot"></a>(Standardized) Residual vs fitted-value plot</h5><ul>
+<li>표준적인 가정 하에서 표준화잔차는 적합값과도 상관되어 있지 않다. 따라서 이 가정이 만족된다면 이 plot은 <code>랜덤하게 흩어진 점들을 나타내야 한다.</code> 단순회귀에서는 (Standardized) Residual vs Predictor(독립변수) 산점도와 동일한 패턴을 가진다.</li>
+</ul>
+<p><img src="/image/Residual_vs_fitted_value.png" alt="표준화잔차와 적합값 plot"></p>
+<h5 id="표준화잔차의-인덱스-plot"><a href="#표준화잔차의-인덱스-plot" class="headerlink" title="표준화잔차의 인덱스 plot"></a>표준화잔차의 인덱스 plot</h5><ul>
+<li><code>표준화잔차 vs 관측개체 번호의 plot</code>이다. 아래와 같이 해석할 수 있으며, 만일 <code>관측개체의 취해진 순서가 중요한 의미를 가진다면, (예컨데, 개체가 시간 또는 공간 상의 순서에 따라 취해졌을 때), 연속적인 순서에 의한 잔차 plot은 오차의 독립성 가정을 검토하기 위해 사용될 수 있다.</code> 독립성 가정 하에서 점들은 0 주위의 수평 띠(밴드) 안에서 랜덤하게 흩어져 있어야 한다.<br><img src="/image/Index_plot_of_Residuals.png" alt="표준화잔차의 인덱스 plot - 01"></li>
+</ul>
+<p><img src="/image/Index_plot_of_Residuals_01.png" alt="표준화잔차의 인덱스 plot - 02"></p>
+<h4 id="2-특이값과-영향력-있는-개체를-검출하기-위한-그래프"><a href="#2-특이값과-영향력-있는-개체를-검출하기-위한-그래프" class="headerlink" title="2) 특이값과 영향력 있는 개체를 검출하기 위한 그래프"></a>2) 특이값과 영향력 있는 개체를 검출하기 위한 그래프</h4><h5 id="지레점-영햘력-특이값"><a href="#지레점-영햘력-특이값" class="headerlink" title="지레점, 영햘력, 특이값"></a>지레점, 영햘력, 특이값</h5><ul>
+<li>주어진 데이터에 모형을 적합함에 있어서 <code>한두 개의 관측값들에 의해 적합이 과도하게 결정되면 분석이 제대로 이루어지지 않은 것이므로 이런 관측값들은 보통 잔차가 0에 가깝거나 0이기 때문에 특이값이 아니나 영향력있는 개체이다. 이런 상황에서는 잔차를 살펴보는 것은 거의 도움이 되지 않는다.</code></li>
+</ul>
+<ul>
+<li><p>어떤 점이 제외되었을 때 혼자서 또는 다른 점들과 결합하여 적합모형(추정된 회귀계수, 적합값, t-통계량 등)에 큰 변화를 준다면 그 점을 <code>영향력 있는 점</code>이라고 한다. <code>일반적으로 어떤 점을 제외하면 약간이라도 적합에 변화가 있을 것이다. 여기에서의 관심은 그 점이 과도한 영향력이 있는가이다.</code><br>따라서, 영향력이 있는 관측개체가 데이터에 존재한다면 그것을 파악하는 것이 중요하다. <code>영향력 있는 개체는 일반적으로 종속(반응)변수 Y 또는 독립(설명)변수 X 공간에 대하여 특이값이다.</code></p>
+<ul>
+<li><p><code>반응(종속) 변수에 대한 특이값</code> : 잔차 plot을 통해 파악될 수 있으며, 잔차 plot은 존재하는 총체적인 모형위반들을 나타낼 것이며, 잔차 plot의 탐색은 분석에서 주요 도구 중 하나이다.</p>
+</li>
+<li><p><code>독립(설명) 변수에 대한 특이값</code> : 앞에서 설명한 지레값($p_{ii}$)는 X-공간에서 특이성을 측정하는 데 이용될 수 있다. <code>큰 지레값을 가지는 관측개체는 X-공간에서 특이값이기 때문</code>이다. 반응변수에 대한 특이값(큰 표준화잔차를 가진 점)과 구별하기 위하여 <code>높은 지레점(high leverage point)</code>라고 한다. 위의 반응 변수에 대한 특이값은 잔차 plot을 통해 충분히 살펴 볼 수 있지만, <code>독립(설명)변수에 대한 특이값은 잔차 plot으로는 찾아보기 힘들다.</code> 그 이유는 아래 잔차와 지레값의 관계에 대한 식을 살펴보면 <code>높은 지레값을 갖는 점들은 잔차가 낮기 때문</code>이다. 그러므로, <code>잔차 plot을 살펴보는 것만으로는 충분하지 않으므로 종속변수와 독립변수의 산점도에 회귀식을 그려보거나 지레값의 index plot을 그려 살펴 봐야 한다.</code> 통상적으로 사용되는 $p_{ii}$에 대한 임계값은 $2(p(\sum p_{ii})+1)/n$이다. 즉, 임계값들의 평균의 2배를 넘으면 높은 지레값을 갖는 점으로 판단한다.</p>
+</li>
+<li><p>데이터가 특이값을 가지고 있으나 그것을 검출하지 못하는 것을 <code>가면문제(masking problem)</code>이라고 한다. 이것은 어떤 특이값들이 다른 특이값들에 의해 숨겨져 있을때 발생할 수 있다. 특이값이 아닌 점을 특이값으로 간주하는 것을 <code>수렁문제(swamping problem)</code>라고 한다. 이것은 <code>특이값이 회귀선을 자기쪽으로 끌어당겨서 다른 점들을 적합선으로부터 멀게 함으로써 발생할 수 있다.</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">p_{ii} + \frac{e^2_{i}}{SSE} \leq 1</script><h5 id="영향력의-측도"><a href="#영향력의-측도" class="headerlink" title="영향력의 측도"></a>영향력의 측도</h5><ul>
+<li><code>Cook&#39;s distance</code> : <code>전체 데이터로부터 얻은 회귀계수들과 i번째 개체를 제거하고 얻은 회귀계수(또는 적합값)들의 차이를 측정</code>한다. 또는 동일하게 전체 데이터로부터 얻은 적합값들과 i번째 개체를 제거하고 얻은 적합값들의 차이를 측정한다. 아래 2번째 식을 보게 되면, Cook’s distance는 기본적인 두 값의 곱임을 알 수 있다. r_{i}는 내적 표준화잔차를 의미하며, $\frac{p_{ii}}{1-p_{ii}}$는 <code>잠재성 함수</code>라고 불린다. <code>어떤 관측개체의 영향력이 크다면 그 개체를 제외할 때 회귀분석의 결과에 큰 변화가 일어날 것이고, 이때 Cook&#39;s distance의 값은 크게 될 것이다.</code> 따라서 큰 $C_{i}$의 값은 그 점이 영향력이 있음을 나타낸다. <code>C값에 대한 index plot을 그려 C값들이 비슷한 값을 가지지 않다면 돋보이는 C값들을 갖는 데이터들을 제외하고 모형을 적합에 보는 등의 방법을 검토해 봐야할 것이다.</code> 엄격한 임계값을 사용하는 것보다는 상대적으로 큰 영향력을 가지는 관측개체들을 가려내는 측도로 활용하기를 권한다. 만약 모든 $C_{i}$값들이 비슷한 값을 가진다면 굳이 특별한 조치를 취할 필요가 없을 것이다. 반면에 나머지 점들에 비하여 특별히 돋보이는 $C_{i}$ 값을 가지는 데이터 점들이 있다면 이는 면밀하게 검토될 필요가 있다.</li>
+</ul>
+<script type="math/tex; mode=display">C_{i} = \frac{sum^{n}_{j=1} (\hat{y_{j}} - \hat{y_{j}}_{i})^2}{\hat{\sigma}^{2} (p+1)} , i=1,2, \cdots ,n</script><script type="math/tex; mode=display">= \frac{r_{i}^{2}}{p+1} \times \frac{p_{ii}}{1-p_{ii}}, i =1,2, \cdots, n.</script><ul>
+<li>이외의 Welsch &amp; Kuh의 측도(DFITS)와 Hadi의 영향력 측도가 있으나, Cook’s distance를 통해 충분히 검사가능하므로 생략하도록 한다. 다만, Welsh &amp; Kuh와 Cook’s distance는 잔차와 지레값에 대한 승법적(곱하는)함수인 반면에 Haid의 측도는 가법적(종속변수와 독립변수 각각에 대한 영향력의 수치를 더하는)함수이다.</li>
+</ul>
+<ul>
+<li><code>특이값은 언제나 조심스럽게 조사되어야 되며 실무에서 분석시 함부로 제거해서는 안된다. 그 데이터 자체도 의미가 있을 수 있기 때문(예를 들면, 데이터가 모집단으로 부터 추출되지 않았다든가 또는 모형이 선형이 아니라는 것을 의미할 수 있기 때문)</code>이다. <code>지레대 효과는 높으나 영향력이 작은 경우는 큰 문제를 일으키지는 않는다. 그러나 높은 지레값을 가지며 영향력이 큰 점들은 예측변수들의 공간에서 보통의 것들에 비해 멀리 떨어져 있으며 적합에 유의적인 영향을 끼치기 때문에 잘 검토할 필요가 있다.</code><ul>
+<li>위에서 언급했던 특이값이 의미있는 경우는 지수함수를 띄는 박테리아의 증식을 예로 들 수 있다. 일정 시간 까지는 개체수가 서서히 증가하다가 어떤 시간의 임계값을 지나면 개체수가 폭발적으로 증가하기 때문이다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/bacteria_growthrate_with_exponential_dist.png" alt="특이값이 의미있는 경우의 예 - 지수모형을 갖는 박테리아 증식 모델"></p>
+<ul>
+<li>즉, <code>P값들의 index plot과 Cook&#39;s distance의 index plot과 종속변수와 독립변수 plot을 종합해서 비교해 보면서 각각의 지렛값이 높은 데이터와 영향력이 있는 값을 찾아야 할 것이다.</code></li>
+</ul>
+<ul>
+<li>criterion에는 cooks 와 DFITS를 사용할 수 있다. 아래 그래프의 해석은 몇가지 주의해야할 관측치들이 있는데, contractor와 reporter는 낮은 Leverage를 갖지만 큰 잔차를 갖는것을 볼 수 있다. RR.engineer는 작은 잔차와 높은 Leverage를 갖는다. Conductor와 minister는 둘다 모두 높은 Leverage와 높은 잔차를 갖으므로 영향력있는 관측치이다.</li>
+</ul>
+<p><img src="/image/influence_plot.png" alt="influence plot"></p>
+<ul>
+<li><code>특이값(잔차가 큰 관측치)과 영향력있는 관측개체(high leverage high residual)를 식별하는 데 유용한 다른 접근방법은 로버스트 회귀(robust regression)</code>이다. <code>높은 지레값을 가지는 관측개체에 상대적으로 낮은 가중치를 주고 회귀직선을 적합</code>시킨다. 다음에 더 자세한 설명을 할 것이다.</li>
+</ul>
+<h4 id="3-변수들의-효과에-대한-진단플롯"><a href="#3-변수들의-효과에-대한-진단플롯" class="headerlink" title="3) 변수들의 효과에 대한 진단플롯"></a>3) 변수들의 효과에 대한 진단플롯</h4><ul>
+<li><code>회귀방정식의 어떤 변수를 보유해야 할 것인지 아니면 제거해야 할 것이지를 각각의 t-검정에 대한 보조도구로 사용</code>될 수 있다.</li>
+</ul>
+<h5 id="첨가변수-plot-또는-편회귀-plot-added-variable-plot-또는-partial-regression-plot"><a href="#첨가변수-plot-또는-편회귀-plot-added-variable-plot-또는-partial-regression-plot" class="headerlink" title="첨가변수 plot 또는 편회귀 plot(added-variable plot 또는 partial regression plot)"></a>첨가변수 plot 또는 편회귀 plot(added-variable plot 또는 partial regression plot)</h5><ul>
+<li>회귀 모형에 대한 특정 독립(설명)변수를 포함시킬 것인지의 여부를 검토할 때, 그 대상이 되는 예측 변수에 대한 회귀계수의 크기를 그래프를 통하여 표현한다. plot에 나타나는 점들의 <code>기울기는 곧 해당 독립(설명)변수에 대한 회귀계수</code>를 나타낸다. <code>따라서 이 plot에 나타난 점들이 뚜렷한 기울기를 보이지 않는다면 이는 그 변수가 모형에서 별로 유용하지 않음을 의미</code>한다. <code>X축이 해당 예측변수 그 자체가 아니므로 비선형성의 여부를 나타내주지는 않는 점을 주의해야 한다.</code> 또한 이 plot은 <code>그 계수의 크기를 결정하는 데 중요한 역할을 하는 데이터 점을 제시해 주기도 한다.</code> 첨가변수 plot은 Y-잔차 $(X_{j}$를 제외한 나머지 변수들로 설명되지 않은 Y의 부분) vs $X_{j}$-잔차$(X_{j}$를 종속변수로하여 나머지 변수들로 설명되지 않은 $X_{j}$의 부분)을 그리는 plot이다. <code>이 두개의 잔차들을 최소 제곱법으로 적합시켰을 때, 적합된 회귀직선의 기울기는 Xj를 포함한 모든 독립(설명)변수 얻은 회귀계수</code>($\hat{\beta}_{j}$)와 같다.</li>
+</ul>
+<ul>
+<li>개별로 그리는 것은 index로 식별을 할 수 있지만 아래에 여러가지를 한 꺼번에 그리는 방법은 인덱스를 볼 수 없으므로 처음에는 여러개를 다 같이 그린 후에 자세히 살펴봐야할 변수에 대해서만 개별로 그리는 방법을 사용하는 것이 좋을 것이다.</li>
+</ul>
+<p><img src="/image/partial_regression_plot.png" alt="partial regression plot을 그리는 방법"></p>
+<p><img src="/image/many_partial_regression_plot.png" alt="partial regression plot을 모형의 모든 변수에 관해 그리는 법"></p>
+<h5 id="성분잔차-plot-component-plus-residual-plot"><a href="#성분잔차-plot-component-plus-residual-plot" class="headerlink" title="성분잔차 plot(component plus residual plot)"></a>성분잔차 plot(component plus residual plot)</h5><ul>
+<li>회귀 분석에서 가장 오래된 그래프적 기법 중의 하나이다. $(e + \hat{\beta}_{j} X_{j} VS X_{j})$에 대한 산점도이다. $\hat{\beta}_{j} X_{j}$은 j번째 독립(설명)변수가 적합값에 기여하는 공헌도(성분)임을 주목하자. 이 plot에서 <code>기울기는 해당 독립변수에 대한 추정 회귀계수를 의미</code>하며, <code>해당 예측변수의 기울기를 보여 줄 뿐 아니라 종속변수와 해당 독립변수사이의 비선형성의 존재도 알려줌으로써 필요할 경우 독립변수에 관한 구체적인 선형변환의 내용까지도 제시</code>한다는 것이다.</li>
+</ul>
+<ul>
+<li>이 또한, added-variable plot처럼 여러개를 그려본 뒤 필요한 변수에 대해서만 살펴보는 것을 추천.</li>
+</ul>
+<p><img src="/image/ccpr_plot.png" alt="CCPR plot을 그리는 방법"></p>
+<p><img src="/image/ccpr_grid.png" alt="CCPR plot을 모형의 모든 변수에 관해 그리는 법"></p>
+<h5 id="component-plus-residual-plot-vs-added-variable-plot"><a href="#component-plus-residual-plot-vs-added-variable-plot" class="headerlink" title="component plus residual plot vs added-variable plot"></a>component plus residual plot vs added-variable plot</h5><ul>
+<li>두 그래프 모두 회귀계수에 대한 추정치를 기울기로 보여주지만, added-variable plot은 어떤 데이터가 회귀계수를 추정하는데 많은 영향을 주었는지를 알 수 있게 도와준다. 반면에, component plus residual plot은 added-variable plot보다 특정 독립변수를 회귀모형에 도입해야 하느냐 하는 문제에 대한 답이나 그 독립변수가 가지는 비선형성의 여부를 탐색하는 데 더 민감한 것으로 알려져 있다.</li>
+</ul>
+<h4 id="추가적인-예측변수의-효과"><a href="#추가적인-예측변수의-효과" class="headerlink" title="추가적인 예측변수의 효과"></a>추가적인 예측변수의 효과</h4><ul>
+<li><p>회귀식에 새로운 변수를 도입하는 것의 효과에 대하여 다음의 두가지 질문을 고려해야할 것이다. (a) 새로운 변수의 회귀계수가 유의한가? (b)새로운 변수를 도입함으로써 회귀식에 이미 포함되어 있는 변수들의 회귀계수를 유의하게 변화시키는가? 이 두가지 질문에 대한 답으로 크게 4가지 유형이 있을 수 있다.</p>
+<ul>
+<li><p>1) 새로운 변수가 유의하지 않은 회귀계수를 가지며, 다른 회귀계수들은 이전의 값에 비해 거의 변화가 없다. 어떤 다른 외부적인 조건(예컨대, 이론 또는 주제에 대한 고려)에 의하여 필요성이 있지 않다면, 새로운 변수는 회귀식에 포함되지 않아야 한다.</p>
+</li>
+<li><p>2) 새로운 변수가 유의한 회귀계수를 가지며, 이전에 도입된 다른 변수들의 회귀계수에 큰 변화가 있다. 이 경우 새로운 변수가 유지되어야 하며, 그러나 공선성에 대한 탐색이 필요하다. 공선성의 증거가 없다면, 그 변수는 방정식에 포함되어야 하며 다른 추가적인 변수의 도입에 대한 탐색이 수행되어야 한다.</p>
+</li>
+<li><p>3) 새로운 변수가 유의한 회귀계수를 가지며, 다른 회귀계수들은 이전의 값에 비하여 큰 변화가 없다. <code>이것은 이상적인 상황이며 새로운 변수가 이전에 도입된 변수들과 상관되어 있지 않을 때 발생</code>한다. 이 경우 새로운 변수는 방정식에 포함되어야한다.</p>
+</li>
+<li><p>4) 새로운 변수가 유의하지 않은 회귀계수를 가지며, 이전에 도입된 다른 회귀계수에 큰 변화가 있다. 이것은 <code>명백한 공선성의 증거</code>이며, 회귀식에 새로운 변수를 포함시킬 것인지 아니면 제 제외시킬 것인지를 결정하기 전에 수정작업이 취해져야 한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="변수변환"><a href="#변수변환" class="headerlink" title="변수변환"></a>변수변환</h2><ul>
+<li>예를 들면, 아래 첫번째 Y(종속변수)에 log를 취하거나 root를 씌우는 것은 종속변수와 반응 변수의 산점도를 살펴보며 그에 맞는 패턴이 그려지면 사용해야 될 것이다. 물론 그 외에도 Y(종속변수)의 단위를 줄이는 경우나 범위를 제한하는 경우에도 사용할 수 있을 것이다. 특히 <code>로그변환</code>은 회귀분석에서 가장 널리 쓰이는 변환 중의 하나이다. <code>분석대상 변수가 평균에 비해 큰 표준편차를 가졌을 경우에 특히 유용한 것으로 알려져 있다. 원래 변수를 로그척도로 변환시키면 이는 그의 변이를 무디게 하는 동시에 비대칭성을 줄이는 효과가 있다. 또한 이분산성을 제거하는 데도 효과적</code>이다.</li>
+</ul>
+<p><img src="/image/linear_regression_of_transform_variables.png" alt="회귀분석 진단"></p>
+<ul>
+<li>잔차에 관련된 플롯들을 그려본 후 가정이 위배되었다면, 여러 방법들을 통해 문제를 해결해보아야 할 것이다. 선형성 또는 정규성의 확보, 분산의 안정화와 같은 어떤 목적을 달성하기 위하여 변환이 적용된다. <code>어떤 경우에는 원래의 변수들보다는 변환된 변수들에 선형회귀모형을 적합할 필요도 있는데, 실제 문제에서 이런 경우는 매우 흔하다. 다중회귀에서의 변환에는 더 많은 노력(여러 변환을 통해 맞는 변수를 찾아야하므로) 주의(반응(종속)변수와 설명(독립)변수의 산점도를 그려서 변환의 힌트를 얻을 수 없으며, 각각의 산점도를 그려서 변환을 진행하였어도 전체적인 설명변수들의 공간상에서는 맞지 않는 경우도 있기 때문)가 필요하다.</code></li>
+</ul>
+<ul>
+<li>가장 흔하게 위반되는 가정은 고려하는 모형의 선형성과 오차분산들의 동일성이다. 다시 한번 말하지만, 회귀분석에서의 선형이라함은 변수들 간의 선형관계라기 보다는 가정 된 회귀모형이 회귀모수에 대해 선형모수에 대해 선형적임을 의미하는 것이다. 아래 모형들은 모두 선형이다.</li>
+</ul>
+<blockquote>
+<p>아래의 모형들은 모두 회귀모수 $\beta_{0}, \beta_{1}, \beta_{2}$에 대해 선형이기 때문에 선형성을 갖는다.</p>
+</blockquote>
+<script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1}X + \varepsilon</script><script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1}X + \beta_{2} X^{2} + \varepsilon</script><script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1} log X + \varepsilon</script><script type="math/tex; mode=display">Y =  \beta_{0} + \beta_{1} \sqrt{X} + \varepsilon</script><ul>
+<li>반면에 아래 모형은 모수 $\beta_{1}$에 대해 선형꼴이 아니기 때문에 비선형모형이 된다.</li>
+</ul>
+<script type="math/tex; mode=display">Y =  \beta_{0} + e^{\beta_{1}X} + \varepsilon</script><ul>
+<li>변수 변환이 필요하게 되는 몇 가지 이유들을 다시 요약해 보면 다음과 같다.</li>
+</ul>
+<h4 id="1-선형성을-위한-변환들"><a href="#1-선형성을-위한-변환들" class="headerlink" title="1) 선형성을 위한 변환들"></a>1) 선형성을 위한 변환들</h4><ul>
+<li>ex) 학습이론(실험심리) 분야의 한 예로서 어떤 Task를 반복적으로 수행할 때 i번째 수행에서 걸리는 시간 $T_{i}$는 이론적으로 아래와 같은 관계를 가진다고 하자. 이 경우 $T_{i}$와 $i$의 관계는 모수 $\alpha$, $\beta$에 관해 비선형이 되므로 선형회귀분석에서의 기법을 직접 적용할 수 없다.</li>
+</ul>
+<script type="math/tex; mode=display">T_{i} = \alpha \beta^{i}, \alpha > 0, 0 < \beta < 1</script><ul>
+<li>반면에 위 모형의 양변에 로그를 취하면 아래와 같은 식을 얻게 되는데, $Y_{i} = log T^{i}$, $\beta_{0} = log \alpha, \beta_{1} = log \beta$, $X_{i} = i$로 변환시키면 $Y_{i} = \beta_{0} + \beta_{1}X_{1}$가 되어 모수 $\beta_{0}$, $\beta_{1}$에 관해 선형꼴이므로, 이제 여기에 표준적인 회귀방법들을 사용할 수 있게 된다. 즉, <code>원래 변수들의 관계는 비선형이지만 변화된 변수들 사이의 관계는 선형</code>이다.</li>
+</ul>
+<ul>
+<li>선형회귀분석에 수반된 기본가정들 중의 하나는 데이터를 묘사하는 회귀모형의 형태가 변수들 간의 선형적 관계를 가져야 하며, 동시에 회귀모수에 관해 선형적이어야 한다는 것이다. <code>이론적인 근거로부터 또는 Y와 설명(독립)변수 X의 산점도를 검토함으로써 두 변수의 관계가 비선형적임을 알게 될 경우</code>가 있다. 반응변수와 설명변수의 산점도를 그렸을 경우 아래와 같은 그래프의 패턴을 나타낸다면, 해당하는 변환을 사용해 보길 권한다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>함수</th>
+<th>변환</th>
+<th>선형 형태</th>
+<th>그림</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$Y = \alpha X^{\beta}$</td>
+<td>$Y’ = log Y, X’ = log X$</td>
+<td>$Y’ = log \alpha + \beta X’$</td>
+<td>그림 1-1</td>
+</tr>
+<tr>
+<td>$Y = \alpha e^{\beta X}$</td>
+<td>$Y’ = ln Y$</td>
+<td>$Y’ = ln \alpha + \beta X$</td>
+<td>그림 1-2</td>
+</tr>
+<tr>
+<td>$Y = \alpha + \beta log X$</td>
+<td>$X’ = log X$</td>
+<td>$Y = \alpha + \beta X’$</td>
+<td>그림 1-3</td>
+</tr>
+<tr>
+<td>$Y = \frac{X}{\alpha X + \beta}$</td>
+<td>$Y’ = \frac{1}{Y}, X’ = \frac{1}{X}$</td>
+<td>$Y’ = \alpha - \beta X’$</td>
+<td>그림 1-4(a)</td>
+</tr>
+<tr>
+<td>$Y = \frac{e^{\alpha + \beta X}}{1 + e^{\alpha + \beta X}}$</td>
+<td>$Y’ = ln \frac{Y}{1-Y}$</td>
+<td>$Y’ = \alpha + \beta X$</td>
+<td>그림 1-4(b)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="2-분산안정화를-위한-변환"><a href="#2-분산안정화를-위한-변환" class="headerlink" title="2) 분산안정화를 위한 변환"></a>2) 분산안정화를 위한 변환</h4><ul>
+<li><code>반응(종속)변수 Y에 대한 분산이 평균에 의존하는 확률분포를 가지는 경우가 있다.</code> 통상 반응(종속)변수 Y의 평균이 설명(독립)변수 X와 관계를 가지게 되므로, 만일 Y의 분산이 Y의 평균에 의존한다면 더 이상 상수가 아니고 X에 따라 변하게 될 것이다. 이런 경우 Y는 정규분포를 따르지 않는다. 그런데 <code>회귀분석에서 대부분의 기본적인 유의성 검정은 Y(혹은 오차항)의 정규성 가정 하에서 성립하므로 이와 같은 비정규성은 문제가 될 수 있다(표본이 큰 경우에는 주문제가 아닐 수 있지만).</code> 회귀모형의 기본가정 중 하나인 등분산성을 위반하는 경우이므로, 회귀모수에 대한 추정량들은 그의 불편성(unbiasedness)은 유지되지만 정확성(precision)의 관점에서는 더 이상 최적 추정량이 아니다. 이 때 변수변환 기법을 이용하여 데이터가 등분산성과 정규성을 동시에 가지도록 할 수 있다. 실제로 오차항이 등분산성을 가지도록 하는 분산안정화 변환(variance-stabilizing transformation)은 많은 경우에 정규성도 어느 정도 만족시키게 한다는 사실이 알려져 있다.</li>
+</ul>
+<ul>
+<li>변수변환은 오차항의 분산을 안정시켜 등분산성(homoscedasticity)을 유지할 목적으로 활용될 수 있다. 오차항의 분산이 모든 관측값에 대하여 똑같은 상수값을 취하지 않을 경우 오차항은 이분산성을 가진다고 말한다. 잔차들의 변이가 X의 값에 따라서 점점 커지거나 작아지는 깔때기 형태의 분포를 가지는 경향이 있다.</li>
+</ul>
+<ul>
+<li><code>이분산성이 존재하면, 원 데이터에 최소제곱추정법을 적용하는 것이 이론적 타당성을 보장받지 못하며, 회귀계수의 추정치나 그의 표준오차도 정확성의 관점에서 신뢰할 수 없게 된다.</code> 회귀 분석에 있어서 반응 변수 Y의 분산이 그의 평균값의 함수인 경우가 있다. 아래 표와 같은 분포들이 대표적이다. 분산안정화를 위한 변수 변환들은 <code>분산을 안정시킬 뿐만 아니라 변환된 변수의 분포가 정규분포에 가깝도록 하는 이중 효과도 가지고 있는 것으로 알려져 있다.</code> 포아송분포를 따를 수 있을 것 같은 사건들은 예를 들어 교통사고수 같은 사건을 예로 들 수 있을 것이다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Y의 확률 분포</th>
+<th>Y의 평균 $\mu$에 따른 Y의 분산</th>
+<th>변환</th>
+<th>분산의 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>포아송</td>
+<td>$\mu$</td>
+<td>$\sqrt{Y} 또는 (\sqrt{Y} + \sqrt{Y + 1})$</td>
+<td>0.25</td>
+</tr>
+<tr>
+<td>이항</td>
+<td>$\mu(1-\mu)/n$</td>
+<td>$sin^{-1} \sqrt{Y}(라디안)$</td>
+<td>0.25/n</td>
+</tr>
+<tr>
+<td>음이항</td>
+<td>$\mu + \lambda^{2} \mu^{2}$</td>
+<td>$\lambda^{-1} sinh^{-1}(\lambda \sqrt{Y}) 또는 \lambda^{-1} sinh^{-1}(\lambda \sqrt{Y} + 0.5)$</td>
+<td>0.25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="3-실제-변환의-필요성과-방법은-주로-모형적합의-과정에서-구한-잔차를-검토함으로써-알-수-있다"><a href="#3-실제-변환의-필요성과-방법은-주로-모형적합의-과정에서-구한-잔차를-검토함으로써-알-수-있다" class="headerlink" title="3) 실제 변환의 필요성과 방법은 주로 모형적합의 과정에서 구한 잔차를 검토함으로써 알 수 있다."></a>3) 실제 변환의 필요성과 방법은 주로 모형적합의 과정에서 구한 잔차를 검토함으로써 알 수 있다.</h4><ul>
+<li>오차항의 분산이 상수가 아닐 뿐더러, 이에 대해 취할 수 있는 적절한 변환이 무엇인지에 관한 사전지식이나 근거를 찾기 어려운 경우도 있다. 이럴 때는 경험적 접근에 따른 분석이 문제의 실마리를 제공할 수도 있으며, 또 이를 통해 적절한 변환도 발견할 수 있게 된다. 이분산성이 있음에도 불구하고 이를 적절히 제거하지 않으면 회귀계수의 추정량이 그의 불편성은 유지되나 표준오차 값은 커지게 된다. 이에 따라 회귀계수의 신뢰구간은 넓어지며 유의성 검정의 민감성이 떨어진다.</li>
+</ul>
+<h3 id="가중최소제곱-Weighted-Least-Squares"><a href="#가중최소제곱-Weighted-Least-Squares" class="headerlink" title="가중최소제곱(Weighted Least Squares)"></a>가중최소제곱(Weighted Least Squares)</h3><ul>
+<li>잔차검정을 통한 결과로 등분산성 가정을 만족시키지 못하였을 경우 변수 변환을 적용하여 일단 이분산성의 상황을 수정한 후, 통상적인 최소제곱(OLS; Ordinary Least Square)추정법을 사용하여 보다 나은 추정치를 구할 수 있었다.</li>
+</ul>
+<ul>
+<li>가중최소제곱(WLS; weighted least squares)법은 변환된 변수들에 대하여 OLS를 수행 하는 것과 동일한 것이다. 앞으로 설명할 WLS법은 이분산성을 갖는 오차를 다루는 방법과 그 추정 방법에 관한 것이다. 예를 들어 <code>WLS는 함량-반응 곡선(dose-response curve)과 로지스틱 모형(Logistic model)에 대한 적합에서 OLS보다 더 우수하다. WLS 추정은 다음의 식을 최소화함을써 얻어진다. 만약 여기서 각 가중치가 1씩 동일하게 나눠가진다면 일반적인 OLS와 동일</code>하다.</li>
+</ul>
+<script type="math/tex; mode=display">\sum_{i=1}^{n} w_{i}(y_{i} - \beta_{0} - \beta_{1} x_{i1} -  \cdots - \beta_{p}x_{ip})^{2}</script><ul>
+<li>위의 식에서 $w_{i}$는 <code>분산에 반비례하는 가중치</code>이다. 즉, $w_{i} = 1/\sigma_{i}^{2}$이다. 따라서 <code>WLS 방법을 사용할 경우 갖은 가중치를 가지는 관찰값은 회귀계수들의 값을 결정하는 데 적은 영향을 미치게된다.</code> 극단적인 경우 $w_{i} = 0$이면 i번째 관측개체는 추정과정에서 제외되는 효과를 가지게 된다. WLS에서는 데이터 생성에 관한 사전지식이나, 직관, 잔차분석 등 이분산성을 탐색하는 과정에 얻은 정보를 종합적으로 활용하게 된다. <code>만약 가중치가 알려져 있지 않다면, 앞에서의 방법은 다음 두 단계로 나누어 진다. 첫 단계에서는 OLS에 의한 결과로부터 가중치를 추정하고, 두번째 단계는 첫 단계에서 구한 가중치를 기초로 WLS를 적용하여 추정치를 구하게 된다.</code></li>
+</ul>
+<ul>
+<li><code>WLS 추정치가 가지는 다른 한 논리는, 모형에 있는 회귀계수는 그대로 두고 변환모형에서 오차항의 분산이 상수가 되도록 데이터 변환을 시키는 데 근거를 둔다.</code></li>
+</ul>
+<h4 id="함량-반응-연관곡선의-적합"><a href="#함량-반응-연관곡선의-적합" class="headerlink" title="함량-반응 연관곡선의 적합"></a>함량-반응 연관곡선의 적합</h4><ul>
+<li>가중최소제곱분석법의 중요한 응용분야 중의 하나로 비율의 형태(0과 1 사이의 값)를 취하는 반응(종속)변수를 선형회귀를 통해 적합시키는 경우를 생각할 수 있다. 어떤 연구자가 피실험대상에게 여러 가지 다른 수준의 자극을 주는 실험을 수행한다고 하자. 실험대상들은 여러 수준의 자극들에 임의 배치되고 각 대상이 그 자극에 반응하느냐의 여부에 따른 이항반응(binary response)을 관찰한다고 하자. 이런 실험의 예는 자극의 수준이 투여된 약이나 독극물의 함량으로 표현되고, 이항반응이 사망 또는 생존을 나타내는 약학이나 생물시험(bioassay) 분야에서 주로 많이 찾아볼 수 있다. 또 다른 예로는 여기에서의 자극을 어떤 제품에 대한 할인액에 대응시킬 때 이항반응이 그 제품의 구매여부로 표현되는 소비자행동을 연구하는 경우를 생각할 수도 있다.</li>
+</ul>
+<ul>
+<li>위의 경우들의 <code>통계분석의 목적은 투여함량-반응 사이의 관계를 결정하는 것뿐 아니라, 어떤 지정된 수준의 반응결과를 얻기 위해 필요한 투여량의 추정도 포함</code>된다. <code>로지스틱 모형(또는 logit model)은 생물학이나 역학 분야 뿐만 아니라 리스크 분석, 학습이론, 소비자행동(선택모형) 이론, 시장 프로모션 연구 등에도 널리 사용</code>된다.</li>
+</ul>
+<h3 id="상관된-오차항의-문제"><a href="#상관된-오차항의-문제" class="headerlink" title="상관된 오차항의 문제"></a>상관된 오차항의 문제</h3><ul>
+<li><p>선형회귀모형의 기본 가정들 중 하나는 i번째 j번째 관측개체에 대한 오차항인 $\varepsilon_{i}$와 $\varepsilon_{j}$가 서로 상관되어 있지 않은 독립적인 확률변수라는 것이다. <code>회귀모형에서 오차항이 가지는 의미에 비추어 볼 때 이들 사이의 상관관계의 존재는 곧 모형에 반영되지 않은 추가적 예측변수의 존재 가능성을 의미할 수도 있다.</code> 빠뜨린 예측변수에 대한 연속된 값들이 서로 상관관계를 가지면, 이런 상관의 효과는 오차항에 반영되고 이에 따라 모형의 오차항은 상관관계를 보이게 될 것이다.</p>
+</li>
+<li><p><code>관측값들이 얻어지는 자연스러운 순서에 따라 그들이 서로 연관되어 있을 경우 오차항(혹은 반응변수의 관측값)들이 자기상관(autocorrelation)을 가지고 있다고 한다.</code> 자기상관성의 문제는 여러 가지 이유로 일어날 수 있다. 시간적 또는 공간적으로 인접되어 있는 관측개체들에 대한 오차항들은 유사한 경향을 가지기 쉽다. 시계열 데이터에서는 연속된 관측개체에 대한 오차항은 양의 상관관계를 가지는 경향이 있다. 또한 공간적으로 인접한 실험구역에서 얻은 관측값들은 공유하는 외적 환경의 영향으로 인해 상관된 잔차를 가지는 경향이 있다.</p>
+</li>
+</ul>
+<ul>
+<li><p>오차항의 자기상관성 문제는 회귀분석에 여러 가지 영향을 미치게 되는데, 그 내용을 요약하면 다음과 같다.</p>
+<ul>
+<li>1.최소제곱추정량이 그의 불편성은 유지하지만 더 이상 최소분산을 가지지 않는다는 점에서 추정향의 효율성이 없어진다.</li>
+<li><ol>
+<li>$\sigma^{2}$이나 모회귀계수의 표준오차의 추정량은 실제보다 심각하게 과소추정될 수 있으며, 이에 따라 추정된 회귀계수는 그의 정확도가 높은 것으로 잘못 판단될 수 있다.</li>
+</ol>
+</li>
+<li><ol>
+<li>통상적으로 사용되는 신뢰구간이나 유의성 검정 등이 엄격한 의미에서 더 이상 타당하지 않다.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>위와 같은 이유로 오차항들 간의 자기상관은 심각한 문제이며 간단히 무시되어서는 안 될 것이다.</code>자기상관성의 문제는 일반적으로 다음 두 가지 유형으로 구분할 수 있다. 첫 번째는 회귀모형에 포함되어야 할 독립(설명)변수가 빠짐으로써 생기는 경우이므로 이때는 해당 독립(설명)변수만 찾아내면 문제는 곧 해결된다. <code>허나, 실제로 데이터 분석을 함에 있어서 해당 변수를 찾는 것은 그리 쉬운 문제가 아니다.</code> 두번째 유형은 순수자기상관이라고 불리는 것으로 데이터 변환 등을 통해 해결될 수 있다.</li>
+</ul>
+<ul>
+<li><code>시계열 데이터의 분석에서 가장 유용한 그래프는 잔차를 시간에 대해 플롯한 인덱스 플롯(index plot)이다.</code> 만약 플롯에서 계속된 몇 개의 양의 잔차들이 있고, 그 다음 여러 개의 음의 잔차가 따라오는 식의 같은 부호를 가진 잔차들이 군집화하는 상황을 볼 수 있다면, 아니면 그 반대의 모습들이 보인다면 해당 데이터는 오차항이 서로 상관되어 있는 경우이다. <code>이러한 형태의 모형들은 오차항들간에 강력한 상관관계가 있다는 증거로서 추가적인 분석이 필요하다는 것을 의미</code>한다.</li>
+</ul>
+<ul>
+<li>그래프 분석에 추가하여 연(run; 잔차의 부호가 동일한 데이터들의 군집이 연속으로 이루어짐)의 크기를 이용하여 오차항의 자기상관성을 검색하는 방법 외에 <code>더빈-왓슨 통계량</code>을 이용할 수도 있다.</li>
+</ul>
+<h4 id="더빈-왓슨-통계량"><a href="#더빈-왓슨-통계량" class="headerlink" title="더빈-왓슨 통계량"></a>더빈-왓슨 통계량</h4><ul>
+<li><code>더빈-왓슨(Durbin-Watson) 통계량</code>은 회귀분석에서 <code>오차항의 자기상관성 여부를 대수적 방법으로 검정</code>하기 위해 널리 사용되는 방법이다. 오차항들이 다음 형식의 1차의 자기상관계열을 이룬다는 가정에 그 근거를 두고 있다. $w_{t}$는 서로 독립이며, 평균이 0이고 분산이 상수인 정규분포를 따르며, $\rho$는 $\varepsilon_{t}$와 $\varepsilon_{t-1}$의 상관계수이다. 이런 관계를 갖는다면 <code>1차 자기상관</code>을 가진다고 말한다.</li>
+</ul>
+<script type="math/tex; mode=display">\varepsilon_{t} = \rho \varepsilon_{t-1} + w_{t}, | \rho | < 1</script><ul>
+<li>더빈-왓슨 통계량 d는 아래의 수식으로 정의된다. 귀무가설 $H_{0} : \rho = 0, H_{1}: \rho &gt; 0$에 대한 검정 통계량으로 사용된다.</li>
+</ul>
+<script type="math/tex; mode=display">d = \frac{\sum^{n}_{t=2} (e_{t} - e_{t-1})^2 }{\sum_{t=1}^{n} e_{t}^{2}}</script><ul>
+<li>위와 같은 방법들을 통해 자기상관을 제거해주기도 하지만 예를들어, 시간에 따라 변하는 중요한 독립변수를 회귀모형에서 빠뜨린 결과로 인한 현상일수도 있기에 <code>관측된 자기상관성의 징후는 잘못된 모형설정에서 비롯된 현상으로 해석할 수도 있다는 의미</code>이다. 실제로 지적된 자기상관의 오차구조를 반영하는 자기회귀(autoregressive) 모형을 가지고 새로 분석을 시작하기보다는 <code>새로운 독립변수의 도입가능성을 고려해보고 진행하는 것이 더 바람직할 때가 많다.</code> 그러므로 <code>자기상관을 수정하기 위해 변수변환 방법을 고려하는 일은 마지막으로 시도해볼 만한 것</code>이다.</li>
+</ul>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Regression(03) - 회귀진단",
+        "image": "https://heung-bae-lee.github.io/image/interaction_term.png",
+        "keywords": "",
+        "genre": "machine learning",
+        "datePublished": "2020-01-15",
+        "dateCreated": "2020-01-15",
+        "dateModified": "2020-05-26",
+        "url": "https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/",
+        "description": "교호작용
+성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia"
+        "wordCount": 5802
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/01/16/NLP_01/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            임베딩이란?
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/01/15/NLP_07/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">NLP란?</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

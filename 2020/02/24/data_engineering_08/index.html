@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>data engineering (Presto란?) | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Presto란? Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어">
+<meta property="og:type" content="article">
+<meta property="og:title" content="data engineering (Presto란?)">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/02/24/data_engineering_08/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Presto란? Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/query_result_settings.png">
+<meta property="og:updated_time" content="2020-02-28T23:27:23.231Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="data engineering (Presto란?)">
+<meta name="twitter:description" content="Presto란? Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/query_result_settings.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/02/24/data_engineering_08/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/data-engineering/">data engineering</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-data_engineering_08" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        data engineering (Presto란?)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/02/24/data_engineering_08/" class="article-date">
+            <time datetime="2020-02-24T13:11:09.000Z" itemprop="datePublished">2020-02-24</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="Presto란"><a href="#Presto란" class="headerlink" title="Presto란?"></a>Presto란?</h2><ul>
+<li>Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어떻게 합칠 수 있는지를 Presto를 통해 하나의 query로 해결할 수 있다. syntax는 SQL과 비슷하다. <code>다양한 multiple data source를 single query를 통해서 진행 할 수 있는 것</code>이다. <code>Hadoop의 경우는 performance나 여러가지 data analytics 할때 여러가지 issue들이있으며 이전 방식이기 때문에 최근에는 Spark와 Presto로 넘어오는 추세이다. AWS는 Presto기반인 Athena를 통해서 S3의 데이터를 작업할 수 있다</code>.</li>
+</ul>
+<h2 id="Serverless란"><a href="#Serverless란" class="headerlink" title="Serverless란?"></a>Serverless란?</h2><ul>
+<li>말 그대로 server가 없다라고 할 수 있으며, Severless라고 하는 부분은 보통 어떠한 서비스를 만들 때, 우리의 Desktop PC를 계속해서 켜두는 경우가 아니므로 EC2라고 하는 계속 지속적으로 띄어져있는 가상의 서버를 만들게 된다. 이때 서버의 용량을 결정해야하는데, 예를들어 chat bot을 통해 User와 소통을할때 어떤 날은 User가 1명 다른날은 100명 어떤날은 10,000명으로 늘어날수있어서 무작정 큰 서버를 사용하게 되거나 순차적으로 Docker를 통해 병렬적으로 어떤 기준이상이 되면 용량을 늘리는 이러한 작업도 다 비용이 되므로 이러한 문제들을 보완하고자 <code>Serverless라는 개념이 도입된다. 어떠한 요청이 들어올때 server를 띄우는데 지속적으로 요청이 들어온다면 계속적으로 병렬적인 server를 띄운다는 것이다. server안에서 용량을 정하는 것을 알아서 자동적으로 해결해 주므로 비용적인 문제를 보완해준다. AWS에서 EC2같은 경우는 server 하나를 띄우는 것이고, Lambda가 Serverless의 개념을 갖는 서비스이다. 또한 Athena도 Serverless의 개념을 갖는 서비스이다.</code></li>
+</ul>
+<h2 id="AWS-Athena의-개요"><a href="#AWS-Athena의-개요" class="headerlink" title="AWS Athena의 개요"></a>AWS Athena의 개요</h2><ul>
+<li><p>AWS Athena에서도 data lake의 시스템 형태로 데이터를 작업하더라도 query를 통해 작업을 하려면 data warehouse 처럼 table의 형식을 안만들 수는 없다.</p>
+</li>
+<li><p>먼저, AWS Athena 필자와 같이 처음 Athena를 사용하는 것이라면, create table 버튼을 클릭하면 아래와 같은 형태로 query문을 입력하는 페이지 보일 것이다.</p>
+</li>
+</ul>
+<p><img src="/image/query_result_settings.png" alt="table 생성 및 query문 결과 저장 setting"></p>
+<ul>
+<li>여기서 query문의 결과를 저장하는 곳을 먼저 설정해 주어야 하는데, 이전의 S3의 spotify-chatbot-project bucket에 새로운 폴더를 추가해 주고 아래 그림과 같이 path를 설정해준다.</li>
+</ul>
+<p><img src="/image/S3_new_folder_add.png" alt="S3 query문 결과 저장 폴더 생성"></p>
+<p><img src="/image/query_path_settings.png" alt="query문 path 설정"></p>
+<ul>
+<li>이제 아래 그림과 같이 이전에 만들어 놓은 parquet형태의 데이터가 존재하는 folder의 path로 query문을 날려준다. 이전에 존재하지 않았던 테이블이 왼쪽의 tab에 생성되며 아래 부분에는 결과를 알려주는 부분이 보여질 것이다. 그 부분에는 partition되어진 부분은 직접적으로 load를 해주어야 한다는 결과를 알려주고있다.</li>
+</ul>
+<p><img src="/image/query_s3_result_partition_load_directly.png" alt="query문 결과"></p>
+<ul>
+<li>위의 그림에서 맨 아래 부분의 모든 partition을 보려면, MSCK REPAIR TABLE) command 사용하라고한 것 처럼, query문을 추가해서 사용하였다.</li>
+</ul>
+<p><img src="/image/Repair_table_mck.png" alt="MSCK REPAIR TABLE query문 추가"></p>
+<ul>
+<li>일반적인 query문과 같이 작성해서 볼 수 있다. 먼저 top_tracks 테이블의 상위 10개만 불러와 볼 것이다. 그리도 partition을 dt로 했기 때문에 dt도 같이 불러와 지는 것을 확인 할 수 있다.</li>
+</ul>
+<p><img src="/image/limit_10_table.png" alt="top_tracks의 상위 10개 데이터"></p>
+<p><img src="/image/dt_with_table_partition.png" alt="dt도 같이 불러옴을 확인"></p>
+<ul>
+<li>audio_features도 동일한 방식으로 만들어 볼 것이다.</li>
+</ul>
+<p><img src="/image/create_external_table_audio_features.png" alt="audio 테이블 생성"></p>
+<p><img src="/image/audio_table_partition_date_load.png" alt="audio 테이블 파티션 로드"></p>
+<p><img src="/image/top_10_load_audio_features.png" alt="audio 테이블 상위 10개 records"></p>
+<ul>
+<li>이밖으 사용법은 아래 문서를 통해 사용법을 확인할 수 있으며, <code>유의할점은 우리가 partition으로 나누어 놓은 것을 전체로 불러 왔기에 최근의 partition만을 살펴보기 위해 date를 어떤 값으로 설정했는지 확인</code>해주어야 한다.</li>
+<li><a href="https://prestodb.io/docs/current/functions.html" target="_blank" rel="noopener">prestodb documents</a></li>
+</ul>
+<p><img src="/image/presto_subscribtion.png" alt="presto 문법을 통한 통계치"></p>
+<h2 id="Apache-Spark"><a href="#Apache-Spark" class="headerlink" title="Apache Spark"></a>Apache Spark</h2><ul>
+<li>데이터를 처리하는 하나의 시스템이다. 데이터는 항상 늘어나고 그리고 너무나 큰 방대한 양을 처리를 해야하기 <code>데이터가 늘어나면 늘어날수록 속도,시간,비용 여러면에서 효율적으로 처리</code>해야한다. 필자는 제플린을 사용할 것인데, 제플린은 Spark를 기반으로 한 Web UI이다. 그래서 Spark를 통해서 처리된 데이터를 시각화한다던지 어떤식으로 output이 나오는지를 볼 수 있다. Jupyter notebook과 비슷하다고 생각하면 된다.</li>
+</ul>
+<p><img src="/image/what_is_Spark.png" alt="Spark란?"></p>
+<h2 id="Map-Reduce"><a href="#Map-Reduce" class="headerlink" title="Map Reduce"></a>Map Reduce</h2><ul>
+<li>Map Reduce는 데이터가 방대한 양으로 늘어날때 처리하는 방식에 issue가 생길 수 있다. 이런 issue들을 보완하기 위해서 데이터가 여러군데 분산처리 되어있는 형태로 저장되어있는데, S3 bucket에 저장한 방식처럼 partition으로 구분된 데이터를 function이나 어떠한 방식에 의해서 mapping을 해서 필요한 부분만을 줄이는 Reduce 과정을 거치게 된다. 이 방식은 처음 <a href="https://ko.wikipedia.org/wiki/%EA%B5%AC%EA%B8%80_%ED%8C%8C%EC%9D%BC_%EC%8B%9C%EC%8A%A4%ED%85%9C" target="_blank" rel="noopener">Google File System</a>으로 사용되어지다가 그 뒤에 Map-Reduce방식으로 Hadoop을 사용했으며, <code>속도에 특화된 Spark를 현재는 주로 사용</code>하고 있다. 예를 들면,</li>
+</ul>
+<p><img src="/image/Map_reduce_what.png" alt="Map Reduce"></p>
+<ul>
+<li>예를들면, 구글같이 다양한 web page를 크롤링해서 각 페이지들의 노출 랭킹을 분석해야 하는 <code>Page Rank</code>라는 알고리즘을 사용할때 html안에 들어가는 tag라던지 이런 문법적인 요소들과 contents들을 한 곳에 몰아서 분석하기 보다는 아래 그림과 같이 Input을 병렬적으로 나누어 진행하고 그 다음 어떠한 Suffling process를 통해서 Reduce하여 결과를 낸다.</li>
+</ul>
+<p><img src="/image/map_reduce_example.png" alt="Map Reduce example"></p>
+<ul>
+<li><p>필자는 AWS의 <code>EMR</code>(Elastic Map Reduce)서비스를 통해 <code>Spark와 제플린을 설치 해 볼 것</code>이다. EMR은 Spark나 Hadoop 같은 시스템에 cluster를 만드는 곳이라고 생각할 수 있다. cluster는 서버들이라고 말 할 수 있다. EC2를 base로한 EMR을 cluster화해서 하나의 instance ECS server가 아니라 master 아니면 다양한 core Node들이 여러개가 생성이 되어서 방대한 양의 데이터를 처리하기 위해서 필요한 setting을 구성할 수 있는 곳이라고 생각할 수 있다.</p>
+</li>
+<li><p>서버를 사용하기 위해서는 다양한 권한이라던지 key file들이 필요하므로 security와 같은 부분을 다루어야 하는데 이런 부부은 AWS에서 IAM 서비스에서 작업할 수 있다.</p>
+</li>
+<li><p>아래 그림과 같이 먼저 AWS에서 EMR 페이지로 이동한다.</p>
+</li>
+</ul>
+<p><img src="/image/EMR_where.png" alt="EMR 서비스"></p>
+<p><img src="/image/create_cluster_EMR.png" alt="EMR 서비스 cluster 생성"></p>
+<ul>
+<li>cluster 이름을 정하고, Application은 Spark를 사용할 것이므로 아래 그림과 같이 설정해 주었다. 또한, hardware 부분은 memory optimization등 여러가지 옵션이 존재하지만 모든 것은 다 비용이므로 우선 간단하게 c4 large를 사용해 보려고 한다.</li>
+</ul>
+<p><img src="/image/create_clustre_quick_options.png" alt="EMR 서비스 quick 옵션들"></p>
+<ul>
+<li>EC2 서버 안에서 다양한 작업들을 하기 위해서 key pair 필요하다. 필자와 같이 한번도 key pair를 생성한 적이 없다면 아래 그림과 같이 Learn how to key pair 버튼을 클릭하여 EC2 페이지로 넘어가 key pair를 생성한다.</li>
+</ul>
+<p><img src="/image/key_pair_setting.png" alt="key pair"></p>
+<p><img src="/image/go_to_EC2_console.png" alt="key pair 생성하는 방법"></p>
+<p><img src="/image/EC2_key_pair_page.png" alt="EC2 key pair 페이지"></p>
+<p><img src="/image/create_key_pair.png" alt="EC2 key pair 생성"></p>
+<p><img src="/image/create_key_pair_process.png" alt="EC2 key pair 생성 방법"></p>
+<p><img src="/image/key_pair_result.png" alt="key pair 생성 결과"></p>
+<ul>
+<li>key pair가 생성되면 동시에 pem 파일이 다운로드 되어질 것이다. 그 파일을 현재 project를 진행하는 폴더로 옮겨 놓는것을 추천한다. 옮겨 놓았다면, 아래 그림과 같이 파일의 모드를 변경해 주어야 한다.</li>
+</ul>
+<p><img src="/image/chmod_key_pair.png" alt="key pair pem 파일 모드 변경"></p>
+<ul>
+<li>해당 pem 파일이 존재하는 path에서 아래와 같이 변경한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod og-rwx spotift_chatbot.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li>key pair를 생성하였으므로 다시 cluster를 생성하는 페이지로 돌아가 key pair를 설정한 뒤에 아래 생성 버튼을 클릭한다.</li>
+</ul>
+<p><img src="/image/security_access_create_cluster.png" alt="cluster 생성"></p>
+<ul>
+<li>cluster가 생성되면 아래 그림과 같이 cluster가 속성들에 대한 페이지가 보일 것이다. 또한, Master 권한으로 접속을 하려면 SSH 방식으로 인증 후 접속해야하기 때문에 security group을 관리 해 주어야 한다. Security groups for Master의 값을 클릭하여 EC2의 security group 페이지로 이동하여 Inbound 규칙에 Master와 slave 둘다 아래 그림과 같이 ssh 규칙을 추가해 주어야 한다.</li>
+</ul>
+<p><img src="/image/EC2_security_groups_inbound_rule_add.png" alt="EC2 security group Inbound rule 추가"></p>
+<p><img src="/image/ssh_port_tcp_ip_add.png" alt="Inbound rule에 ssh 설정"></p>
+<ul>
+<li>ssh로 접속하는 방법은 아래그림과 같이 enable web connection을 클릭하면 확인 할 수 있다.</li>
+</ul>
+<p><img src="/image/enable_web_connection_ssh.png" alt="ssh로 접속하는 방식"></p>
+<ul>
+<li>pem 파일이 존재하는 path로 가서 아래 그림에서 빨간색 줄이 쳐져있는 command를 실행해 놓은 뒤, 동일한 파일 path에 아래 그림에서 처럼 생성하라는 foxyproxy-settings.xml를 회색 네모칸의 내용들을 복사하여 생성한다. 동일한 파일 path에서 하라고 추천하는 것은 이 path에서 계속 접속할 것이기 때문이다.</li>
+</ul>
+<p><img src="/image/connection_ssh_with_web.png" alt="ssh로 접속하는 방식 - 01"></p>
+<ul>
+<li>그 다음은 chrome web store에 가서 <code>foxy proxy</code>를 검색한 후  standard 버젼을 설치해준다. 그러므로 chrome 브라우저를 사용해야 할 것임은 당연히 알 것이라고 생각한다.</li>
+</ul>
+<p><img src="/image/chrome_foxy_proxy_add.png" alt="ssh로 접속하는 방식 - 02"></p>
+<ul>
+<li>foxy proxy를 chrome browser에 추가했다면, 오른쪽 상단에 여우모양의 아이콘이 생성되었을 것이다. 클릭한 후 option 버튼을 눌러준다.</li>
+</ul>
+<p><img src="/image/foxy_proxy_option.png" alt="ssh로 접속하는 방식 - 03"></p>
+<ul>
+<li>그 다음은 왼쪽 tab에서 import/export를 눌러 준 후에 이전에 만들어 준 xml파일을 눌러 replace해 주면 된다. 그런 다음 public dns로 접속해 보면 맨 아래 그림과 같이 test page를 볼 수 있을 것이다. 또한 dns위에 connection들이 활성화 된 것을 볼 수 있다.</li>
+</ul>
+<p><img src="/image/import_export_foxy_proxy.png" alt="ssh로 접속하는 방식 - 03"></p>
+<p><img src="/image/import_export_result_replace.png" alt="ssh로 접속하는 방식 - 04"></p>
+<p><img src="/image/master_public_dns.png" alt="ssh로 접속하는 방식 - 05"></p>
+<p><img src="/image/master_public_dns_success.png" alt="ssh로 접속하는 방식 - 06"></p>
+<ul>
+<li>아래 그림에서와 같이 connection들 중 제플린을 클릭하면 제플린 페이지로 이동한다.</li>
+</ul>
+<p><img src="/image/activatio_connection.png" alt="제플린 접속"></p>
+<p><img src="/image/zeppelin_page.png" alt="zeppelin page"></p>
+<p><img src="/image/zeppelin_notebooke_create.png" alt="notebook 생성"></p>
+<ul>
+<li>모든 명령문이 <code>%pyspark</code>로 시작해야 한다. 필자는 기존의 c4.large로 진행시에는 connection error가 생겨 원인을 찾다가 해결치 못하고 우선 r3.xlarge를 선택하여 다시 cluster를 만든 결과 connection error가 발생하지 않았다.</li>
+</ul>
+<ul>
+<li>2번째 cell까지는 python에서 진행하던 방식이고 3번째 cell에서 구현하는 방식이 spark의 방식인데 spark는 rdd를 기반으로 방대한 데이터를 분산시켜서 mapping한 후 apply해서 얻은 값을 통합을 해서 받는 구조이다. sc(spark context)를 통해 parallelize하게 3개의 데이터를 쪼개서 rdd로 나누어 준 결과이다.</li>
+</ul>
+<p><img src="/image/zeppelin_spark_python.png" alt="zeppelin python 방식과 spark방식의 차이"></p>
+<ul>
+<li>아래와 같이 rdd로 쪼개서 map함수를 통해 쪼개놓은 데이터에 각각 mapping 시켜주고 선택한다. 또한, sqlContext를 통해 S3에 이전에 저장해 놓았던 데이터를 dataFrame형태로 불러와 작업할 수 있다. <code>printSchema()함수를 통해 각각의 값들이 어떤 형태로 들어있는지에 주의</code>를 갖고 살펴봐야 추후에 작업에 어려움이 없다.</li>
+</ul>
+<p><img src="/image/zeppelin_spark_method.png" alt="zeppeplin spark 함수 및 rdd 개념"></p>
+<p><img src="/image/zeppelin_spark_method_show.png" alt="zeppelin spark 함수 및 dataFrame"></p>
+<p><img src="/image/zeppelin_spark_df_show.png" alt="zeppelin spark 함수 및 dataFrame - 01"></p>
+<ul>
+<li>이렇게 불러온 데이터를 내장 함수를 활용해 기본적인 통계량값들을 계산할 수 있으며, 필요에 따라 사용자 정의 함수(UDF : User Definition Function)을 사용하여 전처리를 할 수 있다. UDF를 통해 정의한 함수를 Boolean값으로 처리하여 다음과 같이 filter함수에 적용시켜 condition을 줄 수도 있다.</li>
+</ul>
+<p><img src="/image/spark_zeppelin_function_udf_01.png" alt="sql function 및 udf"></p>
+<p><img src="/image/spark_zeppelin_function_udf_02.png" alt="sql function 및 udf - 01"></p>
+<ul>
+<li>본격적으로 S3에 저장해 놓은 모든 데이터들을 join한 master table을 만들기 위해 아래와 같은 작업을 한다. 가장 먼저, artists parquet 데이터를 불러와 아래와 같이 DataFrame으로 만들 수 있다.</li>
+</ul>
+<p><img src="/image/S3_artists_table_DF.png" alt="artist table"></p>
+<ul>
+<li>허나, <code>artists 데이터는 잘 변하지 않기 때문에 zeppelin에서 python을 통해 RDS에서 바로 불러오는 것이 좋을 수도 있다.</code> 아래에서 함수 안의 argument값들은 자신의 값에 맞는 것들로 먼저 정해놓고 실행해야 한다.</li>
+</ul>
+<p><img src="/image/S3_artist_another_method.png" alt="artist table을 불러오는 다른 방법"></p>
+<ul>
+<li>최종적으로 artists, top-tracks, 그리고 audio_features 모두 join한 table을 만들 것 이다. 참고로 아래 cell을 실행하기 이전에 master node에 접속해서 먼저 sudo pip install pandas와 sudo pip install pyspark 명령어를 통해 설치해 주어야 한다. zeppelin의 장점 중 하나로 <code>바로 sql table로 지정하여 sql query문으로 작업할 수 있다.</code> 해당 값을 <code>바로 시각화할 수 있는 점도 장점 중의 하나</code>이다. <code>옵션에서 없는 그래프를 그리는 것은 python이나 다른 library를 활용하여 보완</code>할 수 있다.</li>
+</ul>
+<p><img src="/image/S3_master_table_join.png" alt="모든 데이터를 join한 master table 생성"></p>
+<p><img src="/image/query_success_zeppelin.png" alt="query문 작성"></p>
+<p><img src="/image/query_success_zeppelin_avg_count.png" alt="query문을 통한 분포 시각화"></p>
+<ul>
+<li>데이터의 audio feature의 분포를 통해 예를 들어 가수의 인기도와 트랙의 인기도의 차이가 거의 없는 해당 가수의 대표적인 트랙을 알고 싶다면 아래와 같은 EDA를 먼저 실행하여 audio feature들의 특징을 파악하는 것이 중요하다. 아래 그림에서 처럼 acousticness는 전체적으로 0쪽으로 치우쳐있어 중심을 대표하는 값으로는 median을 사용해야 될 것이라고 판단할 수 있으며, danceability는 정규분포 꼴을 띄고 있어 mean을 사용해도 무방할 것으로 판단 할 수 있다.</li>
+</ul>
+<p><img src="/image/AVG_audio_features.png" alt="audio features의 평균값들"></p>
+<p><img src="/image/acousticness_dist.png" alt="전체 acousticness의 분포"></p>
+<p><img src="/image/danceability_dist.png" alt="전체 danceability의 분포"></p>
+<p><a href="https://github.com/awskrug/datascience-group/tree/master/workshop-sustainable_data_analysis" target="_blank" rel="noopener">참고하면 좋을 문서 - 01</a></p>
+<p><a href="https://github.com/ravieeeee/serverless-KBOleague-analysis" target="_blank" rel="noopener">참고하면 좋을 문서 - 02</a></p>
+<p><a href="https://aws.amazon.com/ko/blogs/big-data/running-an-external-zeppelin-instance-using-s3-backed-notebooks-with-spark-on-amazon-emr/" target="_blank" rel="noopener">참고하면 좋을 문서 - 03</a></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "data engineering (Presto란?)",
+        "image": "https://heung-bae-lee.github.io/image/query_result_settings.png",
+        "keywords": "",
+        "genre": "data engineering",
+        "datePublished": "2020-02-24",
+        "dateCreated": "2020-02-24",
+        "dateModified": "2020-02-29",
+        "url": "https://heung-bae-lee.github.io/2020/02/24/data_engineering_08/",
+        "description": "Presto란?
+Spark의 단점이라 하면, 물론 Spark SQL도 있지만, 어느 정도 Scripting이 필요한 부분이 있다. MySQL 같이 RDS로 데이터 구축을 했을때에는 SQL을 통해서 쉽게 가져올 수 있었지만, Big data로 넘어 오면서 이전 필자의 글을 보았을 때 S3에서 두 곳에 나누어 저장을 했는데, 이런 경우 그럼 RDS와 다르게 어"
+        "wordCount": 1569
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/03/01/data_engineering_09/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            data engineering (데이터 파이프라인 자동화)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/02/22/data_engineering_07/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">data engineering (데이터 웨어하우스 vs 데이터 레이크)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/02/24/data_engineering_08/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

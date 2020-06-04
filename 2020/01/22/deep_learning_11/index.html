@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Attention mechanism을 사용한 Seq2seq 구현 | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Vallina Seq2seq tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.  한글 텍스트의 형태소분석을 위해 konlpy에서 Okt(Original Korean tag, Twitter에서 공개한 오픈소스 라이브러리)를 사용하기 위해 설치해준다.   12!pip install tensorflow==2.0.0-b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention mechanism을 사용한 Seq2seq 구현">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/22/deep_learning_11/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Vallina Seq2seq tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.  한글 텍스트의 형태소분석을 위해 konlpy에서 Okt(Original Korean tag, Twitter에서 공개한 오픈소스 라이브러리)를 사용하기 위해 설치해준다.   12!pip install tensorflow==2.0.0-b">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/chatbot_data.png">
+<meta property="og:updated_time" content="2020-01-23T17:01:03.099Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Attention mechanism을 사용한 Seq2seq 구현">
+<meta name="twitter:description" content="Vallina Seq2seq tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.  한글 텍스트의 형태소분석을 위해 konlpy에서 Okt(Original Korean tag, Twitter에서 공개한 오픈소스 라이브러리)를 사용하기 위해 설치해준다.   12!pip install tensorflow==2.0.0-b">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/chatbot_data.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/22/deep_learning_11/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/deep-learning/">deep learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-deep_learning_11" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Attention mechanism을 사용한 Seq2seq 구현
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/22/deep_learning_11/" class="article-date">
+            <time datetime="2020-01-21T20:15:09.000Z" itemprop="datePublished">2020-01-22</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Vallina-Seq2seq"><a href="#Vallina-Seq2seq" class="headerlink" title="Vallina Seq2seq"></a>Vallina Seq2seq</h1><ul>
+<li><p>tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.</p>
+</li>
+<li><p>한글 텍스트의 형태소분석을 위해 konlpy에서 Okt(Original Korean tag, Twitter에서 공개한 오픈소스 라이브러리)를 사용하기 위해 설치해준다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!pip install tensorflow==2.0.0-beta1</span><br><span class="line">!pip install konlpy</span><br></pre></td></tr></table></figure>
+<ul>
+<li>필요한 라이브러리 import</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line">import tensorflow as tf</span><br><span class="line">from konlpy.tag import Okt</span><br></pre></td></tr></table></figure>
+<ul>
+<li>tensorflow 버전이 맞는지 확인</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br></pre></td></tr></table></figure>
+<h3 id="하이퍼-파라미터-설정"><a href="#하이퍼-파라미터-설정" class="headerlink" title="하이퍼 파라미터 설정"></a>하이퍼 파라미터 설정</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EPOCHS = 200</span><br><span class="line"><span class="comment"># 가장 많이 사용된 2000개를 사용하기 위해</span></span><br><span class="line">NUM_WORDS = 2000</span><br></pre></td></tr></table></figure>
+<h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Encoder(tf.keras.Model):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    super(Encoder, self).__init__()</span><br><span class="line">    <span class="comment"># 2000개의 단어들을 64크기의 vector로 Embedding해줌.</span></span><br><span class="line">    self.emb = tf.keras.layers.Embedding(NUM_WORDS, 64)</span><br><span class="line">    <span class="comment"># return_state는 return하는 Output에 최근의 state를 더해주느냐에 대한 옵션</span></span><br><span class="line">    <span class="comment"># 즉, Hidden state와 Cell state를 출력해주기 위한 옵션이라고 볼 수 있다.</span></span><br><span class="line">    <span class="comment"># default는 False이므로 주의하자!</span></span><br><span class="line">    self.lstm = tf.keras.layers.LSTM(512, return_state=True)</span><br><span class="line"></span><br><span class="line">  def call(self, x, training=False, mask=None):</span><br><span class="line">    x = self.emb(x)</span><br><span class="line">    _, h, c = self.lstm(x)</span><br><span class="line">    <span class="built_in">return</span> h, c</span><br></pre></td></tr></table></figure>
+<h3 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Decoder(tf.keras.Model):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    super(Decoder, self).__init__()</span><br><span class="line">    self.emb = tf.keras.layers.Embedding(NUM_WORDS, 64)</span><br><span class="line">    <span class="comment"># return_sequence는 return 할 Output을 full sequence 또는 Sequence의 마지막에서 출력할지를 결정하는 옵션</span></span><br><span class="line">    <span class="comment"># False는 마지막에만 출력, True는 모든 곳에서의 출력</span></span><br><span class="line">    self.lstm = tf.keras.layers.LSTM(512, return_sequences=True, return_state=True)</span><br><span class="line">    self.dense = tf.keras.layers.Dense(NUM_WORDS, activation=<span class="string">'softmax'</span>)</span><br><span class="line"></span><br><span class="line">  def call(self, inputs, training=False, mask=None):</span><br><span class="line">    x, h, c = inputs</span><br><span class="line">    x = self.emb(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># initial_state는 셀의 첫 번째 호출로 전달 될 초기 상태 텐서 목록을 의미</span></span><br><span class="line">    <span class="comment"># 이전의 Encoder에서 만들어진 Hidden state와 Cell state를 입력으로 받아야 하므로</span></span><br><span class="line">    x, h, c = self.lstm(x, initial_state=[h, c])</span><br><span class="line">    <span class="built_in">return</span> self.dense(x), h, c</span><br></pre></td></tr></table></figure>
+<h3 id="Seq2seq"><a href="#Seq2seq" class="headerlink" title="Seq2seq"></a>Seq2seq</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">class Seq2seq(tf.keras.Model):</span><br><span class="line">  def __init__(self, sos, eos):</span><br><span class="line">    super(Seq2seq, self).__init__()</span><br><span class="line">    self.enc = Encoder()</span><br><span class="line">    self.dec = Decoder()</span><br><span class="line">    self.sos = sos</span><br><span class="line">    self.eos = eos</span><br><span class="line"></span><br><span class="line">  def call(self, inputs, training=False, mask=None):</span><br><span class="line">    <span class="keyword">if</span> training is True:</span><br><span class="line">      <span class="comment"># 학습을 하기 위해서는 우리가 입력과 출력 두가지를 다 알고 있어야 한다.</span></span><br><span class="line">      <span class="comment"># 출력이 필요한 이유는 Decoder단의 입력으로 shited_ouput을 넣어주게 되어있기 때문이다.</span></span><br><span class="line">      x, y = inputs</span><br><span class="line"></span><br><span class="line">      <span class="comment"># LSTM으로 구현되었기 때문에 Hidden State와 Cell State를 출력으로 내준다.</span></span><br><span class="line">      h, c = self.enc(x)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Hidden state와 cell state, shifted output을 초기값으로 입력 받고</span></span><br><span class="line">      <span class="comment"># 출력으로 나오는 y는 Decoder의 결과이기 때문에 전체 문장이 될 것이다.</span></span><br><span class="line">      y, _, _ = self.dec((y, h, c))</span><br><span class="line">      <span class="built_in">return</span> y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      x = inputs</span><br><span class="line">      h, c = self.enc(x)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Decoder 단에 제일 먼저 sos를 넣어주게끔 tensor화시키고</span></span><br><span class="line">      y = tf.convert_to_tensor(self.sos)</span><br><span class="line">      <span class="comment"># shape을 맞춰주기 위한 작업이다.</span></span><br><span class="line">      y = tf.reshape(y, (1, 1))</span><br><span class="line"></span><br><span class="line">      <span class="comment"># 최대 64길이 까지 출력으로 받을 것이다.</span></span><br><span class="line">      seq = tf.TensorArray(tf.int32, 64)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># tf.keras.Model에 의해서 call 함수는 auto graph모델로 변환이 되게 되는데,</span></span><br><span class="line">      <span class="comment"># 이때, tf.range를 사용해 for문이나 while문을 작성시 내부적으로 tf 함수로 되어있다면</span></span><br><span class="line">      <span class="comment"># 그 for문과 while문이 굉장히 효율적으로 된다.</span></span><br><span class="line">      <span class="keyword">for</span> idx <span class="keyword">in</span> tf.range(64):</span><br><span class="line">        y, h, c = self.dec([y, h, c])</span><br><span class="line">        <span class="comment"># 아래 두가지 작업은 test data를 예측하므로 처음 예측한값을 다시 다음 step의 입력으로 넣어주어야하기에 해야하는 작업이다.</span></span><br><span class="line">        <span class="comment"># 위의 출력으로 나온 y는 softmax를 지나서 나온 값이므로</span></span><br><span class="line">        <span class="comment"># 가장 높은 값의 index값을 tf.int32로 형변환해주고</span></span><br><span class="line">        <span class="comment"># 위에서 만들어 놓았던 TensorArray에 idx에 y를 추가해준다.</span></span><br><span class="line">        y = tf.cast(tf.argmax(y, axis=-1), dtype=tf.int32)</span><br><span class="line">        <span class="comment"># 위의 값을 그대로 넣어주게 되면 Dimension이 하나밖에 없어서</span></span><br><span class="line">        <span class="comment"># 실제로 네트워크를 사용할 때 Batch를 고려해서 사용해야 하기 때문에 (1,1)으로 설정해 준다.</span></span><br><span class="line">        y = tf.reshape(y, (1, 1))</span><br><span class="line">        seq = seq.write(idx, y)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> y == self.eos:</span><br><span class="line">          <span class="built_in">break</span></span><br><span class="line">      <span class="comment"># stack은 그동안 TensorArray로 받은 값을 쌓아주는 작업을 한다.    </span></span><br><span class="line">      <span class="built_in">return</span> tf.reshape(seq.stack(), (1, 64))</span><br></pre></td></tr></table></figure>
+<h3 id="학습-테스트-루프-정의"><a href="#학습-테스트-루프-정의" class="headerlink" title="학습, 테스트 루프 정의"></a>학습, 테스트 루프 정의</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Implement training loop</span></span><br><span class="line">@tf.function</span><br><span class="line">def train_step(model, inputs, labels, loss_object, optimizer, train_loss, train_accuracy):</span><br><span class="line">  <span class="comment"># output_labels는 실제 output과 비교하기 위함</span></span><br><span class="line">  <span class="comment"># shifted_labels는 Decoder부분에 입력을 넣기 위함</span></span><br><span class="line">  output_labels = labels[:, 1:]</span><br><span class="line">  shifted_labels = labels[:, :-1]</span><br><span class="line">  with tf.GradientTape() as tape:</span><br><span class="line">    predictions = model([inputs, shifted_labels], training=True)</span><br><span class="line">    loss = loss_object(output_labels, predictions)</span><br><span class="line">  gradients = tape.gradient(loss, model.trainable_variables)</span><br><span class="line"></span><br><span class="line">  optimizer.apply_gradients(zip(gradients, model.trainable_variables))</span><br><span class="line">  train_loss(loss)</span><br><span class="line">  train_accuracy(output_labels, predictions)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Implement algorithm test</span></span><br><span class="line">@tf.function</span><br><span class="line">def test_step(model, inputs):</span><br><span class="line">  <span class="built_in">return</span> model(inputs, training=False)</span><br></pre></td></tr></table></figure>
+<h3 id="데이터셋-준비"><a href="#데이터셋-준비" class="headerlink" title="데이터셋 준비"></a>데이터셋 준비</h3><ul>
+<li><a href="http://www.aihub.or.kr" target="_blank" rel="noopener">http://www.aihub.or.kr</a>에서 text데이터 중 AI chatbot 데이터를 사용할 것이다. 이 데이터를 다운받아 필자는 google storage 서비스를 이용해서 기존의 생성해놓았던 버킷을 통해 데이터를 업로드 한 후, 받아와서 사용할 것이다. 이 방법은 google storage에서 파일을 받아 사용하는 gsutil 방식이며 빠르다는 점이 장점이지만 현재 세션이 종료되거나 새로시작할 경우 다시 실행 시켜주어야 하는 방식이다. 또한 필자처럼 google colab이 아닌 자신의 로컬PC로 실행할 경우 아래 단계는 건너 뛰어도 상관없다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from google.colab import auth</span><br><span class="line">auth.authenticate_user()</span><br><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line">!gsutil cp gs://kaggle_key/chatbot_data.csv chatbot_data.csv</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>chatbot_data.csv 파일이 현재 path에 존재하는지 확인</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%ls</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>chatbot_data.csv파일을 pandas DataFrame으로 읽어 어떤 데이터들이 존재하고 추후에 x(Question)와 y(Answer)로 나눠주려면 패턴을 찾아야 하기 때문에 모든 데이터를 볼 것이다. 전체 데이터는 999개이기 떄문에 출력되어지는 row의 수를 1000개로 맞춰준다.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.options.display.max_rows = 1000</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chatbot_data = pd.read_csv(<span class="string">'chatbot_data.csv'</span>,header=0)</span><br><span class="line">chatbot_data</span><br></pre></td></tr></table></figure>
+<p><img src="/image/chatbot_data.png" alt="chatbot_data"></p>
+<ul>
+<li>위에서 pandas로 불러들인 QA(Question &amp; Answer) data를 보면 Question과 Answer로 이루어져있다. 즉, 순차적인 데이터인 것이다. 또한 대화의 끝이 나누어져 있지 않아 입력으로 넣어주려면 Data를 Question과 Answer 쌍으로 가공해주어야 할 것이다. 맨처음 줄부터 Question 그다음은 Answer 이순으로 되어있다는 것을 확인할 수 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">dataset_file = <span class="string">'chatbot_data.csv'</span></span><br><span class="line">okt = Okt()</span><br><span class="line"></span><br><span class="line">with open(dataset_file, <span class="string">'r'</span>) as file:</span><br><span class="line">  lines = file.readlines()</span><br><span class="line">  <span class="comment"># okt 라이브러리를 통해 형태소 분석을 한줄씩 진행하였고</span></span><br><span class="line">  <span class="comment"># 나누어진 형태소들을 하나의 sequence로 묶어주기위해</span></span><br><span class="line">  <span class="comment"># 구분자는 공백을 사용해서 join해주었다.</span></span><br><span class="line">  <span class="comment"># 구분자를 space로 한 이유는 나중에 사용할 tokenizer에서 space를 기준으로 단어를 구분하기 때문이다.</span></span><br><span class="line">  seq = [<span class="string">" "</span>.join(okt.morphs(line)) <span class="keyword">for</span> line <span class="keyword">in</span> lines]</span><br><span class="line"></span><br><span class="line">questions = seq[::2]</span><br><span class="line"><span class="comment"># tap은 Decoder단에서 Shifted Output을 입력으로 받을때 시작점을 알려주기 위한 SOS로 tap(\t)을 사용</span></span><br><span class="line">answers = [<span class="string">'\t'</span> + lines <span class="keyword">for</span> lines <span class="keyword">in</span> seq[1::2]]</span><br><span class="line"></span><br><span class="line">num_sample = len(questions)</span><br><span class="line"></span><br><span class="line">perm = list(range(num_sample))</span><br><span class="line">random.seed(0)</span><br><span class="line">random.shuffle(perm)</span><br><span class="line"></span><br><span class="line">train_q = list()</span><br><span class="line">train_a = list()</span><br><span class="line">test_q = list()</span><br><span class="line">test_a = list()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> idx, qna <span class="keyword">in</span> enumerate(zip(questions, answers)):</span><br><span class="line">  q, a = qna</span><br><span class="line">  <span class="keyword">if</span> perm[idx] &gt; num_sample//5:</span><br><span class="line">    train_q.append(q)</span><br><span class="line">    train_a.append(a)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    test_q.append(q)</span><br><span class="line">    test_a.append(a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># filters의 default에는 \t,\n도 제거하기 때문에 이 둘을 제외하고 나머지 문장기호들만 제거하게끔 변경해주었다.</span></span><br><span class="line">tokenizer = tf.keras.preprocessing.text.Tokenizer(num_words=NUM_WORDS,</span><br><span class="line">                                                  filters=<span class="string">'!"#$%&amp;()*+,-./:;&lt;=&gt;?@[\\]^_`&#123;|&#125;~'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 시퀀스 목록을 기반으로 내부 어휘를 업데이트한다.</span></span><br><span class="line">tokenizer.fit_on_texts(train_q + train_a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 위에서 업데이트한 어휘를 기반으로 실수형태의 벡터 형태로 나타내 준다.</span></span><br><span class="line"><span class="comment"># 출력을 통해 나타나는 실수는 count의 수를 나타내는 것은 아니다!</span></span><br><span class="line">train_q_seq = tokenizer.texts_to_sequences(train_q)</span><br><span class="line">train_a_seq = tokenizer.texts_to_sequences(train_a)</span><br><span class="line"></span><br><span class="line">test_q_seq = tokenizer.texts_to_sequences(test_q)</span><br><span class="line">test_a_seq = tokenizer.texts_to_sequences(test_a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># y값에는 maxlen=65인 이유는 앞에 SOS와 뒤에 EOS가 붙어 있는 상황이므로 학습시에는 앞에 하나를 떼고</span></span><br><span class="line"><span class="comment"># 학습하므로 실제로는 64길이만 사용하는 것과 동일하게 된다.</span></span><br><span class="line">x_train = tf.keras.preprocessing.sequence.pad_sequences(train_q_seq,</span><br><span class="line">                                                        value=0,</span><br><span class="line">                                                        padding=<span class="string">'pre'</span>,</span><br><span class="line">                                                        maxlen=64)</span><br><span class="line"></span><br><span class="line">y_train = tf.keras.preprocessing.sequence.pad_sequences(train_a_seq,</span><br><span class="line">                                                        value=0,</span><br><span class="line">                                                        padding=<span class="string">'post'</span>,</span><br><span class="line">                                                        maxlen=65)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x_test = tf.keras.preprocessing.sequence.pad_sequences(test_q_seq,</span><br><span class="line">                                                        value=0,</span><br><span class="line">                                                        padding=<span class="string">'pre'</span>,</span><br><span class="line">                                                        maxlen=64)</span><br><span class="line"></span><br><span class="line">y_test = tf.keras.preprocessing.sequence.pad_sequences(test_a_seq,</span><br><span class="line">                                                        value=0,</span><br><span class="line">                                                        padding=<span class="string">'post'</span>,</span><br><span class="line">                                                        maxlen=65)</span><br><span class="line"></span><br><span class="line"><span class="comment"># prefetch(1024)는 GPU에 미리 1024개의 데이터를 미리 fetch하는 기능!</span></span><br><span class="line"><span class="comment"># 근데 batch size도 아니고 왜 1024개??</span></span><br><span class="line">train_ds = tf.data.Dataset.from_tensor_slices((x_train, y_train)).shuffle(10000).batch(32).prefetch(1024)</span><br><span class="line">test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(1).prefetch(1024)</span><br></pre></td></tr></table></figure>
+<h3 id="학습-환경-정의"><a href="#학습-환경-정의" class="headerlink" title="학습 환경 정의"></a>학습 환경 정의</h3><h4 id="모델-생성-손실-함수-최적화-알고리즘-평가지표-정의"><a href="#모델-생성-손실-함수-최적화-알고리즘-평가지표-정의" class="headerlink" title="모델 생성, 손실 함수, 최적화 알고리즘, 평가지표 정의"></a>모델 생성, 손실 함수, 최적화 알고리즘, 평가지표 정의</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 모델 생성</span></span><br><span class="line">model = Seq2seq(sos=tokenizer.word_index[<span class="string">'\t'</span>],</span><br><span class="line">                eos=tokenizer.word_index[<span class="string">'\n'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 손실함수 및 최적화 기법 정의</span></span><br><span class="line">loss_object = tf.keras.losses.SparseCategoricalCrossentropy()</span><br><span class="line">optimizer = tf.keras.optimizers.Adam()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 성능 지표 정의</span></span><br><span class="line">train_loss = tf.keras.metrics.Mean(name=<span class="string">'train_loss'</span>)</span><br><span class="line">train_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name=<span class="string">'train_accuracy'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="학습-루프-동작"><a href="#학습-루프-동작" class="headerlink" title="학습 루프 동작"></a>학습 루프 동작</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">  <span class="keyword">for</span> seqs, labels <span class="keyword">in</span> train_ds:</span><br><span class="line">    train_step(model, seqs, labels, loss_object, optimizer, train_loss, train_accuracy)</span><br><span class="line"></span><br><span class="line">  template=<span class="string">'Epoch &#123;&#125;, Loss: &#123;&#125;, Accuracy:&#123;&#125;'</span></span><br><span class="line">  <span class="built_in">print</span>(template.format(epoch + 1,</span><br><span class="line">                        train_loss.result(),</span><br><span class="line">                        train_accuracy.result() * 100))</span><br></pre></td></tr></table></figure>
+<p><img src="/image/seq2seq_metric_performence.png" alt="train data 성능"></p>
+<h3 id="테스트-루프"><a href="#테스트-루프" class="headerlink" title="테스트 루프"></a>테스트 루프</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> test_seq, test_labels <span class="keyword">in</span> test_ds:</span><br><span class="line">  prediction = test_step(model, test_seq)</span><br><span class="line">  test_text = tokenizer.sequences_to_texts(test_seq.numpy())</span><br><span class="line">  <span class="comment"># ground_truth</span></span><br><span class="line">  gt_text = tokenizer.sequences_to_texts(test_labels.numpy())</span><br><span class="line">  <span class="comment"># prediction</span></span><br><span class="line">  texts = tokenizer.sequences_to_texts(prediction.numpy())</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'_'</span>)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'q: '</span>, test_text)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'a: '</span>, gt_text)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'p: '</span>, texts)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>예측된 값들을 보면 train data에 과적합된 것을 충분히 알 수 있을 것이다.</li>
+</ul>
+<p><img src="/image/seq2seq_prediction_result.png" alt="test data를 통한 예측 결과"></p>
+<h3 id="이제-여기서-Attention-mechanism을-적용시켜보자"><a href="#이제-여기서-Attention-mechanism을-적용시켜보자" class="headerlink" title="이제 여기서 Attention mechanism을 적용시켜보자."></a>이제 여기서 Attention mechanism을 적용시켜보자.</h3><h4 id="Encoder-Decoder-Seq2seq-부분을-수정하면된다"><a href="#Encoder-Decoder-Seq2seq-부분을-수정하면된다" class="headerlink" title="Encoder, Decoder, Seq2seq 부분을 수정하면된다."></a>Encoder, Decoder, Seq2seq 부분을 수정하면된다.</h4><h3 id="Encoder-1"><a href="#Encoder-1" class="headerlink" title="Encoder"></a>Encoder</h3><ul>
+<li><p>이전과 다르게 <code>LSTM 구조에서 return_sequences=True를 넣어 전체 Hidden State를 출력하게 해주었다. 이를 Key-Value로 사용할 것이다.</code></p>
+</li>
+<li><p>Embedding 결과의 Dimension : (32(batch_szie), 64(sequence의 길이), 64(Embedding Feature의 수))</p>
+</li>
+<li><p>LSTM의 결과의 Dimension : (32(batch_szie), 64(sequence의 길이), 512(LSTM unit의 갯수))</p>
+<ul>
+<li>H : 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit수)</li>
+<li>h(s0) : 32(batch size) * 512 (LSTM unit수)</li>
+<li>c(c0) : 32(batch size) * 512 (LSTM unit수)<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Encoder(tf.keras.Model):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    super(Encoder, self).__init__()</span><br><span class="line">    <span class="comment"># 2000개의 단어들을 64크기의 vector로 Embedding해줌.</span></span><br><span class="line">    self.emb = tf.keras.layers.Embedding(NUM_WORDS, 64)</span><br><span class="line">    <span class="comment"># return_state는 return하는 Output에 최근의 state를 더해주느냐에 대한 옵션</span></span><br><span class="line">    <span class="comment"># 즉, Hidden state와 Cell state를 출력해주기 위한 옵션이라고 볼 수 있다.</span></span><br><span class="line">    <span class="comment"># default는 False이므로 주의하자!</span></span><br><span class="line">    <span class="comment"># return_sequence=True로하는 이유는 Attention mechanism을 사용할 때 우리가 key와 value는</span></span><br><span class="line">    <span class="comment"># Encoder에서 나오는 Hidden state 부분을 사용했어야 했다. 그러므로 모든 Hidden State를 사용하기 위해 바꿔준다.</span></span><br><span class="line">    self.lstm = tf.keras.layers.LSTM(512, return_sequences=True, return_state=True)</span><br><span class="line"></span><br><span class="line">  def call(self, x, training=False, mask=None):</span><br><span class="line">    x = self.emb(x)</span><br><span class="line">    H, h, c = self.lstm(x)</span><br><span class="line">    <span class="built_in">return</span> H, h, c</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Decoder-1"><a href="#Decoder-1" class="headerlink" title="Decoder"></a>Decoder</h3><ul>
+<li><p>LSTM 다음에 Attention 구조를 넣어주고, Encoder의 출력 중 모든 sequence의 Hidden State를 모아놓은 H와 s0, c0, shifted Output을 받아서 Attention value를 구하기 위한 코드를 수정시킨다.</p>
+</li>
+<li><p>Dimension :</p>
+<ul>
+<li>x : shifted_labels로 맨마지막을 제외한 나머지데이터들 =&gt; 32(batch szie) * 64(sequence의 길이)</li>
+<li>s0 : 이전 step의 hidden state =&gt; 32(batch size) * 512(LSTM의 Unit 갯수)</li>
+<li>c0 : 이전 step의 cell state =&gt; 32(batch size) * 512(LSTM의 Unit 갯수)</li>
+<li>H : Encoder단의 모든 Hidden state를 모은 것 =&gt; 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM의 Feature의 갯수)</li>
+</ul>
+</li>
+<li><p>embedding 결과 =&gt; 32(batch size) <em> 64(sequence의 길이) </em> 64(Embedding Feature의 수)</p>
+</li>
+<li><p>LSTM의 결과의 Dimension : (32(batch_szie), 64(sequence의 길이), 512(LSTM unit의 갯수))</p>
+<ul>
+<li>S : 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit수)</li>
+<li>h : 32(batch size) * 512 (LSTM unit수)</li>
+<li>c : 32(batch size) * 512 (LSTM unit수)</li>
+</ul>
+</li>
+<li><p>S_의 Dimension: 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit 수)</p>
+</li>
+<li>A의 Dimension: 32(batch size) <em> 64(sequence의 길이) </em> 512(LSTM unit 수)</li>
+<li>y의 Dimension: 32(batch size) <em> 64(sequence의 길이) </em> 1024</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Decoder(tf.keras.Model):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    super(Decoder, self).__init__()</span><br><span class="line">    self.emb = tf.keras.layers.Embedding(NUM_WORDS, 64)</span><br><span class="line">    <span class="comment"># return_sequence는 return 할 Output을 full sequence 또는 Sequence의 마지막에서 출력할지를 결정하는 옵션</span></span><br><span class="line">    <span class="comment"># False는 마지막에만 출력, True는 모든 곳에서의 출력</span></span><br><span class="line">    self.lstm = tf.keras.layers.LSTM(512, return_sequences=True, return_state=True)</span><br><span class="line">    <span class="comment"># LSTM 출력에다가 Attention value를 dense에 넘겨주는 것이 Attention mechanism이므로</span></span><br><span class="line">    self.att = tf.keras.layers.Attention()</span><br><span class="line">    self.dense = tf.keras.layers.Dense(NUM_WORDS, activation=<span class="string">'softmax'</span>)</span><br><span class="line"></span><br><span class="line">  def call(self, inputs, training=False, mask=None):</span><br><span class="line">    <span class="comment"># x : shifted output, s0 : Decoder단의 처음들어오는 Hidden state</span></span><br><span class="line">    <span class="comment"># c0 : Decoder단의 처음들어오는 cell state H: Encoder단의 Hidden state(Key와 value로 사용)</span></span><br><span class="line">    x, s0, c0, H = inputs</span><br><span class="line">    x = self.emb(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># initial_state는 셀의 첫 번째 호출로 전달 될 초기 상태 텐서 목록을 의미</span></span><br><span class="line">    <span class="comment"># 이전의 Encoder에서 만들어진 Hidden state와 Cell state를 입력으로 받아야 하므로</span></span><br><span class="line">    <span class="comment"># S : Hidden state를 전부다 모아놓은 것이 될 것이다.(Query로 사용)</span></span><br><span class="line">    S, h, c = self.lstm(x, initial_state=[s0, c0])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Query로 사용할 때는 하나 앞선 시점을 사용해줘야 하므로</span></span><br><span class="line">    <span class="comment"># s0가 제일 앞에 입력으로 들어가는데 현재 Encoder 부분에서의 출력이 batch 크기에 따라서 length가 현재 1이기 때문에 2차원형태로 들어오게 된다.</span></span><br><span class="line">    <span class="comment"># 그러므로 이제 3차원 형태로 확장해 주기 위해서 newaxis를 넣어준다.</span></span><br><span class="line">    <span class="comment"># 또한 decoder의 S(Hidden state) 중에 마지막은 예측할 다음이 없으므로 배제해준다.</span></span><br><span class="line">    S_ = tf.concat([s0[:, tf.newaxis, :], S[:, :-1, :]], axis=1)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Attention 적용</span></span><br><span class="line">    <span class="comment"># 아래 []안에는 원래 Query, Key와 value 순으로 입력해야하는데 아래처럼 두가지만 입력한다면</span></span><br><span class="line">    <span class="comment"># 마지막 것을 Key와 value로 사용한다.</span></span><br><span class="line">    A = self.att([S_, H])</span><br><span class="line"></span><br><span class="line">    y = tf.concat([S, A], axis=-1)</span><br><span class="line">    <span class="built_in">return</span> self.dense(y), h, c</span><br></pre></td></tr></table></figure>
+<h3 id="Seq2seq-1"><a href="#Seq2seq-1" class="headerlink" title="Seq2seq"></a>Seq2seq</h3><ul>
+<li>이전의 코드에서 encoder의 출력에 전체 Hidden State를 모아놓은 것과 decoder의 입력으로 이값을 받는 코드를 추가해주었다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">class Seq2seq(tf.keras.Model):</span><br><span class="line">  def __init__(self, sos, eos):</span><br><span class="line">    super(Seq2seq, self).__init__()</span><br><span class="line">    self.enc = Encoder()</span><br><span class="line">    self.dec = Decoder()</span><br><span class="line">    self.sos = sos</span><br><span class="line">    self.eos = eos</span><br><span class="line"></span><br><span class="line">  def call(self, inputs, training=False, mask=None):</span><br><span class="line">    <span class="keyword">if</span> training is True:</span><br><span class="line">      <span class="comment"># 학습을 하기 위해서는 우리가 입력과 출력 두가지를 다 알고 있어야 한다.</span></span><br><span class="line">      <span class="comment"># 출력이 필요한 이유는 Decoder단의 입력으로 shited_ouput을 넣어주게 되어있기 때문이다.</span></span><br><span class="line">      x, y = inputs</span><br><span class="line"></span><br><span class="line">      <span class="comment"># LSTM으로 구현되었기 때문에 Hidden State와 Cell State를 출력으로 내준다.</span></span><br><span class="line">      H, h, c = self.enc(x)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Hidden state와 cell state, shifted output을 초기값으로 입력 받고</span></span><br><span class="line">      <span class="comment"># 출력으로 나오는 y는 Decoder의 결과이기 때문에 전체 문장이 될 것이다.</span></span><br><span class="line">      y, _, _ = self.dec((y, h, c, H))</span><br><span class="line">      <span class="built_in">return</span> y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      x = inputs</span><br><span class="line">      H, h, c = self.enc(x)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Decoder 단에 제일 먼저 sos를 넣어주게끔 tensor화시키고</span></span><br><span class="line">      y = tf.convert_to_tensor(self.sos)</span><br><span class="line">      <span class="comment"># shape을 맞춰주기 위한 작업이다.</span></span><br><span class="line">      y = tf.reshape(y, (1, 1))</span><br><span class="line"></span><br><span class="line">      <span class="comment"># 최대 64길이 까지 출력으로 받을 것이다.</span></span><br><span class="line">      seq = tf.TensorArray(tf.int32, 64)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># tf.keras.Model에 의해서 call 함수는 auto graph모델로 변환이 되게 되는데,</span></span><br><span class="line">      <span class="comment"># 이때, tf.range를 사용해 for문이나 while문을 작성시 내부적으로 tf 함수로 되어있다면</span></span><br><span class="line">      <span class="comment"># 그 for문과 while문이 굉장히 효율적으로 된다.</span></span><br><span class="line">      <span class="keyword">for</span> idx <span class="keyword">in</span> tf.range(64):</span><br><span class="line">        y, h, c = self.dec([y, h, c, H])</span><br><span class="line">        <span class="comment"># 아래 두가지 작업은 test data를 예측하므로 처음 예측한값을 다시 다음 step의 입력으로 넣어주어야하기에 해야하는 작업이다.</span></span><br><span class="line">        <span class="comment"># 위의 출력으로 나온 y는 softmax를 지나서 나온 값이므로</span></span><br><span class="line">        <span class="comment"># 가장 높은 값의 index값을 tf.int32로 형변환해주고</span></span><br><span class="line">        <span class="comment"># 위에서 만들어 놓았던 TensorArray에 idx에 y를 추가해준다.</span></span><br><span class="line">        y = tf.cast(tf.argmax(y, axis=-1), dtype=tf.int32)</span><br><span class="line">        <span class="comment"># 위의 값을 그대로 넣어주게 되면 Dimension이 하나밖에 없어서</span></span><br><span class="line">        <span class="comment"># 실제로 네트워크를 사용할 때 Batch를 고려해서 사용해야 하기 때문에 (1,1)으로 설정해 준다.</span></span><br><span class="line">        y = tf.reshape(y, (1, 1))</span><br><span class="line">        seq = seq.write(idx, y)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> y == self.eos:</span><br><span class="line">          <span class="built_in">break</span></span><br><span class="line">      <span class="comment"># stack은 그동안 TensorArray로 받은 값을 쌓아주는 작업을 한다.    </span></span><br><span class="line">      <span class="built_in">return</span> tf.reshape(seq.stack(), (1, 64))</span><br></pre></td></tr></table></figure>
+<p><img src="/image/seq2seq_with_attention_metric_performence.png" alt="Attention mechanism을 사용한 Seq2seq의 train data 성능"></p>
+<p><img src="/image/seq2seq_with_attention_prediction.png" alt="Attention mechanism을 사용한 Seq2seq의 test 결과"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Attention mechanism을 사용한 Seq2seq 구현",
+        "image": "https://heung-bae-lee.github.io/image/chatbot_data.png",
+        "keywords": "",
+        "genre": "deep learning",
+        "datePublished": "2020-01-22",
+        "dateCreated": "2020-01-22",
+        "dateModified": "2020-01-24",
+        "url": "https://heung-bae-lee.github.io/2020/01/22/deep_learning_11/",
+        "description": "Vallina Seq2seq
+tf.function을 사용하기 위해 tensorflow 2.0.0-beta1버전을 설치한다.
+
+한글 텍스트의 형태소분석을 위해 konlpy에서 Okt(Original Korean tag, Twitter에서 공개한 오픈소스 라이브러리)를 사용하기 위해 설치해준다.
+
+
+12!pip install tensorflow==2.0.0-b"
+        "wordCount": 4290
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/01/24/Crawling_02/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Scrapy 웹 크롤링 03 - Exports, Settings, pipeline
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/01/21/deep_learning_10/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Attention 기법</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/22/deep_learning_11/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

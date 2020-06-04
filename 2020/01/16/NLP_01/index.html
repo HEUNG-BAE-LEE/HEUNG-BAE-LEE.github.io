@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>임베딩이란? | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="컴퓨터가 바라보는 문자  아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.    이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="임베딩이란?">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/01/16/NLP_01/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="컴퓨터가 바라보는 문자  아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.    이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/encoding_with_asciii.png">
+<meta property="og:updated_time" content="2020-02-03T14:23:01.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="임베딩이란?">
+<meta name="twitter:description" content="컴퓨터가 바라보는 문자  아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.    이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/encoding_with_asciii.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/01/16/nlp_01/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-NLP_01" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        임베딩이란?
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/01/16/NLP_01/" class="article-date">
+            <time datetime="2020-01-16T08:29:53.000Z" itemprop="datePublished">2020-01-16</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="컴퓨터가-바라보는-문자"><a href="#컴퓨터가-바라보는-문자" class="headerlink" title="컴퓨터가 바라보는 문자"></a>컴퓨터가 바라보는 문자</h2><p><img src="/image/encoding_with_asciii.png" alt="컴퓨터가 문자를 해석하는 방법"></p>
+<ul>
+<li>아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.</li>
+</ul>
+<p><img src="/image/what_is_different_love_like.png" alt="컴퓨터가 보는 단어"></p>
+<ul>
+<li>이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot encoding을 통한 것이다. 허나, 이러한 Sparse matrix를 통한 계산은 너무 비효율 적이다. 그렇다면 어떻게 dense하게 표현할 수 있을지를 고민하는 것이 바로 Embedding이라는 개념의 본질일 것이다.</li>
+</ul>
+<p><img src="/image/why_is_sparse_matirx_one_hot_encoding.png" alt="One-hot encoding"></p>
+<p><img src="/image/Dense_representation.png" alt="Dense representation"></p>
+<h1 id="임베딩-Embedding-이란"><a href="#임베딩-Embedding-이란" class="headerlink" title="임베딩(Embedding)이란?"></a>임베딩(Embedding)이란?</h1><ul>
+<li>자연어 처리(Natural Language Processing)분야에서 임베딩(Embedding)은 <code>사람이 쓰는 자연어를 기계가 이해할 수 있는 숫자형태인 vector로 바꾼 결과 혹은 그 일련의 과정 전체를 의미</code>한다. 가장 간단한 형태의 임베딩은 단어의 빈도를 그대로 벡터로 사용하는 것이다. <code>단어-문서 행렬(Term-Document Matrix)</code>는 row는 단어 column은 문서에 대응한다.</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">구분</th>
+<th style="text-align:center">메밀꽃 필 무렵</th>
+<th style="text-align:center">운수 좋은 날</th>
+<th style="text-align:center">사랑 손님과 어머니</th>
+<th style="text-align:center">삼포 가는 길</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">기차</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td style="text-align:center">막걸리</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">선술집</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>위의 표에서 운수좋은 날이라는 문서의 임베딩은 [2, 1, 1]이다. 막걸리라는 단어의 임베딩은 [0, 1, 0, 0]이다. 또한 사랑 손님과 어머니, 삼포 가는 길이 사용하는 단어 목록이 상대적으로 많이 겹치고 있는 것을 알 수 있다. 위의 Matrix를 바탕으로 우리는 사랑 손님과 어머니는 삼포 가는 길과 기차라는 소재를 공유한다는 점에서 비슷한 작품일 것이라는 추정을 해볼 수 있다. 또 막걸리라는 단어와 선술집이라는 단어가 운수 좋은 날이라는 작품에만 등장하는 것을 알 수 있다. <code>막걸리-선술집 간 의미 차이가 막걸리 기차 보다 작을 것이라고 추정해 볼 수 있다.</code></li>
+</ul>
+<h2 id="임베딩의-역할"><a href="#임베딩의-역할" class="headerlink" title="임베딩의 역할"></a>임베딩의 역할</h2><ul>
+<li><p>1) <code>단어/문장 간 관련도 계산</code></p>
+<ul>
+<li>단어-문서 행렬은 가장 단순한 형태의 임베딩이다. 현업에서는 이보다 복잡한 형태의 임베딩을 사용한다. 대표적인 임베딩 기법은 <code>Word2Vec</code>을 뽑을 수 있을 것이다. 이렇듯 컴퓨터가 계산하기 쉽도록 <code>단어를 전체 단어들간의 관계에 맞춰 해당 단어의 특성을 갖는 벡터로 바꾸면 단어들 사이의 유사도를 계산하는 일이 가능</code>해진다. 자연어일 때 불가능했던 유사도를 계산할 수코사인 유사도 계산이 임베딩 덕분에 가능하다는 것이다. 또한 임베딩을 수행하면 <code>벡터 공간을 기하학적으로 나타낸 시각화 역시 가능</code>하다.</li>
+</ul>
+</li>
+<li><p>2) <code>의미적/문법적 정보 함축</code></p>
+<ul>
+<li>임베딩은 벡터인 만큼 사칙 연산이 가능하다. <code>단어 벡터 간 덧셈/뺄셈을 통해 단어들 사이의 의미적, 문법적 관계를 도출해낼 수 있다.</code> 예를들면, 아들 - 딸 + 소녀 = 소년이 성립하면 성공적인 임베딩이라고 볼 수 있다. <code>아들 - 딸 사이의 관계와 소년 - 소녀 사이의 의미 차이가 임베딩에 함축돼 있으면 품질이 좋은 임베딩이라 말할 수 있다는 이야기</code>이다. 이렇게 단어 임베딩을 평가하는 방법을 <code>단어 유추 평가(word analogy test)</code>라고 부른다.</li>
+</ul>
+</li>
+<li><p>3) <code>전이학습(Transfer learning)</code></p>
+<ul>
+<li><code>품질 좋은 임베딩은 모형의 성능과 모형의 수렴속도가 빨라지는데 이런 품질 좋은 임베딩을 다른 딥러닝 모델의 입력값으로 사용하는 것을 transfer learning</code>이라 한다. 예를 들면, 대규모 Corpus를 활용해 임베딩을 미리 만들어 놓는다. 임베딩에는 의미적, 문법적 정보 등이 녹아 있다. 이 임베딩을 입력값으로 쓰는 전이 학습 모델은 문서 분류라는 업무를 빠르게 잘 할 수 있게 되는 것이다.</li>
+</ul>
+</li>
+</ul>
+<h2 id="임베딩-기법의-역사와-종류"><a href="#임베딩-기법의-역사와-종류" class="headerlink" title="임베딩 기법의 역사와 종류"></a>임베딩 기법의 역사와 종류</h2><ul>
+<li><p>통계 기반 -&gt; 뉴럴 네트워크 기반</p>
+<ul>
+<li><p>통계 기반 기법</p>
+<ul>
+<li><code>잠재 의미 분석(Latent Semantic Analysis)</code> : 단어 사용 빈도 등 <code>Corpus의 통계량 정보가 들어 있는 행렬에 특이값 분해등 수학적 기법을 적용해 행렬에 속한 벡터들의 차원을 축소하는 방법</code>이다. 차원을 축소하는 이유는 예를 들어 Term-Document matrix 같은 경우는 row가 더 큰 sparse matrix일 확률이 높기 때문에 쓸데 없이 계산량과 메모리자원을 낭비하는 것을 예방하기 위해서이다. 여기서 차원 축소를 통해 얻은 행렬을 기존의 행렬과 비교했을 때 단어를 기준으로 했다면 단어 수준 임베딩, 문서를 기준으로 했다면 문서 임베딩이된다. <code>잠재 의미 분석 수행 대상 행렬은 여러 종류가 될 수 있으며, Term-Document Matrix, TF-IDF Matrix, Word-Context Matrix, PMI Matrix등</code>이 있다.</li>
+</ul>
+</li>
+<li><p>Neural Network 기반 기법</p>
+<ul>
+<li>Neural Probabilistic Language Model이 발표된 이후 부터 Neural Network기반의 임베딩 기법들이 주목 받고 있다. <code>Neural Network는 구조가 유연하고 표현력이 풍부하기 때문에 자연어의 무한한 문맥을 상당 부분 학습할 수 있다.</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>단어 수준 -&gt; 문장 수준</p>
+<ul>
+<li><p><code>단어 수준 임베딩 기법</code> : 각각의 벡터에 해당 <code>단어의 문맥적 의미를 함축</code>하지만, 단어의 형태가 동일하다면 동일단어로 인식하고, 모든 문맥 정보를 해당 단어 벡터 투영하므로 <code>동음이의어를 분간하기 어렵다는 단점</code>이 있다.</p>
+<ul>
+<li>ex) NPLM, Word2Vec, GloVe, FastText, Swivel 등</li>
+</ul>
+</li>
+<li><p><code>문장 수준 임베딩 기법</code> : 2018년 초에 ELMo(Embedding from Language Models)가 발표된 이후 주목 받기 시작했다. <code>개별 단어가 아닌 단어 Sequence 전체의 문맥적 의미를 함축 하기 때문에 단어 임베딩 기법보다 Transfer learning 효과가 좋은 것으로 알려져 있다.</code> 또한, 단어 수준 임베딩의 단점인 <code>동음이의어도 문장수준 임베딩 기법을 사용하면 분리해서 이해할 수 있다.</code></p>
+<ul>
+<li>ex) BERT(Bidirectional Encoder Representations from Transformer), GPT(Generation Pre-Training) 등</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Rule based -&gt; End to End -&gt; Pre-training/fine tuning</p>
+<ul>
+<li><p>1990년대에는 자연어 처리 모델 대부분은 우리가 딥러닝과 달리 머신러닝처럼 사람이 Feature를 직접 뽑았다. 그렇기에 Feature를 추출할 때 언어학적인 지식을 활용해야 했다. 허나. 2000년대 중반 이후 NLP 분야에서도 딥러닝 모델이 주목받기 시작하여 Feature를 직접 뽑지 않아도 되었다. 데이터를 넣어주면 사람의 개입없이 모델 스스로 처음부터 끝까지 이해하는 End-to-End Model 기법을 사용하였다. 대표적으로는 기계번역에 널리 사용됐던 Sequence-to-Sequence 모델이 있다. <code>2018년 ELMo 모델이 제안된 이후 NLP 모델은 pre-training과 fine tuning 방식으로 발전하고 있다.</code></p>
+</li>
+<li><p>우선 대규모 Corpus로 임베딩을 만든다.(Pre-train) 이 임베딩에는 Corpus의 의미적, 문법적 맥락이 포함돼 있다. 이후 임베딩을 입력으로 하는 새로운 딥러닝 모델을 만드로 우리가 풀고 싶은 구체적 문제에 맞는 소규모 데이터에 맞게 임베딩을 포함한 모델 전체를 업데이트한다.(fine tuning) <code>ELMo, GPT, BERT등</code>이 이 방식에 해당된다.  </p>
+</li>
+</ul>
+</li>
+<li><p>우리가 풀고 싶은 자연어 처리의 구체적 문제들(예시 : 품사 판별(Part-Of-Speech tagging), 개체명 인식(Named Entity Recognition), 의미역 분석(Semantic Role Labeling))을 <code>다운 스트림 태스크(DownStream task)</code>라고 한다. 다운스트림에 앞서 해결해야 할 과제라는 뜻의 <code>업스트림 테스크(UpStream task)</code>는 단어/문장 임베딩을 Pre-train하는 작업이 해당된다.</p>
+</li>
+</ul>
+<h2 id="임베딩의-종류와-성능"><a href="#임베딩의-종류와-성능" class="headerlink" title="임베딩의 종류와 성능"></a>임베딩의 종류와 성능</h2><h3 id="1-행렬-분해"><a href="#1-행렬-분해" class="headerlink" title="1) 행렬 분해"></a>1) 행렬 분해</h3><ul>
+<li><code>Corpus 정보가 들어 있는 원래 행렬을 Decomposition을 통해 임베딩</code>하는 기법이다. <code>Decomposition 이후엔 둘 중 하나의 행렬만 사용하거나 둘을 sum하거나 concatenate하는 방식으로 임베딩을 한다.</code><ul>
+<li>ex) GloVe, Swivel 등</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-예측-기반"><a href="#2-예측-기반" class="headerlink" title="2) 예측 기반"></a>2) 예측 기반</h3><ul>
+<li><code>어떤 단어 주변에 특정 단어가 나타날지 예측하거나, 이전 단어들이 주어졌을 때 다음 단어가 무엇일지 예측하거나, 문장 내 일부 단어를 지우고 해당 단어가 무엇일지 맞추는 과정에서 학습하는 방법</code><ul>
+<li>Neural Network기반 방법들이 속한다. ex) Word2Vec, FastText, BERT, ELMo, GPT 등</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-토픽-기반"><a href="#3-토픽-기반" class="headerlink" title="3) 토픽 기반"></a>3) 토픽 기반</h3><ul>
+<li><code>주어진 문서에 잠재된 주제를 추론하는 방식으로 임베딩을 수행</code>하는 기법이며, 대표적으로 <code>잠재 디리클레 할당(LDA)</code>가 있다. LDA 같은 모델은 <code>학습이 완료되면 각 문서가 어떤 주제 분포를 갖는지 확률 벡터 형태로 반환하기 때문에 임베딩 기법의 일종으로 이해</code>할 수 있다.</li>
+</ul>
+<h2 id="NLP-용어-정리"><a href="#NLP-용어-정리" class="headerlink" title="NLP 용어 정리"></a>NLP 용어 정리</h2><h3 id="Corpus-말뭉치"><a href="#Corpus-말뭉치" class="headerlink" title="Corpus(말뭉치)"></a>Corpus(말뭉치)</h3><ul>
+<li>임베딩 학습이라는 특정한 목적을 가지고 수집한 표본이다.</li>
+</ul>
+<p><img src="/image/what_is_Corpus.png" alt="Corpus"></p>
+<h3 id="Collection-컬렉션"><a href="#Collection-컬렉션" class="headerlink" title="Collection(컬렉션)"></a>Collection(컬렉션)</h3><ul>
+<li>Corpus에 속한 각가의 집합을 칭한다.<ul>
+<li>예를 들어, 한국어 위키백과와 네이버 영화 리뷰를 말뭉치로 쓴다면 이들 각각이 컬렉션이 된다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Sentence-문장"><a href="#Sentence-문장" class="headerlink" title="Sentence(문장)"></a>Sentence(문장)</h3><ul>
+<li>생각이나 감정을 말과 글로 표현할 때 완결된 내용을 나타내는 최소의 독립적인 형식 단위를 가리킨다. 실무에서는 <code>주로 문장을 마침표(.)나 느낌표(!), 물음표(?)와 같은 기호로 구분된 문자열을 문장으로 취급</code>한다.</li>
+</ul>
+<h3 id="Document-문서"><a href="#Document-문서" class="headerlink" title="Document(문서)"></a>Document(문서)</h3><ul>
+<li>생각이나 감정, 정보를 공유하는 문장 집합을 의미한다. 문서는 단락(Paragraph)의 집합으로 표현될 수 있다. <code>별도의 기준이 없다면 줄바꿈(\n) 문자로 구분된 문자열을 문서로 취급한다.</code></li>
+</ul>
+<h3 id="Token-토큰"><a href="#Token-토큰" class="headerlink" title="Token(토큰)"></a>Token(토큰)</h3><ul>
+<li>문장은 여러개의 토큰으로 구성된다. 토큰은 단어(Word), 형태소(Morpheme), 서브워드(subword)라고도 한다. 문장을 토큰 시퀀스로 분석하는 과정을 토크나이즈(tokenize)라고 한다.</li>
+</ul>
+<h3 id="Vocabulary-어휘집합"><a href="#Vocabulary-어휘집합" class="headerlink" title="Vocabulary(어휘집합)"></a>Vocabulary(어휘집합)</h3><ul>
+<li>Corpus에 있는 모든 Document를 Sentence로 나누고 여기에 Tokenize를 실행한 후 중복을 제거한 Token들의 집합이다. Vocabulary에 없는 token은 <code>미등록 단어(Unknown word)</code>라고 한다.</li>
+</ul>
+<h1 id="벡터가-어떻게-의미를-가지게-되는가"><a href="#벡터가-어떻게-의미를-가지게-되는가" class="headerlink" title="벡터가 어떻게 의미를 가지게 되는가"></a>벡터가 어떻게 의미를 가지게 되는가</h1><ul>
+<li><p>자연어의 의미를 임베딩에 녹여내는 방법은 <code>자연어의 통계적 패턴 정보를 통째로 임베딩에 넣는 것</code>이다. 자연어의 의미(문법적 의미, 단어의 의미등)는 그 언어를 사용하는 사람들의 일상 언어에 정보가 들어있기 때문이다. <code>임베딩을 만들 때 사용하는 통계 정보는 크게 3가지가 있다.</code></p>
+<ul>
+<li>1) 문장에 어떤 단어가 많이 쓰였는지 -&gt; <code>bag of words(백오브워즈) 가정</code></li>
+<li>2) 단어가 어떤 순서로 등장하는지 -&gt; <code>Language model(언어 모델) 가정</code></li>
+<li>3) 문장에 어떤 단어가 같이 나타났는지 -&gt; <code>distribution hypothesis(분포가정)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-BOW-Bag-Of-Words-가정"><a href="#1-BOW-Bag-Of-Words-가정" class="headerlink" title="1) BOW(Bag-Of-Words) 가정"></a>1) <code>BOW(Bag-Of-Words) 가정</code></h3><ul>
+<li>문서의 저자가 생각한 주제가 문서에서의 단어 사용에 녹아있다는 생각으로부터 <code>단어의 순서 정보는 무시하고 어떤 단어가 많이 쓰였는지 정보를 중시</code>한다. 경우에 따라서는 빈도 역시 단순화해 등장 여부(등장 시 1, 아니면 0)만을 사용하기도 한다. 간단한 아이디어지만 <code>정보 검색(information Retrieval)분야에서 여전히 많이 쓰이고 있다.</code> 사용자 질의에 가장 적절한 문서를 보여줄 때 질의를 BOW 임베딩으로 변환하고 질의와 검색 대상 문서 임베딩 간 코사인 유사도를 구해 가장 높은 문서를 사용자에게 노출 한다.<ul>
+<li>대표 통계량 : TF-IDF<a href="https://heung-bae-lee.github.io/2019/12/14/Recommendation_System_00/">개념을 모른다면 클릭</a></li>
+<li>대표 모델 : Deep Averaging Network<ul>
+<li>단어의 순서를 고려하지 않고 단어의 임베딩을 평균을 취해 만든다. 간단한 구조임에도 성능이 좋아서 현업에서도 자주 쓰인다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Language-model-가정"><a href="#2-Language-model-가정" class="headerlink" title="2) Language model 가정"></a>2) <code>Language model 가정</code></h3><pre><code>- `시퀀스에 확률을 부여하여 단어 시퀀스를 명시적(순서를 고려)으로 학습하는 모델`
+</code></pre><h4 id="2-1-통계-기반-언어-모델"><a href="#2-1-통계-기반-언어-모델" class="headerlink" title="2-1) 통계 기반 언어 모델"></a>2-1) 통계 기반 언어 모델</h4><ul>
+<li>단어가 n개 주어진 상황이라면 Language model은 n개 단어가 동시에 나타날 확률을 반환한다. 통계 기반의 언어 모델은 <code>말뭉치에서 해당 단어 시퀀스가 얼마나 자주 등장하는지 빈도를 세어 학습</code>한다. 잘 학습된 언어 모델이 있다면 주어진 단어 시퀀스 다음 단어로 확률이 높은 자연스러운 단어를 선택할 것이다. 구체적인 방법은 <code>한 상태의 확률은 그 직전 상태에만 의존한다는 Markov assumption에 기반하여 n-gram을 통해 확률을 계산</code>할 수 있다. <code>허나 데이터에 한 번도 등장하지 않는 n-gram이 존재할 때 예측 단계에서는 확률값을 0으로 취하는 문제가 있다.</code></li>
+</ul>
+<script type="math/tex; mode=display">P(w_{n}|w_{n-1} =  \frac{w_{n-1}}{w_{n}})</script><ul>
+<li>위의 문제점들을 해결하기 위해 Back-off, Smoothing 등의 방식이 제안됐다.</li>
+<li>1) <code>Back-off</code><ul>
+<li><code>n-gram 등장 빈도가 0인 단어들이 있을 수 있으므로 n-gram 등장빈도를 n보다 작은 범위의 단어 시퀀스 빈도로 근사하는 방식</code>이다. n을 크게 하면 할수록 등장하지 않는 케이스가 많아질 가능성이 높기 때문이다. $\alpha, \beta$는 실제 빈도와의 차이를 보정해주는 parameter이다.</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">Freq(내 마음 속에 영원히 기억될 최고의 명작이다) \approx \alpha Freq(영원히 기억될 최고의 명작이다) + \beta</script><ul>
+<li>2) (Add-k) Smoothing<ul>
+<li><code>등장 빈도 표에 모두 k 만큼 더하는 기법</code>이다. 만약 k=1로 설정한다면 특별히 <code>라플라스  스무딩(laplace smoothing)</code>이라고 한다. <code>스무딩을 시행하면 높은 빈도를 가진 문자열 등장 확률을 일부 깎고 전혀 등장하지 않는 케이스들에는 약간의 확률을 부여하게 된다.</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-뉴럴-네트워크-기반-언어-모델"><a href="#2-2-뉴럴-네트워크-기반-언어-모델" class="headerlink" title="2-2) 뉴럴 네트워크 기반 언어 모델"></a>2-2) 뉴럴 네트워크 기반 언어 모델</h4><ul>
+<li>Neural Network는 입력과 출력 사이의 관계를 유연하게 포착해낼 수 있고, 그 자체로 확률 모델로 기능할 수 있다. <code>주어진 단어 시퀀스를 가지고 다음 단어를 예측하는 과정에서 학습</code>된다. <code>학습이 완료되면 이들 모델의 중간 혹은 말단 계산 결과물을 단어나 문자의 임베딩으로 활용</code>한다. <code>Language model 기반 기법은 순차적으로 입력받아 다음 단어를 맞춰야 하기 때문에 일방향(uni-directional)이지만 Masked language model은 문장 전체를 다 보고 중간에 있는 단어를 예측하기 때문에 양방향(bi-directional)학습이 가능하다.</code> 그로인해 Masked Language model 기반의 방법들(예:BERT)은 기존 Language model 기법들 대비 임베딩 품질이 좋다.<ul>
+<li>대표 모델 : <code>ELMo, GPT</code> 등</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-Distribution-hypothesis"><a href="#3-Distribution-hypothesis" class="headerlink" title="3) Distribution hypothesis"></a>3) Distribution hypothesis</h3><ul>
+<li>자연어 처리에서 분포란 특정 범위, 즉 Window(해당 단어를 중심으로 범위에 포함시킬 앞뒤 단어 수, 예를 들어 윈도우가 2라면 타깃 단어 앞뒤로 2개의 문맥단어의 빈도를 계산) 내에 동시에 등장하는 이웃 단어 또는 문맥(context)의 집합을 가리킨다. <code>어떤 단어 쌍이 비슷한 문맥 환경에서 자주 등장한다면 그 의미 또한 유사할 것이라는 것이 Distribution hypothesis의 전제</code>이다. <code>형태소의 경계를 정하거나 품사를 나누는 것과 같은 다양한 언어학적 문제는 말뭉치의 분포 정보와 깊은 관계를 갖고 있다.</code> 이 덕분에 <code>임베딩에 분포 정보를 함축하게 되면 해당 벡터에 해당 단어의 의미를 내제시킬 수 있는 것</code>이다.<ul>
+<li>대표 통계량 : PMI(Pointwise Mutual Information :  점별 상호 정보량)<ul>
+<li><code>두 단어의 등장이 독립일 때 대비해 얼마나 자주 같이 등장하는지를 수치화한 것</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">PMI(A, B) = log\frac{P(A,B)}{P(A)P(B)}</script><ul>
+<li>Term-context matrix는 특정 단어 기준으로 Window에 존재하는 단어들을 count하는 방식으로 만들어지는데, 여기에서 PMI 수식을 적용시키면된다. 이렇게 구축한 <code>PMI 행렬의 행 벡터 자체를 해당 단어의 임베딩으로 사용할 수도 있다.</code></li>
+</ul>
+<ul>
+<li>대표 모델 : <code>Word2Vec</code></li>
+</ul>
+<p><img src="/image/word_smillarity_in_word2vec.png" alt="word2vec"></p>
+<ul>
+<li><code>CBOW 모델</code><ul>
+<li>문맥 단어들을 가지고 타깃 단어 하나를 맞추는 과정에서 학습된다.<ul>
+<li>1) 각 주변 단어들을 one-hot 벡터로 만들어 입력값으로 사용 (입력층 벡터)</li>
+<li>2) 가중치 행렬을 각 one-hot 벡터에 곱해서 n-차원 벡터를 만든다. (N-차원 은닉층)</li>
+<li>3) 만들어진 n-차원 벡터를 모두 더한 후 개수로 나눠 평균 n-차원 벡터를 만든다. (출력층 벡터)</li>
+<li>4) n-차원 벡터에 다시 가중치 행렬을 곱해서 one-hot 벡터와 같은 차원의 벡터로 만든다.</li>
+<li>5) 만들어진 벡터를 실제 예측하려고 하는 단어의 one-hot 벡터와 비교해서 학습한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/step_by_step_CBOW.png" alt="CBOW 모델 01"></p>
+<p><img src="/image/step_by_step_CBOW_01.png" alt="CBOW 모델 02"></p>
+<p><img src="/image/Projection_layer_in_CBOW.png" alt="CBOW 모델의 Projection Layer"></p>
+<p><img src="/image/Output_layer_in_CBOW.png" alt="CBOW 모델의 Output Layer"></p>
+<ul>
+<li><p><code>Skip-gram 모델</code></p>
+<ul>
+<li><p>타깃 단어를 가지고 문맥 단어가 무엇일지 예측하는 과정에서 학습된다.</p>
+<ul>
+<li>1) 하나의 단어를 one-hot 벡터로 만들어서 입력값으로 사용한다.(입력층 벡터)</li>
+<li>2) 가중치 행렬을 one-hot 벡터에 곱해서 n-차원 벡터를 만든다.(N-차원 은닉층)</li>
+<li>3) n-차원 벡터에 다시 가중치 행렬을 곱해서 one-hot 벡터와 같은 차원의 벡터로 만든다.(출력층 벡터)</li>
+<li>4) 만들어진 벡터를 실제 예측하려는 주변 단어들 각각의 one-hot 벡터와 비교해서 학습한다.</li>
+</ul>
+</li>
+<li><p>두 모델의 확실한 차이점은 <code>CBOW에서는 입력값으로 여러 개의 단어를 사용하고, 학습을 위해 하나의 단어와 비교하지만, Skip-gram에서는 입력값이 하나의 단어를 사용하고, 학습을 위해 주변의 여러 단어와 비교</code>한다.</p>
+</li>
+<li><p><code>위의 학습 과정을 모두 끝낸 후 가중치 행렬의 각 행을 단어 벡터로 사용한다. 카운트 기반 방법(Bag of Words 가정 방법들)로 만든 단어 벡터보다 단어 간의 유사도를 잘 측정하며, 단어들의 복잡한 특징까지도 잘 잡아낸다는 장점</code>이 있다. <code>보통 CBOW보다 Skip-gram의 성능이 더 좋아 자주 사용된다. 하지만 무조건적으로 좋은 것은 아니다!</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/skip_gram_model_in_word2vec.png" alt="Skip-gram 모델"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "임베딩이란?",
+        "image": "https://heung-bae-lee.github.io/image/encoding_with_asciii.png",
+        "keywords": "",
+        "genre": "NLP",
+        "datePublished": "2020-01-16",
+        "dateCreated": "2020-01-16",
+        "dateModified": "2020-02-03",
+        "url": "https://heung-bae-lee.github.io/2020/01/16/NLP_01/",
+        "description": "컴퓨터가 바라보는 문자
+
+아래와 같이 문자는 컴퓨터가 해석할 때 그냥 기호일 뿐이다. 이렇게 encoding된 상태로 보게 되면 아래와 같은 문제점이 발생할 수 있다.
+
+
+
+이 글자가 어떤 글자인지를 표시할 수 있고 그에 따른 특성을 갖게 하려면 우선 계산할 수 있게 숫자로 만들어 주어야 할 것이다. 그러한 방법 중 가장 단순한 방법이 One-hot enc"
+        "wordCount": 1935
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/01/19/NLP_02/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            NLP 전처리
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/01/15/machine_learning_04/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Regression(03) - 회귀진단</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/30/machine_learning_18/" class="title">Clustering - K-means, K-medoid</a></p>
+                            <p class="item-date"><time datetime="2020-05-29T16:01:30.000Z" itemprop="datePublished">2020-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
+                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_16/" class="title">Ensemble Learning - Ensemble의 Ensemble</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:04:18.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
+                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></p>
+                            <p class="item-title"><a href="/2020/05/17/data_structure_07/" class="title">내가 정리하는 자료구조 06 - 힙(heap)</a></p>
+                            <p class="item-date"><time datetime="2020-05-17T14:39:31.000Z" itemprop="datePublished">2020-05-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">19</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/01/16/NLP_01/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>
