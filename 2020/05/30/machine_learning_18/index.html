@@ -21,7 +21,7 @@
 <meta property="og:description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법 가장 단순하고 빠른 군집화 방법     초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다. 다음과 같은 목저함수 값이 최소">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/how_to_decide_mean_point_in_K_means_clustering_01.png">
-<meta property="og:updated_time" content="2020-06-04T11:30:03.927Z">
+<meta property="og:updated_time" content="2020-06-04T12:07:35.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clustering - K-means, K-medoid">
 <meta name="twitter:description" content="K-means Clusterig 각 군집에 할당된 포인트들의 평균 좌표를 이용해 중심점을 반복적으로 업데이트하면서 군집을 분류해 나가는 방법 가장 단순하고 빠른 군집화 방법     초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다. 다음과 같은 목저함수 값이 최소">
@@ -228,26 +228,11 @@ ga('send', 'pageview');
 </ul>
 <script type="math/tex; mode=display">J = \sum_{i=1}^{N}\min_{\mu_j \in C}(||x_i - \mu_j||^2)</script><ul>
 <li>세부 알고리즘은 다음과 같다.<ul>
-<li><ol>
-<li>임의의 중심위치 $ \mu_{k} (k=1, \ldots , K) $ 를 고른다. 보통 데이터 표본 중에서 $ K $ 개를 선택한다.</li>
-</ol>
-</li>
-<li><ol>
-<li>모든 데이터 $ x_{i} (i = 1, \lodts , N) $ 에서 각각의 중심위치 $ \mu_{k} $ 까지의 거리를 계산한다.</li>
-</ol>
-</li>
-<li><ol>
-<li>각 데이터에서 가장 가까운 중심위치를 선택하여 각 데이터가 속하는 군집을 정한다.</li>
-</ol>
-</li>
-<li><ol>
-<li>각 군집에 대해 중심위치 $ \mu_{k} $ 를 다시 계산한다.</li>
-</ol>
-</li>
-<li><ol>
-<li>2~4를 반복한다.</li>
-</ol>
-</li>
+<li>1) 임의의 중심위치 $ \mu_{k} (k=1, \ldots , K) $ 를 고른다. 보통 데이터 표본 중에서 $ K $ 개를 선택한다.</li>
+<li>2) 모든 데이터 $ x_{i} (i = 1, \ldots , N) $ 에서 각각의 중심위치 $ \mu_{k} $ 까지의 거리를 계산한다.</li>
+<li>3) 각 데이터에서 가장 가까운 중심위치를 선택하여 각 데이터가 속하는 군집을 정한다.</li>
+<li>4) 각 군집에 대해 중심위치 $ \mu_{k} $ 를 다시 계산한다.</li>
+<li>5) 2~4를 반복한다.</li>
 </ul>
 </li>
 </ul>
@@ -485,7 +470,7 @@ ga('send', 'pageview');
 <hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line">pca = PCA(n_components=2)</span><br><span class="line">X = pca.fit_transform(digits.data)</span><br><span class="line"></span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y_pred, cmap=plt.cm.Set1)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <hr>
-<p><img src="MNIST_K_means_clustering_PCA_2_ponents.png" alt="MNIST 데이터를 PCA를 통해 2개의 주성분 벡터를 갖도록 차원을 축소한 그래프"></p>
+<p><img src="/image/MNIST_K_means_clustering_PCA_2_ponents.png" alt="MNIST 데이터를 PCA를 통해 2개의 주성분 벡터를 갖도록 차원을 축소한 그래프"></p>
 <ul>
 <li><code>K-means clusetering은 유클리드 거리를 사용하므로 너무 차원이 높을 때는 군집화 성능이 떨어질 수 있다. 이 때는 차원 축소를 한 후 군집화를 하는 것이 도움이 될 수도 있다.</code></li>
 </ul>
@@ -627,7 +612,7 @@ ga('send', 'pageview');
 
 초기에 제일 처음 랜덤하게 포인트를 하나 잡아서 그 포인트에 가까운 데이터들을 같은 군집으로 할당해준다. 그 다음 아래와 같은 방법으로 반복한다.
 다음과 같은 목저함수 값이 최소"
-        "wordCount": 4322
+        "wordCount": 4327
     }
 </script>
 
