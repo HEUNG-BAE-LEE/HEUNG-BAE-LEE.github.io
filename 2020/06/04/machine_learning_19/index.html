@@ -21,7 +21,7 @@
 <meta property="og:description" content="Hierarchical clustering(계층적 군집화) 계층적 군집화(hierachical clustering)는 여러개의 군집 중에서 가장 유사도가 높은 혹은 거리가 가까운 군집 두개를 선택하여 하나로 합치면서 군집 개수를 줄여 가는 방법을 말한다. 합체 군집화(agglomerative clustering)라고도 한다. 가장 처음에는 모든 군집이 하나">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Hierachical_distance_conception_01.png">
-<meta property="og:updated_time" content="2020-06-05T14:12:50.556Z">
+<meta property="og:updated_time" content="2020-06-05T14:40:07.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clustering - Hierarchical, DBSCAN">
 <meta name="twitter:description" content="Hierarchical clustering(계층적 군집화) 계층적 군집화(hierachical clustering)는 여러개의 군집 중에서 가장 유사도가 높은 혹은 거리가 가까운 군집 두개를 선택하여 하나로 합치면서 군집 개수를 줄여 가는 방법을 말한다. 합체 군집화(agglomerative clustering)라고도 한다. 가장 처음에는 모든 군집이 하나">
@@ -295,10 +295,13 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+<p><img src="/image/what_is_DBSCAN_cinception.png" alt="DBSCAN 개념"></p>
 <ul>
 <li>만약 $ \varepsilon $ 최소 거리 안의 이웃 영역 안에 최소 데이터 개수 이상의 데이터가 있으면  그 데이터는 핵심(core) 데이터이다. 이렇게 핵심 데이터를 찾아낸 다음에는 이 핵심 데이터의 이웃 영역 안에 있는 데이터를 이 핵심데이터와 연결된 핵심 데이터로 정의한다. 핵심 데이터의 이웃 영역안에 있는 데이터도 마찬가지로 연결된 핵심 데이터가 된다. 만약 고밀도 데이터에 더이상 이웃이 없으면 이 데이터는 경계(border) 데이터라고 한다. 핵심 데이터도 아니고 경계 데이터도 아닌 데이터를 outlier라고 한다.</li>
 </ul>
 <p><img src="/image/how_to_DBSCAN_clustering.png" alt="DBSCAN"></p>
+<p><img src="/image/how_to_make_cluster_in_DBSCAN_Algorithme.png" alt="DBSCAN 알고리즘"></p>
+<p><img src="/image/DBSCAN_examples.png" alt="DBSCAN 알고리즘 예시들"></p>
 <ul>
 <li>Scikit-learn의 cluster 서브패키지는 DBSCAN 클래스를 제공한다. 다음과 같은 인수를 받을 수 있다.<ul>
 <li><code>eps</code> : 이웃을 정의하기 위한 거리. epsilon</li>
@@ -306,6 +309,7 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+<p><img src="/image/DBSCAN_parameters_setting_tip.png" alt="DBSCAN 파라미터 설정시 유의점"></p>
 <ul>
 <li>군집화가 끝나면 객체는 다음 속성을 갖는다.<ul>
 <li><code>labels_</code> : 군집번호. 아웃라이어는 -1 값을 갖는다.</li>
@@ -313,6 +317,7 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+<p><img src="/image/DBSCAN_advantages_disadvantages.png" alt="DBSCAN 군집화의 장단점"></p>
 <ul>
 <li>다음은 <code>make_circles</code> 명령과 <code>make_moons</code> 명령으로 만든 동심원, 초승달 데이터를 DBSCAN으로 군집화한 결과를 나타낸 것이다. 마커(marker)의 모양은 군집을 나타내고 마커의 크기가 큰 데이터는 핵심데이터, x 표시된 데이터는 outlier이다.</li>
 </ul>
@@ -427,7 +432,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/06/04/machine_learning_19/",
         "description": "Hierarchical clustering(계층적 군집화)
 계층적 군집화(hierachical clustering)는 여러개의 군집 중에서 가장 유사도가 높은 혹은 거리가 가까운 군집 두개를 선택하여 하나로 합치면서 군집 개수를 줄여 가는 방법을 말한다. 합체 군집화(agglomerative clustering)라고도 한다. 가장 처음에는 모든 군집이 하나"
-        "wordCount": 2328
+        "wordCount": 2347
     }
 </script>
 
