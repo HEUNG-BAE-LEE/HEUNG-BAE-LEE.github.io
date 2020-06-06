@@ -21,7 +21,7 @@
 <meta property="og:description" content="Imbalanced Data 실제로 도메인에서 적용될 때 클래스가 Imbalance한 데이터들이 많을 것이다. 아래와 같이 불균형인 데이터를 그냥 학습시키면 다수의 클래스를 갖는 데이터를 많이 학습하게 되므로 소수 클래스에 대해서는 잘 분류해내지 못한다.   데이터 클래스 비율이 너무 차이가 나면(highly-Imbalanced data) 단순히 우세한 클">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_imbalanced_data_problem.png">
-<meta property="og:updated_time" content="2020-06-06T08:50:51.776Z">
+<meta property="og:updated_time" content="2020-06-06T16:43:16.803Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Imbalanced Data">
 <meta name="twitter:description" content="Imbalanced Data 실제로 도메인에서 적용될 때 클래스가 Imbalance한 데이터들이 많을 것이다. 아래와 같이 불균형인 데이터를 그냥 학습시키면 다수의 클래스를 갖는 데이터를 많이 학습하게 되므로 소수 클래스에 대해서는 잘 분류해내지 못한다.   데이터 클래스 비율이 너무 차이가 나면(highly-Imbalanced data) 단순히 우세한 클">
@@ -216,6 +216,24 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/what_is_imbalanced_data_problem.png" alt="데이터 불균형 문제 - 01"></p>
 <ul>
+<li>아래 코드와 그림은 SVM을 사용하여 각각 다변량(아래는 이변량) 정규분포를 갖는 비대칭 데이터와 대칭 데이터를 분류한 결과를 비교하는 코드이다. 우선 label마다 확실하게 구분되어질 수 있도록 서로 다른 평균을 갖는 이변량 정규분포에 샘플링하여 사용한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import *</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.metrics import recall_score</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def classification_result(n0, n1, title=<span class="string">""</span>):</span><br><span class="line">    rv1 = sp.stats.multivariate_normal([-1, 0], [[1, 0], [0, 1]])</span><br><span class="line">    rv2 = sp.stats.multivariate_normal([+1, 0], [[1, 0], [0, 1]])</span><br><span class="line">    X0 = rv1.rvs(n0, random_state=0)</span><br><span class="line">    X1 = rv2.rvs(n1, random_state=0)</span><br><span class="line">    X = np.vstack([X0, X1])</span><br><span class="line">    y = np.hstack([np.zeros(n0), np.ones(n1)])</span><br><span class="line"></span><br><span class="line">    x1min = -4; x1max = 4</span><br><span class="line">    x2min = -2; x2max = 2</span><br><span class="line">    xx1 = np.linspace(x1min, x1max, 1000)</span><br><span class="line">    xx2 = np.linspace(x2min, x2max, 1000)</span><br><span class="line">    X1, X2 = np.meshgrid(xx1, xx2)</span><br><span class="line"></span><br><span class="line">    plt.contour(X1, X2, rv1.pdf(np.dstack([X1, X2])), levels=[0.05], linestyles=<span class="string">"dashed"</span>)</span><br><span class="line">    plt.contour(X1, X2, rv2.pdf(np.dstack([X1, X2])), levels=[0.05], linestyles=<span class="string">"dashed"</span>)</span><br><span class="line"></span><br><span class="line">    model = SVC(kernel=<span class="string">"linear"</span>, C=1e4, random_state=0).fit(X, y)</span><br><span class="line">    Y = np.reshape(model.predict(np.array([X1.ravel(), X2.ravel()]).T), X1.shape)</span><br><span class="line">    plt.scatter(X[y == 0, 0], X[y == 0, 1], marker=<span class="string">'x'</span>, label=<span class="string">"0 클래스"</span>)</span><br><span class="line">    plt.scatter(X[y == 1, 0], X[y == 1, 1], marker=<span class="string">'o'</span>, label=<span class="string">"1 클래스"</span>)</span><br><span class="line">    plt.contour(X1, X2, Y, colors=<span class="string">'k'</span>, levels=[0.5])</span><br><span class="line">    y_pred = model.predict(X)</span><br><span class="line">    plt.xlim(-4, 4)</span><br><span class="line">    plt.ylim(-3, 3)</span><br><span class="line">    plt.xlabel(<span class="string">"x1"</span>)</span><br><span class="line">    plt.ylabel(<span class="string">"x2"</span>)</span><br><span class="line">    plt.title(title)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> model, X, y, y_pred</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))    </span><br><span class="line">plt.subplot(121)</span><br><span class="line">model1, X1, y1, y_pred1 = classification_result(200, 200, <span class="string">"대칭 데이터 (5:5)"</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model2, X2, y2, y_pred2 = classification_result(200, 20, <span class="string">"비대칭 데이터 (9:1)"</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.savefig(<span class="string">'Imbalanced_data_svc_example'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/Imbalanced_data_svc_example.png" alt="SVC를 이용한 대칭 데이터와 비대칭 데이터의 분류 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(classification_report(y1, y_pred1))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y2, y_pred2))</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.86      0.83      0.84       200</span><br><span class="line">         1.0       0.84      0.86      0.85       200</span><br><span class="line"></span><br><span class="line">    accuracy                           0.85       400</span><br><span class="line">   macro avg       0.85      0.85      0.85       400</span><br><span class="line">weighted avg       0.85      0.85      0.85       400</span><br><span class="line"></span><br><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.96      0.98      0.97       200</span><br><span class="line">         1.0       0.75      0.60      0.67        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.95       220</span><br><span class="line">   macro avg       0.86      0.79      0.82       220</span><br><span class="line">weighted avg       0.94      0.95      0.94       220</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import roc_curve, confusion_matrix</span><br><span class="line"></span><br><span class="line">fpr1, tpr1, thresholds1 = roc_curve(y1, model1.decision_function(X1))</span><br><span class="line">fpr2, tpr2, thresholds2 = roc_curve(y2, model2.decision_function(X2))</span><br><span class="line"></span><br><span class="line">c1 = confusion_matrix(y1, y_pred1, labels=[1, 0])</span><br><span class="line">c2 = confusion_matrix(y2, y_pred2, labels=[1, 0])</span><br><span class="line">r1 = c1[0, 0] / (c1[0, 0] + c1[0, 1])</span><br><span class="line">r2 = c2[0, 0] / (c2[0, 0] + c2[0, 1])</span><br><span class="line">f1 = c1[1, 0] / (c1[1, 0] + c1[1, 1])</span><br><span class="line">f2 = c2[1, 0] / (c2[1, 0] + c2[1, 1])</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12, 8))</span><br><span class="line">plt.plot(fpr1, tpr1, <span class="string">':'</span>, label=<span class="string">"대칭"</span>)</span><br><span class="line">plt.plot(fpr2, tpr2, <span class="string">'-'</span>, label=<span class="string">"비대칭"</span>)</span><br><span class="line">plt.plot([f1], [r1], <span class="string">'ro'</span>)</span><br><span class="line">plt.plot([f2], [r2], <span class="string">'ro'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlabel(<span class="string">'Fall-Out'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Recall'</span>)</span><br><span class="line">plt.title(<span class="string">'ROC 커브'</span>)</span><br><span class="line"><span class="comment"># plt.savefig("roc_curve_diiferent_result_between_balanced_and_Imbalanced")</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>주황색 포인트가 현재 각 모델들의 성능을 의미한다. 대칭 데이터보다 비대칭 데이터를 사용하였을 경우 훨씬 좋지 않다.</li>
+</ul>
+<p><img src="/image/roc_curve_diiferent_result_between_balanced_and_Imbalanced.png" alt="SVC의 결과의 위치 및 ROC 커브"></p>
+<ul>
 <li>모형이 학습을 하면서 위에서 언급한 것 과 같이 소수의 데이터를 잘 학습하지 못하여 소수의 데이터를 잘 분류해 내지 못하는 모습을 아래의 그림에서도 확인할 수 있다. 빨간색 원형의 부분에도 소수 클래스의 데이터라 존재하지만 주변 다수 클래스가 많이 분포되어있어 분류해 내지 못했다.</li>
 </ul>
 <p><img src="/image/data_Imbalanced_examples_01.png" alt="데이터 불균형 문제의 예시 - 01"></p>
@@ -239,8 +257,8 @@ ga('send', 'pageview');
 <li>threshold가 변동되야 하므로 ROC curve를 그려보거나 AUC를 통한 지표를 설정하는 것도 좋은 방법이다.</li>
 </ul>
 <p><img src="/image/considered_imbalanced_data_problem_metrics_03.png" alt="불균형 문제를 갖는 데이터에 대한 성능지표 - 03"></p>
-<ul>
-<li>위에서 잠깐 언급했듯이 Imbalanced data를 해결하기 위한 방법은 크게 2 가지로 소개 할 수 있다. 첫번째 방법은 리샘플링 방법으로 소수의 데이터를 부풀리는 <code>Over sampling</code> 과 다수의 데이터를 줄이는 <code>Under sampling</code>, 그리고 마지막으로 두 가지 방법을 섞어 사용하는 <code>Hybrid sampling</code>이 있다. 두 번째 방법은 모형 자체의 학습하는 가중치를 소수 클래스에 더 주어 학습시키는 방법이다.</li>
+<h3 id="해결방법"><a href="#해결방법" class="headerlink" title="해결방법"></a>해결방법</h3><ul>
+<li>위에서 잠깐 언급했듯이 Imbalanced data를 해결하기 위한 방법은 크게 2 가지로 소개 할 수 있다. 첫번째 방법은 리샘플링 방법으로 소수의 데이터를 부풀리는 <code>Over sampling</code> 과 다수의 데이터에서 일부만 사용하는 <code>Under sampling</code>, 그리고 마지막으로 두 가지 방법을 섞어 사용하는 <code>Hybrid sampling</code>이 있다. 두 번째 방법은 모형 자체의 학습하는 가중치를 소수 클래스에 더 주어 학습시키는 방법이다.</li>
 </ul>
 <p><img src="/image/how_to_overcome_Imbalanced_data_problem_with_resampling_01.png" alt="불균형 문제를 해결하기 위한 리샘플링 방법들"></p>
 <ul>
@@ -248,6 +266,209 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/how_to_overcome_Imbalanced_data_problem_with_resampling_01.png" alt="불균형 문제를 해결하기 위한 리샘플링 방법들"></p>
 <p><img src="/image/oversampling_example.png" alt="오버 샘플링을 통한 불균형 문제 해결 예시"></p>
+<h4 id="Imbalanced-learn-패키지"><a href="#Imbalanced-learn-패키지" class="headerlink" title="Imbalanced-learn 패키지"></a>Imbalanced-learn 패키지</h4><ul>
+<li>Imbalanced data 문제를 해결하기 위한 다양한 샘플링 방법을 구현한 Python 패키지</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -U imbalanced-learn</span><br></pre></td></tr></table></figure>
+<h3 id="Under-sampling"><a href="#Under-sampling" class="headerlink" title="Under sampling"></a>Under sampling</h3><ul>
+<li><code>RandomUnderSampler</code> : random under-sampling method</li>
+<li><code>TomekLinks</code> : Tomek’s link method</li>
+<li><code>CondensedNearestNeighbour</code> : condensed nearest neighbor method</li>
+<li><code>OneSidedSelection</code> : under-sampling based on one-sided selection method</li>
+<li><code>EditedNearestNeighbours</code> : edited nearest neighbor method</li>
+<li><code>NeighbourhoodCLeaningRule</code> : neighborhood cleaning rule</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from imblearn.under_sampling import *</span><br><span class="line"></span><br><span class="line">n0 = 200; n1 = 20</span><br><span class="line">rv1 = sp.stats.multivariate_normal([-1, 0], [[1, 0], [0, 1]])</span><br><span class="line">rv2 = sp.stats.multivariate_normal([+1, 0], [[1, 0], [0, 1]])</span><br><span class="line">X0 = rv1.rvs(n0, random_state=0)</span><br><span class="line">X1 = rv2.rvs(n1, random_state=0)</span><br><span class="line">X_imb = np.vstack([X0, X1])</span><br><span class="line">y_imb = np.hstack([np.zeros(n0), np.ones(n1)])</span><br><span class="line"></span><br><span class="line">x1min = -4; x1max = 4</span><br><span class="line">x2min = -2; x2max = 2</span><br><span class="line">xx1 = np.linspace(x1min, x1max, 1000)</span><br><span class="line">xx2 = np.linspace(x2min, x2max, 1000)</span><br><span class="line">X1, X2 = np.meshgrid(xx1, xx2)</span><br><span class="line"></span><br><span class="line">def classification_result2(X, y, title=<span class="string">""</span>):</span><br><span class="line">    plt.contour(X1, X2, rv1.pdf(np.dstack([X1, X2])), levels=[0.05], linestyles=<span class="string">"dashed"</span>)</span><br><span class="line">    plt.contour(X1, X2, rv2.pdf(np.dstack([X1, X2])), levels=[0.05], linestyles=<span class="string">"dashed"</span>)</span><br><span class="line">    model = SVC(kernel=<span class="string">"linear"</span>, C=1e4, random_state=0).fit(X, y)</span><br><span class="line">    Y = np.reshape(model.predict(np.array([X1.ravel(), X2.ravel()]).T), X1.shape)</span><br><span class="line">    plt.scatter(X[y == 0, 0], X[y == 0, 1], marker=<span class="string">'x'</span>, label=<span class="string">"0 클래스"</span>)</span><br><span class="line">    plt.scatter(X[y == 1, 0], X[y == 1, 1], marker=<span class="string">'o'</span>, label=<span class="string">"1 클래스"</span>)</span><br><span class="line">    plt.contour(X1, X2, Y, colors=<span class="string">'k'</span>, levels=[0.5])</span><br><span class="line">    y_pred = model.predict(X)</span><br><span class="line">    plt.xlim(-4, 4)</span><br><span class="line">    plt.ylim(-3, 3)</span><br><span class="line">    plt.xlabel(<span class="string">"x1"</span>)</span><br><span class="line">    plt.ylabel(<span class="string">"x2"</span>)</span><br><span class="line">    plt.title(title)</span><br><span class="line">    <span class="built_in">return</span> model</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Random-Under-Sampler"><a href="#Random-Under-Sampler" class="headerlink" title="Random Under-Sampler"></a>Random Under-Sampler</h4><ul>
+<li>무작위로 데이터를 없애는 단순 샘플링</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = RandomUnderSampler(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = RandomUnderSampler(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'RandomUnderSampler로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('RandomUnderSampler_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/RandomUnderSampler_result_resampling.png" alt="RandomUnderSampler로 리샘플링한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.92      0.95       200</span><br><span class="line">         1.0       0.51      0.90      0.65        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.91       220</span><br><span class="line">   macro avg       0.75      0.91      0.80       220</span><br><span class="line">weighted avg       0.95      0.91      0.92       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Tomek’s-link-method"><a href="#Tomek’s-link-method" class="headerlink" title="Tomek’s link method"></a>Tomek’s link method</h4><ul>
+<li>토멕링크(Tomek’s link)란 서로 다른 클래스에 속하는 한 쌍의 데이터 $ (x_{+}, x_{-}) $ 로 서로에게 더 가까운 다른 데이터 존재하지 않는 상태이다. 클래스가 다른 두 데이터가 아주 가까이 붙어있으면 토멕링크가 된다. 토멕링크 방법은 이러한 토멕링크를 찾은 다음 그 중에서 다수 클래스에 속하는 데이터를 제외하는 방법으로 <code>경계선을 다수 클래스쪽으로 밀어붙이는 효과</code>가 있다.</li>
+</ul>
+<ul>
+<li><code>소수쪽 경계선을 늘리자라는 방법이다.(단 없애지는 것들이 많은 수가 있지는 않다.) 반복가능!</code></li>
+</ul>
+<p><img src="/image/what_is_tomeklinks_under_sampling.png" alt="Tomek&#39;s link 방법"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = TomekLinks(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'Tomeks link method로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('TomekLinks_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/TomekLinks_result_resampling.png" alt="Tomek&#39;s link method로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.97      0.97      0.97       200</span><br><span class="line">         1.0       0.70      0.70      0.70        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.95       220</span><br><span class="line">   macro avg       0.83      0.83      0.83       220</span><br><span class="line">weighted avg       0.95      0.95      0.95       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Condensed-Nearest-Neighbor"><a href="#Condensed-Nearest-Neighbor" class="headerlink" title="Condensed Nearest Neighbor"></a>Condensed Nearest Neighbor</h4><ul>
+<li>CNN(Condensed Nearest Neighbor) 방법은 1-NN 모형으로 분류되지 않는 데이터만 남기는 방법이다.<ul>
+<li>원래는 clustering에서 사용하는 방법이지만 응용해서 사용한다.</li>
+<li>랜덤하게 하나를 고른 후, 그 다음에는 1-NN방법을 사용한다. 그 다음 선택된 것과 만약 같은 클래스(다수 클래스)이면 안 뽑고 다른 클래스(소수 클래스)이면 뽑음.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>선택된 데이터 집합을 $ S $ 라고 하자.</p>
+<ul>
+<li>1) 소수 클래스 데이터를 모두 $ S $ 에 포함시킨다.</li>
+<li>2) 다수 데이터 중에서 하나를 골라서 가장 가까운 데이터가 다수 클래스이면 포함시키지 않고 아니면 $ S $ 에 포함시킨다.</li>
+<li>3) 더 이상 선택되는 데이터가 없을 때 까지 2를 반복한다.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>이 방법을 사용하면 기존에 선택된 데이터와 가까이 있으면서 같은 클래스인 데이터는 선택되지 않기 때문에 다수 데이터의 경우 선택되는 비율이 적어진다.</p>
+<ul>
+<li><p>허나, <code>가장 가까운 데이터가 소수 클래스인 경우 집합에 포함되겠지만 그만큼 아래 그림처럼 소수 클래스 집단과 거리가 가깝다면 두 클래스를 분류하는데 도움을 주진 못할 것</code>이다.</p>
+</li>
+<li><p>CNN 자체는 <code>경계선을 살리는 역할</code>을 하기 때문에 경계선 보다 멀거나 적은 클래스 주변에 없으면 제거된다. 그러므로 <code>홀로 이걸 사용한다기 보다는 다른 사용에 중간과정에 사용하기도한다.</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = CondensedNearestNeighbour(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'CondensedNearestNeighbour로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('CondensedNearestNeighbour_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/CondensedNearestNeighbour_result_resampling.png" alt="CondensedNearestNeighbour로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.96      0.98      0.97       200</span><br><span class="line">         1.0       0.75      0.60      0.67        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.95       220</span><br><span class="line">   macro avg       0.86      0.79      0.82       220</span><br><span class="line">weighted avg       0.94      0.95      0.94       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="One-Sided-Selection"><a href="#One-Sided-Selection" class="headerlink" title="One Sided Selection"></a>One Sided Selection</h4><ul>
+<li>One Sided Selection은 토맥링크 방법과 Condensed Nearest Neighbour 방법을 섞은 것이다. 토맥링크 중 다수 클래스를 제외하고 나머지 데이터 중에서도 서로 붙어있는 다수 클래스 데이터는 1-NN 방법으로 제외한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = OneSidedSelection(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'OneSidedSelection로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('OneSidedSelection_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/OneSidedSelection_result_resampling.png" alt="OneSidedSelection으로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.97      0.97      0.97       200</span><br><span class="line">         1.0       0.70      0.70      0.70        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.95       220</span><br><span class="line">   macro avg       0.83      0.83      0.83       220</span><br><span class="line">weighted avg       0.95      0.95      0.95       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Edited-Nearest-Neighbours"><a href="#Edited-Nearest-Neighbours" class="headerlink" title="Edited Nearest Neighbours"></a>Edited Nearest Neighbours</h4><ul>
+<li>ENN(Edited Nearest Neighbours) 방법은 다수 클래스 데이터 중 가장 가까운 k(<code>n_neighbors</code>)개의 데이터가 모두(<code>kind_sel=&#39;all&#39;</code>) 또는 다수(<code>kind_sel=&#39;mode&#39;</code>) 다수 클래스가 아니면 삭제하는 방법이다. 소수 클래스 주변의 다수 클래스 데이터는 사라진다.</li>
+</ul>
+<ul>
+<li>그러므로 <code>가까운 k개 중 소수 클래스를 지닌 데이터들은 모두 제거되어 소수 클래스와 다수 클래스 간의 구분이 상대적으로 명확</code>해지게 된다.</li>
+</ul>
+<ul>
+<li>CNN과 비슷하지만, 모든 데이터에 대해서 주변에 제일 가까운 k개를 지정해줘서 주변에 다수 데이터가 많거나 또는 모두 다수 데이터가 아니면 그 데이터를 삭제하여 <code>경계선에 있는 애들 중 다수클래스가 사라져서 위에 말한 것과 동일한 효과</code>를 준다.</li>
+</ul>
+<ul>
+<li><code>knn방법은 데이터간의 모든 거리를 구하기 때문에 데이터 갯수가 많으면 사용하기 힘들다.</code></li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = EditedNearestNeighbours(kind_sel=<span class="string">"all"</span>, n_neighbors=5, random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'EditedNearestNeighbours로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('EditedNearestNeighbours_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/EditedNearestNeighbours_result_resampling.png" alt="EditedNearestNeighbours으로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.94      0.96       200</span><br><span class="line">         1.0       0.58      0.90      0.71        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.93       220</span><br><span class="line">   macro avg       0.79      0.92      0.83       220</span><br><span class="line">weighted avg       0.95      0.93      0.94       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Neighbourhood-Cleaning-Rule"><a href="#Neighbourhood-Cleaning-Rule" class="headerlink" title="Neighbourhood Cleaning Rule"></a>Neighbourhood Cleaning Rule</h4><ul>
+<li>CNN(Condensed Nearest Neighbour) 방법과 ENN(Edited Nearest Neighbours) 방법을 섞은 것이다.</li>
+</ul>
+<ul>
+<li>가장 가까운 데이터가 소수데이터가 아니거나, 가장 가까운 k개가 다수 클래스이거나 다수가 다수 클래스인 데이터를 제거하는 방법이므로 경계선을 너무 명확히 해주는 것을 방지한 효과를 줄 수 있다고 생각한다. ENN을 통해 소수 클래스 데이터 주변을 너무 많이 제거하는 것을 방지한다고 보면 될 것 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = NeighbourhoodCleaningRule(kind_sel=<span class="string">"all"</span>, n_neighbors=5, random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'NeighbourhoodCleaningRule로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('NeighbourhoodCleaningRule_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/NeighbourhoodCleaningRule_result_resampling.png" alt="NeighbourhoodCleaningRule으로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.93      0.96       200</span><br><span class="line">         1.0       0.56      0.95      0.70        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.93       220</span><br><span class="line">   macro avg       0.78      0.94      0.83       220</span><br><span class="line">weighted avg       0.96      0.93      0.94       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Over-sampling"><a href="#Over-sampling" class="headerlink" title="Over sampling"></a>Over sampling</h3><ul>
+<li><code>RandomOverSampler</code> : random sampler</li>
+<li><code>ADASYN</code> : Adaptive Synthetic Sampling Approach for Imbalanced Learning</li>
+<li><code>SMOTE</code> : Synthetic Minority Over-sampling Technique</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from imblearn.over_sampling import *</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="RandomOverSampler"><a href="#RandomOverSampler" class="headerlink" title="RandomOverSampler"></a>RandomOverSampler</h4><ul>
+<li>Random Over Sampling은 소수 클래스의 데이터를 반복해서 넣는 것(replacement)이다. <code>가중치를 증가시키는 것과 비슷</code>하다.</li>
+</ul>
+<ul>
+<li><code>오른쪽과 왼쪽이 변화가 없는 것 처럼 보이지만 오른쪽은 똑같은 데이터를 복제하는 것이기 때문에 숫자를 늘려 경계선을 밀어버린다.</code></li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = RandomOverSampler(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'RandomOverSampler로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('RandomOverSampler_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/RandomOverSampler_result_resampling.png" alt="RandomOverSampler로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.91      0.95       200</span><br><span class="line">         1.0       0.51      0.95      0.67        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.91       220</span><br><span class="line">   macro avg       0.75      0.93      0.81       220</span><br><span class="line">weighted avg       0.95      0.91      0.92       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="ADASYN"><a href="#ADASYN" class="headerlink" title="ADASYN"></a>ADASYN</h4><ul>
+<li><code>소수 데이터를 랜덤하게 두 포인트를 고른 후 직선으로 이어 그 선 사이의 랜덤한 위치에 데이터를 새로 생성</code>한다.</li>
+</ul>
+<ul>
+<li>ADASYN(Adaptive Synthetic Sampling) 방법은 <code>소수 클래스 데이터와 그 데이터에서 가장 가까운 k개의 소수 클래스 데이터 중 무작위로 선택된 데이터 사이의 직선상에 가상의 소수 클래스 데이터를 만드는 방법</code>이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = ADASYN(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'ADASYN로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('ADASYN_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/ADASYN_result_resampling.png" alt="ADASYN으로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.90      0.94       200</span><br><span class="line">         1.0       0.47      0.95      0.63        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.90       220</span><br><span class="line">   macro avg       0.73      0.92      0.79       220</span><br><span class="line">weighted avg       0.95      0.90      0.91       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="SMOTE"><a href="#SMOTE" class="headerlink" title="SMOTE"></a>SMOTE</h4><ul>
+<li>SMOTE(Synthetic Minority Over-sampling Technique) 방법도 ADASYN 방법처럼 데이터를 생성하지만 생성된 데이터를 무조건 소수 클래스라고 하지 않고 분류 모형에 따라 분류한다. 따라서 순수하게 소수 클래스만 sampling을 하지는 않는다.</li>
+</ul>
+<p><img src="/image/SMOTE_view.png" alt="SMOTE 방법"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = SMOTE(random_state=4).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'SMOTE로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('SMOTE_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/SMOTE_result_resampling.png" alt="SMOTE로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">               precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.91      0.95       200</span><br><span class="line">         1.0       0.50      0.90      0.64        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.91       220</span><br><span class="line">   macro avg       0.74      0.91      0.80       220</span><br><span class="line">weighted avg       0.94      0.91      0.92       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="복합-샘플링"><a href="#복합-샘플링" class="headerlink" title="복합 샘플링"></a>복합 샘플링</h3><ul>
+<li><code>SMOTEENN</code> : SMOTE + ENN</li>
+<li><code>SMOTETomek</code> : SMOTE + Tomek</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from imblearn.combine import *</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="SMOTE-ENN"><a href="#SMOTE-ENN" class="headerlink" title="SMOTE + ENN"></a>SMOTE + ENN</h4><ul>
+<li>SMOTE+ENN 방법은 SMOTE(Synthetic Minority Over-sampling Technique) 방법과 ENN(Edited Nearest Neighbours) 방법을 섞은 것이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = SMOTEENN(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'SMOTE +  ENN으로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('SMOTE_and_ENN_result_resampling')</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/SMOTE_and_ENN_result_resampling.png" alt="SMOTE + ENN으로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.92      0.96       200</span><br><span class="line">         1.0       0.54      0.95      0.69        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.92       220</span><br><span class="line">   macro avg       0.77      0.94      0.82       220</span><br><span class="line">weighted avg       0.95      0.92      0.93       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="SMOTE-Tomek"><a href="#SMOTE-Tomek" class="headerlink" title="SMOTE+Tomek"></a>SMOTE+Tomek</h4><ul>
+<li>SMOTE+Tomek 방법은 SMOTE(Synthetic Minority Over-sampling Technique) 방법과 토멕링크 방법을 섞은 것이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = SMOTETomek(random_state=4).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'SMOTE + Tomek으로 리샘플링한 결과'</span>)</span><br><span class="line">plt.savefig(<span class="string">'SMOTETomek_result_resampling'</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/SMOTETomek_result_resampling.png" alt="SMOTE + Tomek으로 리샘플링 한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.92      0.95       200</span><br><span class="line">         1.0       0.51      0.90      0.65        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.91       220</span><br><span class="line">   macro avg       0.75      0.91      0.80       220</span><br><span class="line">weighted avg       0.95      0.91      0.92       220</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="BLSMOTE"><a href="#BLSMOTE" class="headerlink" title="BLSMOTE"></a>BLSMOTE</h4><ul>
+<li>애초에 Decision boundary에 영향을 미칠수 있는 데이터를 리샘플링하겠다는 의도이다.</li>
+</ul>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -336,14 +557,14 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-06-06",
         "dateCreated": "2020-06-06",
-        "dateModified": "2020-06-06",
+        "dateModified": "2020-06-07",
         "url": "https://heung-bae-lee.github.io/2020/06/06/machine_learning_20/",
         "description": "Imbalanced Data
 실제로 도메인에서 적용될 때 클래스가 Imbalance한 데이터들이 많을 것이다. 아래와 같이 불균형인 데이터를 그냥 학습시키면 다수의 클래스를 갖는 데이터를 많이 학습하게 되므로 소수 클래스에 대해서는 잘 분류해내지 못한다.
 
 
 데이터 클래스 비율이 너무 차이가 나면(highly-Imbalanced data) 단순히 우세한 클"
-        "wordCount": 490
+        "wordCount": 5364
     }
 </script>
 
