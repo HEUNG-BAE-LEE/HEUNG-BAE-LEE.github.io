@@ -6,7 +6,7 @@
     
 
     
-    <title>Clustering - Hierarchical, DBSCAN | DataLatte&#39;s IT Blog</title>
+    <title>Clustering - Hierarchical, DBSCAN, Affinity Propagation | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -15,15 +15,15 @@
     
     <meta name="description" content="Hierarchical clustering(계층적 군집화) 계층적 군집화(hierachical clustering)는 여러개의 군집 중에서 가장 유사도가 높은 혹은 거리가 가까운 군집 두개를 선택하여 하나로 합치면서 군집 개수를 줄여 가는 방법을 말한다. 합체 군집화(agglomerative clustering)라고도 한다. 가장 처음에는 모든 군집이 하나">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Clustering - Hierarchical, DBSCAN">
+<meta property="og:title" content="Clustering - Hierarchical, DBSCAN, Affinity Propagation">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/06/04/machine_learning_19/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="Hierarchical clustering(계층적 군집화) 계층적 군집화(hierachical clustering)는 여러개의 군집 중에서 가장 유사도가 높은 혹은 거리가 가까운 군집 두개를 선택하여 하나로 합치면서 군집 개수를 줄여 가는 방법을 말한다. 합체 군집화(agglomerative clustering)라고도 한다. 가장 처음에는 모든 군집이 하나">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Hierachical_distance_conception_01.png">
-<meta property="og:updated_time" content="2020-06-05T14:40:07.519Z">
+<meta property="og:updated_time" content="2020-06-05T16:53:48.077Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Clustering - Hierarchical, DBSCAN">
+<meta name="twitter:title" content="Clustering - Hierarchical, DBSCAN, Affinity Propagation">
 <meta name="twitter:description" content="Hierarchical clustering(계층적 군집화) 계층적 군집화(hierachical clustering)는 여러개의 군집 중에서 가장 유사도가 높은 혹은 거리가 가까운 군집 두개를 선택하여 하나로 합치면서 군집 개수를 줄여 가는 방법을 말한다. 합체 군집화(agglomerative clustering)라고도 한다. 가장 처음에는 모든 군집이 하나">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Hierachical_distance_conception_01.png">
 <meta property="fb:app_id" content="100003222637819">
@@ -186,7 +186,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        Clustering - Hierarchical, DBSCAN
+        Clustering - Hierarchical, DBSCAN, Affinity Propagation
         </h1>
     
 
@@ -326,20 +326,37 @@ ga('send', 'pageview');
 <hr>
 <p><img src="/image/different_result_of_each_clustering_data.png" alt="군집을 이루는 모양에 따른 DBSCAN 결과"></p>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from sklearn import datasets</span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">labels = pd.DataFrame(iris.target)</span><br><span class="line">labels.columns=[<span class="string">'labels'</span>]</span><br><span class="line">data = pd.DataFrame(iris.data)</span><br><span class="line">data.columns=[<span class="string">'Sepal length'</span>,<span class="string">'Sepal width'</span>,<span class="string">'Petal length'</span>,<span class="string">'Petal width'</span>]</span><br><span class="line">data = pd.concat([data,labels],axis=1)</span><br><span class="line"></span><br><span class="line">feature = data[ [<span class="string">'Sepal length'</span>,<span class="string">'Sepal width'</span>,<span class="string">'Petal length'</span>,<span class="string">'Petal width'</span>]]</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cluster import DBSCAN</span><br><span class="line">import matplotlib.pyplot  as plt</span><br><span class="line">import seaborn as sns</span><br><span class="line"></span><br><span class="line"><span class="comment"># create model and prediction</span></span><br><span class="line">model = DBSCAN(eps=0.5,min_samples=5)</span><br><span class="line">predict = pd.DataFrame(model.fit_predict(feature))</span><br><span class="line">predict.columns=[<span class="string">'predict'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># concatenate labels to df as a new column</span></span><br><span class="line">r = pd.concat([feature,predict],axis=1)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(r)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Sepal length  Sepal width  Petal length  Petal width  predict</span><br><span class="line">0             5.1          3.5           1.4          0.2        0</span><br><span class="line">1             4.9          3.0           1.4          0.2        0</span><br><span class="line">2             4.7          3.2           1.3          0.2        0</span><br><span class="line">3             4.6          3.1           1.5          0.2        0</span><br><span class="line">4             5.0          3.6           1.4          0.2        0</span><br><span class="line">..            ...          ...           ...          ...      ...</span><br><span class="line">145           6.7          3.0           5.2          2.3        1</span><br><span class="line">146           6.3          2.5           5.0          1.9        1</span><br><span class="line">147           6.5          3.0           5.2          2.0        1</span><br><span class="line">148           6.2          3.4           5.4          2.3        1</span><br><span class="line">149           5.9          3.0           5.1          1.8        1</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="DBSCAN-결과-시각화"><a href="#DBSCAN-결과-시각화" class="headerlink" title="DBSCAN 결과 시각화"></a>DBSCAN 결과 시각화</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#pairplot with Seaborn</span></span><br><span class="line">sns.pairplot(r,hue=<span class="string">'predict'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/DBSCAN_with_iris.png" alt="iris 데이터를 DBSCAN 군집한 결과"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#pairplot with Seaborn</span></span><br><span class="line">sns.pairplot(data,hue=<span class="string">'labels'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/iris_raw.png" alt="iris raw 데이터의 pair plot"></p>
+<h4 id="Kmeans-결과와-비교"><a href="#Kmeans-결과와-비교" class="headerlink" title="Kmeans 결과와 비교"></a>Kmeans 결과와 비교</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cluster import KMeans</span><br><span class="line">km = KMeans(n_clusters = 3, n_jobs = 4, random_state=21)</span><br><span class="line">km.fit(feature)</span><br><span class="line">new_labels =pd.DataFrame(km.labels_)</span><br><span class="line">new_labels.columns=[<span class="string">'predict'</span>]</span><br><span class="line">r2 = pd.concat([feature,new_labels],axis=1)</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#pairplot with Seaborn</span></span><br><span class="line">sns.pairplot(r2,hue=<span class="string">'predict'</span>)</span><br><span class="line">plt.savefig(<span class="string">'k_means_iris_pair_plot'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <hr>
+<ul>
+<li><code>DBSCAN의 결과보다 더 좋게 군집을 나눈것을 볼 수 있다. K-means는 원형으로 군집을 이룬 데이터에 대해 더 예측력이 좋다는 사실을 확인할 수 있다. 또한, K-means는 대체로 균등적으로 군집의 데이터를 나누어 주기 때문에 아래 그림에서 볼 수 있듯이 군집마다 데이터의 개수가 비슷해 보인다.</code></li>
+</ul>
+<p><img src="/image/k_means_iris_pair_plot.png" alt="k-means 군집화 결과의 pair plot"></p>
+<blockquote>
+<p>참고로, DBSCAN의 파라미터에 민감한 단점을 보완한 HDBSCAN이 있다.</p>
+</blockquote>
 <hr>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install hdbscan</span><br></pre></td></tr></table></figure>
 <hr>
+<p><a href="https://godongyoung.github.io/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D/2019/07/15/HDBSCAN-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-(with-python" target="_blank" rel="noopener">참조</a>.html)</p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -422,17 +439,17 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "Clustering - Hierarchical, DBSCAN",
+        "headline": "Clustering - Hierarchical, DBSCAN, Affinity Propagation",
         "image": "https://heung-bae-lee.github.io/image/Hierachical_distance_conception_01.png",
         "keywords": "",
         "genre": "machine learning",
         "datePublished": "2020-06-04",
         "dateCreated": "2020-06-04",
-        "dateModified": "2020-06-05",
+        "dateModified": "2020-06-06",
         "url": "https://heung-bae-lee.github.io/2020/06/04/machine_learning_19/",
         "description": "Hierarchical clustering(계층적 군집화)
 계층적 군집화(hierachical clustering)는 여러개의 군집 중에서 가장 유사도가 높은 혹은 거리가 가까운 군집 두개를 선택하여 하나로 합치면서 군집 개수를 줄여 가는 방법을 말한다. 합체 군집화(agglomerative clustering)라고도 한다. 가장 처음에는 모든 군집이 하나"
-        "wordCount": 2347
+        "wordCount": 3172
     }
 </script>
 
@@ -480,6 +497,16 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
+        <a href="/2020/06/06/machine_learning_20/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Imbalanced Data
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/2020/05/30/machine_learning_18/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
@@ -506,7 +533,16 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/06/04/machine_learning_19/" class="title">Clustering - Hierarchical, DBSCAN</a></p>
+                            <p class="item-title"><a href="/2020/06/06/machine_learning_20/" class="title">Imbalanced Data</a></p>
+                            <p class="item-date"><time datetime="2020-06-05T16:52:20.000Z" itemprop="datePublished">2020-06-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/06/04/machine_learning_19/" class="title">Clustering - Hierarchical, DBSCAN, Affinity Propagation</a></p>
                             <p class="item-date"><time datetime="2020-06-04T13:46:15.000Z" itemprop="datePublished">2020-06-04</time></p>
                         </div>
                     </li>
@@ -538,15 +574,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/05/27/machine_learning_15/" class="title">Ensemble Learning - Boosting, Stacking</a></p>
-                            <p class="item-date"><time datetime="2020-05-26T17:00:49.000Z" itemprop="datePublished">2020-05-27</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -556,7 +583,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">20</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">21</span></li></ul>
         </div>
     </div>
 
@@ -566,7 +593,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
