@@ -21,7 +21,7 @@
 <meta property="og:description" content="Imbalanced Data 실제로 도메인에서 적용될 때 클래스가 Imbalance한 데이터들이 많을 것이다. 아래와 같이 불균형인 데이터를 그냥 학습시키면 다수의 클래스를 갖는 데이터를 많이 학습하게 되므로 소수 클래스에 대해서는 잘 분류해내지 못한다.   데이터 클래스 비율이 너무 차이가 나면(highly-Imbalanced data) 단순히 우세한 클">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_imbalanced_data_problem.png">
-<meta property="og:updated_time" content="2020-06-06T16:43:16.803Z">
+<meta property="og:updated_time" content="2020-06-06T17:42:02.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Imbalanced Data">
 <meta name="twitter:description" content="Imbalanced Data 실제로 도메인에서 적용될 때 클래스가 Imbalance한 데이터들이 많을 것이다. 아래와 같이 불균형인 데이터를 그냥 학습시키면 다수의 클래스를 갖는 데이터를 많이 학습하게 되므로 소수 클래스에 대해서는 잘 분류해내지 못한다.   데이터 클래스 비율이 너무 차이가 나면(highly-Imbalanced data) 단순히 우세한 클">
@@ -403,6 +403,7 @@ ga('send', 'pageview');
 <ul>
 <li><code>오른쪽과 왼쪽이 변화가 없는 것 처럼 보이지만 오른쪽은 똑같은 데이터를 복제하는 것이기 때문에 숫자를 늘려 경계선을 밀어버린다.</code></li>
 </ul>
+<p><img src="/image/what_is_Random_over_sampling_conception.png" alt="Random Over Sampling이란"></p>
 <hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = RandomOverSampler(random_state=0).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'RandomOverSampler로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('RandomOverSampler_result_resampling')</span></span><br></pre></td></tr></table></figure>
 <hr>
@@ -426,9 +427,17 @@ ga('send', 'pageview');
 <h5 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.90      0.94       200</span><br><span class="line">         1.0       0.47      0.95      0.63        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.90       220</span><br><span class="line">   macro avg       0.73      0.92      0.79       220</span><br><span class="line">weighted avg       0.95      0.90      0.91       220</span><br></pre></td></tr></table></figure>
 <hr>
 <h4 id="SMOTE"><a href="#SMOTE" class="headerlink" title="SMOTE"></a>SMOTE</h4><ul>
-<li>SMOTE(Synthetic Minority Over-sampling Technique) 방법도 ADASYN 방법처럼 데이터를 생성하지만 생성된 데이터를 무조건 소수 클래스라고 하지 않고 분류 모형에 따라 분류한다. 따라서 순수하게 소수 클래스만 sampling을 하지는 않는다.</li>
+<li>SMOTE(Synthetic Minority Over-sampling Technique) 방법도 <code>ADASYN 방법처럼 데이터를 생성하지만 생성된 데이터를 무조건 소수 클래스라고 하지 않고 분류 모형에 따라 분류</code>한다. 따라서 <code>순수하게 소수 클래스만 sampling을 하지는 않는다.</code></li>
 </ul>
 <p><img src="/image/SMOTE_view.png" alt="SMOTE 방법"></p>
+<ul>
+<li>또한, 실행할 때 마다 랜덤하게 데이터가 생성되므로 결과는 매번 다르다.</li>
+</ul>
+<p><img src="/image/what_is_SMOTE_sampling_conception.png" alt="SMOTE 방법의 작동 원리"></p>
+<ul>
+<li><code>oversampling하는 대상이 전체 소수 클래스의 데이터이므로 noise로 판단되어 질 수 있는 밀집되어 나타나지 않는 소수 클래스의 데이터에 대해서도 모두 샘플링하므로 주의</code>하자.</li>
+</ul>
+<p><img src="/image/SMOTE_disadvantages_plot.png" alt="SMOTE를 할 경우 주의할 점"></p>
 <hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X_samp, y_samp = SMOTE(random_state=4).fit_sample(X_imb, y_imb)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">classification_result2(X_imb, y_imb)</span><br><span class="line">plt.title(<span class="string">'원본 데이터'</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">model_samp = classification_result2(X_samp, y_samp)</span><br><span class="line">plt.title(<span class="string">'SMOTE로 리샘플링한 결과'</span>)</span><br><span class="line"><span class="comment"># plt.savefig('SMOTE_result_resampling')</span></span><br></pre></td></tr></table></figure>
 <hr>
@@ -437,6 +446,26 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
 <h5 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">               precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.91      0.95       200</span><br><span class="line">         1.0       0.50      0.90      0.64        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.91       220</span><br><span class="line">   macro avg       0.74      0.91      0.80       220</span><br><span class="line">weighted avg       0.94      0.91      0.92       220</span><br></pre></td></tr></table></figure>
 <hr>
+<h4 id="BLSMOTE"><a href="#BLSMOTE" class="headerlink" title="BLSMOTE"></a>BLSMOTE</h4><ul>
+<li><code>Borderline에 있는 데이터는 class Imbalanced problem에 큰 영향을 미친다고 판단하여 해당 dataset에만 SMOTE를 적용하는 방법</code>이다. 애초에 Decision boundary에 영향을 미칠수 있는 데이터를 리샘플링하겠다는 의도이다.</li>
+</ul>
+<p><img src="/image/What_is_BLSMOTE_conception.png" alt="BLSMOTE의 개념 및 작동원리"></p>
+<ul>
+<li>noise같이 판단되어지는 데이터에 대해서도 oversampling을 하는 SMOTE의 단점을 보완하여 noise라는 카테고리로 분류해 새로 리샘플링하는 데이터에 소수 클래스 데이터로 인해 과적합되지 않도록 해준다.</li>
+</ul>
+<p><img src="/image/overcoming_SMOTE_with_BLSMOTE.png" alt="BLSMOTE의 장점"></p>
+<h4 id="DBSMOTE-DBSCAN-SMOTE"><a href="#DBSMOTE-DBSCAN-SMOTE" class="headerlink" title="DBSMOTE(DBSCAN SMOTE)"></a>DBSMOTE(DBSCAN SMOTE)</h4><ul>
+<li>DBSCAN cluster 생성 후, cluster 내에서 SMOTE를 적용하는 방법이다.</li>
+</ul>
+<p><img src="/image/what_is_DBSMOTE_conception.png" alt="DBSMOTE 개념 및 작동원리"></p>
+<ul>
+<li>DBSCAN Cluster 를 진행하기에 군집의 중심과 이어지는 경향이 있으며, 이 또한 <code>BLSMOTE와 비슷하게 원래 DBSCAN의 장점 중 하나인 noise를 제거하여 샘플링해준다.</code></li>
+</ul>
+<p><img src="/image/DBSMOTE_result_plot.png" alt="DBSMOTE의 결과"></p>
+<ul>
+<li>데이터 마다 편차가 크므로, 실험적으로 해본뒤 해당 데이터에 잘 맞는 샘플링 방법을 사용해야 한다.</li>
+</ul>
+<p><img src="/image/Oversampling_disadvantages.png" alt="Oversampling의 단점"></p>
 <h3 id="복합-샘플링"><a href="#복합-샘플링" class="headerlink" title="복합 샘플링"></a>복합 샘플링</h3><ul>
 <li><code>SMOTEENN</code> : SMOTE + ENN</li>
 <li><code>SMOTETomek</code> : SMOTE + Tomek</li>
@@ -466,9 +495,6 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(classification_report(y_imb, model_samp.predict(X_imb)))</span><br></pre></td></tr></table></figure>
 <h5 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">         0.0       0.99      0.92      0.95       200</span><br><span class="line">         1.0       0.51      0.90      0.65        20</span><br><span class="line"></span><br><span class="line">    accuracy                           0.91       220</span><br><span class="line">   macro avg       0.75      0.91      0.80       220</span><br><span class="line">weighted avg       0.95      0.91      0.92       220</span><br></pre></td></tr></table></figure>
 <hr>
-<h4 id="BLSMOTE"><a href="#BLSMOTE" class="headerlink" title="BLSMOTE"></a>BLSMOTE</h4><ul>
-<li>애초에 Decision boundary에 영향을 미칠수 있는 데이터를 리샘플링하겠다는 의도이다.</li>
-</ul>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -564,7 +590,7 @@ ga('send', 'pageview');
 
 
 데이터 클래스 비율이 너무 차이가 나면(highly-Imbalanced data) 단순히 우세한 클"
-        "wordCount": 5364
+        "wordCount": 5510
     }
 </script>
 
@@ -827,22 +853,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
