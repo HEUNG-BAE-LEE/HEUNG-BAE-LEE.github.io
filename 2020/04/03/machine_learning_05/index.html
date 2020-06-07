@@ -21,7 +21,7 @@
 <meta property="og:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/logistic_regression.png">
-<meta property="og:updated_time" content="2020-06-07T13:07:25.869Z">
+<meta property="og:updated_time" content="2020-06-07T17:20:38.724Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="로지스틱 회귀분석">
 <meta name="twitter:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
@@ -261,7 +261,7 @@ ga('send', 'pageview');
 <li>위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $ \theta (x) $와 0이 나올 확률 $ 1 - \theta (x) $의 비율(ratio)을 의미한다.</li>
 </ul>
 <script type="math/tex; mode=display">odds ratio = \frac{ \theta (x) }{1 - \theta (x)}</script><p>0부터 1사이의 값만 가지는 확률값인 $ \theta (x) $ 를 오즈비로 변환하면 0부터 양의 무한대까지의 값을 가질 수 있다. 오즈비를 로그변환한 것이 위에서 언급한 Logit function이다. 이로써 로지트 함수의 값은 로그변환에 의해 음의 무한대 $(- \infty)$부터 양의 무한대$(\infty)$까지의 값을 가질 수 있다.</p>
-<script type="math/tex; mode=display">y = logit(odds ratio) = log \( \frac{ \theta (x) }{ 1 - \theta (x) } \)</script><ul>
+<script type="math/tex; mode=display">y = logit(odds ratio) = log ( \frac{ \theta (x) }{ 1 - \theta (x) } )</script><ul>
 <li>로지스틱함수(Logistic function)은 로지트 함수의 역함수이다. 즉 <code>음의 무한대부터 양의 무한대 까지의 값을 가지는 입력변수를 0부터 1사이의 값을 가지는 출력변수로 변환한 것</code>이다.</li>
 </ul>
 <script type="math/tex; mode=display">logistic(z) = \theta (z) = \frac{1}{1 + exp(-z)}</script><h3 id="선형-판별-함수"><a href="#선형-판별-함수" class="headerlink" title="선형 판별 함수"></a>선형 판별 함수</h3><ul>
@@ -295,7 +295,10 @@ ga('send', 'pageview');
 <li>기존의 일반 선형 회귀이듯, 다중 선형 회귀는 최소제곱법을 통해 해를 추정해 낼 수 있지만, <code>로지스틱 회귀</code>는 비선형 방정식이 되어 동일하게 최소제곱법으로 회귀계수를 추정해내기 힘들다. 그러므로, 위의 그림처럼 <code>MLE를 통해 회귀계수들을 추정</code>한다.</li>
 </ul>
 <p><img src="/image/logistic_regression_coefficient_estimation_02.png" alt="로지스틱 회귀계수 MLE를 사용한 추정"></p>
-<ul>
+<blockquote>
+<p>그레디언트 벡터가 영벡터가 되는 모수의 값이 로그가능도를 최대화하는 값이다. 하지만 그레디언트 벡터 수식이 $ w $ 에 대한 비선형 함수이므로 선형모형과 같이 간단하게 그레디언트가 0이 되는 모수 $ w $ 값에 대한 수식을 구할 수 없으며 수치적인 최적화 방법(numerical optimization)을 통해 반복적으로 최적 모수 $ w $ 의 값을 구해야 한다.</p>
+</blockquote>
+<h3 id="수치적-최적화"><a href="#수치적-최적화" class="headerlink" title="수치적 최적화"></a>수치적 최적화</h3><ul>
 <li>위의 MLE 방식을 통해 parameter의 값을 업데이트하는데, 아래와 같은 방식으로 수치적 최적화를 진행한다. 위의 로그 가능도함수 $log(l(\beta_{0}, \beta_{1}))$을 편의상 LL이라하자. 로그가능도함수 LL을 최대화하는 것은 다음 목적함수를 최소화하는 것과 같다.</li>
 </ul>
 <script type="math/tex; mode=display">J = - LL</script><ul>
@@ -304,11 +307,155 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">g_{k} = \frac{d}{dw} (-LL)</script><ul>
 <li>위에서 구한 그레디언트 방향으로 step size $(n_{k})$만큼 이동한다.</li>
 </ul>
-<script type="math/tex; mode=display">w_{k+1} = w_{k} - n_{k} g_{k}</script><script type="math/tex; mode=display">= w_{k} + n_{k} \sum_{i=1}^{N} (y_{i} - \theta_{i} (x_{i} ; w)) x_{i}</script><p><img src="/image/multi_logistic_regression_example_01.png" alt="다중 로지스틱 회귀 예제 - 01"></p>
+<script type="math/tex; mode=display">\begin{eqnarray} w_{k+1} &=& w_{k} - \eta_k g_k \\ &=& w_{k} + \eta_k \sum_{i=1}^N \big( y_i  - \mu(x_i; w_k) \big) x_i\\ \end{eqnarray}</script><p><img src="/image/multi_logistic_regression_example_01.png" alt="다중 로지스틱 회귀 예제 - 01"></p>
 <ul>
 <li>위의 그림에서 요약된 다중 로지스틱 회귀분석의 결과를 살펴보면, 맨 마지막 설명과 같이 해석할 수 있지만, 좀 더 자연스러운 해석하고 싶을 경우 아래 그림과 같이 Logit 보다 exp를 취해줘 Odds로 변환하여 해석하는 것을 권한다.</li>
 </ul>
 <p><img src="/image/multi_logistic_regression_example_02.png" alt="다중 로지스틱 회귀 예제 - 02"></p>
+<h3 id="StatsModels-패키지의-로지스틱-회귀"><a href="#StatsModels-패키지의-로지스틱-회귀" class="headerlink" title="StatsModels 패키지의 로지스틱 회귀"></a>StatsModels 패키지의 로지스틱 회귀</h3><ul>
+<li>다음과 같은 1차원 독립변수를 가지는 분류문제를 풀어보자.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import make_classification</span><br><span class="line"></span><br><span class="line">X0, y = make_classification(n_features=1, n_redundant=0, n_informative=1,</span><br><span class="line">                            n_clusters_per_class=1, random_state=4)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, linewidth=2)</span><br><span class="line">sns.distplot(X0[y == 0, :], label=<span class="string">"y = 0"</span>, hist=False)</span><br><span class="line">sns.distplot(X0[y == 1, :], label=<span class="string">"y = 1"</span>, hist=False)</span><br><span class="line">plt.ylim(-0.2, 1.2)</span><br><span class="line"><span class="comment"># plt.savefig('logistic_regression_example_datas')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/logistic_regression_example_datas.png" alt="로지스틱 회귀 예시 데이터"></p>
+<ul>
+<li>StatsModels 패키지는 베르누이 분포를 따르는 로지스틱 회귀 모형 <code>Logit</code>를 제공한다. 사용방법은 <code>OLS</code> 클래스 사용법과 동일하다. 종속변수와 독립변수 데이터를 넣어 모형을 만들고 <code>fit</code> 메서드로 학습을 시킨다. <code>fit</code> 메서드의 <code>disp=0</code> 인수는 최적화 과정에서 문자열 메세지를 나타내지 않는 역할을 한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X = sm.add_constant(X0)</span><br><span class="line">logit_mod = sm.Logit(y, X)</span><br><span class="line">logit_res = logit_mod.fit(disp=0)</span><br><span class="line"><span class="built_in">print</span>(logit_res.summary())</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:                      y   No. Observations:                  100</span><br><span class="line">Model:                          Logit   Df Residuals:                       98</span><br><span class="line">Method:                           MLE   Df Model:                            1</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                  0.7679</span><br><span class="line">Time:                        00:12:48   Log-Likelihood:                -16.084</span><br><span class="line">converged:                       True   LL-Null:                       -69.295</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                 5.963e-25</span><br><span class="line">==============================================================================</span><br><span class="line">coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">const          0.2515      0.477      0.527      0.598      -0.683       1.186</span><br><span class="line">x1             4.2382      0.902      4.699      0.000       2.470       6.006</span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>결과 객체에서 <code>summary</code>메서드를 사용하여 리포트를 출력할 수 있다. 결과 리포트에서 판별함수의 수식이 다음과 같다는 것을 알 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\theta (x) = \sigma(4.2382x + 0.2515)</script><ul>
+<li>따라서 $ z $ 값의 부로를 나누는 기준값은 $ 4.2382x + 0.2515 = 0.5 $ 가 되는 $ x $ 값 즉, $ (0.5-0.2515)/4.2382 $ 이다. <code>predict</code> 메서드를 사용하면 $ \theta (x) $ 값을 출력한다.</li>
+</ul>
+<ul>
+<li>유의확률을 감안하면 상수항의 값은 0과 마찬가지이므로 $ \theta (x) $ 가 다음과 같다고 볼 수도 있다.</li>
+</ul>
+<script type="math/tex; mode=display">\mu(x) = \sigma(4.2382x)</script><ul>
+<li>이렇게 생각하면 $ z $ 값의 부호를 나누는 기준값은 실질적으로는 $ 0.5/4.2382 = 0.118 $ 이다. 실제 데이터가 네모 포인트로 되어있고, 원형의 데이터가 예측 데이터이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">xx = np.linspace(-3, 3, 100)</span><br><span class="line">mu = logit_res.predict(sm.add_constant(xx))</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12, 8))</span><br><span class="line">plt.plot(xx, mu, lw=3)</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2)</span><br><span class="line">plt.scatter(X0, logit_res.predict(X), label=r<span class="string">"$\hat&#123;y&#125;$"</span>, marker=<span class="string">'s'</span>, c=y,</span><br><span class="line">            s=100, edgecolor=<span class="string">"k"</span>, lw=1)</span><br><span class="line">plt.vlines(0.118, ymin=0, ymax=1, lw=1, linestyles=<span class="string">'--'</span>, colors=<span class="string">"red"</span>)</span><br><span class="line">plt.xlim(-3, 3)</span><br><span class="line">plt.xlabel(<span class="string">"x"</span>)</span><br><span class="line">plt.ylabel(r<span class="string">"$\mu$"</span>)</span><br><span class="line">plt.title(r<span class="string">"$\hat&#123;y&#125; = \mu(x)$"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment"># plt.savefig('predicted_value_y_hat_logistic_regression_example')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/predicted_value_y_hat_logistic_regression_example.png" alt="실제 데이터와 예측결과 비교"></p>
+<h3 id="판별함수"><a href="#판별함수" class="headerlink" title="판별함수"></a>판별함수</h3><ul>
+<li><code>Logit</code> 모형의 결과 객체에는 <code>fittedvalues</code>라는 속성으로 판별함수 $ z = w^{T}x $ 값이 들어가 있다. 이 값을 이용하여 분류문제를 풀 수도 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2, label=<span class="string">"데이터"</span>)</span><br><span class="line">plt.plot(X0, logit_res.fittedvalues, label=<span class="string">"판별함수값"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment"># plt.savefig('decision_function_with_logit_fitted_value')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/logistic_fuction_using_logit_fitted_value.png" alt="판별함수 값을 통해 분류문제 풀기"></p>
+<ul>
+<li>위의 $ z $ 값을 통해 직접 시그모이드 함수(로지스틱함수)를 취하여 그려보면 다음과 같이 위에서 로지스틱함수를 그려 예측한 그림과 동일해 지는 것을 확인할 수 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2, label=<span class="string">"데이터"</span>)</span><br><span class="line">plt.scatter(X0, 1/(1+np.exp(-logit_res.fittedvalues)), label=<span class="string">"로지스틱함수값"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment"># plt.savefig('logistic_fuction_using_logit_fitted_value')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/decision_function_with_logit_fitted_value.png" alt="직접 로짓값을 로지스틱 함수에 적용한 그림"></p>
+<h3 id="로지스틱-회귀-성능-측정"><a href="#로지스틱-회귀-성능-측정" class="headerlink" title="로지스틱 회귀 성능 측정"></a>로지스틱 회귀 성능 측정</h3><ul>
+<li>로지스틱 회귀 성능은 맥파든 의사결정계수(McFadden pseudo R square) 값으로 측정한다.</li>
+</ul>
+<script type="math/tex; mode=display">R^2_{\text{pseudo}} = 1 - \dfrac{G^2}{G^2_0}</script><ul>
+<li>$ G^{2} $ 는 이탈도(deviance)라고 하는 양으로 다음과 같이 정의된다. 여기에서 $ \hat{y} $ 은 $ y=1 $ 일 확률 $ \theta $ 를 뜻한다.</li>
+</ul>
+<script type="math/tex; mode=display">G^2 = 2\sum_{i=1}^N \left( y_i\log\dfrac{y_i}{\hat{y}_i} + (1-y_i)\log\dfrac{1-y_i}{1-\hat{y}_i} \right)</script><ul>
+<li><code>이탈도는 모형이 100% 정확한 경우에는 0이 되고 모형의 성능이 나빠질수록 값이 커진다.</code> 또한, 이탈도는 로그가능도에 음수를 취한 값과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">G^2 = -LL</script><ul>
+<li>$ G^{2} $ 는 현재 이탈도이고 $ G_{0}^{2} $ 는 귀무모형(null model)으로 측정한 이탈도이다.</li>
+</ul>
+<ul>
+<li>귀무모형이란 모든 $ x $ 가 $ y $ 를 예측하는데 전혀 영향을 미치지 않는 모형을 말한다. 즉, 무조건부 확률 $ p(y) $ 에 따라 $ x $ 에 상관없이 동일하게 $ y $ 를 예측하는 모형을 말한다. 결국 우리가 만들 수 있는 가장 성능이 나쁜 모형이 된다.</li>
+</ul>
+<script type="math/tex; mode=display">\mu_{\text{null}} = \dfrac{\text{number of $Y=1$ data}}{\text{number of all data}}</script><ul>
+<li><code>따라서 맥파든 의사결정계수는 가장 성능이 좋을 때는 1이 되고 가장 성능이 나쁠 때는 0이된다.</code></li>
+</ul>
+<ul>
+<li>Scikit-learn 패키지의 metric 서브패키지에는 로그 손실을 계산하는 <code>log_loss</code> 함수가 있다. 위 예제에서 최적 모형의 로그 손실은 약 16.08로 계산된다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import log_loss</span><br><span class="line"></span><br><span class="line">y_hat = logit_res.predict(X)</span><br><span class="line">log_loss(y, y_hat, normalize=False)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16.084355200413036</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>귀무 모형의 모수값을 구하면 0.51이고 이 값으로 로그 손실을 계산하면 약 69이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mu_null = np.sum(y) / len(y)</span><br><span class="line">mu_null</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.51</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y_null = np.ones_like(y) * mu_null</span><br><span class="line">log_loss(y, y_null, normalize=False)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">69.29471672244784</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>두 값을 이용하여 맥파든 의사 결정계수 값을 계산할 수 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 - (log_loss(y, y_hat) / log_loss(y, y_null))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.7678848264170398</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Scikit-Learn-패키지의-로지스틱-회귀"><a href="#Scikit-Learn-패키지의-로지스틱-회귀" class="headerlink" title="Scikit-Learn 패키지의 로지스틱 회귀"></a>Scikit-Learn 패키지의 로지스틱 회귀</h3><ul>
+<li>Scikit-Learn 패키지는 로지스틱 회귀 모형 <code>LogisticRegression</code> 를 제공한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">model_sk = LogisticRegression().fit(X0, y)</span><br><span class="line"></span><br><span class="line">xx = np.linspace(-3, 3, 100)</span><br><span class="line">mu = 1.0/(1 + np.exp(-model_sk.coef_[0][0]*xx - model_sk.intercept_[0]))</span><br><span class="line">plt.plot(xx, mu)</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2)</span><br><span class="line">plt.scatter(X0, model_sk.predict(X0), label=r<span class="string">"$\hat&#123;y&#125;$"</span>, marker=<span class="string">'s'</span>, c=y,</span><br><span class="line">            s=100, edgecolor=<span class="string">"k"</span>, lw=1, alpha=0.5)</span><br><span class="line">plt.xlim(-3, 3)</span><br><span class="line">plt.xlabel(<span class="string">"x"</span>)</span><br><span class="line">plt.ylabel(r<span class="string">"$\mu$"</span>)</span><br><span class="line">plt.title(r<span class="string">"$\hat&#123;y&#125;$ = sign $\mu(x)$"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/logistic_regression_example_with_scikit_learn.png" alt="scikit-learn의 logistic regression"></p>
+<blockquote>
+<p>연습문제</p>
+<ol>
+<li>붓꽃 분류문제에서 클래스가 세토사와 베르시칼라 데이터만 사용하고 (setosa=0, versicolor=1) 독립변수로는 꽃받침 길이(Sepal Length)와 상수항만 사용하여 StatsModels 패키지의 로지스틱 회귀모형으로 결과를 예측하고 보고서를 출력한다. 이 보고서에서 어떤 값이 세토사와 베르시칼라를 구분하는 기준값(threshold)으로 사용되고 있는가?</li>
+<li>위 결과를 분류결과표(confusion matrix)와 분류결과보고서(classification report)로 나타내라.</li>
+<li>이 모형에 대해 ROC커브를 그리고 AUC를 구한다. 이 때 Scikit-Learn의 LogisticRegression을 사용하지 않고 위에서 StatsModels로 구한 모형을 사용한다.</li>
+</ol>
+</blockquote>
+<ul>
+<li>1번에 대한 문제 풀이는 아래와 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line">iris=load_iris()</span><br><span class="line">X=pd.DataFrame(iris.data[iris.target &lt;= 1], columns=iris.feature_names)</span><br><span class="line">X=X.loc[:, <span class="string">'sepal length (cm)'</span>]</span><br><span class="line">y=pd.Series(iris.target[iris.target &lt;= 1], name=<span class="string">"target"</span>)</span><br><span class="line"></span><br><span class="line">import statsmodels.api as sm</span><br><span class="line"></span><br><span class="line">X = sm.add_constant(X0)</span><br><span class="line">logit_mod = sm.Logit(y, X)</span><br><span class="line">logit_res = logit_mod.fit(disp=0)</span><br><span class="line"><span class="built_in">print</span>(logit_res.summary())</span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:                 target   No. Observations:                  100</span><br><span class="line">Model:                          Logit   Df Residuals:                       98</span><br><span class="line">Method:                           MLE   Df Model:                            1</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                0.003818</span><br><span class="line">Time:                        01:50:59   Log-Likelihood:                -69.050</span><br><span class="line">converged:                       True   LL-Null:                       -69.315</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                    0.4669</span><br><span class="line">==============================================================================</span><br><span class="line">coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">const         -0.0025      0.201     -0.012      0.990      -0.396       0.391</span><br><span class="line">x1             0.1287      0.177      0.726      0.468      -0.219       0.476</span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>Setosa와 versicolor의 구분하는 기준값은 $ 1/1+exp(z)=0.5 $ 인 지점을 찾아야하므로 $ z= -0.0025+0.1287 x $ 이므로 $ x = 0.019425019425019424 $ 에 대한 수직선이 판별함수 경계선이 될 것이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"></span><br><span class="line">pred_y=np.array([1 <span class="keyword">if</span> x &gt;= 0.5 <span class="keyword">else</span> 0 <span class="keyword">for</span> x <span class="keyword">in</span> list(logit_res.predict(X))])</span><br><span class="line">y=np.array(y)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y, pred_y))</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"><span class="built_in">print</span>(classification_report(y, pred_y))</span><br></pre></td></tr></table></figure>
+<h6 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[[27 23]</span><br><span class="line"> [23 27]]</span><br><span class="line"></span><br><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">           0       0.54      0.54      0.54        50</span><br><span class="line">           1       0.54      0.54      0.54        50</span><br><span class="line"></span><br><span class="line">    accuracy                           0.54       100</span><br><span class="line">   macro avg       0.54      0.54      0.54       100</span><br><span class="line">weighted avg       0.54      0.54      0.54       100</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import roc_auc_score</span><br><span class="line"><span class="built_in">print</span>(roc_auc_score(y,logit_res.predict(X)))</span><br></pre></td></tr></table></figure>
+<h6 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.5327999999999999</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import roc_curve</span><br><span class="line">fpr, tpr, thresholds = roc_curve(y, logit_res.predict(X))</span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.plot(fpr, tpr)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/one_variable_fpr_tpr_roc_curve" alt="Roc curve"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="결과-12"><a href="#결과-12" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -397,7 +544,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-03",
         "dateCreated": "2020-04-03",
-        "dateModified": "2020-06-07",
+        "dateModified": "2020-06-08",
         "url": "https://heung-bae-lee.github.io/2020/04/03/machine_learning_05/",
         "description": "로지스틱 회귀분석
 
@@ -406,7 +553,7 @@ ga('send', 'pageview');
 
 p(y \mid x) = \text{Bin} (y; \theta (x), N)
 위 식에"
-        "wordCount": 895
+        "wordCount": 3467
     }
 </script>
 
@@ -679,5 +826,22 @@ p(y \mid x) = \text{Bin} (y; \theta (x), N)
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
