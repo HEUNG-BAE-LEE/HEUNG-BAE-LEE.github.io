@@ -13,18 +13,18 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="로지스틱 회귀분석   위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $\theta (x)$와 0이 나올 확률 $1-\theta (x)$의 비율(ratio)을 의미한다.  odds ratio = \frac{\theta (x)}{">
+    <meta name="description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
 <meta property="og:type" content="article">
 <meta property="og:title" content="로지스틱 회귀분석">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/04/03/machine_learning_05/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="로지스틱 회귀분석   위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $\theta (x)$와 0이 나올 확률 $1-\theta (x)$의 비율(ratio)을 의미한다.  odds ratio = \frac{\theta (x)}{">
+<meta property="og:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/logistic_regression.png">
-<meta property="og:updated_time" content="2020-04-03T06:40:57.940Z">
+<meta property="og:updated_time" content="2020-06-07T13:07:25.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="로지스틱 회귀분석">
-<meta name="twitter:description" content="로지스틱 회귀분석   위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $\theta (x)$와 0이 나올 확률 $1-\theta (x)$의 비율(ratio)을 의미한다.  odds ratio = \frac{\theta (x)}{">
+<meta name="twitter:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/logistic_regression.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -211,12 +211,73 @@ ga('send', 'pageview');
             <h1 id="로지스틱-회귀분석"><a href="#로지스틱-회귀분석" class="headerlink" title="로지스틱 회귀분석"></a>로지스틱 회귀분석</h1><p><img src="/image/logistic_regression.png" alt="로지스틱 회귀"></p>
 <p><img src="/image/logistic_regression_02.png" alt="로지스틱 함수를 사용하는 이유"></p>
 <ul>
-<li>위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $\theta (x)$와 0이 나올 확률 $1-\theta (x)$의 비율(ratio)을 의미한다.</li>
+<li>로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.</li>
 </ul>
-<script type="math/tex; mode=display">odds ratio = \frac{\theta (x)}{1 - \theta (x)}</script><p>0부터 1사이의 값만 가지는 확률값인 $\theta (x)$를 승산비로 변환하면 0부터 양의 무한대까지의 값을 가질 수 있다. 승산비를 로그변환한 것이 위에서 언급한 Logit function이다.</p>
-<script type="math/tex; mode=display">y = logit(odds ratio) = log\( \frac{theta (x)}{} \)</script><p>이로써 로지트 함수의 값은 로그변환에 의해 음의 무한대 $(- \infty)$부터 양의 무한대$(\infty)$까지의 값을 가질 수 있다. 로지스틱함수(Logistic function)은 로지트 함수의 역함수이다. 즉 <code>음의 무한대부터 양의 무한대 까지의 값을 가지는 입력변수를 0부터 1사이의 값을 가지는 출력변수로 변환한 것</code>이다.</p>
-<script type="math/tex; mode=display">logistic(z) = \theta (z) = \frac{1}{1 + exp(-z)}</script><ul>
+<script type="math/tex; mode=display">p(y \mid x) = \text{Bin} (y; \theta (x), N)</script><ul>
+<li>위 식에서 보듯이 <code>로지스틱 함수는 y의 값이 특정한 구간내의 값 (0 ~ N)만 가질 수 있기 때문에 종속변수가 이러한 특성을 가진 경우에 회귀분석 방법으로 사용</code>할 수 있다.</li>
+</ul>
+<ul>
+<li>또는 이항 분포의 특별한 경우 $ (N=1) $ 로 $ y $ 가 베르누이 확률분포인 경우도 있을 수 있다. 여기에서는 베르누이 확률분포를 따르는 로지스틱 회귀분석만 고려하기로 한다.</li>
+</ul>
+<script type="math/tex; mode=display">p(y \mid x) = \text{Bern} (y; \theta (x) )</script><ul>
+<li>종속변수 $ y $ 가  $ 0 $ 또는 $ 1 $ 인 분류 예측 문제를 풀 때는 $ x $ 값을 이용하여 $ \theta ( x ) $ 를 예측한 후 다음 기준에 따라 $ \hat{y} $ 값을 출력한다.</li>
+</ul>
+<script type="math/tex; mode=display">\hat{y} = \begin{cases} 1 & \text{ if } \theta (x) \geq 0.5 \\ 0 & \text{ if } \theta (x) < 0.5 \end{cases}</script><ul>
+<li>회귀분석을 할 때는 $ \hat{y} $ 으로 $ y = 1 $ 이 될 확률값 $ \theta ( x ) $ 을 직접 사용한다.</li>
+</ul>
+<script type="math/tex; mode=display">\hat{y} = \theta (x)</script><h3 id="시그모이드-함수"><a href="#시그모이드-함수" class="headerlink" title="시그모이드 함수"></a>시그모이드 함수</h3><ul>
+<li>로지스틱 회귀모형에서는 베르누이 확률분포의 모수 $ \theta $ 가 $ x $ 의 함수라고 가정한다. $ \theta (x) $ 는 $ x $ 에 대한 함수를 0부터 1 사이의 값만 나올 수 있도록 시그모이드 함수(sigmoid function)라는 함수를 사용하여 변형한 것을 사용한다.</li>
+</ul>
+<ul>
+<li>시그모이드 함수는 종속변수의 모든 실수 값에 대해 유한한 구간 $ ( a, b ) $ 사이의 한정된 값을 가지고</li>
+</ul>
+<script type="math/tex; mode=display">a < f(x) < b</script><ul>
+<li><code>항상 양의 기울기를 가지는 단조증가</code>하는</li>
+</ul>
+<script type="math/tex; mode=display">a > b \; \rightarrow \; f(a) > f(b)</script><ul>
+<li><p>함수의 집합을 말한다. 실제로는 다음과 같은 함수들이 주로 사용된다.</p>
+</li>
+<li><p>로지스틱(Logistic)함수</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\text{logitstic}(z) = \sigma(z) = \dfrac{1}{1+\exp{(-z)}}</script><ul>
+<li>하이퍼볼릭 탄젠트(Hyperbolic tangent)함수</li>
+</ul>
+<script type="math/tex; mode=display">\tanh(z) = \frac{\sinh z}{\cosh z} = \frac{(e^z - e^{-z})/2}{(e^z + e^{-z})/2} = 2 \sigma(2z) - 1</script><ul>
+<li>오차(Error)함수</li>
+</ul>
+<script type="math/tex; mode=display">\text{erf}(z) = \frac{2}{\sqrt\pi}\int_0^z e^{-t^2}\,dt</script><ul>
+<li><code>하이퍼볼릭탄젠트 함수는 로지스틱함수를 위아래 방향으로 2배 늘리고 좌우 방향으로 1/2로 축소한 것과 같다.</code></li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xx = np.linspace(-5, 5, 1000)</span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.plot(xx, 1/(1+np.exp(-xx)), <span class="string">'r-'</span>, label=<span class="string">"로지스틱함수"</span>)</span><br><span class="line">plt.plot(xx, sp.special.erf(0.5*np.sqrt(np.pi)*xx), <span class="string">'g:'</span>, label=<span class="string">"오차함수"</span>)</span><br><span class="line">plt.plot(xx, np.tanh(xx), <span class="string">'b--'</span>, label=<span class="string">"하이퍼볼릭탄젠트함수"</span>)</span><br><span class="line">plt.ylim([-1.1, 1.1])</span><br><span class="line">plt.legend(loc=2)</span><br><span class="line">plt.xlabel(<span class="string">"x"</span>)</span><br><span class="line">plt.savefig(<span class="string">'sigmoid_functions_ploting'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/sigmoid_functions_ploting.png" alt="시그모이드 함수들"></p>
+<h3 id="로지스틱-함수"><a href="#로지스틱-함수" class="headerlink" title="로지스틱 함수"></a>로지스틱 함수</h3><ul>
+<li>로지스틱함수는 <code>음의 무한대부터 양의 무한대까지의 실수값을 0부터 1사이의 실수값으로 1대 1 대응시키는 시그모이드함수</code>이다. 보통 시그모이드함수라고 하면 로지스틱함수를 의미한다.</li>
+</ul>
+<p><img src="/image/logistic_regression_03.png" alt="로지스틱 회귀 모형식이 만들어진 과정"></p>
+<ul>
+<li>위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $ \theta (x) $와 0이 나올 확률 $ 1 - \theta (x) $의 비율(ratio)을 의미한다.</li>
+</ul>
+<script type="math/tex; mode=display">odds ratio = \frac{ \theta (x) }{1 - \theta (x)}</script><p>0부터 1사이의 값만 가지는 확률값인 $ \theta (x) $ 를 오즈비로 변환하면 0부터 양의 무한대까지의 값을 가질 수 있다. 오즈비를 로그변환한 것이 위에서 언급한 Logit function이다. 이로써 로지트 함수의 값은 로그변환에 의해 음의 무한대 $(- \infty)$부터 양의 무한대$(\infty)$까지의 값을 가질 수 있다.</p>
+<script type="math/tex; mode=display">y = logit(odds ratio) = log \( \frac{ \theta (x) }{ 1 - \theta (x) } \)</script><ul>
+<li>로지스틱함수(Logistic function)은 로지트 함수의 역함수이다. 즉 <code>음의 무한대부터 양의 무한대 까지의 값을 가지는 입력변수를 0부터 1사이의 값을 가지는 출력변수로 변환한 것</code>이다.</li>
+</ul>
+<script type="math/tex; mode=display">logistic(z) = \theta (z) = \frac{1}{1 + exp(-z)}</script><h3 id="선형-판별-함수"><a href="#선형-판별-함수" class="headerlink" title="선형 판별 함수"></a>선형 판별 함수</h3><ul>
 <li>또한, <code>로지스틱 회귀분석에서는 판별함수 수식으로 선형함수를 사용하므로 판별 경계면 또한 선형이 됨을 유의</code>해야한다.</li>
+</ul>
+<ul>
+<li><p>로지스틱함수 $ \sigma(z) $ 를 사용하는 경우에는 $ z $ 과 $ \theta $ 값은 다음과 같은 관계가 있다.</p>
+<ul>
+<li>$ z = 0 $ 일 때 $ \theta = 0.5 $</li>
+<li>$ z &gt; 0 $ 일 때 $ \theta &gt; 0.5; \rightarrow \hat{y} = 1 $</li>
+<li>$ z &lt; 0 $ 일 때 $ \theta &lt; 0.5; \rightarrow \hat{y} = 0 $</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>즉, $ z $ 가 분류 모형의 판별 함수(decision function)의 역할을 한다. 로지스틱 회귀분석에서는 <code>판별함수 수식으로 선형함수를 사용</code>한다. 따라서 판별 경계면도 선형이 된다.</li>
 </ul>
 <script type="math/tex; mode=display">z = w^{T} x</script><p><img src="/image/Logistic_function_01.png" alt="로지스틱 함수"></p>
 <ul>
@@ -224,12 +285,15 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/logistic_regression_example.png" alt="로지스틱 회귀 예제"></p>
 <ul>
-<li><p>위의 그림에서 좌측그림의 적합시킨 회귀선(파란선)을 보면 예측할 확률값이 500미만이면 음수를 갖을 수 있게 되는 것을 확인할 수 있다. 이는 확률값을 예측하는 모델을 만든다는 가정 자체에 위반하는 것이므로 이전에 학습했었던 회귀모형들과는 다른 방법의 회귀모형을 만들어 적합시켜야 할 것임이 분명해졌다.</p>
-</li>
-<li><p>일반적으로 decision boundary(threshold)를 0.5로 하지만 class가 imbalanced 한 경우는 조절하여보면서 적합시킬 수 있다.</p>
-</li>
+<li>위의 그림에서 좌측그림의 적합시킨 회귀선(파란선)을 보면 예측할 확률값이 500미만이면 음수를 갖을 수 있게 되는 것을 확인할 수 있다. 이는 <code>확률값을 예측하는 모델을 만든다는 가정 자체에 위반하는 것이므로 이전에 학습했었던 회귀모형들과는 다른 방법의 회귀모형을 만들어 적합시켜야 할 것임이 분명</code>해졌다.</li>
+</ul>
+<ul>
+<li>일반적으로 decision boundary(threshold)를 0.5로 하지만 class가 imbalanced 한 경우는 조절하여보면서 적합시킬 수 있다.</li>
 </ul>
 <p><img src="/image/logistic_regression_coefficient_estimation_01.png" alt="로지스틱 회귀계수 추정방법 소개"></p>
+<ul>
+<li>기존의 일반 선형 회귀이듯, 다중 선형 회귀는 최소제곱법을 통해 해를 추정해 낼 수 있지만, <code>로지스틱 회귀</code>는 비선형 방정식이 되어 동일하게 최소제곱법으로 회귀계수를 추정해내기 힘들다. 그러므로, 위의 그림처럼 <code>MLE를 통해 회귀계수들을 추정</code>한다.</li>
+</ul>
 <p><img src="/image/logistic_regression_coefficient_estimation_02.png" alt="로지스틱 회귀계수 MLE를 사용한 추정"></p>
 <ul>
 <li>위의 MLE 방식을 통해 parameter의 값을 업데이트하는데, 아래와 같은 방식으로 수치적 최적화를 진행한다. 위의 로그 가능도함수 $log(l(\beta_{0}, \beta_{1}))$을 편의상 LL이라하자. 로그가능도함수 LL을 최대화하는 것은 다음 목적함수를 최소화하는 것과 같다.</li>
@@ -333,15 +397,16 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-03",
         "dateCreated": "2020-04-03",
-        "dateModified": "2020-04-03",
+        "dateModified": "2020-06-07",
         "url": "https://heung-bae-lee.github.io/2020/04/03/machine_learning_05/",
         "description": "로지스틱 회귀분석
 
 
-위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $\theta (x)$와 0이 나올 확률 $1-\theta (x)$의 비율(ratio)을 의미한다.
+로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.
 
-odds ratio = \frac{\theta (x)}{"
-        "wordCount": 351
+p(y \mid x) = \text{Bin} (y; \theta (x), N)
+위 식에"
+        "wordCount": 895
     }
 </script>
 

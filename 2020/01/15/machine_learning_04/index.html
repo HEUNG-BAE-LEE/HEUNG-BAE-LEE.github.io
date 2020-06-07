@@ -21,7 +21,7 @@
 <meta property="og:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/interaction_term.png">
-<meta property="og:updated_time" content="2020-05-25T16:14:20.474Z">
+<meta property="og:updated_time" content="2020-06-07T08:01:31.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(03) - 회귀진단">
 <meta name="twitter:description" content="교호작용 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia">
@@ -613,7 +613,22 @@ ga('send', 'pageview');
 <li>더빈-왓슨 통계량 d는 아래의 수식으로 정의된다. 귀무가설 $H_{0} : \rho = 0, H_{1}: \rho &gt; 0$에 대한 검정 통계량으로 사용된다.</li>
 </ul>
 <script type="math/tex; mode=display">d = \frac{\sum^{n}_{t=2} (e_{t} - e_{t-1})^2 }{\sum_{t=1}^{n} e_{t}^{2}}</script><ul>
-<li>위와 같은 방법들을 통해 자기상관을 제거해주기도 하지만 예를들어, 시간에 따라 변하는 중요한 독립변수를 회귀모형에서 빠뜨린 결과로 인한 현상일수도 있기에 <code>관측된 자기상관성의 징후는 잘못된 모형설정에서 비롯된 현상으로 해석할 수도 있다는 의미</code>이다. 실제로 지적된 자기상관의 오차구조를 반영하는 자기회귀(autoregressive) 모형을 가지고 새로 분석을 시작하기보다는 <code>새로운 독립변수의 도입가능성을 고려해보고 진행하는 것이 더 바람직할 때가 많다.</code> 그러므로 <code>자기상관을 수정하기 위해 변수변환 방법을 고려하는 일은 마지막으로 시도해볼 만한 것</code>이다.</li>
+<li><p>오차항의 자기상관성에 대한 공식적인 검정법은 다음과 같다. 아래 검정의 임계값이 되는 $ (d_{L}, d_{U}) $ 는 선택된 주요 백분위수에 대하여 더빈-왓슨에 의하여 표로 만들어져 있다.</p>
+<ul>
+<li>1) 통계량 $ d $ 를 계산한다.</li>
+<li>2) $ d &lt; d_{L} $ 이면, $ H_{0} $ 를 기각한다.</li>
+<li>3) $ d_{U} &lt; d_{L} $ 이면, $ H_{0} 를 기각하지 않는다. $</li>
+<li>4) $ d_{L} &lt; d &lt; d_{L} $ 이면, 결론을 유보한다.</li>
+</ul>
+</li>
+<li><p>위와 같은 방법들을 통해 자기상관을 제거해주기도 하지만 예를들어, 시간에 따라 변하는 중요한 독립변수를 회귀모형에서 빠뜨린 결과로 인한 현상일수도 있기에 <code>관측된 자기상관성의 징후는 잘못된 모형설정에서 비롯된 현상으로 해석할 수도 있다는 의미</code>이다. 실제로 지적된 자기상관의 오차구조를 반영하는 자기회귀(autoregressive) 모형을 가지고 새로 분석을 시작하기보다는 <code>새로운 독립변수의 도입가능성을 고려해보고 진행하는 것이 더 바람직할 때가 많다.</code> 그러므로 <code>자기상관을 수정하기 위해 변수변환 방법을 고려하는 일은 마지막으로 시도해볼 만한 것</code>이다.</p>
+</li>
+<li><p>더빈-왓슨 통계량으로 어떤 결론을 내리지 못하고 유보하게 되는 경우에는 다음에 설명되는 방법을 통해 재추정을 시도하고 어떤 중요한 변화가 생기는지를 관찰하는 것이 바람직하다. 이미 언급한 바와 같이 <code>오차항의 자기상관은 표준오차의 추정값, 신뢰구간, 검정의 내용 등을 왜곡시키게 되므로 회귀방정식은 재추정되어야 한다.</code> 자기상관 오차가 존재하는 경우 다음과 같은 두 가지 접근방법이 가능하다.</p>
+<ul>
+<li>1) 변수변환</li>
+<li>2) 시간의 효과를 가지는 새로운 예측변수들을 추가해 보는 것</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -703,11 +718,11 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-01-15",
         "dateCreated": "2020-01-15",
-        "dateModified": "2020-05-26",
+        "dateModified": "2020-06-07",
         "url": "https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/",
         "description": "교호작용
 성별, 결혼여부, 혹은 소속 정치단체 등과 같은 질적(qualitative) 또는 범주형(categorical)요인들이 회귀분석에서 종속(반응)변수의 변화를 설명하는 데 매우 유용한 독립(설명) 변수 역할을 할 때가 있다. 이런 질적 독립(설명)변수로 이용할 경우 이들은 지시변수(Indicator variable) 또는 가변수(dummy varia"
-        "wordCount": 5802
+        "wordCount": 5922
     }
 </script>
 
