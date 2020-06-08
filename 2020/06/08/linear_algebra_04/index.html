@@ -21,7 +21,7 @@
 <meta property="og:description" content="우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Independent하면 Unique한 solution을 갖고 선형시스템을 이루는 벡터들이 linearly dependent하면 무수히 많은 solution을 갖는다.    Line">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Uniqueness_of_Solution_for_Ax_equal_b_if_and_only_if.png">
-<meta property="og:updated_time" content="2020-06-08T17:42:42.977Z">
+<meta property="og:updated_time" content="2020-06-08T18:04:55.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linear Independence, Span, and Subspace">
 <meta name="twitter:description" content="우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Independent하면 Unique한 solution을 갖고 선형시스템을 이루는 벡터들이 linearly dependent하면 무수히 많은 solution을 갖는다.    Line">
@@ -240,7 +240,7 @@ ga('send', 'pageview');
 <script type="math/tex; mode=display">\begin{align} C_{1} \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} + C_{2} \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} + C_{3} \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \end{align}</script><ul>
 <li>아래 행렬도 동일하게 열벡터들간의 선형조합으로 영벡터를 만족시키기 위해선 스칼라들이 모두 다 0이어야 하기 때문에 linearly Independent하다.</li>
 </ul>
-<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 3 & 4 & 2 \\ 0 & 1 & 5 \\ 0 & 0 & 5 \end{bmatrix} \Rightarrow \begin{align} C_{1} \begin{bmatrix} 3 \\ 0 \\ 0 \end{bmatrix} + C_{2} \begin{bmatrix} 4 \\ 1 \\ 0 \end{bmatrix} + C_{3} \begin{bmatrix} 2 \\ 5 \\ 5 \end{bmatrix} \end{align}</script><p><img src="/image/linearly_independence_formal_definition.png" alt="벡터들이 Linearly Independent한지 확인하는 법 - 02"></p>
+<script type="math/tex; mode=display">\begin{align} \begin{bmatrix} 3 & 4 & 2 \\ 0 & 1 & 5 \\ 0 & 0 & 5 \end{bmatrix} \Rightarrow C_{1} \begin{bmatrix} 3 \\ 0 \\ 0 \end{bmatrix} + C_{2} \begin{bmatrix} 4 \\ 1 \\ 0 \end{bmatrix} + C_{3} \begin{bmatrix} 2 \\ 5 \\ 5 \end{bmatrix} \end{align}</script><p><img src="/image/linearly_independence_formal_definition.png" alt="벡터들이 Linearly Independent한지 확인하는 법 - 02"></p>
 <ul>
 <li>또 다른 방법으로 마지막으로 추가된 열벡터의 선형조합을 제외하곤 나머지를 우변으로 넘겨 해당 조합들로 마지막 열벡터를 만들 수 있다면 마지막 열벡터는 기존의 열벡터들의 선형조합에 대한 Span에 포함되있는 것이므로 이 또한 linearly dependent 가 될 것이다.</li>
 </ul>
@@ -286,7 +286,7 @@ ga('send', 'pageview');
 <ul>
 <li><p><code>위에서 본 조합처럼 Basis vector들이 unique하지 않기 때문에 linear combination을 찾는 방법은 여러가지일 것이다. 이를 위해 Basis vector들 간에 서로 수직인 조건을 만족하면 계수를 더 쉽게 찾을 수 있는데 이는 추후에 다시 다루어 볼 것이다.</code></p>
 </li>
-<li><p>잠깐 맛보기로 설명해 보자면, $ Basis vector들의 내적 = 0 $ 즉, Basis vector들끼리 서로 수직이라는 의미인 Basis independent라는 개념을 $ Ax = b $ 라는 방정식을 푸는데 적용시킬 수 있다. 여기서 A행렬의 크기는 $ m &gt; n $인 $ m \prod n $ 으로 가정할 것이다. 그렇다면 위의 방정식을 만족하는 solution은 존재하지 않는다는 것을 이미 배웠기 때문에 알 수 있다.</p>
+<li><p>잠깐 맛보기로 설명해 보자면, $ \text{Basis vector들의 내적} = 0 $ 즉, Basis vector들끼리 서로 수직이라는 의미인 Basis independent라는 개념을 $ Ax = b $ 라는 방정식을 푸는데 적용시킬 수 있다. 여기서 A행렬의 크기는 $ m &gt; n $인 $ m \times n $ 으로 가정할 것이다. 그렇다면 위의 방정식을 만족하는 solution은 존재하지 않는다는 것을 이미 배웠기 때문에 알 수 있다.</p>
 </li>
 </ul>
 <ul>
@@ -420,7 +420,7 @@ ga('send', 'pageview');
 
 
 Line"
-        "wordCount": 1362
+        "wordCount": 1361
     }
 </script>
 
