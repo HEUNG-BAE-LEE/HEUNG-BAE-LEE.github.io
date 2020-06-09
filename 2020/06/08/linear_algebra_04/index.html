@@ -13,18 +13,18 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Independent하면 Unique한 solution을 갖고 선형시스템을 이루는 벡터들이 linearly dependent하면 무수히 많은 solution을 갖는다.    Line">
+    <meta name="description" content="아래 내용은 김도형 박사님의 선형대수 강의안, edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Inde">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linear Independence, Span, and Subspace">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/06/08/linear_algebra_04/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Independent하면 Unique한 solution을 갖고 선형시스템을 이루는 벡터들이 linearly dependent하면 무수히 많은 solution을 갖는다.    Line">
+<meta property="og:description" content="아래 내용은 김도형 박사님의 선형대수 강의안, edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Inde">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Uniqueness_of_Solution_for_Ax_equal_b_if_and_only_if.png">
-<meta property="og:updated_time" content="2020-06-08T18:04:55.460Z">
+<meta property="og:updated_time" content="2020-06-09T06:56:37.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linear Independence, Span, and Subspace">
-<meta name="twitter:description" content="우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Independent하면 Unique한 solution을 갖고 선형시스템을 이루는 벡터들이 linearly dependent하면 무수히 많은 solution을 갖는다.    Line">
+<meta name="twitter:description" content="아래 내용은 김도형 박사님의 선형대수 강의안, edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.  선형시스템을 이루는 벡터들이 linearly Inde">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Uniqueness_of_Solution_for_Ax_equal_b_if_and_only_if.png">
 <meta property="fb:app_id" content="100003222637819">
 
@@ -209,6 +209,8 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <ul>
+<li><p>아래 내용은 <a href="https://datascienceschool.net/view-notebook/04358acdcf3347fc989c4cfc0ef6121c/" target="_blank" rel="noopener">김도형 박사님의 선형대수 강의안</a>, <a href="https://www.edwith.org/linearalgebra4ai/joinLectures/14072" target="_blank" rel="noopener">edwith의 인공지능을 위한 선형대수</a> 강의와 <a href="http://www.kocw.net/home/search/kemView.do?kemId=977757" target="_blank" rel="noopener">KOCW의 한양대학교 이상화 교수님의 선형대수학</a> 강의를 보고 정리한 내용이다.</p>
+</li>
 <li><p>우선 이전에 언급했듯이 <code>solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함</code>되어있어야 한다.</p>
 <ul>
 <li>선형시스템을 이루는 벡터들이 <code>linearly Independent</code>하면 <code>Unique한 solution</code>을 갖고</li>
@@ -412,15 +414,12 @@ ga('send', 'pageview');
         "dateModified": "2020-06-09",
         "url": "https://heung-bae-lee.github.io/2020/06/08/linear_algebra_04/",
         "description": "
+아래 내용은 김도형 박사님의 선형대수 강의안, edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.
+
 우선 이전에 언급했듯이 solution가 존재하려면 solution 벡터가 선형시스템이 이루는 Span안에 포함되어있어야 한다.
 
-선형시스템을 이루는 벡터들이 linearly Independent하면 Unique한 solution을 갖고
-선형시스템을 이루는 벡터들이 linearly dependent하면 무수히 많은 solution을 갖는다.
-
-
-
-Line"
-        "wordCount": 1361
+선형시스템을 이루는 벡터들이 linearly Inde"
+        "wordCount": 1389
     }
 </script>
 
@@ -468,6 +467,16 @@ Line"
         
 <nav id="article-nav">
     
+        <a href="/2020/06/09/linear_algebra_05/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Linear Transformation
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/2020/06/06/machine_learning_20/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
@@ -489,6 +498,15 @@ Line"
         <h3 class="widget-title">recents</h3>
         <div class="widget">
             <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/06/09/linear_algebra_05/" class="title">Linear Transformation</a></p>
+                            <p class="item-date"><time datetime="2020-06-09T05:23:12.000Z" itemprop="datePublished">2020-06-09</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -526,15 +544,6 @@ Line"
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/05/29/machine_learning_17/" class="title">Clustering</a></p>
-                            <p class="item-date"><time datetime="2020-05-28T18:17:21.000Z" itemprop="datePublished">2020-05-29</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -544,7 +553,7 @@ Line"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">21</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">21</span></li></ul>
         </div>
     </div>
 
@@ -554,7 +563,7 @@ Line"
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
