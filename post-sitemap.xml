@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/04/03/machine_learning_05/</loc>
+        <lastmod>2020-06-09T07:44:15.379Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/06/09/linear_algebra_05/</loc>
-        <lastmod>2020-06-09T07:09:52.476Z</lastmod>
+        <lastmod>2020-06-09T07:42:23.765Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -42,14 +50,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/05/12/linear_algebra_01/</loc>
         <lastmod>2020-06-09T05:28:24.776Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/04/03/machine_learning_05/</loc>
-        <lastmod>2020-06-07T18:17:34.175Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

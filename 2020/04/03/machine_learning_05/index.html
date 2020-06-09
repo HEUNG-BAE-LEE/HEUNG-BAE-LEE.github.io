@@ -21,7 +21,7 @@
 <meta property="og:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/logistic_regression.png">
-<meta property="og:updated_time" content="2020-06-07T18:17:34.175Z">
+<meta property="og:updated_time" content="2020-06-09T07:44:15.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="로지스틱 회귀분석">
 <meta name="twitter:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
@@ -435,7 +435,7 @@ ga('send', 'pageview');
 <hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import roc_curve</span><br><span class="line">fpr, tpr, thresholds = roc_curve(y, logit_res.predict(X))</span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.plot(fpr, tpr)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <hr>
-<p><img src="/image/one_variable_fpr_tpr_roc_curve" alt="Roc curve"></p>
+<p><img src="/image/one_variable_fpr_tpr_roc_curve.png" alt="Roc curve"></p>
 <h4 id="로지스틱-회귀를-사용한-이진-분류의-예"><a href="#로지스틱-회귀를-사용한-이진-분류의-예" class="headerlink" title="로지스틱 회귀를 사용한 이진 분류의 예"></a>로지스틱 회귀를 사용한 이진 분류의 예</h4><ul>
 <li><p>다음 데이터는 미국 의대생의 입학관련 데이터이다. 데이터의 의미는 다음과 같다.</p>
 </li>
@@ -621,7 +621,7 @@ ga('send', 'pageview');
         "genre": "machine learning",
         "datePublished": "2020-04-03",
         "dateCreated": "2020-04-03",
-        "dateModified": "2020-06-08",
+        "dateModified": "2020-06-09",
         "url": "https://heung-bae-lee.github.io/2020/04/03/machine_learning_05/",
         "description": "로지스틱 회귀분석
 
