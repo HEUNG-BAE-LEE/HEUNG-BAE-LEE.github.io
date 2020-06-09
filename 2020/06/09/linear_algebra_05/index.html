@@ -21,7 +21,7 @@
 <meta property="og:description" content="아래 내용은 김도형 박사님의 선형대수 강의안, edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  행렬에 의해서의 변환 또는 함수에 대해 정리해 볼 것이다.   Transformation Domain(정의역) : 입력값으로 가질 수 있는 모든 값들의 집합 Co-domain(공역)">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Transformation_linear_algebra.png">
-<meta property="og:updated_time" content="2020-06-09T09:26:56.339Z">
+<meta property="og:updated_time" content="2020-06-09T09:31:08.297Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linear Transformation &amp; onto, ono-to-one의 개념">
 <meta name="twitter:description" content="아래 내용은 김도형 박사님의 선형대수 강의안, edwith의 인공지능을 위한 선형대수 강의와 KOCW의 한양대학교 이상화 교수님의 선형대수학 강의를 보고 정리한 내용이다.  행렬에 의해서의 변환 또는 함수에 대해 정리해 볼 것이다.   Transformation Domain(정의역) : 입력값으로 가질 수 있는 모든 값들의 집합 Co-domain(공역)">
@@ -299,7 +299,7 @@ ga('send', 'pageview');
 <ul>
 <li>모든 Basis vector들에 대한 transformation 결과를 알고 있다면 행렬 A 를 몰라도 vector space내의 어떠한 transformation 결과도 찾을 수 있다.  </li>
 </ul>
-<script type="math/tex; mode=display">AX_{1} = a_{1}, AX_{2} = a_{2}, \cdots, AX_{n} = a_{n}</script><script type="math/tex; mode=display">y = C_{1} X_{1} + C_{1} X_{1} + \cdots + C_{n} X_{n}</script><script type="math/tex; mode=display">Ay = C_{1} A X_{1} + C_{1} A X_{1} + \cdots + C_{n} A X_{n} \&=&  C_{1} a_{1} + C_{2} a_{2} + \cdots + C_{n} a_{n}</script><ul>
+<script type="math/tex; mode=display">AX_{1} = a_{1}, AX_{2} = a_{2}, \cdots, AX_{n} = a_{n}</script><script type="math/tex; mode=display">y = C_{1} X_{1} + C_{1} X_{1} + \cdots + C_{n} X_{n}</script><script type="math/tex; mode=display">Ay = C_{1} A X_{1} + C_{1} A X_{1} + \cdots + C_{n} A X_{n} \\ &=&  C_{1} a_{1} + C_{2} a_{2} + \cdots + C_{n} a_{n}</script><ul>
 <li>Neural Network에서 FC Layer에서 가중치와 입력값의 내적과 bias term에 의한 선형 변환을 기하하적으로 볼 수 있다. 아래에서 <code>선형변환이 사용된 것은 정사각형 모양으로 이루어져 있던 칸을 평행사변형 모양으로 변형되는 데 사용</code>되어졌으며, 중심이 이동되는 것은 bias에 의한 것이고, 연산의 결과값이 작은 부분은 activation function을 통과하며 더 줄어들기 때문에 찌그러지는 것을 확인 할 수 있다.</li>
 </ul>
 <p><img src="https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/img/1layer.gif" alt="Wx+b의 변환"></p>
@@ -407,7 +407,7 @@ ga('send', 'pageview');
 Transformation
 Domain(정의역) : 입력값으로 가질 수 있는 모든 값들의 집합
 Co-domain(공역) "
-        "wordCount": 754
+        "wordCount": 755
     }
 </script>
 
@@ -670,22 +670,5 @@ Co-domain(공역) "
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
