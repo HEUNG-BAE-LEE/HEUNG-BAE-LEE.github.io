@@ -6,7 +6,7 @@
     
 
     
-    <title>Least Squares Problem | DataLatte&#39;s IT Blog</title>
+    <title>Least Squares Problem &amp; Orthogonal Projection | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -15,15 +15,15 @@
     
     <meta name="description" content="Least Squares Problem 앞서 말했던 것과 같이 크기가 $ m \times n $ 행렬에 대해 $ Ax=b $를 푼다면, 풀려는 방정식의 개수가 미지수의 개수보다 많기 때문에 해가 존재하지 않게 된다. 우리가 분석하려는 데이터들은 대체로 이런 Over-determined된 형태일 것이다.    위의 Over-determined 형태의 feat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Least Squares Problem">
+<meta property="og:title" content="Least Squares Problem &amp; Orthogonal Projection">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/06/09/linear_algebra_06/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
 <meta property="og:description" content="Least Squares Problem 앞서 말했던 것과 같이 크기가 $ m \times n $ 행렬에 대해 $ Ax=b $를 푼다면, 풀려는 방정식의 개수가 미지수의 개수보다 많기 때문에 해가 존재하지 않게 된다. 우리가 분석하려는 데이터들은 대체로 이런 Over-determined된 형태일 것이다.    위의 Over-determined 형태의 feat">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Over_determined_Linear_Systems.png">
-<meta property="og:updated_time" content="2020-06-09T19:34:53.592Z">
+<meta property="og:updated_time" content="2020-06-11T15:48:07.189Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Least Squares Problem">
+<meta name="twitter:title" content="Least Squares Problem &amp; Orthogonal Projection">
 <meta name="twitter:description" content="Least Squares Problem 앞서 말했던 것과 같이 크기가 $ m \times n $ 행렬에 대해 $ Ax=b $를 푼다면, 풀려는 방정식의 개수가 미지수의 개수보다 많기 때문에 해가 존재하지 않게 된다. 우리가 분석하려는 데이터들은 대체로 이런 Over-determined된 형태일 것이다.    위의 Over-determined 형태의 feat">
 <meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Over_determined_Linear_Systems.png">
 <meta property="fb:app_id" content="100003222637819">
@@ -186,7 +186,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        Least Squares Problem
+        Least Squares Problem &amp; Orthogonal Projection
         </h1>
     
 
@@ -251,6 +251,12 @@ ga('send', 'pageview');
 <p><img src="/image/inner_product_meaning_in_algebra.png" alt="내적의 의미"></p>
 <p><img src="/image/Inner_Product_and_Angle_Between_Vectors.png" alt="벡터간 사이각과 내적의 관계"></p>
 <ul>
+<li>If non-zero vectors, $ v_{1}, v_{2}, \ldots, v_{n} $ are orthogonal, $ v_{i}^{T} v_{j} = 0, ||v_{i}|| \neq 0 $ then <code>the vectors are linearly independent!</code></li>
+</ul>
+<ul>
+<li>위에서 linearly independent가 되는 이유는 vector들을 가지고 linear combination을 하여 0 벡터를 만들 수 있는 경우가 모든 계수가 0일 때만 가능하기 때문이다.</li>
+</ul>
+<script type="math/tex; mode=display">C_{1} v_{1} + C_{2} v_{2} + \cdots + C_{n} v_{n} = 0</script><script type="math/tex; mode=display">\rightarrow v_{i}^{T} ( C_{1} v_{1} + C_{2} v_{2} + \cdots + C_{n} v_{n} ) = 0</script><script type="math/tex; mode=display">\rightarrow C_{i} || V_{i} ||^{2} = 0 for \forall i</script><script type="math/tex; mode=display">C_{i} = 0</script><ul>
 <li><p>두 벡터의 내적이 0을 갖는다면 두 벡터는 서로 직교한다는 의미이다. 왜냐하면 위의 식에서 $ cos 90 = 0$ 이기 때문이다. 참고로 두 벡터가 직교하며, 각각 Unit vector인 경우 <code>Orthonormal</code>하다고 한다.</p>
 <ul>
 <li><code>Orthogonal한 경우 linearly independent한 벡터들이지만 linearly independent하다고 해서 Orthogonal 하진 않는다.</code></li>
@@ -281,6 +287,92 @@ ga('send', 'pageview');
 <li>이러한 error를 가장 작게 해주는 solution $ x $ 를 찾는 것이 우리의 objective function(cost function)이 될 것이다.</li>
 </ul>
 <p><img src="/image/Back_to_Over_dtermined_System_05.png" alt="Over-determined System Solution - 04"></p>
+<h2 id="Least-Squares-Problem의-기하학적-측면"><a href="#Least-Squares-Problem의-기하학적-측면" class="headerlink" title="Least Squares Problem의 기하학적 측면"></a>Least Squares Problem의 기하학적 측면</h2><ul>
+<li>근사시킨 해 $ \hat{x} $ 는 기존의 $ Ax $ 즉, A의 column vector들의 linear combination인 <code>column space에 모든 포인트 중에 가장 가까운 점을 의미</code>한다. 가장 가까운 점을 찾는 것은 $ || b-Ax || \pert column space of A $ 이 성립된다.</li>
+</ul>
+<p><img src="/image/Geometric_Interpretation_of_Least_Squares_01.png" alt="Geometric Interpretation of Least Squares - 01"></p>
+<ul>
+<li>아래와 같이 행렬 A와도 직교하는 것을 확인할 수 있다.</li>
+</ul>
+<p><img src="/image/Geometric_Interpretation_of_Least_Squares_02.png" alt="Geometric Interpretation of Least Squares - 02"></p>
+<ul>
+<li>$ Ax \simeq b $ 를 푸는 문제는 결국 $ A^{T} A \hat{x} = A^{T} b $ 를 푸는 것과 동일해 진다. 새로운 linear system을 푸는 문제가 되며, 우리는 이 식을 <code>normal equation</code> 이라고 부른다. $ A^{T} A $ 가 역행렬이 존재한다면, 맨 마지막 식과 동일하게 solution을 찾을 수 있다.</li>
+</ul>
+<p><img src="/image/Normal_equation.png" alt="Normal Equation"></p>
+<ul>
+<li>위에서 언급했던 것 처럼 우리가 목표로 삼았던 objective function은 $ \underset{ x }{ \arg \min } || b - Ax|| $ 에 대해서 찾게 되면 아래 그림에서와 같이 계산할 수 있다.</li>
+</ul>
+<p><img src="/image/Another_Derivation_of_normal_Equation.png" alt="또 다른 도출 방식"></p>
+<ul>
+<li>벡터의 미분이 잘 이해가 가지 않는다면 아래수식을 살펴보자. 먼저 아래 수식에서 x_{i} 에 대해 미분한다면 각각 3과 2를 갖는 열 벡터로 계산되어질 것이다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align} a^{T} x \begin{bmatrix} 3 & 2  \end{bmatrix} \begin{bmatrix} x_{1} \\ x_{2}  \end{bmatrix} = 3 x_{1} + 2 x_{2} \end{align}</script><ul>
+<li>아래에서와 같이 두 벡터의 내적은 스칼라이기 때문에 순서를 바꾸어도 상관이 없다. 이런 성질을 이용하여 미분을 풀어주면 된다.</li>
+</ul>
+<script type="math/tex; mode=display">a^{T} x = x^{T} a \Rightarrow \frac{d}{dx} (a^{T} x) = a</script><ul>
+<li>$ x^{T} A^{T} A x $ 같은 경우에는 $ f(x)g(x) = f(x)^{‘} g(x) + f(x) g(x)^{‘} $ 로 생각하여 풀면 된다.</li>
+</ul>
+<script type="math/tex; mode=display">\frac{d}{dx} x^{T} A^{T} A x = \frac{d}{dx} x^{T} (A^{T} A x) + \frac{d}{dx} (x^{T} A^{T} A) x = A^{T} A x + A^{T} A x</script><p><img src="/image/Life_span_example_least_square_problems.png" alt="Least Square Problems의 예시"></p>
+<ul>
+<li>$ A^{T}A $ 의 역행렬이 존재하지 않는다면 우선 2가지 경우 중에 하나가 될 것이다. 1)해가 존재하지 않는다. 2) 무수히 많은 해를 가진다. 일반적으로 Normal equation의 경우에는 특수한 성질로 인해 해가 없는 경우는 없다. 직관적으로 설명해보자면, 해가 하나이상있는 이유는 무엇인지 생각해보면, 수선의 발인 $ \hat{x} $ 가 존재하지 않는 경우여야만 해가 존재하지 않을 텐데 공간 상 어느 지점에서도 수선의 발을 내려 columns space와의 접점이 생기지 않을 순 없다.</li>
+</ul>
+<ul>
+<li>그렇다면 $ A^{T}A $ 가 어떤 경우에 역행렬이 존재하지 않는가에 대해 생각해보자. A의 행렬이 linearly independent한 column 벡터들로 이루어져 있다면 역행렬이 존재하고, 그렇지 않다면 역행렬이 존재하지 않을 것이다. 즉, 역행렬이 존재한다는 이야기는 결국 A의 행렬이 linearly independent한 column 벡터들로 이루어져 $ \hat{b} $ 를 만드는 linear combination이 unique해야만 하기 때문이다. 반대로, 역행렬이 존재하지 않은 경우 해는 무수히 많을 것이고 A 행렬의 column 벡터들이 linearly dependent하여  $ \hat{b} $ 를 만드는 linear combination이 여러가지 있다는 이야기가 되기 때문이다.</li>
+</ul>
+<ul>
+<li>또한, 실제로 $ A^{T}A $ 의 역행렬이 존재하지 않는 경우는 거의 없다. 왜냐하면 column 별로 정확하게 비율이 맞추어지는 경우는 어렵기 때문이다.</li>
+</ul>
+<p><img src="/image/what_if_C_equal_AT_A_is_not_invertible.png" alt="역행렬을 갖지 않는 경우"></p>
+<h2 id="Orthogonal-Projection"><a href="#Orthogonal-Projection" class="headerlink" title="Orthogonal Projection"></a>Orthogonal Projection</h2><ul>
+<li>이전에 구했던 $ \hat{x} = ( A^{T} A )^{-1} A^{T} b $ 를 대입하여 $ \hat{b} $ 를 살펴보면 아래와 같이 <code>linear transformation을 이루는 것을 확인 할 수 있다.</code> 아래의 밑줄친 행렬을 Projection matrix라고도 한다.</li>
+</ul>
+<p><img src="/image/Orthogonal_Projection_Perspective.png" alt="Orthogonal Projection Perspective"></p>
+<ul>
+<li><p>If non-zero vectors, $ v_{1}, v_{2}, \ldots, v_{n} $ are orthogonal, $ v_{i}^{T} v_{j} = 0, ||v_{i}|| \neq 0 $ then <code>the vectors are linearly independent!</code></p>
+</li>
+<li><p>두 벡터의 내적이 0을 갖는다면 두 벡터는 서로 직교한다는 의미이다. 왜냐하면 위의 식에서 $ cos 90 = 0$ 이기 때문이다. 참고로 두 벡터가 직교하며, 각각 Unit vector인 경우 <code>Orthonormal</code>하다고 한다.</p>
+<ul>
+<li><code>Orthogonal한 경우 linearly independent한 벡터들이지만 linearly independent하다고 해서 Orthogonal 하진 않는다.</code><ul>
+<li>$ x^{T} y  = 0 \rightarrow \text{angle} = 90^{\circ}$</li>
+<li>$ x^{T} y  &gt; 0 \rightarrow \text{angle} &lt; 90^{\circ}$</li>
+<li>$ x^{T} y  &lt; 0 \rightarrow \text{angle} &gt; 90^{\circ}$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/Orthogonal_and_Orthonormal_Sets.png" alt="Orthogonal and Orthonormal Sets"></p>
+<ul>
+<li>첫번째 문장에서 처럼 p개의 column벡터를 갖는 행렬의 subspace W의 차원수가 p라는 의미는 행렬을 이루고 있는 모든 column 벡터가 linearly independent하다는 의미이다. 이러한 <code>linearly independent한 벡터들을 orthogonal하게 만드는 것은 Gram-Schmidt process를 통해 가능</code>하다.</li>
+</ul>
+<p><img src="/image/Orthogonal_and_Orthonormal_Basis.png" alt="Orthogonal and Orthonormal Basis"></p>
+<h3 id="Cosines-and-Projection-onto-line"><a href="#Cosines-and-Projection-onto-line" class="headerlink" title="Cosines and Projection onto line"></a>Cosines and Projection onto line</h3><ul>
+<li>아래 그림과 같이 projection한 지점으로 이동시켜주는 matrix를 우리는 Projection matrix라고 한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{eqnarray} P = \hat{x} a  = \frac{a^{T}b}{a^{T}a} a \\ &=& \frac{a a^{T}}{a^{T}a} b \text{vector의 내적은 순서를 바꾸어도 어차피 scalar값이므로 문제없음.} \\ &=& P b \end{eqnarray}</script><script type="math/tex; mode=display">Projection matrix P = frac{a a^{T}}{a^{T} a}</script><ul>
+<li>projection matrix의 성질</li>
+</ul>
+<script type="math/tex; mode=display">P^{T} = \{ frac{a a^{T}}{a^{T} a} \}^{T} = frac{a a^{T}}{a^{T} a} = P</script><script type="math/tex; mode=display">P^{2} = frac{a a^{T}}{a^{T} a} frac{a a^{T}}{a^{T} a} = frac{ a (a^{T} a ) a^{T} }{ ( a^{T} a ) a^{T} a} = P</script><script type="math/tex; mode=display">Projection matrix P = frac{a a^{T}}{a^{T} a}</script><p><img src="/image/projection_b_onto_a.png" alt="projection b onto a"></p>
+<ul>
+<li>위에서 했던 방법과 동일하게 아래 그림에서도 동일하게 Projection matrix를 구할 수 있으며, projection된 좌표의 벡터를 계산할 수 있다.</li>
+</ul>
+<p><img src="/image/Orthogonal_Projection_y_hat_of_y_onto_line.png" alt="Orthogonal Projection y hat of y onto line"></p>
+<ul>
+<li>2-Dimensional subspace $ W $ 에 orthogonal projection한 $ \hat{y} $ 를 구하는 것은 <code>두 orthogonal Basis vector들에 대해 projection하여 계산된 성분의 합으로 구할 수 있다.</code> 각 orthogonal한 Basis vector에 대해 projection을 해도 직교되는 지는 삼수선의 정리에의해 보장되므로 걱정하지 않아도 된다.</li>
+</ul>
+<p><img src="/image/Orthogonal_Projection_y_hat_of_y_onto_Plane.png" alt="Orthogonal Projection y hat of y onto Plane"></p>
+<ul>
+<li>위에서와 다르게 $ y $ 가 이미 subspace $ W $ 에 포함되어있다면, prjection을 해도 동일하게 y이기 때문에 아래와 같이 동일한 식을 풀어도 y값이 그대로 계산된다.</li>
+</ul>
+<p><img src="/image/Orthogonal_Projection_when_y_in_W.png" alt="Orthogonal Projection when y in W"></p>
+<ul>
+<li>이제 아래와 같이 각각의 projection 성분들의 합을 하나의 Projection matrix를 통한 선형변환적 측면으로 바라볼 수 있게 된다.</li>
+</ul>
+<p><img src="/image/Transformation_Orthogonal_projection.png" alt="Transformation Orthogonal Projection"></p>
+<ul>
+<li>결국 우리가 찾는 solution은 기존의 column space에 포함되지 않았던 상수벡터 $ b $를 linear transformation하여 projection한 벡터에 관해 계산하는 것이라는 사실을 다시한번 확인할 수 있다.</li>
+</ul>
+<p><img src="/image/Orthogonal_projection_Perspective_01.png" alt="Orthogonal Projection Perspective"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -363,13 +455,13 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "Least Squares Problem",
+        "headline": "Least Squares Problem &amp; Orthogonal Projection",
         "image": "https://heung-bae-lee.github.io/image/Over_determined_Linear_Systems.png",
         "keywords": "",
         "genre": "linear algebra",
         "datePublished": "2020-06-09",
         "dateCreated": "2020-06-09",
-        "dateModified": "2020-06-10",
+        "dateModified": "2020-06-12",
         "url": "https://heung-bae-lee.github.io/2020/06/09/linear_algebra_06/",
         "description": "Least Squares Problem
 앞서 말했던 것과 같이 크기가 $ m \times n $ 행렬에 대해 $ Ax=b $를 푼다면, 풀려는 방정식의 개수가 미지수의 개수보다 많기 때문에 해가 존재하지 않게 된다. 우리가 분석하려는 데이터들은 대체로 이런 Over-determined된 형태일 것이다.
@@ -377,7 +469,7 @@ ga('send', 'pageview');
 
 
 위의 Over-determined 형태의 feat"
-        "wordCount": 545
+        "wordCount": 1534
     }
 </script>
 
@@ -451,7 +543,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
-                            <p class="item-title"><a href="/2020/06/09/linear_algebra_06/" class="title">Least Squares Problem</a></p>
+                            <p class="item-title"><a href="/2020/06/09/linear_algebra_06/" class="title">Least Squares Problem &amp; Orthogonal Projection</a></p>
                             <p class="item-date"><time datetime="2020-06-09T14:12:36.000Z" itemprop="datePublished">2020-06-09</time></p>
                         </div>
                     </li>
@@ -640,5 +732,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
