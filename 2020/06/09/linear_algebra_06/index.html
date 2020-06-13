@@ -21,7 +21,7 @@
 <meta property="og:description" content="Least Squares Problem 앞서 말했던 것과 같이 크기가 $ m \times n $ 행렬에 대해 $ Ax=b $를 푼다면, 풀려는 방정식의 개수가 미지수의 개수보다 많기 때문에 해가 존재하지 않게 된다. 우리가 분석하려는 데이터들은 대체로 이런 Over-determined된 형태일 것이다.    위의 Over-determined 형태의 feat">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/Over_determined_Linear_Systems.png">
-<meta property="og:updated_time" content="2020-06-11T15:48:07.189Z">
+<meta property="og:updated_time" content="2020-06-13T06:13:29.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Least Squares Problem &amp; Orthogonal Projection">
 <meta name="twitter:description" content="Least Squares Problem 앞서 말했던 것과 같이 크기가 $ m \times n $ 행렬에 대해 $ Ax=b $를 푼다면, 풀려는 방정식의 개수가 미지수의 개수보다 많기 때문에 해가 존재하지 않게 된다. 우리가 분석하려는 데이터들은 대체로 이런 Over-determined된 형태일 것이다.    위의 Over-determined 형태의 feat">
@@ -213,7 +213,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Over_determined_Linear_Systems.png" alt="Over-determined Linear Systems"></p>
 <ul>
-<li>위의 Over-determined 형태의 feature matrix를 column vector들의 linear combination으로 나타내 주면, 다음과 같이 표현할 수 있을 것이다. Vector 각각의 column vector의 차원이 n차원일 때 <code>column space가 Span하는 공간내에 상수 벡터 b가 포함되어 있을 확률은 매우 적다</code>. 왜냐하면 <code>n이 무한하게 늘어난다고 가정한다면 무한한 차원에서 3개의 column vector들의 linear combination으로 얻어지는 column space도 매우 얇은 초평면(hyperplane)이 될 것이기 때문</code>이다. 그러므로 해는 존재하지 않는다.</li>
+<li>위의 Over-determined 형태의 feature matrix를 column vector들의 linear combination으로 나타내 주면, 다음과 같이 표현할 수 있을 것이다. Vector 각각의 column vector의 차원이 n차원일 때 <code>column space가 Span하는 공간내에 상수 벡터 b가 포함되어 있을 확률은 매우 적다</code>. 왜냐하면 <code>m이 무한하게 늘어난다고 가정한다면 무한한 차원에서 3개의 column vector들의 linear combination으로 얻어지는 column space도 매우 얇은 초평면(hyperplane)이 될 것이기 때문</code>이다. 이러한 매우 얇은 초평면에 상수 벡터 $ b $가 포함되어있을 확률은 크지 않다. 그러므로 해는 존재하지 않는다.</li>
 </ul>
 <p><img src="/image/Vector_Equation_Perspective.png" alt="Vector Equation Perspective"></p>
 <ul>
@@ -280,7 +280,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Back_to_Over_dtermined_System_03.png" alt="Over-determined System Solution - 02"></p>
 <ul>
-<li>위의 두 가지 경우를 비교하여, 어떤 것이 더 좋은 방법일지 확인해보자. 더 작은 error값을 갖는 2번째 방법이 더 좋은 방법이라고 할 수 있을 것이다. 여기에서 <code>error는 결국 $ || b-Ax || $ 를 의미하는 것을 확인 할 수 있다.</code></li>
+<li>위의 두 가지 경우를 비교하여, 어떤 것이 더 좋은 방법일지 확인해보자. 더 작은 error값을 갖는 2번째 방법이 더 좋은 방법이라고 할 수 있을 것이다. 여기에서 error는 결국 $ || b-Ax || $ 를 의미하는 것을 확인 할 수 있다.</li>
 </ul>
 <p><img src="/image/Back_to_Over_dtermined_System_04.png" alt="Over-determined System Solution - 03"></p>
 <ul>
@@ -288,7 +288,7 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Back_to_Over_dtermined_System_05.png" alt="Over-determined System Solution - 04"></p>
 <h2 id="Least-Squares-Problem의-기하학적-측면"><a href="#Least-Squares-Problem의-기하학적-측면" class="headerlink" title="Least Squares Problem의 기하학적 측면"></a>Least Squares Problem의 기하학적 측면</h2><ul>
-<li>근사시킨 해 $ \hat{x} $ 는 기존의 $ Ax $ 즉, A의 column vector들의 linear combination인 <code>column space에 모든 포인트 중에 가장 가까운 점을 의미</code>한다. 가장 가까운 점을 찾는 것은 $ || b-Ax || \pert column space of A $ 이 성립된다.</li>
+<li>근사시킨 해 $ \hat{x} $ 는 기존의 $ Ax $ 즉, A의 column vector들의 linear combination인 <code>column space에 모든 포인트 중에 가장 가까운 점을 의미</code>한다. 가장 가까운 점을 찾는 것은 $ || b-Ax || \bot column space of A $ 이 성립된다.</li>
 </ul>
 <p><img src="/image/Geometric_Interpretation_of_Least_Squares_01.png" alt="Geometric Interpretation of Least Squares - 01"></p>
 <ul>
@@ -366,13 +366,25 @@ ga('send', 'pageview');
 </ul>
 <p><img src="/image/Orthogonal_Projection_when_y_in_W.png" alt="Orthogonal Projection when y in W"></p>
 <ul>
-<li>이제 아래와 같이 각각의 projection 성분들의 합을 하나의 Projection matrix를 통한 선형변환적 측면으로 바라볼 수 있게 된다.</li>
+<li>여기서 $ \hat{b} $을 orthonormal한 Basis vector들인 $ u_{1}, u_{2} $ 에 projection시킨다면 아래와 같이 각각의 projection 성분들의 합을 하나의 Projection matrix를 통한 선형변환적 측면으로 바라볼 수 있게 된다.</li>
 </ul>
 <p><img src="/image/Transformation_Orthogonal_projection.png" alt="Transformation Orthogonal Projection"></p>
 <ul>
-<li>결국 우리가 찾는 solution은 기존의 column space에 포함되지 않았던 상수벡터 $ b $를 linear transformation하여 projection한 벡터에 관해 계산하는 것이라는 사실을 다시한번 확인할 수 있다.</li>
+<li>만약 행렬 A가 Orthogonal한 벡터들로 이루어져있다면, 아래와 같이 계산할 수 있다. 결국 우리가 찾는 solution은 기존의 column space에 포함되지 않았던 상수벡터 $ b $를 linear transformation하여 projection한 벡터에 관해 계산하는 것이라는 사실을 다시한번 확인할 수 있다.</li>
 </ul>
 <p><img src="/image/Orthogonal_projection_Perspective_01.png" alt="Orthogonal Projection Perspective"></p>
+<ul>
+<li>예를 들어, 행렬 $A$가 orthonormal한 벡터들로 이루어져 있고, 행렬 $ B $ 는 orthonormal하지 않은 벡터들로 이루어져 있다고 가정해 보자. 아래와 같이 기하학적으로 살펴볼 수 있으며, 결국 행렬 B의 경우 <code>행렬을 이루는 다른 벡터에 대해 projection 방향이 영향을 받기 때문에 영향을 주는 벡터가 가중치 또는 계수 x 값을 결정하게 된다. 그러나 Orthonormal한 경우 다른 벡터(feature)에 관계없이 독립적으로 Orthogonal Projection을 통해 계수를 계산할 수 있다.</code></li>
+</ul>
+<p><img src="/image/Projection_about_non_orthornormal_and_orthonormal.png" alt="Orthonormal한 행렬과 그렇지 않은 행렬의 projection"></p>
+<ul>
+<li>또한, orthogonal하지 않는 column 벡터들이 유사한 형태로 이루어져 있다면, projection 성분들을 구할 때 다른 벡터와 평행한 방향으로 projection해야 하므로 아래와 같은 그림으로 projection 되어 질 것이다. 만약 벡터 $ b_{1} $ 이 약간 틀어지게 된다면, 그때의 projection된 성분 값은 더 멀어지거나 가까워질 것이다. 즉, <code>orthogonal 하지 않는 유사한 벡터들의 projection은 다른 벡터에 영향을 많이 받게 되어 조금의 변동으로도 계수에 대한 큰 오차가 발생된다.</code> 그러므로 <code>이런 경우 적합된 회귀 모델에 입력이 조금 바뀐다면 계수 벡터가 굉장히 sensitive하게 바뀔 것이다. 이는 test 데이터에 대한 성능이 안좋아지게 되는 결과를 초래 할 수도 있다.</code> 이러한 이유로 regularization term을 포함한 회귀계수를 축소한 모형들을 사용하는 것이다.</li>
+</ul>
+<p><img src="/image/non_orthogonal_vector_projection_importance.png" alt="Orthogonal하지 않은 방향이 비슷한 벡터들의 projection의 위험성"></p>
+<ul>
+<li>한가지 예로 <code>Ridge regression</code>은 아래와 같은 objective function을 갖는데 이는 아래 그림과 같이 <code>벡터들을 수직하게 만들어 주는 의미</code>를 갖는다. <code>회귀에서와 마찬가지로 선형 분류나 NN에서의 가중치 벡터도 동일하게 생각해보면 가중치 벡터들이 서로 Orthogonal하지 않게 되면 feature들의 의미를 중복해가지고 있는 feature들을 구성하게 될 것</code>이다.</li>
+</ul>
+<script type="math/tex; mode=display">( A^{T} A + \lambda I ) x = A^{T} b</script><p><img src="/image/Ridge_regression_geometric_perspectives.png" alt="Ridge regression의 기하하적 의미"></p>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -461,7 +473,7 @@ ga('send', 'pageview');
         "genre": "linear algebra",
         "datePublished": "2020-06-09",
         "dateCreated": "2020-06-09",
-        "dateModified": "2020-06-12",
+        "dateModified": "2020-06-13",
         "url": "https://heung-bae-lee.github.io/2020/06/09/linear_algebra_06/",
         "description": "Least Squares Problem
 앞서 말했던 것과 같이 크기가 $ m \times n $ 행렬에 대해 $ Ax=b $를 푼다면, 풀려는 방정식의 개수가 미지수의 개수보다 많기 때문에 해가 존재하지 않게 된다. 우리가 분석하려는 데이터들은 대체로 이런 Over-determined된 형태일 것이다.
@@ -469,7 +481,7 @@ ga('send', 'pageview');
 
 
 위의 Over-determined 형태의 feat"
-        "wordCount": 1534
+        "wordCount": 1805
     }
 </script>
 
@@ -570,7 +582,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/06/06/machine_learning_20/" class="title">Imbalanced Data</a></p>
+                            <p class="item-title"><a href="/2020/06/06/machine_learning_21/" class="title">Imbalanced Data</a></p>
                             <p class="item-date"><time datetime="2020-06-05T16:52:20.000Z" itemprop="datePublished">2020-06-06</time></p>
                         </div>
                     </li>
@@ -579,7 +591,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/06/04/machine_learning_19/" class="title">Clustering - Hierarchical, DBSCAN, Affinity Propagation</a></p>
+                            <p class="item-title"><a href="/2020/06/04/machine_learning_20/" class="title">Clustering - Hierarchical, DBSCAN, Affinity Propagation</a></p>
                             <p class="item-date"><time datetime="2020-06-04T13:46:15.000Z" itemprop="datePublished">2020-06-04</time></p>
                         </div>
                     </li>
@@ -593,7 +605,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">21</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">22</span></li></ul>
         </div>
     </div>
 
@@ -603,7 +615,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -732,22 +744,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>

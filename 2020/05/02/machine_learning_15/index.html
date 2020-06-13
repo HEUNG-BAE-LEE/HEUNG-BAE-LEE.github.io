@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Ensemble Learning - Bagging, RandomForest | DataLatte&#39;s IT Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content>
+    
+    
+    <meta name="description" content="Ensemble Learning이란? 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.   모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.  단일 모형을 사용할">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ensemble Learning - Bagging, RandomForest">
+<meta property="og:url" content="https://heung-bae-lee.github.io/2020/05/02/machine_learning_15/index.html">
+<meta property="og:site_name" content="DataLatte&#39;s IT Blog">
+<meta property="og:description" content="Ensemble Learning이란? 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.   모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.  단일 모형을 사용할">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png">
+<meta property="og:updated_time" content="2020-05-26T17:05:52.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ensemble Learning - Bagging, RandomForest">
+<meta name="twitter:description" content="Ensemble Learning이란? 모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.   모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.  단일 모형을 사용할">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png">
+<meta property="fb:app_id" content="100003222637819">
+
+
+    <link rel="canonical" href="https://heung-bae-lee.github.io/2020/05/02/machine_learning_15/">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+    <link rel="stylesheet" type="text/css" href>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">	
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+    <link rel="stylesheet" href="/css/style.css">
+   
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-154199624-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4604833066889492" data-ad-slot="4588503508" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<link rel="alternate" href="/rss2.xml" title="DataLatte's IT Blog" type="application/rss+xml">
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DataLatte&#39;s IT Blog using Hexo</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Bayes/">Bayes</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS231n/">CS231n</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Front-end/">Front end</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Kaggle/">Kaggle</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Recommendation-System/">Recommendation System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/crawling/">crawling</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/data-engineering/">data engineering</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/deep-learning/">deep learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/growth-hacking/">growth hacking</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/hexo/">hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linear-algebra/">linear algebra</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/machine-learning/">machine learning</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/machine-learning/">machine learning</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 상단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="4588503508"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			    <article id="post-machine_learning_15" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Ensemble Learning - Bagging, RandomForest
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/05/02/machine_learning_15/" class="article-date">
+            <time datetime="2020-05-02T12:00:10.000Z" itemprop="datePublished">2020-05-02</time>
+        </a>
+    </div>
+
+		
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="Ensemble-Learning이란"><a href="#Ensemble-Learning이란" class="headerlink" title="Ensemble Learning이란?"></a>Ensemble Learning이란?</h2><ul>
+<li>모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.</li>
+</ul>
+<ul>
+<li><p>모형 결합 방법을 사용하면 <code>일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.</code></p>
+<ul>
+<li>단일 모형을 사용할 때 보다 성능 분산이 감소하기에 <code>과최적화(overfitting)을 방지</code>한다.</li>
+<li><code>개별 모형이 성능이 안좋을 경우에는 결합 모형의 성능이 더 향상</code>된다.</li>
+</ul>
+</li>
+<li><p>Ensemble Learning은 캐글이나 다른 대회에서 높은 성능을 자랑하며 여러 차례 우승을 차지한 알고리즘으로 그만큼 강력하지만, 현업에서는 Ensemble Learning을 사용하지 않을 가능성이 매우 높다. 왜냐하면 굉장히 강력하지만 다른 모델들과의 성능차이가 엄청나게 차이나는 것이 아니며, 실제 Domain에서 중요한 변수가 무엇인지와 같은 원인을 찾는 feature selection 부분이 더 중요할 수 있기 때문이다. 물론, 성능측면이 중요한 Domain분야에서는 Ensemble Learning이 중요할 것이다.</p>
+</li>
+<li><p>Ensemble이라는 의미의 사전적 정의는 ‘합창단’, ‘조화’라는 의미를 지닌다. 즉, 머신러닝에서의 개념은 여러개의 모델을 조합을 시킨다라는 의미로 받아들일 수 있다.</p>
+</li>
+</ul>
+<p><img src="/image/Ensemble_dictionary_mean.png" alt="Ensemble의 의미"></p>
+<ul>
+<li>통계학에서의 대수의 법칙이라는 개념이 있는데, 큰 모집단에서 무작위로 뽑은 표본의 수가 많아 질수록(보통은 30개이상의 관측이) 모집단의 평균에 가까울 확률이 높아진다는 개념이다. <code>많은 시행의 결과가 수학적으로 합리적인 결과를 보여준다</code>는 것을 의미하는데, Ensemble learning에 적용하여 생각해보면 다수의 모델이 더 합리적인 성능을 가져올 수 있다는 것으로 해석할 수도 있다.</li>
+</ul>
+<p><img src="/image/the_law_of_large_number.png" alt="대수의 법칙과 Ensemble"></p>
+<ul>
+<li>하지만 아래에서 <code>합치는 모델의 성능 자체가 떨어지는 모델을 가지고 Ensemble learning을 진행한다고 해도 성능을 올릴 수는 없다.</code></li>
+</ul>
+<p><img src="/image/Ensemble_learning_conception_01.png" alt="Ensemble learning의 개념 - 01"></p>
+<p><img src="/image/Ensemble_learning_conception_02.png" alt="Ensemble learning의 개념 - 02"></p>
+<ul>
+<li>아래에서는 이진분류에 대해서만 언급했지만, 대부분의 classification 문제에서는 One VS Rest 방식으로 문제를 풀기에 이진 분류 뿐만아니라, class가 여러개인 multi class 문제에서도 적용되는 내용이다.</li>
+</ul>
+<p><img src="/image/why_performence_prob_higher_than_half.png" alt="Ensemble learning에서 base model의 성능의 전제조건"></p>
+<ul>
+<li>아래에서와 같이 각각의 성능이 0.5인 분류기들을 voting을 통해 결과를 내게 되는데, 각각의 weak한 분류기들의 조합을 통해 최종적으로는 0.625라는 성능을 내게 된다.</li>
+</ul>
+<p><img src="/image/how_to_decision_predicted_value_on_ensemble.png" alt="Ensemble을 통한 결과 도출"></p>
+<ul>
+<li>다수결 모형이 개별 모형보다 더 나은 성능을 보이는 이유는 다음 실험에서도 확인 할 수 있다. 만약 개별 모형이 정답을 출력할 확률이 $p$인 경우에 <code>서로 다르고 독립적인 모형</code> $N$개를 모아서 다수결 모형을 만들면 정답을 출력할 확률이 다음과 같아진다.</li>
+</ul>
+<script type="math/tex; mode=display">\sum_{k>\frac{N}{2}}^N \binom N k p^k (1-p)^{N-k}</script><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def total_error(p, N):</span><br><span class="line">    te = 0.0</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(int(np.ceil(N/2)), N + 1):</span><br><span class="line">        te += sp.misc.comb(N, k) * p**k * (1-p)**(N-k)</span><br><span class="line">    <span class="built_in">return</span> te</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = np.linspace(0, 1, 100)</span><br><span class="line">plt.plot(x, x, <span class="string">'g:'</span>, lw=3, label=<span class="string">"개별 모형"</span>)</span><br><span class="line">plt.plot(x, total_error(x, 10), <span class="string">'b-'</span>, label=<span class="string">"다수결 모형 (N=10)"</span>)</span><br><span class="line">plt.plot(x, total_error(x, 100), <span class="string">'r-'</span>, label=<span class="string">"다수결 모형 (N=100)"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"개별 모형의 성능"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"다수결 모형의 성능"</span>)</span><br><span class="line">plt.legend(loc=0)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/each_model_and_voting_medel_performance_differ.png" alt="개별모델과 앙상블 모델의 성능 비교"></p>
+<ul>
+<li>각각의 분류기(모델)를 통해 최종적으로는 해당 데이터들의 decision boundary의 평균을 사용하는 것과 동일한 결과를 얻을 수 있다.</li>
+</ul>
+<p><img src="/image/Ensemble_learning_classifier_decision_boundary_visualization.png" alt="Ensemble을 통한 예측의 decision boundary"></p>
+<ul>
+<li>아래에서와 같이 <code>Test data에 대해 일정부분 bias되는 부분을 줄이기 위해 overfitting이 잘 되는 트리기반의 모형을 주로 베이스 모델로 사용</code>한다.</li>
+</ul>
+<p><img src="/image/base_line_model_why_is_based_on_tree.png" alt="Ensemble 모델에서 트리기반을 주로 사용하는 이유"></p>
+<ul>
+<li>Ensemble Learning의 종류는 아래 그림과 같이 나눌 수 있다. 쉽게 말하면 <code>Bagging</code>은 여러 개의 모델을 만들기 위해서는 Tree기반이나 선형회귀 분석 같은 경우는 동일한 feature와 동일한 data를 사용했을 경우 동일한 결과를 내주기 때문에, <code>모델을 여러 개 만들기 위해서 데이터를 나누어서 각 모델에 fitting시키는 것을 의미</code>한다. <code>Random Forest</code>는 데이터 뿐만 아니라 feature들의 선택도 각 모델별로 달리하여 fitting하는 것이며, <code>Boosting</code>은 분류기가 틀리게 예측한 데이터들에 대해 그 다음 학습기는 좀 더 학습을 잘 할 수 있도록 가중치를 주는 개념이다. 마지막으로 <code>Stacking</code>은 성능순으로 점수를 매기는 캐글에서는 0.1%라도 올리는 것이 중요하기 때문에 사용되어 지는데, 다른 Ensemble 기법들 보다 많은 성능을 높이지는 못하여 잘 사용되지는 않는다. 굉장히 많은 학습 연산량을 필요로 하기 때문에 실제 Domain에서 사용되어지기에는 쉽지 않다.</li>
+</ul>
+<p><img src="/image/Ensmble_learning_types.png" alt="Ensemble learning의 종류"></p>
+<ul>
+<li>위에서 언급한 것과 같이 모형 결합 방법은 크게 나누어 취합(aggregation) 방법론과 부스팅(boosting)방법론으로 나눌 수 있다.<ul>
+<li>취합 방법론은 사용할 모형의 집합이 이미 결정되어있다.</li>
+<li>부스팅 방법론은 사용할 모형을 점진적으로 늘려간다.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>각 방법론의 대표적인 방법들은 아래와 같다.</p>
+<ul>
+<li><p>취합 방법론</p>
+<ul>
+<li>다수결(Majority Voting)</li>
+<li>배깅(Bagging)</li>
+<li>랜덤 포레스트(Random Forests)</li>
+</ul>
+</li>
+<li><p>부스팅 방법론</p>
+<ul>
+<li>에이다부스트(AdaBoost)</li>
+<li>그레디언트 부스트(Gradient Boost)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="다수결-방법-Voting"><a href="#다수결-방법-Voting" class="headerlink" title="다수결 방법(Voting)"></a>다수결 방법(Voting)</h2><ul>
+<li>다수결 방법은 가장 단순한 모형 결합 방법으로 전혀 다른 모형도 결합할 수 있다. 다수결 방법은 Hard Voting과 Soft Voting 두 가지로 나뉘어진다.<ul>
+<li>hard voting: 단순 투표. 개별 모형의 결과 기준</li>
+<li>soft voting: 가중치 투표. 개별 모형의 <code>조건부 확률의 합</code> 기준</li>
+<li><code>일반적으로 hard voting보다는 soft voting이 예측 성능이 좋아서 더 많이 사용된다.</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Scikit-Learn의 ensemble 서브 패키지는 다수결 방법을 위한 <code>VotingClassifier</code>클래스를 제공한다. 입력인수는 다음과 같다.</p>
+<ul>
+<li><code>estimators</code>: 개별 모형 목록, 리스트나 named parameter 형식으로 입력</li>
+<li><code>voting</code>: 문자열 {hard, soft} hard voting과 soft voting 선택. 디폴트는 hard</li>
+<li><code>weights</code>: 사용자 가중치 리스트</li>
+</ul>
+</li>
+<li><p>다음과 같은 예제 데이터를 가지는 이진 분류 문제를 생각해보자.</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">X = np.array([[0, -0.5], [-1.5, -1.5], [1, 0.5], [-3.5, -2.5], [0, 1], [1, 1.5], [-2, -0.5]])</span><br><span class="line">y = np.array([1, 1, 1, 2, 2, 2, 2])</span><br><span class="line">x_new = [0, -1.5]</span><br><span class="line">plt.scatter(X[y == 1, 0], X[y == 1, 1], s=100, marker=<span class="string">'o'</span>, c=<span class="string">'r'</span>, label=<span class="string">"클래스 1"</span>)</span><br><span class="line">plt.scatter(X[y == 2, 0], X[y == 2, 1], s=100, marker=<span class="string">'x'</span>, c=<span class="string">'b'</span>, label=<span class="string">"클래스 2"</span>)</span><br><span class="line">plt.scatter(x_new[0], x_new[1], s=100, marker=<span class="string">'^'</span>, c=<span class="string">'g'</span>, label=<span class="string">"테스트 데이터"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"x1"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"x2"</span>)</span><br><span class="line">plt.title(<span class="string">"이진 분류 예제 데이터"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/Ensemble_voting_method_data.png" alt="Ensemble 방법 중 Voting 방법을 사용할 데이터"></p>
+<ul>
+<li>먼저, 이 문제를 3가지 다른 방법으로 풀어볼 것이다.<ul>
+<li>로지스틱 회귀모형</li>
+<li>QDA 모형</li>
+<li>가우시안 나이브베이즈 모형</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>마지막으로 3가지 모형을 다수결로 합친 모형을 <code>VotingClassifier</code>클래스로 만들었다. 다만 3가지 모형의 가중치가 각각 1,1,2로 가우시안 나이브베이즈 모형의 가중치를 높였다.</li>
+</ul>
+<ul>
+<li>결과는 다음과 같이, 로지스틱 회귀모형과 가우시안 나이브베이즈 모형은 클래스 1이라는 결과를 보이지만 QDA모형은 클래스 2라는 결과를 보였다. 소프트 방식의 다수결 모형은 클래스 2라는 결론을 보인다. 만약 하드 방식의 다수결 모형이었다면 예측 결과는 클래스 1이 될 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line">from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis</span><br><span class="line">from sklearn.ensemble import VotingClassifier</span><br><span class="line"></span><br><span class="line">model1 = LogisticRegression(random_state=1)</span><br><span class="line">model2 = QuadraticDiscriminantAnalysis()</span><br><span class="line">model3 = GaussianNB()</span><br><span class="line">ensemble = VotingClassifier(estimators=[(<span class="string">'lr'</span>, model1), (<span class="string">'qda'</span>, model2), (<span class="string">'gnb'</span>, model3)], voting=<span class="string">'soft'</span>)</span><br><span class="line"></span><br><span class="line">probas = [c.fit(X, y).predict_proba([x_new]) <span class="keyword">for</span> c <span class="keyword">in</span> (model1, model2, model3, ensemble)]</span><br><span class="line">class1_1 = [pr[0, 0] <span class="keyword">for</span> pr <span class="keyword">in</span> probas]</span><br><span class="line">class2_1 = [pr[0, 1] <span class="keyword">for</span> pr <span class="keyword">in</span> probas]</span><br><span class="line"></span><br><span class="line">ind = np.arange(4)</span><br><span class="line">width = 0.35  <span class="comment"># bar width</span></span><br><span class="line">p1 = plt.bar(ind, np.hstack(([class1_1[:-1], [0]])), width, color=<span class="string">'green'</span>)</span><br><span class="line">p2 = plt.bar(ind + width, np.hstack(([class2_1[:-1], [0]])), width, color=<span class="string">'lightgreen'</span>)</span><br><span class="line">p3 = plt.bar(ind, [0, 0, 0, class1_1[-1]], width, color=<span class="string">'blue'</span>)</span><br><span class="line">p4 = plt.bar(ind + width, [0, 0, 0, class2_1[-1]], width, color=<span class="string">'steelblue'</span>)</span><br><span class="line"></span><br><span class="line">plt.xticks(ind + 0.5 * width, [<span class="string">'로지스틱 회귀 모형'</span>, <span class="string">'QDA 모형'</span>, <span class="string">'가우시안 나이브베이즈'</span>, <span class="string">'소프트 다수결 모형'</span>])</span><br><span class="line">plt.ylim([0, 1.1])</span><br><span class="line">plt.title(<span class="string">'세가지 다른 분류 모형과 소프트 다수결 모형의 분류 결과'</span>)</span><br><span class="line">plt.legend([p1[0], p2[0]], [<span class="string">'클래스 1'</span>, <span class="string">'클래스 2'</span>], loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/soft_voting_method_on_data_test.png" alt="소프트 보팅을 사용한 결과와 개별모델 예측 결과와의 비교"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from itertools import product</span><br><span class="line"></span><br><span class="line">x_min, x_max = -4, 2</span><br><span class="line">y_min, y_max = -3, 2</span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.005),</span><br><span class="line">                     np.arange(y_min, y_max, 0.005))</span><br><span class="line">f, axarr = plt.subplots(2, 2)</span><br><span class="line"><span class="keyword">for</span> idx, clf, tt <span class="keyword">in</span> zip(product([0, 1], [0, 1]),</span><br><span class="line">                        [model1, model2, model3, ensemble],</span><br><span class="line">                        [<span class="string">'로지스틱 회귀'</span>, <span class="string">'QDA'</span>, <span class="string">'가우시안 나이브베이즈'</span>, <span class="string">'다수결 모형'</span>]):</span><br><span class="line">    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">    Z = Z.reshape(xx.shape)</span><br><span class="line">    axarr[idx[0], idx[1]].contourf(xx, yy, Z, alpha=0.2, cmap=mpl.cm.jet)</span><br><span class="line">    axarr[idx[0], idx[1]].scatter(</span><br><span class="line">        X[:, 0], X[:, 1], c=y, alpha=0.5, s=50, cmap=mpl.cm.jet)</span><br><span class="line">    axarr[idx[0], idx[1]].scatter(x_new[0], x_new[1], marker=<span class="string">'x'</span>)</span><br><span class="line">    axarr[idx[0], idx[1]].set_title(tt)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>아래 각 모형별로 decision boundary를 살펴 보았을 경우 어떠한 생각이 드는가? 필자의 생각엔 물론 전제조건이 아래 train 데이터가 모집단의 분포를 대표할 수 있는 데이터들이라는 가정하에 soft 방식으로 한 결과는 옳지 못한 결과라고 생각한다. 2클래스로 분류되기엔 1 클래스가 많은 영역에 존재하기 때문이다. 이렇게 시각화를 통해 살펴보는 방법도 결과에 대한 검증을 위해 필요할 것이다. 허나, 다변량인 경우는 몇가지 중요한 변수들에 대해서만 시각화를 해 본다던가 아니면 해당 조합들에 대해 모두 그려보는 것도 때론 좋은 방법일 수 있을 것이다.</li>
+</ul>
+<p><img src="/image/each_model_decision_boundary_differ_result.png" alt="모델 별 decision boundary"></p>
+<ul>
+<li>앞서 모형 결합에서 사용하는 독립적인 모형의 수가 많을 수록 성능 향상이 일어날 가능성이 높다는 것을 알았다. <code>각각 다른 확률 모형을 사용하는데에는 한계가 있으므로 보통은 배깅 방법을 사용하여 같은 확률 모형을 쓰지만 서로 다른 결과를 출력하는 다수의 모형을 만든다.</code></li>
+</ul>
+<h2 id="배깅-Bagging"><a href="#배깅-Bagging" class="headerlink" title="배깅(Bagging)"></a>배깅(Bagging)</h2><ul>
+<li><p>Bagging은 Bootstrap Aggregating의 약자로 Sampling을 하는 방식이 Bootstrap방식을 사용하기 때문이다. 아래 그림에서 볼 수 있듯이 복원추출의 방식이라고 생각하면된다. 하나의 모델에 대하여 데이터를 추출할 경우 해당 모델에 들어가있는 데이터는 중복된 데이터가 있을 수 있다.(오른쪽 첫번째 데이터세트에서와 같이)</p>
+<ul>
+<li>같은 데이터 샘플을 중복사용(replacement)하지 않으면: Pasting</li>
+<li>같은 데이터 샘플을 중복사용(replacement)하면: Bagging</li>
+<li>데이터가 아니라 다차원 독립 변수 중 일부 차원을 선택하는 경우에는: Random Subspaces</li>
+<li>데이터 샘플과 독립 변수 차원 모두 일부만 랜덤하게 사용하면: Random Patches</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/What_is_bagging_01.png" alt="Bagging의 개념 - 01"></p>
+<ul>
+<li>이렇게 추출하는 데이터는 전체 데이터 중 약 63%정도만 추출을 하게 된다. 아래 첫 번째 그림에서는 밑줄이 그러진 원의 데이터는 추출되지 않는 데이터들이다. 2번째 그림은 Bootstrap size가 5라면 5개씩 12개의 데이터 set를 복원추출을 통하여 뽑는 것이다. 여기서의 $k$는 임의로 정할 수 있다.</li>
+</ul>
+<p><img src="/image/What_is_bagging_02.png" alt="Bagging의 개념 - 02"></p>
+<p><img src="/image/What_is_bagging_03.png" alt="Bagging의 개념 - 03"></p>
+<ul>
+<li>위에서 언급했듯이 추출되지 않은 데이터 set이 있는 것은 학습에 활용되지 않았으므로 그대로 두면 데이터를 낭비하는 것과 동일하다. 물론 Test set을 미리 나누어 놓고 해당 Test set을 prediction한 결과를 voting하여 성능을 측정하지만, 사용되지 않은 데이터(Out-of_Bag data)에 대해서도 모델별 성능을 계산한다.</li>
+</ul>
+<p><img src="/image/What_is_bagging_04.png" alt="Bagging의 개념 - 04"></p>
+<ul>
+<li>트리(Tree)와 배깅(Bagging)을 비교하자면 깊이 성장한 트리는 overfitting이 굉장히 심해지기 때문에 분산이 증가하기 때문에 편향은 줄어들 것이다. 그러나 배깅은 이러한 트리들을 결합시키므로 <code>편향이 유지되며, 분사은 감소하는 모델</code>이 될 것이다. <code>학습데이터의 noise에 robust</code>하다. 그러나 모형해석이 어려워지는 단점이 있다. 이러한 단점이 실제 Domain에서 사용되지 못하는 이유가 될 수 있다.</li>
+</ul>
+<p><img src="/image/What_is_bagging_05.png" alt="Bagging의 개념 - 05"></p>
+<ul>
+<li>Scikit-Learn의 ensemble 서브 패키지는 배깅 모형 결합을 위한 <code>BaggingClassifier</code> 클래스를 제공한다. 사용법은 아래와 같다. 참고로 <code>BaggingRegressor</code>도 존재하며 사용법은 동일하다.<ul>
+<li><code>base_estimator</code>: 기본모형</li>
+<li><code>n_estimators</code>: 모형 갯수. default=10</li>
+<li><code>bootstrap</code>: 데이터 중복 사용 여부. default=True</li>
+<li><code>max_samples</code>: 데이터 샘플 중 선택할 샘플의 수 혹은 비율. default=1.0</li>
+<li><code>bootstrap_features</code>: feature의 중복 사용 여부. default=False</li>
+<li><code>max_features</code>: 다차원 독립 변수 중 선택할 차원의 수 혹은 비율. default=1.0</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn.ensemble import BaggingClassifier</span><br><span class="line"></span><br><span class="line">iris = load_iris()</span><br><span class="line">X, y = iris.data[:, [0, 2]], iris.target</span><br><span class="line"></span><br><span class="line">model1 = DecisionTreeClassifier(max_depth=10, random_state=0).fit(X, y)</span><br><span class="line">model2 = BaggingClassifier(DecisionTreeClassifier(max_depth=2), n_estimators=100, random_state=0).fit(X, y)</span><br><span class="line"></span><br><span class="line">x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1</span><br><span class="line">y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1</span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1), np.arange(y_min, y_max, 0.1))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">Z1 = model1.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z1, alpha=0.6, cmap=mpl.cm.jet)</span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y, alpha=1, s=50, cmap=mpl.cm.jet, edgecolors=<span class="string">"k"</span>)</span><br><span class="line">plt.title(<span class="string">"개별 모형"</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">Z2 = model2.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z2, alpha=0.6, cmap=mpl.cm.jet)</span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y, alpha=1, s=50, cmap=mpl.cm.jet, edgecolors=<span class="string">"k"</span>)</span><br><span class="line">plt.title(<span class="string">"배깅 모형"</span>)</span><br><span class="line">plt.suptitle(<span class="string">"붓꽃 데이터의 분류 결과"</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>왼쪽은 단일 모형으로 max_depth=10으로 설정한 Decision tree의 decision boundary의 모습이다. 트리의 깊이가 깊으므로 과최적화(overfitting)이 발생되었다. 오른쪽의 그림은 max_depth=2로 설정한 Decision tree모형을 100개 결합한 배깅 모형의 decision boundary 모습이다. 물론 depth를 작게하여 기본적인 모형자체도 과최적화(overfitting)를 방지하였지만, 배깅을 함으로써 모형의 분산이 줄어들며 더 train data에 robust하게 decision boundary가 그려진것을 확인할 수 있다.</li>
+</ul>
+<p><img src="/image/bagging_and_single_model_performance_differ_result.png" alt="배깅과 단일모형간의 decision boundary의 차이"></p>
+<h2 id="랜덤-포레스트-Random-Forest"><a href="#랜덤-포레스트-Random-Forest" class="headerlink" title="랜덤 포레스트(Random Forest)"></a>랜덤 포레스트(Random Forest)</h2><ul>
+<li>아래 그림과 같이 배깅은 여러 모델들을 결합하지만 부트스트랩 방식을 사용하여 모델들간의 사용되어지는 데이터가 동일한 집합들이 있을 수 있다. 그러므로 <code>Ensemble Learning의 개념에서 언급했었던 각 모델별 독립이라는 가정에 크게 위반</code>되어진다. 결국 비슷한 트리가 만들어지게 되어 모델들간의 공분산이 크게 되어 모델이 많아짐에 따라 점점 전체 Ensemble 모델의 분산은 커진다는 것이다. 분산이 커진다면 편향이 감소되어 더 좋은것이 아닌가라고 생각이 들수도 있겠지만, 모델의 예측 성능의 변동폭이 너무 크게 되면(분산이 크게 되어) 그만큼 불확신성도 높아지기 때문이다. 게다가, 애초에 다양한 모델에 대한 결합을 한 Ensemble 모델을 만들려고 한 의도조차 변질되어진다.</li>
+</ul>
+<p><img src="/image/why_is_randomforest_better_than_bagging.png" alt="배깅의 유의점 보완을 위한 방안"></p>
+<ul>
+<li>랜덤포레스트(Random Forest)는 의사 결정 나무(Decision Tree)를 개별 모형으로 사용하는 모형 결합 방법을 말한다. 랜덤 포레스트는 데이터 특징차원의 일부만 선택하여 사용한다. 하지만 <code>노드 분리시 모든 독립 변수들을 비교하여 최선의 독립 변수를 선택하는 것이 아니라 독립 변수 차원을 랜덤하게 감소시킨 다음 그 중에서 독립 변수를 선택</code>한다. 이렇게 하면 <code>개별 모형들 사이의 상관관계가 줄어들기 때문에 모형 성능의 변동이 감소하는 효과</code>가 있다. 이러한 방법을 극단적으로 적용한 것이 Extremely Randomized Trees 모형으로 이 경우에는 각 노드에서 랜덤하게 독립 변수를 선택한다.</li>
+</ul>
+<p><img src="/image/random_forest_conception.png" alt="랜덤포레스트의 개념"></p>
+<p><img src="/image/random_forest_how_to_decide_parameter.png" alt="랜덤 포레스트의 개념 및 특징"></p>
+<ul>
+<li>랜덤 포레스트와 Extremely Randomized Trees 모형은 각각 <code>RandomForestClassifier</code> 클래스와 <code>ExtraTreesClassifier</code> 클래스로 구현되어 있다.</li>
+</ul>
+<ul>
+<li>랜덤 포레스트는 CPU 병렬 처리도 효과적으로 수행되어 빠른 학습이 가능하기 때문에 뒤에 소개할 그레디언트 부스팅보다 예측 성능이 약간 떨어지더라도 랜덤 포레스트로 일단 기반 모델을 먼저 구축하는 경우가 많다. 멀티 코어 환경에서는 RandomForestClassifier 생성자와 GridSearchCV 생성 시 n_jobs = -1 파라미터를 추가하면 모든 CPU 코어을 이용해 학습할 수 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line">iris = load_iris()</span><br><span class="line">X, y = iris.data[:, [0, 2]], iris.target</span><br><span class="line"></span><br><span class="line">model1 = DecisionTreeClassifier(max_depth=10, random_state=0).fit(X, y)</span><br><span class="line">model2 = RandomForestClassifier(max_depth=2, n_estimators=100, random_state=0).fit(X, y)</span><br><span class="line"></span><br><span class="line">x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1</span><br><span class="line">y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1</span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1), np.arange(y_min, y_max, 0.1))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">Z1 = model1.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z1, alpha=0.6, cmap=mpl.cm.jet)</span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y, alpha=1, s=50, cmap=mpl.cm.jet, edgecolors=<span class="string">"k"</span>)</span><br><span class="line">plt.title(<span class="string">"개별 모형"</span>)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">Z2 = model2.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z2, alpha=0.6, cmap=mpl.cm.jet)</span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y, alpha=1, s=50, cmap=mpl.cm.jet, edgecolors=<span class="string">"k"</span>)</span><br><span class="line">plt.title(<span class="string">"배깅 모형"</span>)</span><br><span class="line">plt.suptitle(<span class="string">"붓꽃 데이터의 분류 결과"</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>아래 그림에서 오른쪽은 max_depth=2로 설정하고 모형의 수를 100개로 한 RandomForest 모델의 decision boundary의 시각화한 것이다.</li>
+</ul>
+<p><img src="/image/randomforest_decision_boundary_reuslt_viz.png" alt="랜덤포레스트와 단일 Decision Tree 모형의 decision boundary 비교"></p>
+<ul>
+<li>랜덤 포레스트의 장점 중 하나는 각 독립 변수의 중요도(feature importance)를 계산할 수 있다는 점이다. 포레스트 안에서 사용된 모든 노드에 대해 어떤 독립 변수를 사용하였고 그 노드에서 얻은 information gain을 구할 수 있으므로 각각의 독립 변수들이 얻어낸 information gain의 평균을 비교하면 어떤 독립 변수가 중요한지를 비교할 수 있다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import make_classification</span><br><span class="line">from sklearn.ensemble import ExtraTreesClassifier</span><br><span class="line"></span><br><span class="line">X, y = make_classification(n_samples=1000, n_features=10, n_informative=3, n_redundant=0, n_repeated=0,</span><br><span class="line">                           n_classes=2, random_state=0, shuffle=False)</span><br><span class="line"></span><br><span class="line">forest = ExtraTreesClassifier(n_estimators=250, random_state=0)</span><br><span class="line">forest.fit(X, y)</span><br><span class="line"></span><br><span class="line">importances = forest.feature_importances_</span><br><span class="line"></span><br><span class="line">std = np.std([tree.feature_importances_ <span class="keyword">for</span> tree <span class="keyword">in</span> forest.estimators_], axis=0)</span><br><span class="line">indices = np.argsort(importances)[::-1]</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">"특성 중요도"</span>)</span><br><span class="line">plt.bar(range(X.shape[1]), importances[indices],</span><br><span class="line">        color=<span class="string">"r"</span>, yerr=std[indices], align=<span class="string">"center"</span>)</span><br><span class="line">plt.xticks(range(X.shape[1]), indices)</span><br><span class="line">plt.xlim([-1, X.shape[1]])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/feature_importance_using_random_forests.png" alt="랜덤포레스트를 통한 특성 중요도"></p>
+<ul>
+<li>다음은 올리베티 얼굴 사진을 Extreme 랜덤 포레스트로 구한 뒤 특징(pixel) 중요도를 이미지로 나타낸 것이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import fetch_olivetti_faces</span><br><span class="line">from sklearn.ensemble import ExtraTreesClassifier</span><br><span class="line"></span><br><span class="line">data = fetch_olivetti_faces()</span><br><span class="line">X = data.data</span><br><span class="line">y = data.target</span><br><span class="line"></span><br><span class="line">forest = ExtraTreesClassifier(n_estimators=1000, random_state=0)</span><br><span class="line">forest.fit(X, y)</span><br><span class="line"></span><br><span class="line">importances = forest.feature_importances_</span><br><span class="line">importances = importances.reshape(data.images[0].shape)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(8, 8))</span><br><span class="line">plt.imshow(importances, cmap=plt.cm.bone_r)</span><br><span class="line">plt.grid(False)</span><br><span class="line">plt.title(<span class="string">"픽셀 중요도(pixel importance)"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/image/pixel_importance_using_random_forests.png" alt="랜덤포레스트를 이용해 시각화한 픽셀 중요도"></p>
+
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 하단형 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="9861011486"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "HeungBae Lee"
+        },
+        "headline": "Ensemble Learning - Bagging, RandomForest",
+        "image": "https://heung-bae-lee.github.io/image/Ensemble_dictionary_mean.png",
+        "keywords": "",
+        "genre": "machine learning",
+        "datePublished": "2020-05-02",
+        "dateCreated": "2020-05-02",
+        "dateModified": "2020-05-27",
+        "url": "https://heung-bae-lee.github.io/2020/05/02/machine_learning_15/",
+        "description": "Ensemble Learning이란?
+모형 결합(model combining)방법은 앙상블 방법론(ensemble methods)라고도 한다. 이는 특정한 하나의 예측 방법이 아니라 복수의 예측모형을 결합하여 더 나은 성능의 예측을 하려는 시도이다.
+
+
+모형 결합 방법을 사용하면 일반적으로 계산량은 증가하지만 다음과 같은 효과가 있다.
+
+단일 모형을 사용할"
+        "wordCount": 2575
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/heungbae.lee" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HEUNG-BAE-LEE" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/05/12/linear_algebra_01/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            선형대수 요소(Elements in linear algebra)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2020/05/02/data_structure_06/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">내가 정리하는 자료구조 05 - 트리(Tree)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/06/09/linear_algebra_06/" class="title">Least Squares Problem &amp; Orthogonal Projection</a></p>
+                            <p class="item-date"><time datetime="2020-06-09T14:12:36.000Z" itemprop="datePublished">2020-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/06/09/linear_algebra_05/" class="title">Linear Transformation &amp; onto, ono-to-one의 개념</a></p>
+                            <p class="item-date"><time datetime="2020-06-09T05:23:12.000Z" itemprop="datePublished">2020-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linear-algebra/">linear algebra</a></p>
+                            <p class="item-title"><a href="/2020/06/08/linear_algebra_04/" class="title">Linear Independence, Span, and Subspace</a></p>
+                            <p class="item-date"><time datetime="2020-06-08T06:52:22.000Z" itemprop="datePublished">2020-06-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/06/06/machine_learning_21/" class="title">Imbalanced Data</a></p>
+                            <p class="item-date"><time datetime="2020-06-05T16:52:20.000Z" itemprop="datePublished">2020-06-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
+                            <p class="item-title"><a href="/2020/06/04/machine_learning_20/" class="title">Clustering - Hierarchical, DBSCAN, Affinity Propagation</a></p>
+                            <p class="item-date"><time datetime="2020-06-04T13:46:15.000Z" itemprop="datePublished">2020-06-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">22</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS231n/">CS231n</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crawling/">crawling</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CS231n/" style="font-size: 10px;">CS231n</a> <a href="/tags/crawling/" style="font-size: 20px;">crawling</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사이드바 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4604833066889492"
+     data-ad-slot="3275421833"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 HeungBae Lee</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://heung-bae-lee.github.io/2020/05/02/machine_learning_15/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

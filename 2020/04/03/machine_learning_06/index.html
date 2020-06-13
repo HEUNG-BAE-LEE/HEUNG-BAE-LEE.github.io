@@ -6,26 +6,26 @@
     
 
     
-    <title>PCA를 이해하기 위한 기본적 선형대수 | DataLatte&#39;s IT Blog</title>
+    <title>로지스틱 회귀분석 | DataLatte&#39;s IT Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content>
     
     
-    <meta name="description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
+    <meta name="description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PCA를 이해하기 위한 기본적 선형대수">
+<meta property="og:title" content="로지스틱 회귀분석">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
+<meta property="og:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png">
-<meta property="og:updated_time" content="2020-04-13T08:45:00.404Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/logistic_regression.png">
+<meta property="og:updated_time" content="2020-06-13T06:34:52.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PCA를 이해하기 위한 기본적 선형대수">
-<meta name="twitter:description" content="차원의 저주 먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.    다른 관점에서">
-<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png">
+<meta name="twitter:title" content="로지스틱 회귀분석">
+<meta name="twitter:description" content="로지스틱 회귀분석   로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.  p(y \mid x) = \text{Bin} (y; \theta (x), N) 위 식에">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/logistic_regression.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -186,7 +186,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        PCA를 이해하기 위한 기본적 선형대수
+        로지스틱 회귀분석
         </h1>
     
 
@@ -197,7 +197,7 @@ ga('send', 'pageview');
                 
     <div class="article-date">
         <a href="/2020/04/03/machine_learning_06/" class="article-date">
-            <time datetime="2020-04-03T06:40:52.000Z" itemprop="datePublished">2020-04-03</time>
+            <time datetime="2020-04-03T04:58:10.000Z" itemprop="datePublished">2020-04-03</time>
         </a>
     </div>
 
@@ -208,137 +208,401 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h1 id="차원의-저주"><a href="#차원의-저주" class="headerlink" title="차원의 저주"></a>차원의 저주</h1><ul>
-<li>먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. <code>차원의 저주</code>는<code>차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것</code>을 의미한다.</li>
-</ul>
-<p><img src="/image/curse_of_dimensionality_01.png" alt="차원의 저주 - 01"></p>
+            <h1 id="로지스틱-회귀분석"><a href="#로지스틱-회귀분석" class="headerlink" title="로지스틱 회귀분석"></a>로지스틱 회귀분석</h1><p><img src="/image/logistic_regression.png" alt="로지스틱 회귀"></p>
+<p><img src="/image/logistic_regression_02.png" alt="로지스틱 함수를 사용하는 이유"></p>
 <ul>
-<li>다른 관점에서 한번 살펴보면, 관측치의 수가 한정되어 있다고 할 경우에 먼저, 1차원 상의 공간(변수가 1개인 경우)에서는 10개의 데이터만 있어도 해당 차원의 절반을 설명할 수 있기에 공간을 설명함에 있어서 부족함이 없다고 판단할 수 있다. 허나 2차원상의 공간으로 살펴보았을 경우 1차원의 경우보다 관측치 간의 간격이 멀게 있어 사이에 빈 공간이 많이 나타남을 알 수 있다. 이렇게 빈 공간이 나타남은 사실상 우리가 모델을 통해 예측은 가능하지만 모형에 따라 변동이 심해지는 어디까지나 예측하는 값을 의미한다. 3차원 상에서는 2차원 공간상에서 보다 훨씬 더 관측치가 떨어져있음을 확인할 수 있다. 그러므로 모델의 변동성 즉, 모델의 분산이 더 커지게 되는 것이다. 간단히 말하자면, 점과 점 사이의 공간이 차원이 늘어날수록 멀어지는데, 빈 공간에 위치한 예측값을 채워넣기 위해서는 임의로 채워넣기 때문에 모델이 어려워진다는 것이다.  </li>
+<li>로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.</li>
 </ul>
-<p><img src="/image/curse_of_dimensionality_02.png" alt="차원의 저주 - 02"></p>
-<ul>
-<li>예를 들어, 아래와 같이 KNN 알고리즘(가장 가까이 있는 변수가 예측값으로 결과를 갖는 알고리즘)을 통한 비지도학습을 진행한다고 가정해보자. x1 변수의 공간만을 생각하여 1차원적으로 생각하면, 아래 그림에서 검정색 점과 가장 가까운 점은 노란색 테두리안에 있는 2개의 점들 중 하나일 것이다. 허나 x2 변수의 공간도 같이 고려하여 2차원적으로 살펴보면, 파란색 원 안에 놓여있는 1개의 점이 가장 가까운 점이 될 것이다. 여기서 주목해야 할 점은 <code>동일한 데이터를 통해서 2차원으로 살펴보면 최단거리의 길이가 늘어났다는 점</code>이다. <code>KNN 알고리즘의 결과로 1차원으로 살펴본 것 보다 2차원으로 살펴보는 것이 최단거리의 길이가 더 길기 때문에 값이 좀 더 이질적이라고 볼 수 있으며, 결과적으로 과연 2차원적으로 예측한 값을 KNN알고리즘의 결과값으로 사용해도 문제가 없을지에 의문점이 생기게 된다.</code> x2가 Y와 관련된 변수라면 크게 문제가 없겠지만, x2가 전혀 관련없는 변수라면 굉장히 모델이 낭비가되며, 좋지 않은 모델이 될 것이기 때문이다.</li>
+<script type="math/tex; mode=display">p(y \mid x) = \text{Bin} (y; \theta (x), N)</script><ul>
+<li>위 식에서 보듯이 <code>로지스틱 함수는 y의 값이 특정한 구간내의 값 (0 ~ N)만 가질 수 있기 때문에 종속변수가 이러한 특성을 가진 경우에 회귀분석 방법으로 사용</code>할 수 있다.</li>
 </ul>
 <ul>
-<li>위에서 언급했던 것처럼 차원이 증가하게 되면 좋지 않은 측면이 있고, 이것을 차원의 저주라고 부르며 <code>차원을 될 수 있는 한 축소하는 것이 필요</code>하다.</li>
+<li>또는 이항 분포의 특별한 경우 $ (N=1) $ 로 $ y $ 가 베르누이 확률분포인 경우도 있을 수 있다. 여기에서는 베르누이 확률분포를 따르는 로지스틱 회귀분석만 고려하기로 한다.</li>
 </ul>
-<p><img src="/image/necessity_for_reduction_of_dimensionality.png" alt="차원축소의 필요성"></p>
-<ul>
-<li>기본적으로 차원을 축소하는 방법으로 아래와 같은 것들을 예로 들 수 있다. 먼저, 상관계수가 높은 변수들이라면 동일한 움직임의 방향을 갖기 때문에 그들 중 하나의 변수만을 선택해도 큰 문제가 없다고 보는 측면이다. 이 방법에서의 문제점은 예를 들어 두 변수의 상관계수가 0.8이라면, 나머지 0.2에 해당하는 정보는 버려지게 되는 점이다. 이런 부분을 보완한 것이 PCA이다. <code>PCA는 차원을 줄이면서도 정보의 손실을 최소화</code>하는 것이다.</li>
+<script type="math/tex; mode=display">p(y \mid x) = \text{Bern} (y; \theta (x) )</script><ul>
+<li>종속변수 $ y $ 가  $ 0 $ 또는 $ 1 $ 인 분류 예측 문제를 풀 때는 $ x $ 값을 이용하여 $ \theta ( x ) $ 를 예측한 후 다음 기준에 따라 $ \hat{y} $ 값을 출력한다.</li>
 </ul>
-<p><img src="/image/kinds_of_reduction_of_dimensonality.png" alt="차원축소법의 종류"></p>
-<h1 id="공분산-행렬의-이해"><a href="#공분산-행렬의-이해" class="headerlink" title="공분산 행렬의 이해"></a>공분산 행렬의 이해</h1><ul>
-<li>공분산 행렬은 쉽게 말해 행렬의 내적이라고 할 수 있다. 아래 그림에서 처럼 계산할 수 있다. 대각 요소를 제외한 나머지 비대각요소들은 두 변수간의 움직임의 방향을 알 수 있다. 그러므로 상관관계를 미리 알고 있다면 두 변수간의 공분산의 부호도 알 수 있다.</li>
+<script type="math/tex; mode=display">\hat{y} = \begin{cases} 1 & \text{ if } \theta (x) \geq 0.5 \\ 0 & \text{ if } \theta (x) < 0.5 \end{cases}</script><ul>
+<li>회귀분석을 할 때는 $ \hat{y} $ 으로 $ y = 1 $ 이 될 확률값 $ \theta ( x ) $ 을 직접 사용한다.</li>
 </ul>
-<p><img src="/image/covariance_matrix_concept_01.png" alt="공분산 행렬의 이해 - 01"></p>
-<ul>
-<li>공분산 행렬의 활용은 위에서 언급했던 것 처럼 두 변수간의 상관계수의 부호를 알 수 있는 것 말고도 존재한다. 아래 그림과 같이 특정 점들과의 내적연산을 시행하면, 점의 위치를 이동시키는데 이 때 이동된 점들의 분포가 공분산 구조와 비슷한 형태를 가지게 된다. <code>즉 공분산 행렬과 점(벡터 또는 행렬)들의 연산은 공분산 구조로 점들을 분포시키는 기능</code>을 한다.</li>
-</ul>
-<p><img src="/image/covariance_matrix_concept_02.png" alt="공분산 행렬의 이해 - 02"></p>
-<ul>
-<li>공분산 행렬이 대칭행렬이지만, positive definite가 아닌 행렬인 경우를 다음 그림에서 보여주고 있다. 아래 수식이 성립한다면 행렬 A가 positive definite하다고 한다.</li>
-</ul>
-<script type="math/tex; mode=display">x^{T} A  x > 0</script><p><a href="https://datascienceschool.net/view-notebook/d6205659aff0413797c22552947aec83/" target="_blank" rel="noopener">참고 - 행렬의 성질</a></p>
-<p><img src="/image/covariance_matrix_concept_03.png" alt="공분산 행렬의 이해 - 03"></p>
-<ul>
-<li>아래의 공분산 행렬은 행렬식(determinant)가 0인 경우이다. 이렇게 행렬식이 0인 공분산행렬과의 내적은 오른쪽 그림과 같이 원점을 기준으로 일직선의 형태를 이루게 된다.</li>
-</ul>
-<p><img src="/image/covariance_matrix_concept_04.png" alt="공분산 행렬의 이해 - 04"></p>
-<h1 id="Principal-Components의-이해"><a href="#Principal-Components의-이해" class="headerlink" title="Principal Components의 이해"></a>Principal Components의 이해</h1><ul>
-<li>아래 그림을 살펴보면 x1과 x2는 음의 강한 상관관계를 갖는다는 것을 확인 할 수 있다. x1이 증가하면 x2가 감소하는 움직을 갖는다. 결론적으로는 정보가 중복되어있다. 이렇게 중복되어있는 정보를 요약해서 갖고있을수 있을 순 없을까에 대한 방법을 고안한 것이 바로 PCA이다. 아래 그림과 같이 두 변수간의 가장 큰 분산을 나타내는 벡터에 대해 각 데이터를 projection을 취한다면 해당 projection 된 데이터들의 벡터만을 가지고도 기존의 데이터에 대한 분산을 표현할 수 있게 된다.</li>
+<script type="math/tex; mode=display">\hat{y} = \theta (x)</script><h3 id="시그모이드-함수"><a href="#시그모이드-함수" class="headerlink" title="시그모이드 함수"></a>시그모이드 함수</h3><ul>
+<li>로지스틱 회귀모형에서는 베르누이 확률분포의 모수 $ \theta $ 가 $ x $ 의 함수라고 가정한다. $ \theta (x) $ 는 $ x $ 에 대한 함수를 0부터 1 사이의 값만 나올 수 있도록 시그모이드 함수(sigmoid function)라는 함수를 사용하여 변형한 것을 사용한다.</li>
 </ul>
 <ul>
-<li><code>차원을 줄이면서 정보의 손실을 최소화하는 방법은 자료의 변동을 가장 잘 설명하는 어떤 축을 찾는 것</code>이다.</li>
+<li>시그모이드 함수는 종속변수의 모든 실수 값에 대해 유한한 구간 $ ( a, b ) $ 사이의 한정된 값을 가지고</li>
 </ul>
-<p><img src="/image/PCA_conception_01.png" alt="Principal Components의 개념 - 01"></p>
+<script type="math/tex; mode=display">a < f(x) < b</script><ul>
+<li><code>항상 양의 기울기를 가지는 단조증가</code>하는</li>
+</ul>
+<script type="math/tex; mode=display">a > b \; \rightarrow \; f(a) > f(b)</script><ul>
+<li><p>함수의 집합을 말한다. 실제로는 다음과 같은 함수들이 주로 사용된다.</p>
+</li>
+<li><p>로지스틱(Logistic)함수</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\text{logitstic}(z) = \sigma(z) = \dfrac{1}{1+\exp{(-z)}}</script><ul>
+<li>하이퍼볼릭 탄젠트(Hyperbolic tangent)함수</li>
+</ul>
+<script type="math/tex; mode=display">\tanh(z) = \frac{\sinh z}{\cosh z} = \frac{(e^z - e^{-z})/2}{(e^z + e^{-z})/2} = 2 \sigma(2z) - 1</script><ul>
+<li>오차(Error)함수</li>
+</ul>
+<script type="math/tex; mode=display">\text{erf}(z) = \frac{2}{\sqrt\pi}\int_0^z e^{-t^2}\,dt</script><ul>
+<li><code>하이퍼볼릭탄젠트 함수는 로지스틱함수를 위아래 방향으로 2배 늘리고 좌우 방향으로 1/2로 축소한 것과 같다.</code></li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xx = np.linspace(-5, 5, 1000)</span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.plot(xx, 1/(1+np.exp(-xx)), <span class="string">'r-'</span>, label=<span class="string">"로지스틱함수"</span>)</span><br><span class="line">plt.plot(xx, sp.special.erf(0.5*np.sqrt(np.pi)*xx), <span class="string">'g:'</span>, label=<span class="string">"오차함수"</span>)</span><br><span class="line">plt.plot(xx, np.tanh(xx), <span class="string">'b--'</span>, label=<span class="string">"하이퍼볼릭탄젠트함수"</span>)</span><br><span class="line">plt.ylim([-1.1, 1.1])</span><br><span class="line">plt.legend(loc=2)</span><br><span class="line">plt.xlabel(<span class="string">"x"</span>)</span><br><span class="line">plt.savefig(<span class="string">'sigmoid_functions_ploting'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/sigmoid_functions_ploting.png" alt="시그모이드 함수들"></p>
+<h3 id="로지스틱-함수"><a href="#로지스틱-함수" class="headerlink" title="로지스틱 함수"></a>로지스틱 함수</h3><ul>
+<li>로지스틱함수는 <code>음의 무한대부터 양의 무한대까지의 실수값을 0부터 1사이의 실수값으로 1대 1 대응시키는 시그모이드함수</code>이다. 보통 시그모이드함수라고 하면 로지스틱함수를 의미한다.</li>
+</ul>
+<p><img src="/image/logistic_regression_03.png" alt="로지스틱 회귀 모형식이 만들어진 과정"></p>
 <ul>
-<li>Principal Components를 찾아내는 방법을 간단히 말하자면 자료의 분산을 가장 많이 설명하는 축인 장축과 자료의 분산을 가장 적게 설명하는 단축을 찾아내는 것이다.  </li>
+<li>위의 추정식에서 가장 오른쪽에 있는 로그 오즈비(log odds ratio)를 먼저 설명하자면, 로그 안에 들어간 오즈비(odds ratio)는 베르누이 시도에서 1이 나올 확률 $ \theta (x) $와 0이 나올 확률 $ 1 - \theta (x) $의 비율(ratio)을 의미한다.</li>
 </ul>
-<p><img src="/image/PCA_conception_03.png" alt="Principal Components의 개념 - 02"></p>
-<p><img src="/image/PCA_conception_02.png" alt="Principal Components의 개념 - 03"></p>
-<h1 id="PCA-수학적-개념이해-행렬연산-행렬식-특성방정식"><a href="#PCA-수학적-개념이해-행렬연산-행렬식-특성방정식" class="headerlink" title="PCA 수학적 개념이해 - 행렬연산, 행렬식, 특성방정식"></a>PCA 수학적 개념이해 - 행렬연산, 행렬식, 특성방정식</h1><p><img src="/image/find_determinant.png" alt="행렬식 구하는 방법"></p>
-<ul>
-<li><code>행렬식</code>(determinant)은 쉽게 말해 해당 <code>행렬이 갖는 Volume(2차원인 경우는 면적)</code>을 의미한다. 아래 그림과 같이 2차원 공간상에서 면적이 1을 갖는 좌표들(파란색)을 D라는 행렬로 명명했을 경우, A행렬로 선형변환시켜주면 아래 그림의 빨간색 직사각형으로 변환되며, 부피는 각 행렬식의 곱 형태로 계산 되어 5를 갖는다.</li>
+<script type="math/tex; mode=display">odds ratio = \frac{ \theta (x) }{1 - \theta (x)}</script><p>0부터 1사이의 값만 가지는 확률값인 $ \theta (x) $ 를 오즈비로 변환하면 0부터 양의 무한대까지의 값을 가질 수 있다. 오즈비를 로그변환한 것이 위에서 언급한 Logit function이다. 이로써 로지트 함수의 값은 로그변환에 의해 음의 무한대 $(- \infty)$부터 양의 무한대$(\infty)$까지의 값을 가질 수 있다.</p>
+<script type="math/tex; mode=display">y = logit(odds ratio) = log ( \frac{ \theta (x) }{ 1 - \theta (x) } )</script><ul>
+<li>로지스틱함수(Logistic function)은 로지트 함수의 역함수이다. 즉 <code>음의 무한대부터 양의 무한대 까지의 값을 가지는 입력변수를 0부터 1사이의 값을 가지는 출력변수로 변환한 것</code>이다.</li>
 </ul>
-<ul>
-<li><code>만약 행렬식이 0을 갖는다면</code> 행렬의 곱은 1직선을 이룰 것이고, 선분의 형태로 표현될 것이다.</li>
-</ul>
-<p><img src="/image/deteminant_of_algebra_aspection.png" alt="행렬식의 기하하적인 요소"></p>
-<p><img src="/image/determinant_applications_and_relations.png" alt="행렬식의 활용"></p>
-<h1 id="고유값과-고유벡터"><a href="#고유값과-고유벡터" class="headerlink" title="고유값과 고유벡터"></a>고유값과 고유벡터</h1><ul>
-<li><code>임의의 정방행렬 A로 선형변환하더라도 방향은 유지되면 해당 벡터를 고유벡터라고 하며, 크기(늘어난 정도)를 고유값</code>이라고 한다.</li>
-</ul>
-<p><img src="/image/eigen_value_and_eigen_vector_01.png" alt="고유값과 고유벡터 - 01"></p>
-<ul>
-<li>기하학적으로 설명해보자면, 아래 그림과 같이 고유벡터는 빨간색 선을 제외한 나머지 선형변환을 해도 벡터의 방향이 바뀌지 않는 파란색, 분홍색 벡터들이 고유벡터를 의미한다. 그리고 고유값은 스케일(크기)를 의미한다.</li>
-</ul>
-<p><img src="/image/eigen_value_and_eigen_vector_02.png" alt="고유값과 고유벡터 - 02"></p>
-<ul>
-<li>아래 그림과 같은 식으로 고유값과 고유벡터를 구할 수 있다. 먼저 고유값을 구하는 방법은 $det(A - \lambda I)=0$을 만족하는 고유값을 찾으면 되는데, 이유는 우리가 구하고 싶은 고유값과 고유벡터는 0벡터를 제외한 다른 벡터를 구하고 싶기 때문에 행렬식이 0이아닌 다른 값을 갖는다면 역행렬이 존재하게 되어 0벡터가 해당 선형시스템의 유일한 해가 되지 않도록하려면 non-trivial solution(해가 무수히 많아야)을 갖어야 한다. 그러므로 해당 행렬식이 0의 값을 갖게되어 역행렬이 존재하지 않도록 해야하기 때문에 아래와 같은 수식을 통해 고유값을 구할 수 있다.</li>
+<script type="math/tex; mode=display">logistic(z) = \theta (z) = \frac{1}{1 + exp(-z)}</script><h3 id="선형-판별-함수"><a href="#선형-판별-함수" class="headerlink" title="선형 판별 함수"></a>선형 판별 함수</h3><ul>
+<li>또한, <code>로지스틱 회귀분석에서는 판별함수 수식으로 선형함수를 사용하므로 판별 경계면 또한 선형이 됨을 유의</code>해야한다.</li>
 </ul>
 <ul>
-<li>고유값은 크기를 기준으로 내림차순으로(큰 것부터 작은 것 순으로)적어주면, 그에따른 고유벡터도 동일한 인덱스를 매칭해준다. 여기서 주의할 점은 <code>고유벡터는 해당 고유벡터를 normalization을 통해 크기가 1인 벡터를 기준으로 스칼라배를 해도 동일한 고유벡터라고 여긴다는 점</code>이다.</li>
+<li><p>로지스틱함수 $ \sigma(z) $ 를 사용하는 경우에는 $ z $ 과 $ \theta $ 값은 다음과 같은 관계가 있다.</p>
+<ul>
+<li>$ z = 0 $ 일 때 $ \theta = 0.5 $</li>
+<li>$ z &gt; 0 $ 일 때 $ \theta &gt; 0.5; \rightarrow \hat{y} = 1 $</li>
+<li>$ z &lt; 0 $ 일 때 $ \theta &lt; 0.5; \rightarrow \hat{y} = 0 $</li>
 </ul>
-<p><img src="/image/eigen_value_and_eigen_vector_03.png" alt="고유값과 고유벡터 - 03"></p>
-<h1 id="PCA-수학적-개념이해-Singular-Value-Decomposition-SVD"><a href="#PCA-수학적-개념이해-Singular-Value-Decomposition-SVD" class="headerlink" title="PCA 수학적 개념이해 - Singular Value Decomposition(SVD)"></a>PCA 수학적 개념이해 - Singular Value Decomposition(SVD)</h1><ul>
-<li>PCA는 다르게 행렬식을 계산하기 때문에 정방행렬인 경우에만 계산이 가능하다는 단점이 있다. 이러한 점을 보완하기 위한 Decomposition 방법이 바로 SVD(Singular Value Decomposition)이다.</li>
+</li>
 </ul>
 <ul>
-<li>SVD는 임의의 행렬 X에 관해 3개의 행렬로 분해가 가능하며, 각각의 행렬의 크기는 아래와 같고, V와 U는 column들이 Orthogonal(직교)한 행렬(서로 직교하는 성분들끼리의 내적은 0)이므로 동일행렬의 내적은 Identity matrix를 갖는다. V와 D가 각각 임의의행렬 X에 공분산행렬에 해당하는 고유벡터 행렬과 고유값 행렬을 의미한다.</li>
+<li>즉, $ z $ 가 분류 모형의 판별 함수(decision function)의 역할을 한다. 로지스틱 회귀분석에서는 <code>판별함수 수식으로 선형함수를 사용</code>한다. 따라서 판별 경계면도 선형이 된다.</li>
 </ul>
-<p><img src="/image/Singular_value_decomposition_01.png" alt="SVD 개념"></p>
+<script type="math/tex; mode=display">z = w^{T} x</script><p><img src="/image/Logistic_function_01.png" alt="로지스틱 함수"></p>
 <ul>
-<li>공분산 행렬인 $X^{T}X$를 SVD 한 후, 아래 그림과 같이 eigen vector들의 행렬로 곱해주면 eigen vector들의 행렬과 eigen value들의 내적 값을 구할 수 있다.</li>
+<li>위의 그림에서 알 수 있듯이, X의 범위가 [$-\infty$, $+\infty$]인 경우에 Y의 범위를 [0,1]로 만들어주는 함수이다.</li>
 </ul>
-<p><img src="/image/Singular_value_decomposition_02.png" alt="SVD와 eigen vector, eigen value와의 연과성"></p>
-<h1 id="PCA-수행과정-및-수학적-개념-적용"><a href="#PCA-수행과정-및-수학적-개념-적용" class="headerlink" title="PCA 수행과정 및 수학적 개념 적용"></a>PCA 수행과정 및 수학적 개념 적용</h1><ul>
-<li>제일 먼저, 각 데이터에 대해 standardization을 통해 표준정규분포를 따르도록 scaling을 해준다. 이런 normalization은 각 feature에 대한 공간의 범위가 다르다면 비교하는데 어려움이 있기 때문이다. 또한, 이 과정에서 feature 벡터의 크기를 1로 갖게끔 Unit vector로 만들어 주는 것이 추후에 SVD를 계산하는 과정에서 Orthogonal한 eigen vector가 Orthonormal vector가 되어 계산함에 있어서 편리하게 된다.</li>
-</ul>
-<p><img src="/image/PCA_simulation_action_01.png" alt="PCA 수행과정 - 01"></p>
+<p><img src="/image/logistic_regression_example.png" alt="로지스틱 회귀 예제"></p>
 <ul>
-<li>그 후 SVD는 우선 우리는 프로그램을 사용하여 바로 구할 수 있다는 가정을 해보자. 여기서 <code>eigen vector같은 경우에는 공분산 구조나 공분산 행렬이나 동일한 값을 갖지만, eigen value는 다음 그림에서와 같이 관측치의 개수에서 하나를 빼주어야 한다.</code></li>
+<li>위의 그림에서 좌측그림의 적합시킨 회귀선(파란선)을 보면 예측할 확률값이 500미만이면 음수를 갖을 수 있게 되는 것을 확인할 수 있다. 이는 <code>확률값을 예측하는 모델을 만든다는 가정 자체에 위반하는 것이므로 이전에 학습했었던 회귀모형들과는 다른 방법의 회귀모형을 만들어 적합시켜야 할 것임이 분명</code>해졌다.</li>
 </ul>
-<p><img src="/image/PCA_simulation_action_02.png" alt="PCA 수행과정 - 02"></p>
 <ul>
-<li>PC Score는 위에서와 같이 큰 순서대로 정렬된 eigen value 행렬 D와 앞에 U행렬값의 내적이 곧 행렬 X와 V의 내적을 하여 상수인 $\lambda V$를 만드는 과정과 동일하다.</li>
+<li>일반적으로 decision boundary(threshold)를 0.5로 하지만 class가 imbalanced 한 경우는 조절하여보면서 적합시킬 수 있다.</li>
 </ul>
-<p><img src="/image/PCA_simulation_action_03.png" alt="PCA 수행과정 - 03"></p>
+<p><img src="/image/logistic_regression_coefficient_estimation_01.png" alt="로지스틱 회귀계수 추정방법 소개"></p>
 <ul>
-<li>아래 그림과 같이 PC Score를 구해 중요도를 따져 상위 q개만을 통해 회귀분석을 진행할 수 있다.</li>
+<li>기존의 일반 선형 회귀이듯, 다중 선형 회귀는 최소제곱법을 통해 해를 추정해 낼 수 있지만, <code>로지스틱 회귀</code>는 비선형 방정식이 되어 동일하게 최소제곱법으로 회귀계수를 추정해내기 힘들다. 그러므로, 위의 그림처럼 <code>MLE를 통해 회귀계수들을 추정</code>한다.</li>
 </ul>
-<p><img src="/image/PCA_simulation_action_04.png" alt="PCA 수행과정 - 04"></p>
-<h1 id="PCA의-심화적-이해"><a href="#PCA의-심화적-이해" class="headerlink" title="PCA의 심화적 이해"></a>PCA의 심화적 이해</h1><ul>
-<li><code>한 마디로 PCA는 데이터의 변동을 가장 잘 설명하는 한 축을 찾아서 그 축에 대해 각 관측치들을 projection한 성분을 의미한다. 그 다음에는 이러한 해당 변동축에 직각이 되는 축에 관측치들을 projection하는 과정을 반복하여 진행하게 되는데 직각이 되는 축을 찾는 이유는 이전의 축과 동일한 정보를 갖지않는 새로운 피처를 뽑기 위함이라고 필자는 생각</code>한다.</li>
+<p><img src="/image/logistic_regression_coefficient_estimation_02.png" alt="로지스틱 회귀계수 MLE를 사용한 추정"></p>
+<blockquote>
+<p>그레디언트 벡터가 영벡터가 되는 모수의 값이 로그가능도를 최대화하는 값이다. 하지만 그레디언트 벡터 수식이 $ w $ 에 대한 비선형 함수이므로 선형모형과 같이 간단하게 그레디언트가 0이 되는 모수 $ w $ 값에 대한 수식을 구할 수 없으며 수치적인 최적화 방법(numerical optimization)을 통해 반복적으로 최적 모수 $ w $ 의 값을 구해야 한다.</p>
+</blockquote>
+<h3 id="수치적-최적화"><a href="#수치적-최적화" class="headerlink" title="수치적 최적화"></a>수치적 최적화</h3><ul>
+<li>위의 MLE 방식을 통해 parameter의 값을 업데이트하는데, 아래와 같은 방식으로 수치적 최적화를 진행한다. 위의 로그 가능도함수 $log(l(\beta_{0}, \beta_{1}))$을 편의상 LL이라하자. 로그가능도함수 LL을 최대화하는 것은 다음 목적함수를 최소화하는 것과 같다.</li>
 </ul>
-<p><img src="/image/what_is_inner_product_of_PC_SCORE.png" alt="PC Score의 본질적인 의미"></p>
+<script type="math/tex; mode=display">J = - LL</script><ul>
+<li>SGD(Steepest Gradient Descent)방식을 사용(Stochastic Gradient Descent아님!!)하여 아래와 같은 그레디언 벡터를 구할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">g_{k} = \frac{d}{dw} (-LL)</script><ul>
+<li>위에서 구한 그레디언트 방향으로 step size $(n_{k})$만큼 이동한다.</li>
+</ul>
+<script type="math/tex; mode=display">\begin{eqnarray} w_{k+1} &=& w_{k} - \eta_k g_k \\ &=& w_{k} + \eta_k \sum_{i=1}^N \big( y_i  - \mu(x_i; w_k) \big) x_i\\ \end{eqnarray}</script><p><img src="/image/multi_logistic_regression_example_01.png" alt="다중 로지스틱 회귀 예제 - 01"></p>
 <ul>
-<li>PCA의 <code>단점</code> 중 하나로는 <code>해당 성분이 의미하는 바를 직관적으로 설명할 수 없다</code>는 점이다. 또한 선형회귀에 사용되는 것과 같이 <code>해당 변수들이 비선형관계를 갖는다면 잡아낼 수 없다.</code></li>
+<li>위의 그림에서 요약된 다중 로지스틱 회귀분석의 결과를 살펴보면, 맨 마지막 설명과 같이 해석할 수 있지만, 좀 더 자연스러운 해석하고 싶을 경우 아래 그림과 같이 Logit 보다 exp를 취해줘 Odds로 변환하여 해석하는 것을 권한다.</li>
 </ul>
-<p><img src="/image/bad_aspection_of_PCA.png" alt="PCA의 단점"></p>
+<p><img src="/image/multi_logistic_regression_example_02.png" alt="다중 로지스틱 회귀 예제 - 02"></p>
+<h3 id="StatsModels-패키지의-로지스틱-회귀"><a href="#StatsModels-패키지의-로지스틱-회귀" class="headerlink" title="StatsModels 패키지의 로지스틱 회귀"></a>StatsModels 패키지의 로지스틱 회귀</h3><ul>
+<li>다음과 같은 1차원 독립변수를 가지는 분류문제를 풀어보자.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import make_classification</span><br><span class="line"></span><br><span class="line">X0, y = make_classification(n_features=1, n_redundant=0, n_informative=1,</span><br><span class="line">                            n_clusters_per_class=1, random_state=4)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, linewidth=2)</span><br><span class="line">sns.distplot(X0[y == 0, :], label=<span class="string">"y = 0"</span>, hist=False)</span><br><span class="line">sns.distplot(X0[y == 1, :], label=<span class="string">"y = 1"</span>, hist=False)</span><br><span class="line">plt.ylim(-0.2, 1.2)</span><br><span class="line"><span class="comment"># plt.savefig('logistic_regression_example_datas')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/logistic_regression_example_datas.png" alt="로지스틱 회귀 예시 데이터"></p>
 <ul>
-<li>위에서 언급한 첫번째 단점(직관적으로 PC성분을 통한 피처를 설명하기 어렵다.)을 조금이나마 보완할 수 있는 방법은 grid를 통해 해당하는 곳의 범위들의 데이터를 직접 뽑아 각 성분의 의미를 설명할 수 있다. 아래와 같이 이미지 데이터인 경우는 좀 더 구별하기 쉬울 것이다.</li>
+<li>StatsModels 패키지는 베르누이 분포를 따르는 로지스틱 회귀 모형 <code>Logit</code>를 제공한다. 사용방법은 <code>OLS</code> 클래스 사용법과 동일하다. 종속변수와 독립변수 데이터를 넣어 모형을 만들고 <code>fit</code> 메서드로 학습을 시킨다. <code>fit</code> 메서드의 <code>disp=0</code> 인수는 최적화 과정에서 문자열 메세지를 나타내지 않는 역할을 한다.</li>
 </ul>
-<p><img src="/image/Complement_the_shortcomings_of_PCA.png" alt="PCA의 단점을 보완하는 방법"></p>
-<h1 id="Kernel-PCA"><a href="#Kernel-PCA" class="headerlink" title="Kernel PCA"></a>Kernel PCA</h1><ul>
-<li>위에서 언급했던 두 번째 단점인 비선형관계를 갖는다면 잡아내기 힘들다는 점을 보완하기 위한 방법으로서, 다음 그림과 같은 상황에서 Kernel PCA를 사용할 것이다. 아래 관측치들의 집합인 행렬 X의 공분산 구조는 0에 가까운 값을 갖을 것이다. 즉, 서로 선형관계가 아닌 상황이다.</li>
-</ul>
-<p><img src="/image/when_we_use_kernel_PCA.png" alt="Kernel PCA를 하는 경우"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X = sm.add_constant(X0)</span><br><span class="line">logit_mod = sm.Logit(y, X)</span><br><span class="line">logit_res = logit_mod.fit(disp=0)</span><br><span class="line"><span class="built_in">print</span>(logit_res.summary())</span><br></pre></td></tr></table></figure>
+<h5 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:                      y   No. Observations:                  100</span><br><span class="line">Model:                          Logit   Df Residuals:                       98</span><br><span class="line">Method:                           MLE   Df Model:                            1</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                  0.7679</span><br><span class="line">Time:                        00:12:48   Log-Likelihood:                -16.084</span><br><span class="line">converged:                       True   LL-Null:                       -69.295</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                 5.963e-25</span><br><span class="line">==============================================================================</span><br><span class="line">coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">const          0.2515      0.477      0.527      0.598      -0.683       1.186</span><br><span class="line">x1             4.2382      0.902      4.699      0.000       2.470       6.006</span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
 <ul>
-<li>기존의 PCA는 feature들 사이의 패턴이 존재하는 것으로 간주하여 비교(각 feature들간의 움직이는 방향을 나타내는 공분산 구조를 통해 값을 구했기 때문)를 했지만, 이번에는 관측치와 관측치 사이의 패턴을 수치화하여 PC를 구하는 방법이다. 아래 그림에서 K(Kernel matrix)의 예시를 보듯이 여러가지 방법이 존재한다.</li>
+<li>결과 객체에서 <code>summary</code>메서드를 사용하여 리포트를 출력할 수 있다. 결과 리포트에서 판별함수의 수식이 다음과 같다는 것을 알 수 있다.</li>
 </ul>
-<p><img src="/image/what_is_kernel_PCA.png" alt="Kernel PCA를 계산하는 방법"></p>
+<script type="math/tex; mode=display">\theta (x) = \sigma(4.2382x + 0.2515)</script><ul>
+<li>따라서 $ z $ 값의 부로를 나누는 기준값은 $ 4.2382x + 0.2515 = 0.5 $ 가 되는 $ x $ 값 즉, $ (0.5-0.2515)/4.2382 $ 이다. <code>predict</code> 메서드를 사용하면 $ \theta (x) $ 값을 출력한다.</li>
+</ul>
 <ul>
-<li>아래 그림과 같이 Kernel PCA를 계산할 수 있다.</li>
+<li>유의확률을 감안하면 상수항의 값은 0과 마찬가지이므로 $ \theta (x) $ 가 다음과 같다고 볼 수도 있다.</li>
 </ul>
-<p><img src="/image/How_to_calculate_Kernel_matrix.png" alt="Kernel matrix를 계산하는 방법"></p>
+<script type="math/tex; mode=display">\mu(x) = \sigma(4.2382x)</script><ul>
+<li>이렇게 생각하면 $ z $ 값의 부호를 나누는 기준값은 실질적으로는 $ 0.5/4.2382 = 0.118 $ 이다. 실제 데이터가 네모 포인트로 되어있고, 원형의 데이터가 예측 데이터이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">xx = np.linspace(-3, 3, 100)</span><br><span class="line">mu = logit_res.predict(sm.add_constant(xx))</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12, 8))</span><br><span class="line">plt.plot(xx, mu, lw=3)</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2)</span><br><span class="line">plt.scatter(X0, logit_res.predict(X), label=r<span class="string">"$\hat&#123;y&#125;$"</span>, marker=<span class="string">'s'</span>, c=y,</span><br><span class="line">            s=100, edgecolor=<span class="string">"k"</span>, lw=1)</span><br><span class="line">plt.vlines(0.118, ymin=0, ymax=1, lw=1, linestyles=<span class="string">'--'</span>, colors=<span class="string">"red"</span>)</span><br><span class="line">plt.xlim(-3, 3)</span><br><span class="line">plt.xlabel(<span class="string">"x"</span>)</span><br><span class="line">plt.ylabel(r<span class="string">"$\mu$"</span>)</span><br><span class="line">plt.title(r<span class="string">"$\hat&#123;y&#125; = \mu(x)$"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment"># plt.savefig('predicted_value_y_hat_logistic_regression_example')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/predicted_value_y_hat_logistic_regression_example.png" alt="실제 데이터와 예측결과 비교"></p>
+<h3 id="판별함수"><a href="#판별함수" class="headerlink" title="판별함수"></a>판별함수</h3><ul>
+<li><code>Logit</code> 모형의 결과 객체에는 <code>fittedvalues</code>라는 속성으로 판별함수 $ z = w^{T}x $ 값이 들어가 있다. 이 값을 이용하여 분류문제를 풀 수도 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2, label=<span class="string">"데이터"</span>)</span><br><span class="line">plt.plot(X0, logit_res.fittedvalues, label=<span class="string">"판별함수값"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment"># plt.savefig('decision_function_with_logit_fitted_value')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/logistic_fuction_using_logit_fitted_value.png" alt="판별함수 값을 통해 분류문제 풀기"></p>
 <ul>
-<li>아래 그림과 같이 원형의 띠로 구분지어져 있는 형상인데도 불구하구 Kernel PCA를 사용하면 잘 구분되는지에 대한 이유는 다음과 같다. 먼저 각 관측치에대해 pair-wise하게 Kernel matrix를 구해 비슷한 값들을 갖는 관측치들로 정렬하여 보면 비슷한 값을 갖는 관측치들 끼리 모여 block matrix를 형성하는 모습을 볼 수 있다.</li>
+<li>위의 $ z $ 값을 통해 직접 시그모이드 함수(로지스틱함수)를 취하여 그려보면 다음과 같이 위에서 로지스틱함수를 그려 예측한 그림과 동일해 지는 것을 확인할 수 있다.</li>
 </ul>
-<p><img src="/image/Kernel_matrix_shape_how.png" alt="Kernel matrix의 형태"></p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2, label=<span class="string">"데이터"</span>)</span><br><span class="line">plt.scatter(X0, 1/(1+np.exp(-logit_res.fittedvalues)), label=<span class="string">"로지스틱함수값"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment"># plt.savefig('logistic_fuction_using_logit_fitted_value')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/decision_function_with_logit_fitted_value.png" alt="직접 로짓값을 로지스틱 함수에 적용한 그림"></p>
+<h3 id="로지스틱-회귀-성능-측정"><a href="#로지스틱-회귀-성능-측정" class="headerlink" title="로지스틱 회귀 성능 측정"></a>로지스틱 회귀 성능 측정</h3><ul>
+<li>로지스틱 회귀 성능은 맥파든 의사결정계수(McFadden pseudo R square) 값으로 측정한다.</li>
+</ul>
+<script type="math/tex; mode=display">R^2_{\text{pseudo}} = 1 - \dfrac{G^2}{G^2_0}</script><ul>
+<li>$ G^{2} $ 는 이탈도(deviance)라고 하는 양으로 다음과 같이 정의된다. 여기에서 $ \hat{y} $ 은 $ y=1 $ 일 확률 $ \theta $ 를 뜻한다.</li>
+</ul>
+<script type="math/tex; mode=display">G^2 = 2\sum_{i=1}^N \left( y_i\log\dfrac{y_i}{\hat{y}_i} + (1-y_i)\log\dfrac{1-y_i}{1-\hat{y}_i} \right)</script><ul>
+<li><code>이탈도는 모형이 100% 정확한 경우에는 0이 되고 모형의 성능이 나빠질수록 값이 커진다.</code> 또한, 이탈도는 로그가능도에 음수를 취한 값과 같다.</li>
+</ul>
+<script type="math/tex; mode=display">G^2 = -LL</script><ul>
+<li>$ G^{2} $ 는 현재 이탈도이고 $ G_{0}^{2} $ 는 귀무모형(null model)으로 측정한 이탈도이다.</li>
+</ul>
 <ul>
-<li>Kernel matrix를 구한 값으로 eigen vector의 역할을 하는 행렬 U와 각 eigen value의 $d_{i}$의 곱인 PC Score를 통해 얻은 결과를 그래프로 그려보면 아래와 같은 결과를 얻을 수 있다. 아래의 경우에서는 첫번째 성분을 선택하여 사용하면 3가지 군집을 잘 판별할 수 있을 것이다.</li>
+<li>귀무모형이란 모든 $ x $ 가 $ y $ 를 예측하는데 전혀 영향을 미치지 않는 모형을 말한다. 즉, 무조건부 확률 $ p(y) $ 에 따라 $ x $ 에 상관없이 동일하게 $ y $ 를 예측하는 모형을 말한다. 결국 우리가 만들 수 있는 가장 성능이 나쁜 모형이 된다.</li>
 </ul>
-<p><img src="/image/result_of_kernel_PCA.png" alt="Kernel matrix의 결과"></p>
+<script type="math/tex; mode=display">\mu_{\text{null}} = \dfrac{\text{number of $Y=1$ data}}{\text{number of all data}}</script><ul>
+<li><code>따라서 맥파든 의사결정계수는 가장 성능이 좋을 때는 1이 되고 가장 성능이 나쁠 때는 0이된다.</code></li>
+</ul>
+<ul>
+<li>Scikit-learn 패키지의 metric 서브패키지에는 로그 손실을 계산하는 <code>log_loss</code> 함수가 있다. 위 예제에서 최적 모형의 로그 손실은 약 16.08로 계산된다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import log_loss</span><br><span class="line"></span><br><span class="line">y_hat = logit_res.predict(X)</span><br><span class="line">log_loss(y, y_hat, normalize=False)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16.084355200413036</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>귀무 모형의 모수값을 구하면 0.51이고 이 값으로 로그 손실을 계산하면 약 69이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mu_null = np.sum(y) / len(y)</span><br><span class="line">mu_null</span><br></pre></td></tr></table></figure>
+<h5 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.51</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y_null = np.ones_like(y) * mu_null</span><br><span class="line">log_loss(y, y_null, normalize=False)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">69.29471672244784</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>두 값을 이용하여 맥파든 의사 결정계수 값을 계산할 수 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 - (log_loss(y, y_hat) / log_loss(y, y_null))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.7678848264170398</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Scikit-Learn-패키지의-로지스틱-회귀"><a href="#Scikit-Learn-패키지의-로지스틱-회귀" class="headerlink" title="Scikit-Learn 패키지의 로지스틱 회귀"></a>Scikit-Learn 패키지의 로지스틱 회귀</h3><ul>
+<li>Scikit-Learn 패키지는 로지스틱 회귀 모형 <code>LogisticRegression</code> 를 제공한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">model_sk = LogisticRegression().fit(X0, y)</span><br><span class="line"></span><br><span class="line">xx = np.linspace(-3, 3, 100)</span><br><span class="line">mu = 1.0/(1 + np.exp(-model_sk.coef_[0][0]*xx - model_sk.intercept_[0]))</span><br><span class="line">plt.plot(xx, mu)</span><br><span class="line">plt.scatter(X0, y, c=y, s=100, edgecolor=<span class="string">"k"</span>, lw=2)</span><br><span class="line">plt.scatter(X0, model_sk.predict(X0), label=r<span class="string">"$\hat&#123;y&#125;$"</span>, marker=<span class="string">'s'</span>, c=y,</span><br><span class="line">            s=100, edgecolor=<span class="string">"k"</span>, lw=1, alpha=0.5)</span><br><span class="line">plt.xlim(-3, 3)</span><br><span class="line">plt.xlabel(<span class="string">"x"</span>)</span><br><span class="line">plt.ylabel(r<span class="string">"$\mu$"</span>)</span><br><span class="line">plt.title(r<span class="string">"$\hat&#123;y&#125;$ = sign $\mu(x)$"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/logistic_regression_example_with_scikit_learn.png" alt="scikit-learn의 logistic regression"></p>
+<blockquote>
+<p>연습문제</p>
+<ol>
+<li>붓꽃 분류문제에서 클래스가 세토사와 베르시칼라 데이터만 사용하고 (setosa=0, versicolor=1) 독립변수로는 꽃받침 길이(Sepal Length)와 상수항만 사용하여 StatsModels 패키지의 로지스틱 회귀모형으로 결과를 예측하고 보고서를 출력한다. 이 보고서에서 어떤 값이 세토사와 베르시칼라를 구분하는 기준값(threshold)으로 사용되고 있는가?</li>
+<li>위 결과를 분류결과표(confusion matrix)와 분류결과보고서(classification report)로 나타내라.</li>
+<li>이 모형에 대해 ROC커브를 그리고 AUC를 구한다. 이 때 Scikit-Learn의 LogisticRegression을 사용하지 않고 위에서 StatsModels로 구한 모형을 사용한다.</li>
+</ol>
+</blockquote>
+<ul>
+<li>1번에 대한 문제 풀이는 아래와 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line">iris=load_iris()</span><br><span class="line">X=pd.DataFrame(iris.data[iris.target &lt;= 1], columns=iris.feature_names)</span><br><span class="line">X=X.loc[:, <span class="string">'sepal length (cm)'</span>]</span><br><span class="line">y=pd.Series(iris.target[iris.target &lt;= 1], name=<span class="string">"target"</span>)</span><br><span class="line"></span><br><span class="line">import statsmodels.api as sm</span><br><span class="line"></span><br><span class="line">X = sm.add_constant(X0)</span><br><span class="line">logit_mod = sm.Logit(y, X)</span><br><span class="line">logit_res = logit_mod.fit(disp=0)</span><br><span class="line"><span class="built_in">print</span>(logit_res.summary())</span><br></pre></td></tr></table></figure>
+<h5 id="결과-5"><a href="#결과-5" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:                 target   No. Observations:                  100</span><br><span class="line">Model:                          Logit   Df Residuals:                       98</span><br><span class="line">Method:                           MLE   Df Model:                            1</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                0.003818</span><br><span class="line">Time:                        01:50:59   Log-Likelihood:                -69.050</span><br><span class="line">converged:                       True   LL-Null:                       -69.315</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                    0.4669</span><br><span class="line">==============================================================================</span><br><span class="line">coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">const         -0.0025      0.201     -0.012      0.990      -0.396       0.391</span><br><span class="line">x1             0.1287      0.177      0.726      0.468      -0.219       0.476</span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>Setosa와 versicolor의 구분하는 기준값은 $ 1/1+exp(z)=0.5 $ 인 지점을 찾아야하므로 $ z= -0.0025+0.1287 x $ 이므로 $ x = 0.019425019425019424 $ 에 대한 수직선이 판별함수 경계선이 될 것이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"></span><br><span class="line">pred_y=np.array([1 <span class="keyword">if</span> x &gt;= 0.5 <span class="keyword">else</span> 0 <span class="keyword">for</span> x <span class="keyword">in</span> list(logit_res.predict(X))])</span><br><span class="line">y=np.array(y)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y, pred_y))</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"><span class="built_in">print</span>(classification_report(y, pred_y))</span><br></pre></td></tr></table></figure>
+<h6 id="결과-6"><a href="#결과-6" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[[27 23]</span><br><span class="line"> [23 27]]</span><br><span class="line"></span><br><span class="line">              precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">           0       0.54      0.54      0.54        50</span><br><span class="line">           1       0.54      0.54      0.54        50</span><br><span class="line"></span><br><span class="line">    accuracy                           0.54       100</span><br><span class="line">   macro avg       0.54      0.54      0.54       100</span><br><span class="line">weighted avg       0.54      0.54      0.54       100</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import roc_auc_score</span><br><span class="line"><span class="built_in">print</span>(roc_auc_score(y,logit_res.predict(X)))</span><br></pre></td></tr></table></figure>
+<h6 id="결과-7"><a href="#결과-7" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.5327999999999999</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import roc_curve</span><br><span class="line">fpr, tpr, thresholds = roc_curve(y, logit_res.predict(X))</span><br><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">plt.plot(fpr, tpr)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/one_variable_fpr_tpr_roc_curve.png" alt="Roc curve"></p>
+<h4 id="로지스틱-회귀를-사용한-이진-분류의-예"><a href="#로지스틱-회귀를-사용한-이진-분류의-예" class="headerlink" title="로지스틱 회귀를 사용한 이진 분류의 예"></a>로지스틱 회귀를 사용한 이진 분류의 예</h4><ul>
+<li><p>다음 데이터는 미국 의대생의 입학관련 데이터이다. 데이터의 의미는 다음과 같다.</p>
+</li>
+<li><p><code>Acceptance</code> : 0이면 불합격, 1이면 합격</p>
+</li>
+<li><code>BCPM</code> : Bio/Chem/Physics/Math 과목의 학점 평균</li>
+<li><code>GPA</code> : 전체과목 학점 평균</li>
+<li><code>VR</code> : MCAT Verbal reasoning 과목 점수</li>
+<li><code>PS</code> : MCAT Physical sciences 과목 점수</li>
+<li><code>WS</code> : MCAT Writing sample 과목 점수</li>
+<li><code>BS</code> : MCAT Biological science 과목 점수</li>
+<li><code>MCAT</code> : MCAT 총점</li>
+<li><code>Apps</code> : 의대 지원 횟수</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_med = sm.datasets.get_rdataset(<span class="string">"MedGPA"</span>, package=<span class="string">"Stat2Data"</span>)</span><br><span class="line">df_med = data_med.data</span><br><span class="line">df_med.tail()</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>일단 학점(GPA)과 합격여부의 관계를 살펴보자.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12,8))</span><br><span class="line">sns.stripplot(x=<span class="string">"GPA"</span>, y=<span class="string">"Acceptance"</span>, data=df_med,</span><br><span class="line">              jitter=True, orient=<span class="string">'h'</span>, order=[1, 0])</span><br><span class="line">plt.grid(True)</span><br><span class="line"><span class="comment"># plt.savefig('MCAT_data_target')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/MCAT_data_target.png" alt="합격여부에 따른 학점의 분포"></p>
+<ul>
+<li>로지스틱 회귀분석을 실시한다. <code>MCAT = VR + PS + WS + BS</code> 이므로 <code>MCAT</code>은 독립 변수에서 제외해야 한다. 데이터 행렬이 <code>선형독립이어야 하기 때문</code>이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model_med = sm.Logit.from_formula(<span class="string">"Acceptance ~ Sex + BCPM + GPA + VR + PS + WS + BS + Apps"</span>, df_med)</span><br><span class="line">result_med = model_med.fit()</span><br><span class="line"><span class="built_in">print</span>(result_med.summary())</span><br></pre></td></tr></table></figure>
+<h6 id="결과-8"><a href="#결과-8" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Optimization terminated successfully.</span><br><span class="line">         Current <span class="keyword">function</span> value: 0.280736</span><br><span class="line">         Iterations 9</span><br><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:             Acceptance   No. Observations:                   54</span><br><span class="line">Model:                          Logit   Df Residuals:                       45</span><br><span class="line">Method:                           MLE   Df Model:                            8</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                  0.5913</span><br><span class="line">Time:                        02:56:41   Log-Likelihood:                -15.160</span><br><span class="line">converged:                       True   LL-Null:                       -37.096</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                 6.014e-07</span><br><span class="line">==============================================================================</span><br><span class="line">                 coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">Intercept    -46.6414     15.600     -2.990      0.003     -77.216     -16.067</span><br><span class="line">Sex[T.M]      -2.2835      1.429     -1.597      0.110      -5.085       0.518</span><br><span class="line">BCPM          -6.1633      6.963     -0.885      0.376     -19.811       7.484</span><br><span class="line">GPA           12.3973      8.611      1.440      0.150      -4.479      29.274</span><br><span class="line">VR             0.0790      0.311      0.254      0.799      -0.530       0.688</span><br><span class="line">PS             1.1673      0.539      2.164      0.030       0.110       2.225</span><br><span class="line">WS            -0.7784      0.396     -1.968      0.049      -1.554      -0.003</span><br><span class="line">BS             1.9184      0.682      2.814      0.005       0.582       3.255</span><br><span class="line">Apps           0.0512      0.147      0.348      0.728      -0.237       0.340</span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>예측 결과와 실제 결과를 비교하면 다음과 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df_med[<span class="string">"Prediction"</span>] = result_med.predict(df_med)</span><br><span class="line">plt.figure(figsize=(12, 8))</span><br><span class="line">sns.boxplot(x=<span class="string">"Acceptance"</span>, y=<span class="string">"Prediction"</span>, data=df_med)</span><br><span class="line"><span class="comment"># plt.savefig('box_plot_predict_value')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/box_plot_predict_value.png" alt="예측확률값과 실제값의 비교"></p>
+<ul>
+<li>위 분석 결과를 토대로 유의하지 않은 변수들을 제외하고 PS와 BS 점수만을 이용하여 다시 회귀분석하면 다음과 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model_med = sm.Logit.from_formula(<span class="string">"Acceptance ~  PS + BS"</span>, df_med)</span><br><span class="line">result_med = model_med.fit()</span><br><span class="line"><span class="built_in">print</span>(result_med.summary())</span><br></pre></td></tr></table></figure>
+<h6 id="결과-9"><a href="#결과-9" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Optimization terminated successfully.</span><br><span class="line">         Current <span class="keyword">function</span> value: 0.460609</span><br><span class="line">         Iterations 7</span><br><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:             Acceptance   No. Observations:                   55</span><br><span class="line">Model:                          Logit   Df Residuals:                       52</span><br><span class="line">Method:                           MLE   Df Model:                            2</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                  0.3315</span><br><span class="line">Time:                        03:04:00   Log-Likelihood:                -25.333</span><br><span class="line">converged:                       True   LL-Null:                       -37.896</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                 3.503e-06</span><br><span class="line">==============================================================================</span><br><span class="line">                 coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">Intercept    -15.5427      4.684     -3.318      0.001     -24.723      -6.362</span><br><span class="line">PS             0.4798      0.316      1.518      0.129      -0.140       1.099</span><br><span class="line">BS             1.1464      0.387      2.959      0.003       0.387       1.906</span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>위 결과를 바탕으로 다음 점수가 $ 15.5427 + 0.5 $ 보다 크면 합격이라고 예측할 수 있다.</li>
+</ul>
+<script type="math/tex; mode=display">0.4798 \text{PS} + 1.1464 \text{BS}</script><h3 id="로지스틱-회귀를-사용한-회귀분석"><a href="#로지스틱-회귀를-사용한-회귀분석" class="headerlink" title="로지스틱 회귀를 사용한 회귀분석"></a>로지스틱 회귀를 사용한 회귀분석</h3><ul>
+<li>로지스틱 회귀는 분류문제뿐만 아니라 종속변수 $ y $ 가 $ 0 $ 부터 $ 1 $ 까지 막혀있는 회귀분석 문제에도 사용할 수 있다. 이 때는 다음처럼 $ \theta $ 값을 종속변수 $ y $ 의 예측값으로 사용한다.</li>
+</ul>
+<script type="math/tex; mode=display">\hat{y} = \mu(x)</script><ul>
+<li><code>만약 실제 $ y $ 의 범위가 0 부터 1이 아니면 스케일링을 통해 바꿔야 한다.</code></li>
+</ul>
+<blockquote>
+<p>예제<br>다음 데이터는 1974년도에 “여성은 가정을 보살피고 국가를 운영하는 일은 남자에게 맡겨두어야 한다”라는 주장에 대한 찬성, 반대 입장을 조사한 결과이다. 각 열은 다음을 뜻한다.</p>
+</blockquote>
+<ul>
+<li><code>education</code> : 교육 기간</li>
+<li><code>sex</code> :  성별</li>
+<li><code>agree</code> : 찬성 인원</li>
+<li><code>disagree</code> : 반대 인원</li>
+<li><code>ratio</code> : 찬성 비율</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data_wrole = sm.datasets.get_rdataset(<span class="string">"womensrole"</span>, package=<span class="string">"HSAUR"</span>)</span><br><span class="line">df_wrole = data_wrole.data</span><br><span class="line">df_wrole[<span class="string">"ratio"</span>] = df_wrole.agree / (df_wrole.agree + df_wrole.disagree)</span><br><span class="line">df_wrole.tail()</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>교육을 많이 받는 사람일수록 찬성 비율이 감소하는 것을 볼 수 있다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12, 8))</span><br><span class="line">sns.scatterplot(x=<span class="string">"education"</span>, y=<span class="string">"ratio"</span>, style=<span class="string">"sex"</span>, data=df_wrole)</span><br><span class="line">plt.grid(True)</span><br><span class="line">plt.savefig(<span class="string">'education_ratio_up'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/education_ratio_up.png" alt="교육과 찬성비율과의 관계"></p>
+<ul>
+<li>분석 결과는 다음과 같다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model_wrole = sm.Logit.from_formula(<span class="string">"ratio ~ education + sex"</span>, df_wrole)</span><br><span class="line">result_wrole = model_wrole.fit()</span><br><span class="line"><span class="built_in">print</span>(result_wrole.summary())</span><br></pre></td></tr></table></figure>
+<h6 id="결과-10"><a href="#결과-10" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Optimization terminated successfully.</span><br><span class="line">         Current <span class="keyword">function</span> value: 0.448292</span><br><span class="line">         Iterations 6</span><br><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:                  ratio   No. Observations:                   41</span><br><span class="line">Model:                          Logit   Df Residuals:                       38</span><br><span class="line">Method:                           MLE   Df Model:                            2</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                  0.3435</span><br><span class="line">Time:                        03:13:11   Log-Likelihood:                -18.380</span><br><span class="line">converged:                       True   LL-Null:                       -27.997</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                 6.660e-05</span><br><span class="line">===============================================================================</span><br><span class="line">                  coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Intercept       2.0442      0.889      2.299      0.022       0.302       3.787</span><br><span class="line">sex[T.Male]    -0.1968      0.736     -0.267      0.789      -1.640       1.247</span><br><span class="line">education      -0.2127      0.071     -2.987      0.003      -0.352      -0.073</span><br><span class="line">===============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>성별은 유의하지 않다는 것을 알게되었으므로 성별을 제외하고 다시 모형을 구한다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model_wrole2 = sm.Logit.from_formula(<span class="string">"ratio ~ education"</span>, df_wrole)</span><br><span class="line">result_wrole2 = model_wrole2.fit()</span><br><span class="line"><span class="built_in">print</span>(result_wrole2.summary())</span><br></pre></td></tr></table></figure>
+<h6 id="결과-11"><a href="#결과-11" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Optimization terminated successfully.</span><br><span class="line">         Current <span class="keyword">function</span> value: 0.449186</span><br><span class="line">         Iterations 6</span><br><span class="line">                           Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:                  ratio   No. Observations:                   41</span><br><span class="line">Model:                          Logit   Df Residuals:                       39</span><br><span class="line">Method:                           MLE   Df Model:                            1</span><br><span class="line">Date:                Mon, 08 Jun 2020   Pseudo R-squ.:                  0.3422</span><br><span class="line">Time:                        03:14:51   Log-Likelihood:                -18.417</span><br><span class="line">converged:                       True   LL-Null:                       -27.997</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                 1.202e-05</span><br><span class="line">==============================================================================</span><br><span class="line">                 coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">Intercept      1.9345      0.781      2.478      0.013       0.405       3.464</span><br><span class="line">education     -0.2117      0.071     -2.983      0.003      -0.351      -0.073</span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(12, 8))</span><br><span class="line">sns.scatterplot(x=<span class="string">"education"</span>, y=<span class="string">"ratio"</span>, data=df_wrole)</span><br><span class="line">xx = np.linspace(0, 20, 100)</span><br><span class="line">df_wrole_p = pd.DataFrame(&#123;<span class="string">"education"</span>: xx&#125;)</span><br><span class="line">plt.plot(xx, result_wrole2.predict(df_wrole_p), <span class="string">"r-"</span>, lw=4, label=<span class="string">"예측"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<p><img src="/image/logistic_regression_using_ratio.png" alt="예측 결과"></p>
+<h2 id="실습"><a href="#실습" class="headerlink" title="실습"></a>실습</h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 분석에 필요한 패키지 불러오기</span></span><br><span class="line">import os</span><br><span class="line">import numpy as np</span><br><span class="line">import pandas as pd</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn import metrics</span><br><span class="line">from sklearn.metrics import confusion_matrix</span><br><span class="line">from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve</span><br><span class="line">import statsmodels.api as sm</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import itertools</span><br><span class="line">import time</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="data-info"><a href="#data-info" class="headerlink" title="data info"></a>data info</h4><ul>
+<li>Experience : 경력</li>
+<li>Income : 수입</li>
+<li>Famliy : 가족단위</li>
+<li>CCAvg : 월 카드사용량</li>
+<li>Education : 교육수준 (1: undergrad; 2, Graduate; 3; Advance )</li>
+<li>Mortgage : 가계대출</li>
+<li>Securities : account 유가증권계좌유무</li>
+<li>CD account : 양도예금증서 계좌 유무</li>
+<li>Online : 온라인계좌유무</li>
+<li>CreidtCard : 신용카드유무</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Personal Loan 데이터 불러오기</span></span><br><span class="line">ploan = pd.read_csv(<span class="string">'../data/Personal Loan.csv'</span>)</span><br><span class="line">ploan.head()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-12"><a href="#결과-12" class="headerlink" title="결과"></a>결과</h5><h2 id><a href="#" class="headerlink" title></a><img src="/image/ploan_head.png" alt="ploan 상위 5개"></h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 의미없는 변수 제거 ID, zip code 제외</span></span><br><span class="line">ploan_processed = ploan.dropna(axis=0).drop([<span class="string">'ID'</span>, <span class="string">'ZIP Code'</span>], axis=1, inplace=False)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 상수항 추가</span></span><br><span class="line">ploan_processed = sm.add_constant(ploan_processed, has_constant=<span class="string">"add"</span>)</span><br><span class="line">ploan_processed.head()</span><br></pre></td></tr></table></figure>
+<h5 id="결과-13"><a href="#결과-13" class="headerlink" title="결과"></a>결과</h5><h2 id="-1"><a href="#-1" class="headerlink" title></a><img src="/image/ploan_processed_head.png" alt="ploan_processed 상위 5개"></h2><h4 id="설명변수-X-타켓변수-Y-분리-및-학습데이터와-평가데이터"><a href="#설명변수-X-타켓변수-Y-분리-및-학습데이터와-평가데이터" class="headerlink" title="설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터"></a>설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 대출여부: 1 or 0</span></span><br><span class="line">feature_columns = ploan_processed.columns.difference([<span class="string">'Personal Loan'</span>])</span><br><span class="line">X = ploan_processed[feature_columns]</span><br><span class="line">y = ploan_processed[<span class="string">'Personal Loan'</span>]</span><br><span class="line"></span><br><span class="line">train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)</span><br><span class="line"><span class="built_in">print</span>(train_x.shape, test_x.shape, train_y.shape, test_y.shape)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-14"><a href="#결과-14" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(1750, 12) (750, 12) (1750,) (750,)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="로지스틱회귀모형-모델링-y-f-x"><a href="#로지스틱회귀모형-모델링-y-f-x" class="headerlink" title="로지스틱회귀모형 모델링 y = f(x)"></a>로지스틱회귀모형 모델링 y = f(x)</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 로지스틱 모형 적합</span></span><br><span class="line">model = sm.Logit(train_y, train_x)</span><br><span class="line">results = model.fit(method=<span class="string">'newton'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-15"><a href="#결과-15" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Optimization terminated successfully.</span><br><span class="line">         Current <span class="keyword">function</span> value: 0.131055</span><br><span class="line">         Iterations 9</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(results.summary())</span><br></pre></td></tr></table></figure>
+<h5 id="결과-16"><a href="#결과-16" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Logit Regression Results                           </span><br><span class="line">==============================================================================</span><br><span class="line">Dep. Variable:          Personal Loan   No. Observations:                 1750</span><br><span class="line">Model:                          Logit   Df Residuals:                     1738</span><br><span class="line">Method:                           MLE   Df Model:                           11</span><br><span class="line">Date:                Sat, 13 Jun 2020   Pseudo R-squ.:                  0.6030</span><br><span class="line">Time:                        15:20:24   Log-Likelihood:                -229.35</span><br><span class="line">converged:                       True   LL-Null:                       -577.63</span><br><span class="line">Covariance Type:            nonrobust   LLR p-value:                2.927e-142</span><br><span class="line">======================================================================================</span><br><span class="line">coef    std err          z      P&gt;|z|      [0.025      0.975]</span><br><span class="line">--------------------------------------------------------------------------------------</span><br><span class="line">Age                    0.0245      0.102      0.240      0.810      -0.175       0.224</span><br><span class="line">CCAvg                  0.0985      0.063      1.562      0.118      -0.025       0.222</span><br><span class="line">CD Account             4.3726      0.568      7.703      0.000       3.260       5.485</span><br><span class="line">CreditCard            -1.2374      0.337     -3.667      0.000      -1.899      -0.576</span><br><span class="line">Education              1.5203      0.190      7.999      0.000       1.148       1.893</span><br><span class="line">Experience            -0.0070      0.102     -0.069      0.945      -0.206       0.192</span><br><span class="line">Family                 0.7579      0.128      5.914      0.000       0.507       1.009</span><br><span class="line">Income                 0.0547      0.004     12.659      0.000       0.046       0.063</span><br><span class="line">Mortgage              -0.0001      0.001     -0.144      0.885      -0.002       0.002</span><br><span class="line">Online                -0.4407      0.263     -1.674      0.094      -0.957       0.075</span><br><span class="line">Securities Account    -1.8520      0.561     -3.299      0.001      -2.952      -0.752</span><br><span class="line">const                -13.9203      2.773     -5.021      0.000     -19.354      -8.486</span><br><span class="line">======================================================================================</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#회귀계수 출력</span></span><br><span class="line">results.params</span><br></pre></td></tr></table></figure>
+<h5 id="결과-17"><a href="#결과-17" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Age                    0.024471</span><br><span class="line">CCAvg                  0.098468</span><br><span class="line">CD Account             4.372577</span><br><span class="line">CreditCard            -1.237447</span><br><span class="line">Education              1.520329</span><br><span class="line">Experience            -0.007032</span><br><span class="line">Family                 0.757911</span><br><span class="line">Income                 0.054695</span><br><span class="line">Mortgage              -0.000133</span><br><span class="line">Online                -0.440746</span><br><span class="line">Securities Account    -1.852006</span><br><span class="line">const                -13.920298</span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="회귀-계수-해석"><a href="#회귀-계수-해석" class="headerlink" title="회귀 계수 해석"></a>회귀 계수 해석</h4><ul>
+<li>나이가 한살 많을수록록 대출할 확률이 1.024 높다.</li>
+<li>수입이 1단위 높을소룩 대출할 확률이 1.05배 높다</li>
+<li>가족 구성원수가 1많을수록 대출할 확률이 2.13배 높다</li>
+<li>경력이 1단위 높을수록 대출할 확률이 0.99배 높다(귀무가설 채택)</li>
+<li>Experience,  Mortgage는 제외할 필요성이 있어보임</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.exp(results.params)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-18"><a href="#결과-18" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Age                   1.024773e+00</span><br><span class="line">CCAvg                 1.103479e+00</span><br><span class="line">CD Account            7.924761e+01</span><br><span class="line">CreditCard            2.901239e-01</span><br><span class="line">Education             4.573729e+00</span><br><span class="line">Experience            9.929928e-01</span><br><span class="line">Family                2.133814e+00</span><br><span class="line">Income                1.056218e+00</span><br><span class="line">Mortgage              9.998665e-01</span><br><span class="line">Online                6.435563e-01</span><br><span class="line">Securities Account    1.569221e-01</span><br><span class="line">const                 9.005163e-07</span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## y_hat 예측</span></span><br><span class="line">pred_y = results.predict(test_x)</span><br><span class="line"></span><br><span class="line">def cut_off(y,threshold):</span><br><span class="line">    Y = y.copy() <span class="comment"># copy함수를 사용하여 이전의 y값이 변화지 않게 함</span></span><br><span class="line">    Y[Y&gt;threshold]=1</span><br><span class="line">    Y[Y&lt;=threshold]=0</span><br><span class="line">    <span class="built_in">return</span>(Y.astype(int))</span><br><span class="line"></span><br><span class="line">pred_Y = cut_off(pred_y,0.5)</span><br><span class="line"></span><br><span class="line"><span class="comment"># confusion matrix</span></span><br><span class="line">cfmat = confusion_matrix(test_y, pred_Y)</span><br><span class="line"><span class="built_in">print</span>(cfmat)</span><br></pre></td></tr></table></figure>
+<h5 id="결과-19"><a href="#결과-19" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[661  12]</span><br><span class="line"> [ 28  49]]</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## confusion matrix accuracy계산하기</span></span><br><span class="line">accuracy = (cfmat[0,0]+cfmat[1,1])/cfmat.sum()</span><br><span class="line">accuracy</span><br><span class="line"></span><br><span class="line">def acc(cfmat):</span><br><span class="line">    acc = (cfmat[0,0]+cfmat[1,1])/cfmat.sum()</span><br><span class="line">    <span class="built_in">return</span> acc</span><br></pre></td></tr></table></figure>
+<h5 id="결과-20"><a href="#결과-20" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.9466666666666667</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="임계값-cut-off-에-따른-성능지표-비교"><a href="#임계값-cut-off-에-따른-성능지표-비교" class="headerlink" title="임계값(cut-off)에 따른 성능지표 비교"></a>임계값(cut-off)에 따른 성능지표 비교</h4><ul>
+<li>threshold에 따라 정확도가 달라지므로 가장 좋은 성능을 보여주는 0.5~0.6사이의 threshold를 사용하는 것이 좋을 것이다.</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">threshold = np.arange(0,1,0.1)</span><br><span class="line">table = pd.DataFrame(columns=[<span class="string">'ACC'</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> threshold:</span><br><span class="line">    pred_Y = cut_off(pred_y,i)</span><br><span class="line">    cfmat = confusion_matrix(test_y, pred_Y)</span><br><span class="line">    table.loc[i] = acc(cfmat)</span><br><span class="line">table.index.name=<span class="string">'threshold'</span></span><br><span class="line">table.columns.name=<span class="string">'performance'</span></span><br><span class="line">table</span><br></pre></td></tr></table></figure>
+<h6 id="결과-21"><a href="#결과-21" class="headerlink" title="결과"></a>결과</h6><h2 id="-2"><a href="#-2" class="headerlink" title></a><img src="/image/threshold_parameter_decision_01.png" alt="threshold별 성능"></h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sklearn ROC 패키지 제공</span></span><br><span class="line">fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y, pos_label=1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print ROC curve</span></span><br><span class="line">plt.plot(fpr,tpr)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print AUC</span></span><br><span class="line">auc = np.trapz(tpr,fpr)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'AUC:'</span>, auc)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h6 id="결과-22"><a href="#결과-22" class="headerlink" title="결과"></a>결과</h6><h2 id="-3"><a href="#-3" class="headerlink" title></a><img src="/image/roc_curve_rogistic_regression_example_for_lecture_01.png" alt="roc curve"></h2><h4 id="변수선택법"><a href="#변수선택법" class="headerlink" title="변수선택법"></a>변수선택법</h4><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">feature_columns = list(ploan_processed.columns.difference([<span class="string">"Personal Loan"</span>]))</span><br><span class="line">X = ploan_processed[feature_columns]</span><br><span class="line">y = ploan_processed[<span class="string">'Personal Loan'</span>] <span class="comment"># 대출여부: 1 or 0</span></span><br><span class="line"></span><br><span class="line">train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)</span><br><span class="line"><span class="built_in">print</span>(train_x.shape, test_x.shape, train_y.shape, test_y.shape)</span><br></pre></td></tr></table></figure>
+<h6 id="결과-23"><a href="#결과-23" class="headerlink" title="결과"></a>결과</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(1750, 12) (750, 12) (1750,) (750,)</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">def processSubset(X,y, feature_set):</span><br><span class="line">            model = sm.Logit(y,X[list(feature_set)])</span><br><span class="line">            regr = model.fit()</span><br><span class="line">            AIC = regr.aic</span><br><span class="line">            <span class="built_in">return</span> &#123;<span class="string">"model"</span>:regr, <span class="string">"AIC"</span>:AIC&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">''</span><span class="string">'</span></span><br><span class="line"><span class="string">전진선택법</span></span><br><span class="line"><span class="string">'</span><span class="string">''</span></span><br><span class="line">def forward(X, y, predictors):</span><br><span class="line">    <span class="comment"># 데이터 변수들이 미리정의된 predictors에 있는지 없는지 확인 및 분류</span></span><br><span class="line">    remaining_predictors = [p <span class="keyword">for</span> p <span class="keyword">in</span> X.columns.difference([<span class="string">'const'</span>]) <span class="keyword">if</span> p not <span class="keyword">in</span> predictors]</span><br><span class="line">    tic = time.time()</span><br><span class="line">    results = []</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> remaining_predictors:</span><br><span class="line">        results.append(processSubset(X=X, y= y, feature_set=predictors+[p]+[<span class="string">'const'</span>]))</span><br><span class="line">    <span class="comment"># 데이터프레임으로 변환</span></span><br><span class="line">    models = pd.DataFrame(results)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># AIC가 가장 낮은 것을 선택</span></span><br><span class="line">    best_model = models.loc[models[<span class="string">'AIC'</span>].argmin()] <span class="comment"># index</span></span><br><span class="line">    toc = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Processed "</span>, models.shape[0], <span class="string">"models on"</span>, len(predictors)+1, <span class="string">"predictors in"</span>, (toc-tic))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'Selected predictors:'</span>,best_model[<span class="string">'model'</span>].model.exog_names,<span class="string">' AIC:'</span>,best_model[0] )</span><br><span class="line">    <span class="built_in">return</span> best_model</span><br><span class="line"></span><br><span class="line">def forward_model(X,y):</span><br><span class="line">    Fmodels = pd.DataFrame(columns=[<span class="string">"AIC"</span>, <span class="string">"model"</span>])</span><br><span class="line">    tic = time.time()</span><br><span class="line">    <span class="comment"># 미리 정의된 데이터 변수</span></span><br><span class="line">    predictors = []</span><br><span class="line">    <span class="comment"># 변수 1~10개 : 0~9 -&gt; 1~10</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(1, len(X.columns.difference([<span class="string">'const'</span>])) + 1):</span><br><span class="line">        Forward_result = forward(X=X,y=y,predictors=predictors)</span><br><span class="line">        <span class="keyword">if</span> i &gt; 1:</span><br><span class="line">            <span class="keyword">if</span> Forward_result[<span class="string">'AIC'</span>] &gt; Fmodel_before:</span><br><span class="line">                <span class="built_in">break</span></span><br><span class="line">        Fmodels.loc[i] = Forward_result</span><br><span class="line">        predictors = Fmodels.loc[i][<span class="string">"model"</span>].model.exog_names</span><br><span class="line">        Fmodel_before = Fmodels.loc[i][<span class="string">"AIC"</span>]</span><br><span class="line">        predictors = [ k <span class="keyword">for</span> k <span class="keyword">in</span> predictors <span class="keyword">if</span> k != <span class="string">'const'</span>]</span><br><span class="line">    toc = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Total elapsed time:"</span>, (toc - tic), <span class="string">"seconds."</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span>(Fmodels[<span class="string">'model'</span>][len(Fmodels[<span class="string">'model'</span>])])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">''</span><span class="string">'</span></span><br><span class="line"><span class="string">후진소거법</span></span><br><span class="line"><span class="string">'</span><span class="string">''</span></span><br><span class="line">def backward(X,y,predictors):</span><br><span class="line">    tic = time.time()</span><br><span class="line">    results = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 데이터 변수들이 미리정의된 predictors 조합 확인</span></span><br><span class="line">    <span class="keyword">for</span> combo <span class="keyword">in</span> itertools.combinations(predictors, len(predictors) - 1):</span><br><span class="line">        results.append(processSubset(X=X, y= y,feature_set=list(combo)+[<span class="string">'const'</span>]))</span><br><span class="line">    models = pd.DataFrame(results)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 가장 낮은 AIC를 가진 모델을 선택</span></span><br><span class="line">    best_model = models.loc[models[<span class="string">'AIC'</span>].argmin()]</span><br><span class="line">    toc = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Processed "</span>, models.shape[0], <span class="string">"models on"</span>, len(predictors) - 1, <span class="string">"predictors in"</span>,</span><br><span class="line">          (toc - tic))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'Selected predictors:'</span>,best_model[<span class="string">'model'</span>].model.exog_names,<span class="string">' AIC:'</span>,best_model[0] )</span><br><span class="line">    <span class="built_in">return</span> best_model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def backward_model(X, y):</span><br><span class="line">    Bmodels = pd.DataFrame(columns=[<span class="string">"AIC"</span>, <span class="string">"model"</span>], index = range(1,len(X.columns)))</span><br><span class="line">    tic = time.time()</span><br><span class="line">    predictors = X.columns.difference([<span class="string">'const'</span>])</span><br><span class="line">    Bmodel_before = processSubset(X,y,predictors)[<span class="string">'AIC'</span>]</span><br><span class="line">    <span class="keyword">while</span> (len(predictors) &gt; 1):</span><br><span class="line">        Backward_result = backward(X=train_x, y= train_y, predictors = predictors)</span><br><span class="line">        <span class="keyword">if</span> Backward_result[<span class="string">'AIC'</span>] &gt; Bmodel_before:</span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        Bmodels.loc[len(predictors) - 1] = Backward_result</span><br><span class="line">        predictors = Bmodels.loc[len(predictors) - 1][<span class="string">"model"</span>].model.exog_names</span><br><span class="line">        Bmodel_before = Backward_result[<span class="string">'AIC'</span>]</span><br><span class="line">        predictors = [ k <span class="keyword">for</span> k <span class="keyword">in</span> predictors <span class="keyword">if</span> k != <span class="string">'const'</span>]</span><br><span class="line"></span><br><span class="line">    toc = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Total elapsed time:"</span>, (toc - tic), <span class="string">"seconds."</span>)</span><br><span class="line">    <span class="built_in">return</span> (Bmodels[<span class="string">'model'</span>].dropna().iloc[0])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">''</span><span class="string">'</span></span><br><span class="line"><span class="string">단계적 선택법</span></span><br><span class="line"><span class="string">'</span><span class="string">''</span></span><br><span class="line">def Stepwise_model(X,y):</span><br><span class="line">    Stepmodels = pd.DataFrame(columns=[<span class="string">"AIC"</span>, <span class="string">"model"</span>])</span><br><span class="line">    tic = time.time()</span><br><span class="line">    predictors = []</span><br><span class="line">    Smodel_before = processSubset(X,y,predictors+[<span class="string">'const'</span>])[<span class="string">'AIC'</span>]</span><br><span class="line">    <span class="comment"># 변수 1~10개 : 0~9 -&gt; 1~10</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(1, len(X.columns.difference([<span class="string">'const'</span>])) + 1):</span><br><span class="line">        Forward_result = forward(X=X, y=y, predictors=predictors) <span class="comment"># constant added</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">'forward'</span>)</span><br><span class="line">        Stepmodels.loc[i] = Forward_result</span><br><span class="line">        predictors = Stepmodels.loc[i][<span class="string">"model"</span>].model.exog_names</span><br><span class="line">        predictors = [ k <span class="keyword">for</span> k <span class="keyword">in</span> predictors <span class="keyword">if</span> k != <span class="string">'const'</span>]</span><br><span class="line">        Backward_result = backward(X=X, y=y, predictors=predictors)</span><br><span class="line">        <span class="keyword">if</span> Backward_result[<span class="string">'AIC'</span>]&lt; Forward_result[<span class="string">'AIC'</span>]:</span><br><span class="line">            Stepmodels.loc[i] = Backward_result</span><br><span class="line">            predictors = Stepmodels.loc[i][<span class="string">"model"</span>].model.exog_names</span><br><span class="line">            Smodel_before = Stepmodels.loc[i][<span class="string">"AIC"</span>]</span><br><span class="line">            predictors = [ k <span class="keyword">for</span> k <span class="keyword">in</span> predictors <span class="keyword">if</span> k != <span class="string">'const'</span>]</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">'backward'</span>)</span><br><span class="line">        <span class="keyword">if</span> Stepmodels.loc[i][<span class="string">'AIC'</span>]&gt; Smodel_before:</span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            Smodel_before = Stepmodels.loc[i][<span class="string">"AIC"</span>]</span><br><span class="line">    toc = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Total elapsed time:"</span>, (toc - tic), <span class="string">"seconds."</span>)</span><br><span class="line">    <span class="built_in">return</span> (Stepmodels[<span class="string">'model'</span>][len(Stepmodels[<span class="string">'model'</span>])])</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Forward_best_model = forward_model(X=train_x, y= train_y)</span><br><span class="line">Stepwise_best_model = Stepwise_model(X=train_x,y=train_y)</span><br><span class="line">Backward_best_model = backward_model(X=train_x,y=train_y)</span><br><span class="line"></span><br><span class="line">pred_y_full = results.predict(test_x) <span class="comment"># full model</span></span><br><span class="line">pred_y_forward = Forward_best_model.predict(test_x[Forward_best_model.model.exog_names])</span><br><span class="line">pred_y_backward = Backward_best_model.predict(test_x[Backward_best_model.model.exog_names])</span><br><span class="line">pred_y_stepwise = Stepwise_best_model.predict(test_x[Stepwise_best_model.model.exog_names])</span><br><span class="line"></span><br><span class="line">pred_Y_full= cut_off(pred_y_full,0.5)</span><br><span class="line">pred_Y_forward = cut_off(pred_y_forward,0.5)</span><br><span class="line">pred_Y_backward = cut_off(pred_y_backward,0.5)</span><br><span class="line">pred_Y_stepwise = cut_off(pred_y_stepwise,0.5)</span><br><span class="line"></span><br><span class="line">cfmat_full = confusion_matrix(test_y, pred_Y_full)</span><br><span class="line">cfmat_forward = confusion_matrix(test_y, pred_Y_forward)</span><br><span class="line">cfmat_backward = confusion_matrix(test_y, pred_Y_backward)</span><br><span class="line">cfmat_stepwise = confusion_matrix(test_y, pred_Y_stepwise)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(acc(cfmat_full))</span><br><span class="line"><span class="built_in">print</span>(acc(cfmat_forward))</span><br><span class="line"><span class="built_in">print</span>(acc(cfmat_backward))</span><br><span class="line"><span class="built_in">print</span>(acc(cfmat_stepwise))</span><br></pre></td></tr></table></figure>
+<h5 id="결과-24"><a href="#결과-24" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0.9466666666666667</span><br><span class="line">0.944</span><br><span class="line">0.944</span><br><span class="line">0.944</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>변수선택법을 통한 성능이나 full model이나 성능차이가 거의 없으므로 full model을 사용할 것이다.</li>
+</ul>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -421,21 +685,22 @@ ga('send', 'pageview');
             "@type": "Person",
             "name": "HeungBae Lee"
         },
-        "headline": "PCA를 이해하기 위한 기본적 선형대수",
-        "image": "https://heung-bae-lee.github.io/image/curse_of_dimensionality_01.png",
+        "headline": "로지스틱 회귀분석",
+        "image": "https://heung-bae-lee.github.io/image/logistic_regression.png",
         "keywords": "",
         "genre": "machine learning",
         "datePublished": "2020-04-03",
         "dateCreated": "2020-04-03",
-        "dateModified": "2020-04-13",
+        "dateModified": "2020-06-13",
         "url": "https://heung-bae-lee.github.io/2020/04/03/machine_learning_06/",
-        "description": "차원의 저주
-먼저 PCA를 하는 이유에 대해 설명해 볼 것이다. 전에 언급했던 변수(또는 피처)들이 많아질수록 변수들이 있는 공간의 차원수 또한 점차적으로 늘어나게 된다. 차원의 저주는차원이 늘어남에 따라서 같은 영역의 자료를 갖고 있음에도 전체 영역 대비 모델을 통해 변수로 설명할 수 있는 데이터의 패턴은 줄어들게 되는 것을 의미한다.
+        "description": "로지스틱 회귀분석
 
 
+로지스틱(Logistic) 회귀분석은 회귀분석이라는 명칭과 달리 회귀분석 문제와 분류문제 모두에 사용할 수 있다. 로지스틱 회귀분석 모형에서는 종속변수가 이항분포를 따르고 그 모수 $ \theta $ 가 독립변수 $ x $ 에 의존한다고 가정한다.
 
-다른 관점에서"
-        "wordCount": 1505
+p(y \mid x) = \text{Bin} (y; \theta (x), N)
+위 식에"
+        "wordCount": 10056
     }
 </script>
 
@@ -483,20 +748,20 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2020/04/14/machine_learning_07/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2020/04/03/machine_learning_07/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">newer</strong>
         <p class="article-nav-title">
         
-            나이브 베이즈 분류모형
+            PCA를 이해하기 위한 기본적 선형대수
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
     </a>
     
     
-        <a href="/2020/04/03/machine_learning_05/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/03/20/Python_00/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">로지스틱 회귀분석</p>
+        <p class="article-nav-title">Python - 00 (Python의 장점 및 자료형)</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -546,7 +811,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/06/06/machine_learning_20/" class="title">Imbalanced Data</a></p>
+                            <p class="item-title"><a href="/2020/06/06/machine_learning_21/" class="title">Imbalanced Data</a></p>
                             <p class="item-date"><time datetime="2020-06-05T16:52:20.000Z" itemprop="datePublished">2020-06-06</time></p>
                         </div>
                     </li>
@@ -555,7 +820,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/machine-learning/">machine learning</a></p>
-                            <p class="item-title"><a href="/2020/06/04/machine_learning_19/" class="title">Clustering - Hierarchical, DBSCAN, Affinity Propagation</a></p>
+                            <p class="item-title"><a href="/2020/06/04/machine_learning_20/" class="title">Clustering - Hierarchical, DBSCAN, Affinity Propagation</a></p>
                             <p class="item-date"><time datetime="2020-06-04T13:46:15.000Z" itemprop="datePublished">2020-06-04</time></p>
                         </div>
                     </li>
@@ -569,7 +834,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">21</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bayes/">Bayes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C-자료구조/">C/C++/자료구조</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front-end/">Front end</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kaggle/">Kaggle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Recommendation-System/">Recommendation System</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Statistics-Mathematical-Statistics/">Statistics - Mathematical Statistics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/crawling/">crawling</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/data-engineering/">data engineering</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/growth-hacking/">growth hacking</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linear-algebra/">linear algebra</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">22</span></li></ul>
         </div>
     </div>
 
@@ -579,7 +844,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -708,22 +973,5 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 </body>
 </html>
