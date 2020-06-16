@@ -21,7 +21,7 @@
 <meta property="og:description" content="회귀 게수를 축소해야 하는 이유 먼저, 회귀 분석하기 좋은 데이터의 조건에 대해서 이야기 해 볼 것이다. X와 Y의 관계가 명확해야하며 선형성을 가지면 가장 좋을 것이다. 또한, 독립변수의 개수가 많다면 학습의 시간도 상대적으로 오래걸리며 과적합이 될 확률이 높다. 이러한 문제들이 발생되기 때문에 Y와의 상관성은 높아야 하지만 독립변수들끼리의 상관성은 적은">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://heung-bae-lee.github.io/image/what_data_set_is_good_for_regression.png">
-<meta property="og:updated_time" content="2020-06-13T09:27:52.172Z">
+<meta property="og:updated_time" content="2020-06-13T09:37:49.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Regression(04) - Ridge and Lasso">
 <meta name="twitter:description" content="회귀 게수를 축소해야 하는 이유 먼저, 회귀 분석하기 좋은 데이터의 조건에 대해서 이야기 해 볼 것이다. X와 Y의 관계가 명확해야하며 선형성을 가지면 가장 좋을 것이다. 또한, 독립변수의 개수가 많다면 학습의 시간도 상대적으로 오래걸리며 과적합이 될 확률이 높다. 이러한 문제들이 발생되기 때문에 Y와의 상관성은 높아야 하지만 독립변수들끼리의 상관성은 적은">
@@ -365,6 +365,10 @@ ga('send', 'pageview');
 <ul>
 <li>Lasso의 경우에는 $ \lambda $ 값에 따라서 성능의 변화가 심하고 좋은 변수라고 p-value를 보고 판단한 변수가 오히려 0으로 가버리는 현상들 때문에 이러한 경우에는 기본적인 모형을 사용하는 것이 좋다.</li>
 </ul>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="결과-20"><a href="#결과-20" class="headerlink" title="결과"></a>결과</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
 
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -457,7 +461,7 @@ ga('send', 'pageview');
         "url": "https://heung-bae-lee.github.io/2020/01/16/machine_learning_05/",
         "description": "회귀 게수를 축소해야 하는 이유
 먼저, 회귀 분석하기 좋은 데이터의 조건에 대해서 이야기 해 볼 것이다. X와 Y의 관계가 명확해야하며 선형성을 가지면 가장 좋을 것이다. 또한, 독립변수의 개수가 많다면 학습의 시간도 상대적으로 오래걸리며 과적합이 될 확률이 높다. 이러한 문제들이 발생되기 때문에 Y와의 상관성은 높아야 하지만 독립변수들끼리의 상관성은 적은"
-        "wordCount": 6237
+        "wordCount": 6257
     }
 </script>
 
@@ -730,5 +734,22 @@ ga('send', 'pageview');
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>

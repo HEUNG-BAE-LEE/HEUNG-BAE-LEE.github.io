@@ -305,7 +305,7 @@ tensorflow version 확인1print(tf.__version__)
 
         <p class="article-excerpt">
             순차 데이터의 이해
-우리가 순환 신경망을 사용하는 이유는 입력을 순환 신경망으로 받거나 출력을 순환 신경망으로 내기 위해서이다.
+우리가 순환 신경망을 사용하는 이유는 입력을 순차데이터로 받거나 출력을 순차데이터으로 내기 위해서이다.
 
 
 
@@ -313,7 +313,7 @@ tensorflow version 확인1print(tf.__version__)
 
 
 
-일반적으로는 위에서 보는 것과 같이 Temporal Sequenc
+일반적으로는 위에서 보는 것과 같이 Temporal Sequence를 
         </p>
     </div>
 </article>
@@ -878,5 +878,22 @@ Node가 단일 뉴런 연산을 의미한다고 했는데 여기서의 단일 �
 <script src="/js/main.js"></script>
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
 </body>
 </html>
