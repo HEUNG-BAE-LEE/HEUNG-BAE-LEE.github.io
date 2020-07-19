@@ -8,8 +8,40 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/2020/06/22/computer_vision_01/</loc>
+        <lastmod>2020-07-19T03:08:07.128Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/07/19/NLP_14/</loc>
+        <lastmod>2020-07-19T03:04:37.084Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/2020/01/12/deep_learning_08/</loc>
-        <lastmod>2020-06-16T04:55:26.966Z</lastmod>
+        <lastmod>2020-06-21T15:56:24.840Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/</loc>
+        <lastmod>2020-06-13T18:20:10.763Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/2020/06/09/linear_algebra_05/</loc>
+        <lastmod>2020-06-13T09:37:57.148Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -48,14 +80,6 @@
     </url>
 
     <url>
-        <loc>https://heung-bae-lee.github.io/2020/06/09/linear_algebra_05/</loc>
-        <lastmod>2020-06-13T04:15:49.663Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://heung-bae-lee.github.io/2020/06/08/linear_algebra_04/</loc>
         <lastmod>2020-06-09T07:49:50.169Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -82,14 +106,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/2020/05/12/linear_algebra_01/</loc>
         <lastmod>2020-06-09T05:28:24.776Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/2020/01/15/machine_learning_04/</loc>
-        <lastmod>2020-06-07T08:01:31.299Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

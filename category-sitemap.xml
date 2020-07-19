@@ -8,22 +8,36 @@
     </url>
 
     <url>
+        <loc>https://heung-bae-lee.github.io/categories/Computer-Vision/</loc>
+        <lastmod>2020-07-19T03:08:07.128Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://heung-bae-lee.github.io/categories/NLP/</loc>
+        <lastmod>2020-07-19T03:04:37.084Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://heung-bae-lee.github.io/categories/deep-learning/</loc>
-        <lastmod>2020-06-16T04:55:26.966Z</lastmod>
+        <lastmod>2020-06-21T15:56:24.840Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://heung-bae-lee.github.io/categories/machine-learning/</loc>
-        <lastmod>2020-06-13T09:37:49.617Z</lastmod>
+        <lastmod>2020-06-13T18:20:10.763Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://heung-bae-lee.github.io/categories/linear-algebra/</loc>
-        <lastmod>2020-06-13T06:13:29.668Z</lastmod>
+        <lastmod>2020-06-13T09:37:57.148Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -45,13 +59,6 @@
     <url>
         <loc>https://heung-bae-lee.github.io/categories/data-engineering/</loc>
         <lastmod>2020-03-09T14:06:21.058Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://heung-bae-lee.github.io/categories/NLP/</loc>
-        <lastmod>2020-02-20T07:19:46.701Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
