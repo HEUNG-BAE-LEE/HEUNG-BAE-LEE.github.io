@@ -13,17 +13,19 @@
         <meta name="keywords" content>
     
     
-    <meta name="description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+    <meta name="description" content="Feature and Feature vector Feature와 Feature vector에 대해 설명하기 위해 아래 몽타주를 예를 들어 설명해 볼 것이다. 몽타주는 목격자들에 의해 범인의 특징을 합쳐 만든것으로 범인을 대표할 만한 특징을 알 수 있도록 해야할 것이다. 예를 들어 모든 사람이 갖고있는 눈이 2개, 귀가 2개 같은 특징은 범인을 검거하는데 전">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Feature and Feature vector">
 <meta property="og:url" content="https://heung-bae-lee.github.io/2020/07/19/NLP_14/index.html">
 <meta property="og:site_name" content="DataLatte&#39;s IT Blog">
-<meta property="og:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta property="og:description" content="Feature and Feature vector Feature와 Feature vector에 대해 설명하기 위해 아래 몽타주를 예를 들어 설명해 볼 것이다. 몽타주는 목격자들에 의해 범인의 특징을 합쳐 만든것으로 범인을 대표할 만한 특징을 알 수 있도록 해야할 것이다. 예를 들어 모든 사람이 갖고있는 눈이 2개, 귀가 2개 같은 특징은 범인을 검거하는데 전">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-07-19T03:04:37.084Z">
+<meta property="og:image" content="https://heung-bae-lee.github.io/image/what_is_feature.png">
+<meta property="og:updated_time" content="2020-07-19T23:18:23.149Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Feature and Feature vector">
-<meta name="twitter:description" content="DataLatte가 Data Science 공부를 하면서 정리해 놓는 블로그">
+<meta name="twitter:description" content="Feature and Feature vector Feature와 Feature vector에 대해 설명하기 위해 아래 몽타주를 예를 들어 설명해 볼 것이다. 몽타주는 목격자들에 의해 범인의 특징을 합쳐 만든것으로 범인을 대표할 만한 특징을 알 수 있도록 해야할 것이다. 예를 들어 모든 사람이 갖고있는 눈이 2개, 귀가 2개 같은 특징은 범인을 검거하는데 전">
+<meta name="twitter:image" content="https://heung-bae-lee.github.io/image/what_is_feature.png">
 <meta property="fb:app_id" content="100003222637819">
 
 
@@ -206,7 +208,126 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            
+            <h2 id="Feature-and-Feature-vector"><a href="#Feature-and-Feature-vector" class="headerlink" title="Feature and Feature vector"></a>Feature and Feature vector</h2><ul>
+<li>Feature와 Feature vector에 대해 설명하기 위해 아래 몽타주를 예를 들어 설명해 볼 것이다. <code>몽타주는 목격자들에 의해 범인의 특징을 합쳐 만든것으로 범인을 대표할 만한 특징을 알 수 있도록 해야할 것이다.</code> 예를 들어 모든 사람이 갖고있는 눈이 2개, 귀가 2개 같은 특징은 범인을 검거하는데 전혀 도움이 되지 않을 것이다.</li>
+</ul>
+<p><img src="/image/what_is_feature.png" alt="feature란 무엇인가 - 01"></p>
+<ul>
+<li><code>Feature</code>란 <code>sample을 잘 설명하는 특징</code>이다. <code>Feature를 통해 우리는 특정 sample을 수치화 할 수 있다.</code></li>
+</ul>
+<p><img src="/image/what_is_feature_01.png" alt="feature란 무엇인가 - 02"></p>
+<ul>
+<li>60,000장의 손글씨로 0~9 숫자를 쓴 데이터를 보면 아래 그림에서 보듯이 특정 위치에 선이 곧은(휘어진) 선이 얼마나 있는지를 또는 해당 선이 얼마나 굵은지, 어느 정도 기울어져 있는지를 통해 해당 데이터의 레이블을 학습하여 예측해 낼 수 있을 것이다. 그러나, <code>다른 Task 예를 들어, 손글씨를 생성하는 Task는 각 sample들 사이의 차이를 설명할 수 있는 feature도 존재해야 할 것</code>이다.</li>
+</ul>
+<p><img src="/image/what_is_feature_02.png" alt="feature란 무엇인가 - 03"></p>
+<ul>
+<li>Deep Learning과 전통적인 Machine Learning에서 사용되는 Feature의 차이를 보면 아래 그림과 같다. Machine Learning에서와는 다르게 특별하게 Feature를 추출해 내는 전처리 모델이 필요하지 않게 된다. 학습하는 과정에서 자연스럽게 해당 Feature와 Target간의 관계를 만들어 낼 수 있는 Feature를 만들어 내기 때문이다. 이렇게 End-To-End로 구현을 할 수 있어지므로 시스템이 굉장히 가벼워 진다. 즉, NN모델 하나만 있으면 된다는 이야기이다.</li>
+</ul>
+<p><img src="/image/what_is_feature_03.png" alt="feature란 무엇인가 - 04"></p>
+<h2 id="One-hot-Encoding"><a href="#One-hot-Encoding" class="headerlink" title="One-hot Encoding"></a>One-hot Encoding</h2><ul>
+<li>Categorical value를 표현하기 위한 방법 중 하나인 One-hot Encoding에 대해 다루어 볼 것이다.</li>
+</ul>
+<ul>
+<li><code>Continuous value는 비슷한 값은 비슷한 의미를 지닌다</code>는 의미는 예를 들어 키가 175cm인 사람이 있다고 했을때, 177cm인 사람과 120cm인 사람에 대해 각각 비교했을때, 어떤 사람과 유사한 것인지 생각해보면 이해하기 쉬울 것이다. 허나, <code>Categorical value를 생각해 보면 비슷한 값일지라도 상관없는 의미를 지닌다.</code> 예를 들어 MNIST의 Label을 보면 0과 1은 숫자 개념으로 보았을 때 더 가까운 관계를 가지지만, 이미지로 보았을 때 0과 1보다는 0과 6이 더 가까운 관계를 가진다는 것을 알 수 있다.</li>
+</ul>
+<p><img src="/image/what_is_diiference_with_between_categorical_and_continuous_value.png" alt="Categorical value vs Continuous value"></p>
+<ul>
+<li>좀 더 Categorical value에 대해 알아보자. 아래의 16개의 단어를 살펴보면, 연필과 볼펜의 관계가 연필과 자의 관계보다 일상속에서 생각해보면 더 가까운 의미를 가져야 한다는 것을 알 수 있다. 허나, 테이블에서 보면 9-연필, 5-볼펜, 10-자 이므로 index 값으로 보았을때는 연필과 자가 더 가깝게 해석되어 질 수 있다. 이처럼 <code>Categorical value에서는 값의 크기나 위치를 가지고 의미를 부여하고 해석하는 것은 굉장히 위험하다.</code></li>
+</ul>
+<p><img src="/image/Categorical_value_examples_01.png" alt="Categorical Value의 예시 - 01"></p>
+<ul>
+<li>위의 단어 테이블을 One-hot Encoding을 통해 변환하여도 동일한 정보를 갖고 있다.</li>
+</ul>
+<p><img src="/image/One_hot_encoding_with_categorical_value.png" alt="Categorcal value의 One-hot Encoding"></p>
+<ul>
+<li>위의 정보들로만 One-hot Encoding을 통해 변환하는 경우 아래와 같이 Sparse한 Matrix를 얻게 된다.</li>
+</ul>
+<p><img src="/image/One_hot_Encoding_vector_is_sparse_vector_01.png" alt="One-hot Encoding Vector의 Sparsity - 01"></p>
+<ul>
+<li>이러한 Sparse한 Matrix에서 위와 같이 Vector에 하나의 1의 값만을 갖는 벡터들로 이루어져있다면 단어 Vector들 간 서로 직교하게 되어 Cosine Similarity가 0이 된다. 즉, 단어간의 유사도를 비교할 수 없다는 의미이다.</li>
+</ul>
+<p><img src="/image/One_hot_Encoding_vector_is_sparse_vector_02.png" alt="One-hot Encoding Vector의 Sparsity - 02"></p>
+<ul>
+<li>그래서 Vector Embedding 기법이 탄생하게 Motivation이 되었다. 대표적으로 <code>Word2Vec 또는 DNN을 통해 차원축소 및 Dense vector로 표현하여 아래 그림과 같이 단어간의 유사도가 높은 단어끼리 벡터공간상에서 비슷한 위치에 놓여 유사도를 계산할 수 있도록 해준다.</code></li>
+</ul>
+<p><img src="/image/why_need_to_dense_word_embedding_vector.png" alt="Word Embedding의 필요성"></p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>Categorical value는 One-hot Encoding을 통해 벡터로 표현된다.</li>
+</ul>
+<ul>
+<li>Sparse Vector는 벡터간 유사도 계산이 어렵다.</li>
+</ul>
+<ul>
+<li><code>따라서 Dense Vector로 표현할 필요가 있다.</code></li>
+</ul>
+<h2 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h2><ul>
+<li>AutoEncoder는 Deep Learning의 특성을 잘 반영한 Architecture이다.</li>
+</ul>
+<ul>
+<li>간단히 말하면, <code>입력과 출력이 동일하게끔 최대한 차이가 안나게 학습시키는 구조</code>라고 볼 수 있다. 그러므로 중간 병목단계에서 Feature의 압축이 일어난다. 여기서 중간 병목단계의 Z로 보낼때 많은 정보가 손실이 된다면, 다시 Decoder 구조에서 출력을 낼 때 기존의 Encoder단의 입력과 차이가 많이 날 수 있다. 물론 해당 병목구간의 크기가 너무작지 않아 충분히 크다면 잘 압축을 시행해서 정보의 손실이 없을 수도 있겠지만, 우리가 원하는 방향은 아닐 것이다. 즉, <code>학습을 진행하면서 구조 자체에서 해당 병목구간을 효율적으로 통과하기 위한 정보를 찾아낸 것</code>이다.</li>
+</ul>
+<p><img src="/image/What_is_AutoEncoder_01.png" alt="AutoEncoder란? - 01"></p>
+<ul>
+<li>먼저 Encoder단을 살펴보면, $ x $ (입력) 보다 $ Z $ 가 훨씬 더 작은 차원을 갖으므로, Z로 압축을 하는 과정에서 Decoder단에서 복원시 필요없는 뻔한 정보들은 버리고 필요한건 챙기는 부분이라고 생각하면된다. 예를 들어 MNIST의 숫자가 차지하는 Pixel을 제외한 나머지 Pixel들은 모두 검정색인 데이터들이므로 필요가 없을 것이다.</li>
+</ul>
+<p><img src="/image/What_is_AutoEncoder_02.png" alt="AutoEncoder란? - 02"></p>
+<ul>
+<li>Bottleneck 부분은 입력( $ x $ )에 비해 작은 차원으로 구성되므로 <code>차원의 크기에 따라 압축의 정도가 다를 것</code>이다. 그러므로 $ Z $ 는 입력 ( $ x $ ) 에 대한 Feature Vector라고 할 수 있다.</li>
+</ul>
+<p><img src="/image/What_is_AutoEncoder_03.png" alt="AutoEncoder란? - 03"></p>
+<ul>
+<li>Decoder 구조에서는 Bottleneck 부분에서 얻은 압축된 Dense Vector를 입력으로 받아 최대한 Encoder의 입력(x)와 유사하도록 복원하는 역할을 한다.</li>
+</ul>
+<p><img src="/image/What_is_AutoEncoder_04.png" alt="AutoEncoder란? - 04"></p>
+<h3 id="Summary-1"><a href="#Summary-1" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>오토인코더(AE)는 압축과 해제를 반복하며 특징 추출을 자동으로 학습<ul>
+<li>필요한 정보와 필요없는 정보를 구분할 수 있게 되는 과정</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>인코더로부터 나온 중간 결과물(z)은 입력(x)에 대한 feature vector</code>이다.<ul>
+<li>Embedding vector</li>
+<li><code>인코더에 통과시키는 것은 Feature vector에 대한 Embedding 과정이라고 볼 수 있다.</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="AutoEncoder의-Bottleneck의-결과물"><a href="#AutoEncoder의-Bottleneck의-결과물" class="headerlink" title="AutoEncoder의 Bottleneck의 결과물"></a>AutoEncoder의 Bottleneck의 결과물</h2><ul>
+<li>AutoEncoder는 이전에 설명한것처럼 압축과 해제를 반복하며 특징 추출을 자동으로 학습하는데 만들어진 <code>Feature Vector의 각 차원은 어떤 의미가 있을까</code></li>
+</ul>
+<p><img src="/image/What_is_mean_for_Bottleneck_outcome.png" alt="AutoEncoder의 Feature vector 차원의 의미 - 01"></p>
+<ul>
+<li>AutoEncoder의 Encoder 결과뭉인 $ z $ 를 plot하면 <code>비슷한 샘플들이 비슷한 sample들은 비슷한 곳에 위치한다. 해당 공간을 hidden(latent) space라고 부른다.</code></li>
+</ul>
+<p><img src="/image/What_is_mean_for_Bottleneck_outcome_01.png" alt="AutoEncoder의 Feature vector 차원의 의미 - 02"></p>
+<ul>
+<li>이렇게 sample을 통과하는 과정은 latent(hidden) space에 mapping(Embedding)하는 과정이라고 볼 수 있다. Encoder 구조를 떠나 <code>어떠한 NN의 각 Layer의 결과물은 Feature vector라고 볼 수 있다.</code></li>
+</ul>
+<p><img src="/image/What_is_mean_for_Bottleneck_outcome_02.png" alt="AutoEncoder의 Feature vector 차원의 의미 - 03"></p>
+<ul>
+<li>hidden vector에 대한 해석은 어렵다. 그에 대한 연구로 XAI(또는 Explainable AI)로 진행되고 있지만 아직 완벽하지 않다. 하지만, 비슷한 특징을 가진 sample은 비슷한 hidden vector를 가질 것이다. 왜냐하면 Embedding하는 과정 즉, Hidden(latent) space에 mapping되는 과정을 거쳤기 때문이다.</li>
+</ul>
+<p><img src="/image/What_is_mean_for_Bottleneck_outcome_03.png" alt="AutoEncoder의 Feature vector 차원의 의미 - 04"></p>
+<ul>
+<li>만약 XAI를 통해 완벽하게 hidden vector의 각 차원들에 대해 해석할 수 있다면, 아래 그림과 같이 각 차원의 값을 조절하여 원하는 데이터를 만들어 내는 것도 가능하게 될 것이다.</li>
+</ul>
+<p><img src="/image/explainable_Hidden_vector.png" alt="hidden vector의 해석이 완변하다면"></p>
+<h3 id="Summary-2"><a href="#Summary-2" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li><code>Hidden layer의 결과값들을 hidden vectors라 부르며, 이들은 sample의 feature를 담고 있다.</code></li>
+</ul>
+<ul>
+<li><code>신경망(또는 Layer)을 통과시키는 것은 입력공간(input space)에서 잠재공간(latent space)로의 mapping 과정</code>이다.<ul>
+<li>고차원 공간(high-dimensional space) -&gt; 저차원 공간(lower-dimensional space)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Hidden representation을 해석하는 것은 매우 어려움.<ul>
+<li><code>하지만 비슷한 sample은 비슷한 hidden representation을 지닌다.</code></li>
+</ul>
+</li>
+</ul>
+
         </div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 하단형 -->
@@ -289,15 +410,16 @@ ga('send', 'pageview');
             "name": "HeungBae Lee"
         },
         "headline": "Feature and Feature vector",
-        "image": "https://heung-bae-lee.github.io",
+        "image": "https://heung-bae-lee.github.io/image/what_is_feature.png",
         "keywords": "",
         "genre": "NLP",
         "datePublished": "2020-07-19",
         "dateCreated": "2020-07-19",
-        "dateModified": "2020-07-19",
+        "dateModified": "2020-07-20",
         "url": "https://heung-bae-lee.github.io/2020/07/19/NLP_14/",
-        "description": ""
-        "wordCount": 1
+        "description": "Feature and Feature vector
+Feature와 Feature vector에 대해 설명하기 위해 아래 몽타주를 예를 들어 설명해 볼 것이다. 몽타주는 목격자들에 의해 범인의 특징을 합쳐 만든것으로 범인을 대표할 만한 특징을 알 수 있도록 해야할 것이다. 예를 들어 모든 사람이 갖고있는 눈이 2개, 귀가 2개 같은 특징은 범인을 검거하는데 전"
+        "wordCount": 918
     }
 </script>
 
